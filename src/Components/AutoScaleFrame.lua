@@ -1,8 +1,8 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
-local Finalize = require(NekaUI.Utils.Finalize)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local Finalize = require(OnyxUI.Utils.Finalize)
 
 local New = Fusion.New
 local Value = Fusion.Value
@@ -11,7 +11,7 @@ local Out = Fusion.Out
 local Hydrate = Fusion.Hydrate
 local Children = Fusion.Children
 
-local Frame = require(NekaUI.Components.Frame)
+local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
 	Props.BaseResolution = EnsureProp(Props.BaseResolution, "Vector2", Vector2.new())

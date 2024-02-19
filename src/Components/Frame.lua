@@ -1,7 +1,7 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
-local Finalize = require(NekaUI.Utils.Finalize)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local Finalize = require(OnyxUI.Utils.Finalize)
 
 local New = Fusion.New
 local Children = Fusion.Children

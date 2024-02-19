@@ -1,16 +1,16 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
+local Fusion = require(OnyxUI.Parent.Fusion)
 
 local Children = Fusion.Children
 local New = Fusion.New
 
-local MenuFrame = require(NekaUI.Components.MenuFrame)
-local Button = require(NekaUI.Components.Button)
-local AutoScaleFrame = require(NekaUI.Components.AutoScaleFrame)
-local TitleBar = require(NekaUI.Components.TitleBar)
-local ScrollingFrame = require(NekaUI.Components.ScrollingFrame)
-local SettingToggle = require(NekaUI.Components.SettingToggle)
+local MenuFrame = require(OnyxUI.Components.MenuFrame)
+local Button = require(OnyxUI.Components.Button)
+local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
+local TitleBar = require(OnyxUI.Components.TitleBar)
+local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
+local SettingToggle = require(OnyxUI.Components.SettingToggle)
 
 local function SettingsMenu(Props)
 	return AutoScaleFrame {

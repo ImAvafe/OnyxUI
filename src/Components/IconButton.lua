@@ -1,16 +1,16 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
-local ColourUtils = require(NekaUI.Parent.ColourUtils)
-local Finalize = require(NekaUI.Utils.Finalize)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local ColourUtils = require(OnyxUI.Parent.ColourUtils)
+local Finalize = require(OnyxUI.Utils.Finalize)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 
 local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local BaseButton = require(NekaUI.Components.BaseButton)
-local Icon = require(NekaUI.Components.Icon)
+local BaseButton = require(OnyxUI.Components.BaseButton)
+local Icon = require(OnyxUI.Components.Icon)
 
 local function IconButton(Props)
 	local IsHovering = EnsureProp(Props.IsHovering, "boolean", false)

@@ -1,15 +1,15 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
-local Finalize = require(NekaUI.Utils.Finalize)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local Finalize = require(OnyxUI.Utils.Finalize)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 
 local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 
-local BaseButton = require(NekaUI.Components.BaseButton)
+local BaseButton = require(OnyxUI.Components.BaseButton)
 
 local function SwitchInput(Props)
 	Props.SwitchedOn = EnsureProp(Props.SwitchedOn, "boolean", false)

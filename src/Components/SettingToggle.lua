@@ -1,14 +1,14 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local SwitchGroup = require(NekaUI.Components.SwitchGroup)
-local SwitchInput = require(NekaUI.Components.SwitchInput)
-local Text = require(NekaUI.Components.Text)
+local SwitchGroup = require(OnyxUI.Components.SwitchGroup)
+local SwitchInput = require(OnyxUI.Components.SwitchInput)
+local Text = require(OnyxUI.Components.Text)
 
 local function SettingToggle(Props)
 	Props.SwitchedOn = EnsureProp(Props.SwitchedOn, "boolean", false)

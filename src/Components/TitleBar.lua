@@ -1,15 +1,15 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
-local Finalize = require(NekaUI.Utils.Finalize)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local Finalize = require(OnyxUI.Utils.Finalize)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local Frame = require(NekaUI.Components.Frame)
-local Text = require(NekaUI.Components.Text)
-local IconButton = require(NekaUI.Components.IconButton)
+local Frame = require(OnyxUI.Components.Frame)
+local Text = require(OnyxUI.Components.Text)
+local IconButton = require(OnyxUI.Components.IconButton)
 
 local function TitleBar(Props)
 	Props.CloseButtonDisabled = EnsureProp(Props.CloseButtonDisabled, "boolean", false)

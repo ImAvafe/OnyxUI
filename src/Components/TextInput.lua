@@ -1,9 +1,9 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
-local Finalize = require(NekaUI.Utils.Finalize)
-local ColourUtils = require(NekaUI.Parent.ColourUtils)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local Finalize = require(OnyxUI.Utils.Finalize)
+local ColourUtils = require(OnyxUI.Parent.ColourUtils)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -14,7 +14,7 @@ local Out = Fusion.Out
 local Observer = Fusion.Observer
 local Spring = Fusion.Spring
 
-local Text = require(NekaUI.Components.Text)
+local Text = require(OnyxUI.Components.Text)
 
 local function TextInput(Props)
 	Props.Disabled = EnsureProp(Props.Disabled, "boolean", false)

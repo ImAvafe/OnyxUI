@@ -1,7 +1,7 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 
 local New = Fusion.New
 local Children = Fusion.Children

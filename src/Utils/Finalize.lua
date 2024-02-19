@@ -1,13 +1,13 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local AutomaticSizer = require(NekaUI.Utils.AutomaticSizer)
+local AutomaticSizer = require(OnyxUI.Utils.AutomaticSizer)
 
 return function(Instance: Instance)
-  if not Instance:GetAttribute("Finalized") then
-    AutomaticSizer.AutomaticSize(Instance)
+	if not Instance:GetAttribute("Finalized") then
+		AutomaticSizer.AutomaticSize(Instance)
 
-    Instance:SetAttribute("Finalized", true)
-  end
+		Instance:SetAttribute("Finalized", true)
+	end
 
-  return Instance
+	return Instance
 end

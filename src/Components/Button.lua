@@ -1,9 +1,9 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
-local ColourUtils = require(NekaUI.Parent.ColourUtils)
-local Finalize = require(NekaUI.Utils.Finalize)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local ColourUtils = require(OnyxUI.Parent.ColourUtils)
+local Finalize = require(OnyxUI.Utils.Finalize)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 
 local New = Fusion.New
 local Value = Fusion.Value
@@ -11,9 +11,9 @@ local Children = Fusion.Children
 local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
 
-local BaseButton = require(NekaUI.Components.BaseButton)
-local Text = require(NekaUI.Components.Text)
-local Icon = require(NekaUI.Components.Icon)
+local BaseButton = require(OnyxUI.Components.BaseButton)
+local Text = require(OnyxUI.Components.Text)
+local Icon = require(OnyxUI.Components.Icon)
 
 local function Button(Props)
 	Props.Contents = EnsureProp(Props.Contents, "table", {})

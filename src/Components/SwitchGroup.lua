@@ -1,12 +1,12 @@
-local NekaUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Parent.Fusion)
-local Finalize = require(NekaUI.Utils.Finalize)
-local EnsureProp = require(NekaUI.Utils.EnsureProp)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local Finalize = require(OnyxUI.Utils.Finalize)
+local EnsureProp = require(OnyxUI.Utils.EnsureProp)
 
 local Children = Fusion.Children
 
-local BaseButton = require(NekaUI.Components.BaseButton)
+local BaseButton = require(OnyxUI.Components.BaseButton)
 
 local function SwitchGroup(Props)
 	Props.SwitchedOn = EnsureProp(Props.SwitchedOn, "boolean", false)
