@@ -68,49 +68,46 @@ local function SwitchInput(Props)
 						PaddingTop = UDim.new(0, 3),
 					},
 
-					[Children] = {
-						New "Frame" {
-							Name = "Ball",
-							AnchorPoint = Spring(
-								Computed(function()
-									return (Props.SwitchedOn:get() and Vector2.new(1, 0.5)) or Vector2.new(0, 0.5)
-								end),
-								40,
-								1
-							),
-							Position = Spring(
-								Computed(function()
-									return (Props.SwitchedOn:get() and UDim2.fromScale(1, 0.5))
-										or UDim2.fromScale(0, 0.5)
-								end),
-								40,
-								1
-							),
-							Size = UDim2.fromScale(0, 1),
-							BackgroundColor3 = Spring(
-								Computed(function()
-									if Props.Disabled:get() then
-										return Color3.fromRGB(35, 35, 35)
-									end
-									if Props.SwitchedOn:get() then
-										return Color3.fromRGB(216, 216, 216)
-									else
-										return Color3.fromRGB(70, 70, 70)
-									end
-								end),
-								40,
-								1
-							),
+					New "Frame" {
+						Name = "Ball",
+						AnchorPoint = Spring(
+							Computed(function()
+								return (Props.SwitchedOn:get() and Vector2.new(1, 0.5)) or Vector2.new(0, 0.5)
+							end),
+							40,
+							1
+						),
+						Position = Spring(
+							Computed(function()
+								return (Props.SwitchedOn:get() and UDim2.fromScale(1, 0.5)) or UDim2.fromScale(0, 0.5)
+							end),
+							40,
+							1
+						),
+						Size = UDim2.fromScale(0, 1),
+						BackgroundColor3 = Spring(
+							Computed(function()
+								if Props.Disabled:get() then
+									return Color3.fromRGB(35, 35, 35)
+								end
+								if Props.SwitchedOn:get() then
+									return Color3.fromRGB(216, 216, 216)
+								else
+									return Color3.fromRGB(70, 70, 70)
+								end
+							end),
+							40,
+							1
+						),
 
-							[Children] = {
-								New "UIAspectRatioConstraint" {
-									AspectRatio = 1,
-									AspectType = Enum.AspectType.ScaleWithParentSize,
-									DominantAxis = Enum.DominantAxis.Height,
-								},
-								New "UICorner" {
-									CornerRadius = UDim.new(0.5, 0),
-								},
+						[Children] = {
+							New "UIAspectRatioConstraint" {
+								AspectRatio = 1,
+								AspectType = Enum.AspectType.ScaleWithParentSize,
+								DominantAxis = Enum.DominantAxis.Height,
+							},
+							New "UICorner" {
+								CornerRadius = UDim.new(0.5, 0),
 							},
 						},
 					},
