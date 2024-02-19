@@ -1,0 +1,12 @@
+{
+  "name": "OnyxUI",
+  "tree": {
+    "$path": "Include/Linking.lua",
+    "Packages": {
+      "$path": "Packages",
+      "OnyxUI": {
+        "$path": "src"
+      }
+    }
+  }
+}

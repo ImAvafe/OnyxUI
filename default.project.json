@@ -1,18 +1,6 @@
 {
-  "name": "NekaUI",
-  
+  "name": "OnyxUI",
   "tree": {
-    "$className": "DataModel",
-
-    "ReplicatedStorage": {
-      "$className": "ReplicatedStorage",
-    
-      "NekaUI": {
-        "$path": "src",
-        "Packages": {
-          "$path": "Packages"
-        }
-      }
-    }
+    "$path": "src"
   }
 }
