@@ -1,0 +1,5 @@
+Packages
+ExtPackages
+
+*.lock
+*.rbxl.lock
