@@ -3,6 +3,6 @@
 
 # To add a new tool, add an entry to this table.
 [tools]
-rojo = "quenty/rojo@7.2.1-quenty-npm-canary.5"
+rojo = "rojo-rbx/rojo@7.2.0"
 selene = "kampfkarren/selene@0.21.0"
 wally = "UpliftGames/wally@0.3.1"
