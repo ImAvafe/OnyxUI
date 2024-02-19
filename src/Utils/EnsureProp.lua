@@ -1,6 +1,6 @@
 local NekaUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Packages.Fusion)
+local Fusion = require(NekaUI.Parent.Fusion)
 
 local Value = Fusion.Value
 

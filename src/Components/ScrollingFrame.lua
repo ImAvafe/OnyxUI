@@ -1,14 +1,13 @@
 local NekaUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Packages.Fusion)
+local Fusion = require(NekaUI.Parent.Fusion)
 local Finalize = require(NekaUI.Utils.Finalize)
 local EnsureProp = require(NekaUI.Utils.EnsureProp)
 
 local New = Fusion.New
 local Children = Fusion.Children
 
-local Components = script.Parent
-local Frame = require(Components.Frame)
+local Frame = require(NekaUI.Components.Frame)
 
 local function ScrollingFrame(Props)
 	Props.AutomaticSize = EnsureProp(Props.AutomaticSize, "Enum", Enum.AutomaticSize.None)

@@ -1,6 +1,6 @@
 local NekaUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Packages.Fusion)
+local Fusion = require(NekaUI.Parent.Fusion)
 local EnsureProp = require(NekaUI.Utils.EnsureProp)
 
 local Children = Fusion.Children

@@ -1,6 +1,6 @@
 local NekaUI = script.Parent.Parent
 
-local Fusion = require(NekaUI.Packages.Fusion)
+local Fusion = require(NekaUI.Parent.Fusion)
 local Finalize = require(NekaUI.Utils.Finalize)
 local EnsureProp = require(NekaUI.Utils.EnsureProp)
 
@@ -9,8 +9,7 @@ local Children = Fusion.Children
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 
-local Components = script.Parent
-local BaseButton = require(Components.BaseButton)
+local BaseButton = require(NekaUI.Components.BaseButton)
 
 local function SwitchInput(Props)
 	Props.SwitchedOn = EnsureProp(Props.SwitchedOn, "boolean", false)
