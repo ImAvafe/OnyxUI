@@ -16,8 +16,6 @@ local Themer = {
 	Themes = Loader.LoadChildren(script),
 }
 
-print(Themer.Themes)
-
 function Themer:Add(ThemeName: string, Theme: table)
 	self.Themes[ThemeName] = {}
 	ReconcileValues(self.Themes[ThemeName], THEME_TEMPLATE)
