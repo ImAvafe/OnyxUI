@@ -41,9 +41,11 @@ local function MenuFrame(Props)
 				[Children] = {
 					Computed(function()
 						local UIListLayout
-						for _, Child in ipairs(Props[Children]) do
-							if Child:IsA("UIListLayout") then
-								UIListLayout = Child
+						if Props[Children] then
+							for _, Child in ipairs(Props[Children]) do
+								if Child:IsA("UIListLayout") then
+									UIListLayout = Child
+								end
 							end
 						end
 						if not UIListLayout then
