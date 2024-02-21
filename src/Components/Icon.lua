@@ -1,13 +1,13 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local Children = Fusion.Children
 
 local function Text(Props)
-	Props.ImageColor3 = EnsureProp(Props.ImageColor3, "Color3", Color3.fromRGB(255, 255, 255))
+	Props.ImageColor3 = EnsureValue(Props.ImageColor3, "Color3", Color3.fromRGB(255, 255, 255))
 
 	return New "ImageLabel" {
 		Name = Props.Name or "Icon",

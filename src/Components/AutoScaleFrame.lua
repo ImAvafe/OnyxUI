@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Finalize = require(OnyxUI.Utils.Finalize)
 
 local New = Fusion.New
@@ -14,10 +14,10 @@ local Children = Fusion.Children
 local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props)
-	Props.BaseResolution = EnsureProp(Props.BaseResolution, "Vector2", Vector2.new())
-	Props.ScaleClamps = EnsureProp(Props.ScaleClamps, "table", { Min = 0.8, Max = math.huge })
-	Props.ScaleMultiplier = EnsureProp(Props.ScaleMultiplier, "number", 1)
-	Props.Name = EnsureProp(Props.Name, "string", "AutoScaleFrame")
+	Props.BaseResolution = EnsureValue(Props.BaseResolution, "Vector2", Vector2.new())
+	Props.ScaleClamps = EnsureValue(Props.ScaleClamps, "table", { Min = 0.8, Max = math.huge })
+	Props.ScaleMultiplier = EnsureValue(Props.ScaleMultiplier, "number", 1)
+	Props.Name = EnsureValue(Props.Name, "string", "AutoScaleFrame")
 
 	local ViewportSize = Value(Vector2.new())
 	Hydrate(workspace.CurrentCamera) {

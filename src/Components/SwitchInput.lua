@@ -2,7 +2,7 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -12,8 +12,8 @@ local Spring = Fusion.Spring
 local BaseButton = require(OnyxUI.Components.BaseButton)
 
 local function SwitchInput(Props)
-	Props.SwitchedOn = EnsureProp(Props.SwitchedOn, "boolean", false)
-	Props.Disabled = EnsureProp(Props.Disabled, "boolean", false)
+	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
+	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
 	return Finalize(BaseButton {
 		Name = Props.Name or "SwitchInput",

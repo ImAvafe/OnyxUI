@@ -3,7 +3,7 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
 local ColourUtils = require(OnyxUI.Parent.ColourUtils)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -17,12 +17,12 @@ local Spring = Fusion.Spring
 local Text = require(OnyxUI.Components.Text)
 
 local function TextInput(Props)
-	Props.Disabled = EnsureProp(Props.Disabled, "boolean", false)
-	Props.Text = EnsureProp(Props.Text, "string", "")
-	Props.CharacterLimit = EnsureProp(Props.CharacterLimit, "number", -1)
+	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
+	Props.Text = EnsureValue(Props.Text, "string", "")
+	Props.CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
 
-	Props.OnFocused = EnsureProp(Props.OnFocused, "function", function() end)
-	Props.OnFocusLost = EnsureProp(Props.OnFocusLost, "function", function() end)
+	Props.OnFocused = EnsureValue(Props.OnFocused, "function", function() end)
+	Props.OnFocusLost = EnsureValue(Props.OnFocusLost, "function", function() end)
 
 	local IsFocused = Value(false)
 	local RemainingCharaters = Computed(function()

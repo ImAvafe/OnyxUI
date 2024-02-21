@@ -2,22 +2,22 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local OnEvent = Fusion.OnEvent
 local Children = Fusion.Children
 
 local function Button(Props)
-	Props.Disabled = EnsureProp(Props.Disabled, "boolean", false)
+	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
-	Props.IsHovering = EnsureProp(Props.IsHovering, "boolean", false)
-	Props.IsHolding = EnsureProp(Props.IsHolding, "boolean", false)
-	Props.OnActivated = EnsureProp(Props.OnActivated, "function", function() end)
-	Props.OnMouseEnter = EnsureProp(Props.OnMouseEnter, "function", function() end)
-	Props.OnMouseLeave = EnsureProp(Props.OnMouseLeave, "function", function() end)
-	Props.OnMouseButton1Down = EnsureProp(Props.OnMouseButton1Down, "function", function() end)
-	Props.OnMouseButton1Up = EnsureProp(Props.OnMouseButton1Up, "function", function() end)
+	Props.IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
+	Props.IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
+	Props.OnActivated = EnsureValue(Props.OnActivated, "function", function() end)
+	Props.OnMouseEnter = EnsureValue(Props.OnMouseEnter, "function", function() end)
+	Props.OnMouseLeave = EnsureValue(Props.OnMouseLeave, "function", function() end)
+	Props.OnMouseButton1Down = EnsureValue(Props.OnMouseButton1Down, "function", function() end)
+	Props.OnMouseButton1Up = EnsureValue(Props.OnMouseButton1Up, "function", function() end)
 
 	return Finalize(New "TextButton" {
 		Name = Props.Name or "BaseButton",

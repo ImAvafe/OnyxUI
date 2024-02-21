@@ -3,7 +3,7 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local ColourUtils = require(OnyxUI.Parent.ColourUtils)
 local Finalize = require(OnyxUI.Utils.Finalize)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local Value = Fusion.Value
@@ -16,11 +16,11 @@ local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 
 local function Button(Props)
-	Props.Contents = EnsureProp(Props.Contents, "table", {})
-	Props.Style = EnsureProp(Props.Style, "string", "Empty")
-	Props.BackgroundColor3 = EnsureProp(Props.BackgroundColor3, "Color3", nil)
-	Props.ContentColor3 = EnsureProp(Props.ContentColor3, "Color3", nil)
-	Props.ContentSize = EnsureProp(Props.ContentSize, "number", 20)
+	Props.Contents = EnsureValue(Props.Contents, "table", {})
+	Props.Style = EnsureValue(Props.Style, "string", "Empty")
+	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", nil)
+	Props.ContentColor3 = EnsureValue(Props.ContentColor3, "Color3", nil)
+	Props.ContentSize = EnsureValue(Props.ContentSize, "number", 20)
 
 	local IsHolding = Value(false)
 	local ContentColor3 = Computed(function()

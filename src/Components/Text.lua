@@ -2,17 +2,17 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local Children = Fusion.Children
 
 local function Text(Props)
-	Props.TextColor3 = EnsureProp(Props.TextColor3, "Color3", Color3.fromRGB(255, 255, 255))
-	Props.TextSize = EnsureProp(Props.TextSize, "number", 18)
-	Props.RichText = EnsureProp(Props.RichText, "boolean", false)
-	Props.FontFace = EnsureProp(Props.FontFace, "Font", Font.fromEnum(Enum.Font.GothamMedium))
-	Props.ClipsDescendants = EnsureProp(Props.ClipsDescendants, "boolean", true)
+	Props.TextColor3 = EnsureValue(Props.TextColor3, "Color3", Color3.fromRGB(255, 255, 255))
+	Props.TextSize = EnsureValue(Props.TextSize, "number", 18)
+	Props.RichText = EnsureValue(Props.RichText, "boolean", false)
+	Props.FontFace = EnsureValue(Props.FontFace, "Font", Font.fromEnum(Enum.Font.GothamMedium))
+	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)
 
 	return Finalize(New "TextLabel" {
 		Name = Props.Name or "Text",

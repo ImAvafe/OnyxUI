@@ -3,7 +3,7 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local ColourUtils = require(OnyxUI.Parent.ColourUtils)
 local Finalize = require(OnyxUI.Utils.Finalize)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -13,7 +13,7 @@ local BaseButton = require(OnyxUI.Components.BaseButton)
 local Icon = require(OnyxUI.Components.Icon)
 
 local function IconButton(Props)
-	local IsHovering = EnsureProp(Props.IsHovering, "boolean", false)
+	local IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
 
 	return Finalize(BaseButton {
 		Name = Props.Name or "IconButton",

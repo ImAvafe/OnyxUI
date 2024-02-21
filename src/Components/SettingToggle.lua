@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -11,8 +11,8 @@ local SwitchInput = require(OnyxUI.Components.SwitchInput)
 local Text = require(OnyxUI.Components.Text)
 
 local function SettingToggle(Props)
-	Props.SwitchedOn = EnsureProp(Props.SwitchedOn, "boolean", false)
-	Props.Disabled = EnsureProp(Props.Disabled, "boolean", false)
+	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
+	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
 	return SwitchGroup {
 		Size = UDim2.fromScale(1, 0),

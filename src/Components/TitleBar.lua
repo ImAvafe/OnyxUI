@@ -2,7 +2,7 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -12,8 +12,8 @@ local Text = require(OnyxUI.Components.Text)
 local IconButton = require(OnyxUI.Components.IconButton)
 
 local function TitleBar(Props)
-	Props.CloseButtonDisabled = EnsureProp(Props.CloseButtonDisabled, "boolean", false)
-	Props.TextSize = EnsureProp(Props.TextSize, "number", 26)
+	Props.CloseButtonDisabled = EnsureValue(Props.CloseButtonDisabled, "boolean", false)
+	Props.TextSize = EnsureValue(Props.TextSize, "number", 26)
 
 	return Finalize(Frame {
 		Name = "TitleBar",

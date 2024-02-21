@@ -2,7 +2,7 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
-local EnsureProp = require(OnyxUI.Utils.EnsureProp)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -10,9 +10,9 @@ local Children = Fusion.Children
 local Frame = require(OnyxUI.Components.Frame)
 
 local function ScrollingFrame(Props)
-	Props.AutomaticSize = EnsureProp(Props.AutomaticSize, "Enum", Enum.AutomaticSize.None)
-	Props.ScrollingDirection = EnsureProp(Props.ScrollingDirection, "Enum", Enum.ScrollingDirection.Y)
-	Props.AutomaticCanvasSize = EnsureProp(Props.AutomaticCanvasSize, "Enum", Enum.AutomaticSize.Y)
+	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "Enum", Enum.AutomaticSize.None)
+	Props.ScrollingDirection = EnsureValue(Props.ScrollingDirection, "Enum", Enum.ScrollingDirection.Y)
+	Props.AutomaticCanvasSize = EnsureValue(Props.AutomaticCanvasSize, "Enum", Enum.AutomaticSize.Y)
 
 	return Finalize(New "ScrollingFrame" {
 		Name = Props.Name,
