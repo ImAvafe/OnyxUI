@@ -8,7 +8,59 @@ local Loader = require(OnyxUI.Parent.Loader)
 local Value = Fusion.Value
 
 local THEME_TEMPLATE = {
-	BackgroundColor = Value(Color3.fromRGB(255, 255, 255)),
+	Colors = {
+		Primary = {
+			Main = Value(nil),
+		},
+		Secondary = {
+			Main = Value(nil),
+		},
+		Accent = {
+			Main = Value(nil),
+		},
+
+		Neutral = {
+			Main = Value(nil),
+		},
+		NeutralContent = {
+			Main = Value(nil),
+		},
+
+		Base = {
+			Main = Value(nil),
+		},
+		BaseContent = {
+			Main = Value(nil),
+		},
+
+		Success = {
+			Main = Value(nil),
+		},
+		Error = {
+			Main = Value(nil),
+		},
+		Warning = {
+			Main = Value(nil),
+		},
+		Info = {
+			Main = Value(nil),
+		},
+	},
+	Fonts = {
+		Body = Value("GothamSsm"),
+		Heading = Value("GothamSsm"),
+		Monospace = Value("GothamSsm"),
+	},
+	FontWeights = {
+		Body = Value(Enum.FontWeight.Regular),
+		Bold = Value(Enum.FontWeight.Bold),
+		Heading = Value(Enum.FontWeight.Bold),
+	},
+	TextSize = Value(14),
+	CornerRadius = Value(8),
+	StrokeWidth = Value(2),
+	Space = Value(4),
+	Transitions = {},
 }
 
 local Themer = {
