@@ -26,6 +26,14 @@ local function SwitchInput(Props: table)
 		end)
 	)
 
+	local ContentColor = Computed(function()
+		if Props.SwitchedOn:get() then
+			return Themer.Theme.Colors.Primary.Main:get()
+		else
+			return Themer.Theme.Colors.NeutralContent.Dark:get()
+		end
+	end)
+
 	return Finalize(BaseButton {
 		Name = Props.Name or "SwitchInput",
 		Parent = Props.Parent,
@@ -59,20 +67,21 @@ local function SwitchInput(Props: table)
 				[Children] = {
 					New "UIStroke" {
 						ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-						Color = Spring(
+						Transparency = Spring(
 							Computed(function()
 								if Props.Disabled:get() then
-									return Color3.fromRGB(40, 40, 40)
+									return 0.7
 								end
 								if Props.SwitchedOn:get() then
-									return Themer.Theme.Colors.Neutral.Light:get()
+									return 0
 								else
-									return Color3.fromRGB(50, 50, 50)
+									return 0.6
 								end
 							end),
 							30,
 							1
 						),
+						Color = Spring(ContentColor, 30, 1),
 						Thickness = Themer.Theme.StrokeThickness,
 					},
 					New "UICorner" {
@@ -104,20 +113,21 @@ local function SwitchInput(Props: table)
 							1
 						),
 						Size = UDim2.fromScale(0, 1),
-						BackgroundColor3 = Spring(
+						BackgroundTransparency = Spring(
 							Computed(function()
 								if Props.Disabled:get() then
-									return Themer.Theme.Colors.Primary.Contrast:get()
+									return 0.7
 								end
 								if Props.SwitchedOn:get() then
-									return Themer.Theme.Colors.Primary.Main:get()
+									return 0
 								else
-									return Themer.Theme.Colors.Primary.Dark:get()
+									return 0
 								end
 							end),
-							40,
+							30,
 							1
 						),
+						BackgroundColor3 = Spring(ContentColor, 40, 1),
 
 						[Children] = {
 							New "UIAspectRatioConstraint" {

@@ -5,7 +5,7 @@ local Colors = require(OnyxUI.Utils.Colors)
 return {
 	Colors = {
 		Primary = {
-			Main = Colors.Violet["500"],
+			Main = Colors.Violet["400"],
 			Contrast = Colors.White,
 		},
 		Secondary = {
@@ -16,7 +16,7 @@ return {
 		},
 
 		Neutral = {
-			Main = Colors.Stone["800"],
+			Main = Colors.Stone["700"],
 		},
 		NeutralContent = {
 			Main = Colors.Stone["300"],
