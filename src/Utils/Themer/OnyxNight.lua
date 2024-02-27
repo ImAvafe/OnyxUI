@@ -5,7 +5,8 @@ local Colors = require(OnyxUI.Utils.Colors)
 return {
 	Colors = {
 		Primary = {
-			Main = Colors.White,
+			Main = Colors.Violet["500"],
+			Contrast = Colors.White,
 		},
 		Secondary = {
 			Main = Colors.White,
@@ -47,13 +48,13 @@ return {
 		Monospace = "GothamSsm",
 	},
 	FontWeights = {
-		Body = Enum.FontWeight.Regular,
+		Body = Enum.FontWeight.Medium,
 		Bold = Enum.FontWeight.Bold,
 		Heading = Enum.FontWeight.Bold,
 	},
 	TextSize = 18,
 	CornerRadius = 8,
-	StrokeWidth = 2,
+	StrokeThickness = 2,
 	Space = 4,
-	Transitions = {},
+	TransitionTime = 0.1,
 }

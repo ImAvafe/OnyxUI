@@ -2,6 +2,7 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -9,58 +10,74 @@ local Computed = Fusion.Computed
 
 local Frame = require(OnyxUI.Components.Frame)
 
-local function MenuFrame(Props)
+local function MenuFrame(Props: table)
+	Props.Name = EnsureValue(Props.Name, "string", "MenuFrame")
+	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
+	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0.015)
+	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Base.Main)
+
+	Props.StrokeColor = EnsureValue(Props.StrokeColor, "Color3", Themer.Theme.Colors.Neutral.Light)
+	Props.StrokeThickness = EnsureValue(Props.StrokeThickness, "number", Themer.Theme.StrokeThickness)
+	Props.CornerRadius = EnsureValue(
+		Props.CornerRadius,
+		"number",
+		Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius:get() * 2)
+		end)
+	)
+	Props.Padding = EnsureValue(
+		Props.Padding,
+		"UDim",
+		Computed(function()
+			return UDim.new(0, Themer.Theme.Space:get() * 3)
+		end)
+	)
+
 	return New "CanvasGroup" {
-		Name = Props.Name or "MenuFrame",
-		Parent = Props.Parent,
+		Name = Props.Name,
 		LayoutOrder = Props.LayoutOrder,
 		Position = Props.Position,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize or Enum.AutomaticSize.Y,
+		AutomaticSize = Props.AutomaticSize,
 		ZIndex = Props.ZIndex,
+		Parent = Props.Parent,
 
 		GroupTransparency = Props.GroupTransparency,
-
-		BackgroundColor3 = Color3.fromRGB(26, 26, 26),
-		BackgroundTransparency = 0.015,
+		BackgroundColor3 = Props.BackgroundColor3,
+		BackgroundTransparency = Props.BackgroundTransparency,
 
 		[Children] = {
 			New "UICorner" {
-				CornerRadius = UDim.new(0, 15),
+				CornerRadius = Props.CornerRadius,
 			},
 			New "UIStroke" {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Color = Color3.fromRGB(50, 50, 50),
-				Thickness = 2,
+				Color = Props.StrokeColor,
+				Thickness = Props.StrokeThickness,
+			},
+			New "UIPadding" {
+				PaddingBottom = Props.Padding,
+				PaddingLeft = Props.Padding,
+				PaddingRight = Props.Padding,
+				PaddingTop = Props.Padding,
 			},
 			Frame {
 				Name = "Contents",
-				AutomaticSize = Enum.AutomaticSize.Y,
-				Size = UDim2.fromScale(1, 0),
+				AutomaticSize = Props.AutomaticSize,
+				Size = Computed(function()
+					local AutomaticSizeScales = {
+						[Enum.AutomaticSize.None] = UDim2.fromScale(1, 1),
+						[Enum.AutomaticSize.XY] = UDim2.fromScale(0, 0),
+						[Enum.AutomaticSize.X] = UDim2.fromScale(0, 1),
+						[Enum.AutomaticSize.Y] = UDim2.fromScale(1, 0),
+					}
+					return AutomaticSizeScales[Props.AutomaticSize:get()]
+				end),
 
-				[Children] = {
-					Computed(function()
-						local UIListLayout
-						if Props[Children] then
-							for _, Child in ipairs(Props[Children]) do
-								if Child:IsA("UIListLayout") then
-									UIListLayout = Child
-								end
-							end
-						end
-						if not UIListLayout then
-							return New "UIListLayout" {
-								SortOrder = Enum.SortOrder.LayoutOrder,
-								Padding = UDim.new(0, 15),
-								HorizontalAlignment = Enum.HorizontalAlignment.Left,
-							}
-						end
-					end, Fusion.cleanup),
-
-					Props[Children],
-				},
+				[Children] = Props[Children],
 			},
+
 			Props.TopChildren,
 		},
 	}

@@ -4,6 +4,7 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
 local ColourUtils = require(OnyxUI.Parent.ColourUtils)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -16,11 +17,23 @@ local Spring = Fusion.Spring
 
 local Text = require(OnyxUI.Components.Text)
 
-local function TextInput(Props)
+local function TextInput(Props: table)
+	Props.Name = EnsureValue(Props.Name, "string", "TextInput")
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 	Props.Text = EnsureValue(Props.Text, "string", "")
-	Props.CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
+	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Neutral.Dark:get())
+	Props.TextSize = EnsureValue(Props.TextSize, "string", Themer.Theme.TextSize:get())
+	Props.TextColor3 = EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main:get())
+	Props.PlaceholderColor3 =
+		EnsureValue(Props.PlaceholderColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark:get())
+	Props.FontFace = EnsureValue(
+		Props.FontFace,
+		"Font",
+		Font.fromName(Themer.Theme.Fonts.Body:get(), Themer.Theme.FontWeights.Body:get())
+	)
 
+	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
+	Props.CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
 	Props.OnFocused = EnsureValue(Props.OnFocused, "function", function() end)
 	Props.OnFocusLost = EnsureValue(Props.OnFocusLost, "function", function() end)
 
@@ -30,28 +43,32 @@ local function TextInput(Props)
 	end)
 
 	local TextInputInstance = New "TextBox" {
-		Name = Props.Name or "Text",
+		Name = Props.Name,
 		Parent = Props.Parent,
-		LayoutOrder = Props.LayoutOrder,
 		Position = Props.Position,
+		Rotation = Props.Rotation,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize or Enum.AutomaticSize.XY,
+		AutomaticSize = Props.AutomaticSize,
+		Visible = Props.Visible,
 		ZIndex = Props.ZIndex,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
+		Selectable = Props.Selectable,
+		BackgroundColor3 = Props.BackgroundColor3,
+		BackgroundTransparency = Props.BackgroundTransparency,
 
 		PlaceholderColor3 = Computed(function()
 			if Props.Disabled:get() then
 				return Color3.fromRGB(65, 65, 65)
 			else
-				return Color3.fromRGB(100, 100, 100)
+				return Props.PlaceholderColor3:get()
 			end
 		end),
-		TextSize = Props.TextSize or 18,
-		TextColor3 = Props.TextColor3 or Color3.fromRGB(255, 255, 255),
-		FontFace = Props.FontFace or Font.fromName("GothamSsm", Enum.FontWeight.Medium),
-		TextEditable = Computed(function()
-			return not Props.Disabled:get()
-		end),
+		TextSize = Props.TextSize,
+		TextColor3 = Props.TextColor3,
+		FontFace = Props.FontFace,
 		Text = Props.Text,
 		RichText = Props.RichText,
 		PlaceholderText = Props.PlaceholderText,
@@ -60,10 +77,10 @@ local function TextInput(Props)
 		TextYAlignment = Props.TextYAlignment or Enum.TextYAlignment.Top,
 		MultiLine = Props.MultiLine,
 		ClearTextOnFocus = Props.ClearTextOnFocus,
-
 		AutoLocalize = false,
-		ClipsDescendants = true,
-		BackgroundColor3 = Color3.fromRGB(34, 34, 34),
+		TextEditable = Computed(function()
+			return not Props.Disabled:get()
+		end),
 
 		[OnEvent "Focused"] = function()
 			IsFocused:set(true)
@@ -78,24 +95,26 @@ local function TextInput(Props)
 
 		[Children] = {
 			New "UICorner" {
-				CornerRadius = UDim.new(0, 5),
+				CornerRadius = Computed(function()
+					return UDim.new(0, Themer.Theme.CornerRadius:get() / 1.5)
+				end),
 			},
 			New "UIPadding" {
-				PaddingBottom = UDim.new(0, 8),
-				PaddingLeft = UDim.new(0, 12),
-				PaddingRight = UDim.new(0, 12),
-				PaddingTop = UDim.new(0, 8),
+				PaddingBottom = UDim.new(0, Themer.Theme.Space:get() * 2),
+				PaddingLeft = UDim.new(0, Themer.Theme.Space:get() * 3),
+				PaddingRight = UDim.new(0, Themer.Theme.Space:get() * 3),
+				PaddingTop = UDim.new(0, Themer.Theme.Space:get() * 2),
 			},
 			New "UIStroke" {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 				Color = Spring(
 					Computed(function()
-						local BaseColor = Color3.fromRGB(50, 50, 50)
+						local BaseColor = Themer.Theme.Colors.Neutral.Light:get()
 						if Props.Disabled:get() then
 							return BaseColor
 						end
 						if IsFocused:get() then
-							return ColourUtils.Lighten(BaseColor, 0.09)
+							return ColourUtils.Lighten(BaseColor, 0.08)
 						else
 							return BaseColor
 						end
@@ -115,9 +134,9 @@ local function TextInput(Props)
 						TextSize = 15,
 						TextColor3 = Computed(function()
 							if RemainingCharaters:get() == 0 then
-								return Color3.fromRGB(190, 90, 90)
+								return Themer.Theme.Colors.Error.Main:get()
 							else
-								return Color3.fromRGB(119, 119, 119)
+								return Themer.Theme.Colors.Neutral.Light:get()
 							end
 						end),
 					}

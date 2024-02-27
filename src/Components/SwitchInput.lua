@@ -3,6 +3,7 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -11,9 +12,19 @@ local Spring = Fusion.Spring
 
 local BaseButton = require(OnyxUI.Components.BaseButton)
 
-local function SwitchInput(Props)
+local function SwitchInput(Props: table)
 	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
+
+	Props.Name = EnsureValue(Props.Name, "string", "SwitchInput")
+	Props.Size = EnsureValue(Props.Size, "UDim2", UDim2.fromOffset(50, 25))
+	Props.Padding = EnsureValue(
+		Props.Padding,
+		"UDim",
+		Computed(function()
+			return UDim.new(0, Themer.Theme.Space:get())
+		end)
+	)
 
 	return Finalize(BaseButton {
 		Name = Props.Name or "SwitchInput",
@@ -33,10 +44,16 @@ local function SwitchInput(Props)
 		end,
 
 		[Children] = {
+			New "UIPadding" {
+				PaddingTop = UDim.new(0, 2),
+				PaddingBottom = UDim.new(0, 2),
+				PaddingRight = UDim.new(0, 2),
+				PaddingLeft = UDim.new(0, 2),
+			},
 			New "Frame" {
 				Name = "Switch",
-				Size = UDim2.fromOffset(50, 25),
-				BackgroundColor3 = Color3.fromRGB(17, 17, 17),
+				Size = Props.Size,
+				BackgroundColor3 = Themer.Theme.Colors.Base.Light,
 				BackgroundTransparency = 0,
 
 				[Children] = {
@@ -48,7 +65,7 @@ local function SwitchInput(Props)
 									return Color3.fromRGB(40, 40, 40)
 								end
 								if Props.SwitchedOn:get() then
-									return Color3.fromRGB(65, 65, 65)
+									return Themer.Theme.Colors.Neutral.Light:get()
 								else
 									return Color3.fromRGB(50, 50, 50)
 								end
@@ -56,16 +73,18 @@ local function SwitchInput(Props)
 							30,
 							1
 						),
-						Thickness = 2,
+						Thickness = Themer.Theme.StrokeThickness,
 					},
 					New "UICorner" {
-						CornerRadius = UDim.new(0.5, 0),
+						CornerRadius = Computed(function()
+							return UDim.new(0, Themer.Theme.CornerRadius:get() * 2)
+						end),
 					},
 					New "UIPadding" {
-						PaddingBottom = UDim.new(0, 3),
-						PaddingLeft = UDim.new(0, 4),
-						PaddingRight = UDim.new(0, 4),
-						PaddingTop = UDim.new(0, 3),
+						PaddingBottom = Props.Padding,
+						PaddingLeft = Props.Padding,
+						PaddingRight = Props.Padding,
+						PaddingTop = Props.Padding,
 					},
 
 					New "Frame" {
@@ -88,12 +107,12 @@ local function SwitchInput(Props)
 						BackgroundColor3 = Spring(
 							Computed(function()
 								if Props.Disabled:get() then
-									return Color3.fromRGB(35, 35, 35)
+									return Themer.Theme.Colors.Primary.Contrast:get()
 								end
 								if Props.SwitchedOn:get() then
-									return Color3.fromRGB(216, 216, 216)
+									return Themer.Theme.Colors.Primary.Main:get()
 								else
-									return Color3.fromRGB(70, 70, 70)
+									return Themer.Theme.Colors.Primary.Dark:get()
 								end
 							end),
 							40,
@@ -107,7 +126,9 @@ local function SwitchInput(Props)
 								DominantAxis = Enum.DominantAxis.Height,
 							},
 							New "UICorner" {
-								CornerRadius = UDim.new(0.5, 0),
+								CornerRadius = Computed(function()
+									return UDim.new(0, Themer.Theme.CornerRadius:get() * 2)
+								end),
 							},
 						},
 					},

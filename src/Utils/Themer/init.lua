@@ -59,9 +59,9 @@ local THEME_TEMPLATE = {
 	},
 	TextSize = Value(14),
 	CornerRadius = Value(8),
-	StrokeWidth = Value(2),
+	StrokeThickness = Value(2),
 	Space = Value(4),
-	Transitions = Value({}),
+	TransitionTime = Value(0.1),
 }
 
 local Themer = {

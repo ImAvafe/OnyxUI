@@ -4,6 +4,7 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local ColourUtils = require(OnyxUI.Parent.ColourUtils)
 local Finalize = require(OnyxUI.Utils.Finalize)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local New = Fusion.New
 local Value = Fusion.Value
@@ -15,12 +16,13 @@ local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 
-local function Button(Props)
+local function Button(Props: table)
+	Props.Name = EnsureValue(Props.Name, "string", "Button")
 	Props.Contents = EnsureValue(Props.Contents, "table", {})
-	Props.Style = EnsureValue(Props.Style, "string", "Empty")
-	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", nil)
+	Props.Style = EnsureValue(Props.Style, "string", "Filled")
+	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Primary.Main)
 	Props.ContentColor3 = EnsureValue(Props.ContentColor3, "Color3", nil)
-	Props.ContentSize = EnsureValue(Props.ContentSize, "number", 20)
+	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize:get() * 1.1)
 
 	local IsHolding = Value(false)
 	local ContentColor3 = Computed(function()
@@ -35,35 +37,34 @@ local function Button(Props)
 	end)
 
 	return Finalize(BaseButton {
-		Name = Props.Name or "Button",
+		Name = Props.Name,
 		Parent = Props.Parent,
-		LayoutOrder = Props.LayoutOrder,
 		Position = Props.Position,
+		Rotation = Props.Rotation,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
 		AutomaticSize = Props.AutomaticSize,
+		Visible = Props.Visible,
 		ZIndex = Props.ZIndex,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
+		Selectable = Props.Selectable,
 
 		BackgroundTransparency = Computed(function()
 			if Props.Style:get() == "Filled" then
 				return 0
 			else
-				if IsHolding:get() then
-					return 0.95
-				else
-					return 1
-				end
+				return 1
 			end
 		end),
 		BackgroundColor3 = Computed(function()
-			local BaseColor = Props.BackgroundColor3:get() or Color3.fromRGB(255, 255, 255)
 			if IsHolding:get() then
-				return ColourUtils.Darken(BaseColor, 0.08)
+				return ColourUtils.Darken(Props.BackgroundColor3:get(), 0.08)
 			else
-				return BaseColor
+				return Props.BackgroundColor3:get()
 			end
 		end),
-		ClipsDescendants = true,
 
 		OnActivated = Props.OnActivated,
 		IsHovering = Props.IsHovering,
@@ -80,35 +81,35 @@ local function Button(Props)
 
 		[Children] = {
 			New "UICorner" {
-				CornerRadius = UDim.new(0, 8),
+				CornerRadius = Computed(function()
+					return UDim.new(0, Themer.Theme.CornerRadius:get() / 1.5)
+				end),
 			},
 			New "UIPadding" {
-				PaddingBottom = UDim.new(0, 6),
-				PaddingLeft = UDim.new(0, 20),
-				PaddingRight = UDim.new(0, 20),
-				PaddingTop = UDim.new(0, 6),
+				PaddingBottom = UDim.new(0, Themer.Theme.Space:get() * 1),
+				PaddingLeft = UDim.new(0, Themer.Theme.Space:get() * 3),
+				PaddingRight = UDim.new(0, Themer.Theme.Space:get() * 3),
+				PaddingTop = UDim.new(0, Themer.Theme.Space:get() * 1),
 			},
 			New "UIListLayout" {
 				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, 4),
+				Padding = Computed(function()
+					return UDim.new(0, Themer.Theme.Space:get())
+				end),
 				FillDirection = Enum.FillDirection.Horizontal,
 				HorizontalAlignment = Enum.HorizontalAlignment.Center,
 				VerticalAlignment = Enum.VerticalAlignment.Center,
 			},
 			New "UIStroke" {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				-- Enabled = Computed(function()
-				--   return Props.Style:get() ~= "Filled"
-				-- end),
 				Color = Computed(function()
-					local BaseColor = Props.BackgroundColor3:get() or Color3.fromRGB(255, 255, 255)
 					if Props.Style:get() == "Filled" then
-						return BaseColor
+						return Props.BackgroundColor3:get()
 					else
-						return ColourUtils.Darken(BaseColor, 0.35)
+						return ColourUtils.Darken(Props.BackgroundColor3:get(), 0.35)
 					end
 				end),
-				Thickness = 2,
+				Thickness = Themer.Theme.StrokeThickness,
 			},
 
 			ForValues(Props.Contents, function(ContentString)
@@ -117,7 +118,7 @@ local function Button(Props)
 						Image = ContentString,
 						ImageColor3 = ContentColor3,
 						Size = Computed(function()
-							local BaseSize = Props.ContentSize:get() - 1
+							local BaseSize = Props.ContentSize:get()
 							return UDim2.fromOffset(BaseSize, BaseSize)
 						end),
 					}

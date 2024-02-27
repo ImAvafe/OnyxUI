@@ -13,14 +13,15 @@ local Children = Fusion.Children
 
 local Frame = require(OnyxUI.Components.Frame)
 
-return function(Props)
+return function(Props: table)
+	Props.Name = EnsureValue(Props.Name, "string", "AutoScaleFrame")
+
 	Props.BaseResolution = EnsureValue(Props.BaseResolution, "Vector2", Vector2.new())
 	Props.ScaleClamps = EnsureValue(Props.ScaleClamps, "table", { Min = 0.8, Max = math.huge })
 	Props.ScaleMultiplier = EnsureValue(Props.ScaleMultiplier, "number", 1)
-	Props.Name = EnsureValue(Props.Name, "string", "AutoScaleFrame")
 
 	local ViewportSize = Value(Vector2.new())
-	Hydrate(workspace.CurrentCamera) {
+	Hydrate(game.Workspace.CurrentCamera) {
 		[Out "ViewportSize"] = ViewportSize,
 	}
 

@@ -2,15 +2,17 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
+local New = Fusion.New
 
 local SwitchGroup = require(OnyxUI.Components.SwitchGroup)
 local SwitchInput = require(OnyxUI.Components.SwitchInput)
 local Text = require(OnyxUI.Components.Text)
 
-local function SettingToggle(Props)
+local function SettingToggle(Props: table)
 	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
@@ -25,7 +27,7 @@ local function SettingToggle(Props)
 				AnchorPoint = Vector2.new(0, 0.5),
 				Position = UDim2.fromScale(0, 0.5),
 				Text = Props.Label,
-				TextSize = 19,
+				TextSize = Themer.Theme.TextSize,
 				TextColor3 = Computed(function()
 					if not Props.Disabled:get() then
 						return Color3.fromRGB(255, 255, 255)

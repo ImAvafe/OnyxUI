@@ -3,6 +3,7 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -11,20 +12,43 @@ local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
 local IconButton = require(OnyxUI.Components.IconButton)
 
-local function TitleBar(Props)
+local function TitleBar(Props: table)
+	Props.Name = EnsureValue(Props.Name, "string", "TitleBar")
+	Props.TextSize = EnsureValue(
+		Props.TextSize,
+		"number",
+		Computed(function()
+			return Themer.Theme.TextSize:get() * 1.4
+		end)
+	)
+	Props.Size = EnsureValue(Props.Size, "Udim2", UDim2.fromScale(1, 0))
+	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
 	Props.CloseButtonDisabled = EnsureValue(Props.CloseButtonDisabled, "boolean", false)
-	Props.TextSize = EnsureValue(Props.TextSize, "number", 26)
+	Props.CloseButtonImage = EnsureValue(Props.CloseButtonImage, "string", "rbxassetid://13405228418")
+	Props.OnClose = EnsureValue(Props.OnClose, "function", function() end)
 
 	return Finalize(Frame {
-		Name = "TitleBar",
-		Size = UDim2.fromScale(1, 0),
-		AutomaticSize = Enum.AutomaticSize.Y,
+		Name = Props.Name,
+		Parent = Props.Parent,
+		Position = Props.Position,
+		Rotation = Props.Rotation,
+		AnchorPoint = Props.AnchorPoint,
+		Size = Props.Size,
+		AutomaticSize = Props.AutomaticSize,
+		Visible = Props.Visible,
+		ZIndex = Props.ZIndex,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
+		Selectable = Props.Selectable,
+		BackgroundColor3 = Props.BackgroundColor3,
+		BackgroundTransparency = Props.BackgroundTransparency,
 
 		[Children] = {
 			Text {
 				Name = "Title",
-				AnchorPoint = Vector2.new(0.5, 0.5),
-				Position = UDim2.fromScale(0.5, 0.5),
+				AnchorPoint = Vector2.new(0.5, 0),
+				Position = UDim2.fromScale(0.5, 0),
 				Text = Props.Title,
 				TextSize = Props.TextSize,
 				AutoLocalize = Props.AutoLocalize,
@@ -33,13 +57,15 @@ local function TitleBar(Props)
 				if not Props.CloseButtonDisabled:get() then
 					return IconButton {
 						Name = "CloseButton",
-						Image = "rbxassetid://13405228418",
-						AnchorPoint = Vector2.new(1, 0.5),
-						Position = UDim2.fromScale(1, 0.5),
-						Size = UDim2.fromOffset(23, 23),
+						Image = Props.CloseButtonImage,
+						AnchorPoint = Vector2.new(1, 0),
+						Position = UDim2.fromScale(1, 0),
+						Size = Computed(function()
+							return UDim2.fromOffset(Props.TextSize:get(), Props.TextSize:get())
+						end),
 						OnActivated = function()
-							if Props.OnClose then
-								Props.OnClose()
+							if Props.OnClose:get() then
+								Props.OnClose:get()()
 							end
 						end,
 					}

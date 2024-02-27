@@ -6,31 +6,33 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local New = Fusion.New
 local Children = Fusion.Children
 
-local function Text(Props)
+local function Text(Props: table)
+	Props.Name = EnsureValue(Props.Name, "string", "Icon")
+	Props.Size = EnsureValue(Props.Size, "number", UDim2.fromOffset(20, 20))
 	Props.ImageColor3 = EnsureValue(Props.ImageColor3, "Color3", Color3.fromRGB(255, 255, 255))
+	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 
 	return New "ImageLabel" {
-		Name = Props.Name or "Icon",
+		Name = Props.Name,
 		Parent = Props.Parent,
-		LayoutOrder = Props.LayoutOrder,
 		Position = Props.Position,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size or UDim2.fromOffset(20, 20),
-		AutomaticSize = Props.AutomaticSize,
-		ZIndex = Props.ZIndex,
 		Rotation = Props.Rotation,
+		AnchorPoint = Props.AnchorPoint,
+		Size = Props.Size,
+		AutomaticSize = Props.AutomaticSize,
+		Visible = Props.Visible,
+		ZIndex = Props.ZIndex,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
+		Selectable = Props.Selectable,
+		BackgroundColor3 = Props.BackgroundColor3,
+		BackgroundTransparency = Props.BackgroundTransparency,
 
 		Image = Props.Image,
 		ImageColor3 = Props.ImageColor3,
-		BackgroundTransparency = 1,
 
-		[Children] = {
-			-- New "UIAspectRatioConstraint" {
-			--   AspectRatio = 1,
-			-- },
-
-			Props[Children],
-		},
+		[Children] = Props[Children],
 	}
 end
 

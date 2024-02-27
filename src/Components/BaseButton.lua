@@ -8,11 +8,16 @@ local New = Fusion.New
 local OnEvent = Fusion.OnEvent
 local Children = Fusion.Children
 
-local function Button(Props)
+local function Button(Props: table)
+	Props.Name = EnsureValue(Props.Name, "string", "BaseButton")
+	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
+	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
+
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
 	Props.IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
 	Props.IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
+
 	Props.OnActivated = EnsureValue(Props.OnActivated, "function", function() end)
 	Props.OnMouseEnter = EnsureValue(Props.OnMouseEnter, "function", function() end)
 	Props.OnMouseLeave = EnsureValue(Props.OnMouseLeave, "function", function() end)
@@ -20,24 +25,25 @@ local function Button(Props)
 	Props.OnMouseButton1Up = EnsureValue(Props.OnMouseButton1Up, "function", function() end)
 
 	return Finalize(New "TextButton" {
-		Name = Props.Name or "BaseButton",
+		Name = Props.Name,
 		Parent = Props.Parent,
 		LayoutOrder = Props.LayoutOrder,
 		Position = Props.Position,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize or Enum.AutomaticSize.XY,
+		AutomaticSize = Props.AutomaticSize,
 		ZIndex = Props.ZIndex,
 		Visible = Props.Visible,
 		Selectable = Props.Selectable,
 
 		Text = "",
-		BackgroundTransparency = Props.BackgroundTransparency or 1,
+		AutoLocalize = false,
+		BackgroundTransparency = Props.BackgroundTransparency,
 		BackgroundColor3 = Props.BackgroundColor3,
 		ClipsDescendants = Props.ClipsDescendants,
 
 		[OnEvent "Activated"] = function()
-			if not Props.Disabled:get(false) then
+			if not Props.Disabled:get() then
 				Props.OnActivated:get()()
 			end
 		end,
