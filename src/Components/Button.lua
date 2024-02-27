@@ -21,13 +21,13 @@ local function Button(Props: table)
 	Props.Contents = EnsureValue(Props.Contents, "table", {})
 	Props.Style = EnsureValue(Props.Style, "string", "Filled")
 	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Primary.Main)
-	Props.ContentColor3 = EnsureValue(Props.ContentColor3, "Color3", nil)
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Contrast)
 	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize:get() * 1.1)
 
 	local IsHolding = Value(false)
 	local ContentColor3 = Computed(function()
-		if Props.ContentColor3:get() ~= nil then
-			return Props.ContentColor3:get()
+		if Props.Color:get() ~= nil then
+			return Props.Color:get()
 		end
 		if Props.Style:get() == "Filled" then
 			return Color3.fromRGB(0, 0, 0)

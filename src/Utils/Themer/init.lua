@@ -74,7 +74,7 @@ function Themer:ProcessColors(Theme: table)
 		for _, Color in pairs(Theme.Colors) do
 			if typeof(Color.Main) == "table" and Color.Main.get then
 				if Color.Contrast == nil then
-					Color.Contrast = Value(ColourUtils.Darken(Color.Main:get(), 0.1))
+					Color.Contrast = Value(ColourUtils.Emphasise(Color.Main:get(), 1))
 				end
 				if Color.Dark == nil then
 					Color.Dark = Value(ColourUtils.Darken(Color.Main:get(), 0.05))
