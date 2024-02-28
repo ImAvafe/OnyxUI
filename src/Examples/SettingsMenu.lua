@@ -5,13 +5,14 @@ local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local New = Fusion.New
+local Computed = Fusion.Computed
 
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local Button = require(OnyxUI.Components.Button)
-local AutoScaleFrame = require(OnyxUI.Components.AutoScaleFrame)
 local TitleBar = require(OnyxUI.Components.TitleBar)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local SettingToggle = require(OnyxUI.Components.SettingToggle)
+local TextInput = require(OnyxUI.Components.TextInput)
 
 local function SettingsMenu(Props: table)
 	return MenuFrame {
@@ -39,6 +40,9 @@ local function SettingsMenu(Props: table)
 					},
 					New "UIPadding" {
 						PaddingRight = UDim.new(0, 16),
+						PaddingLeft = Computed(function()
+							return UDim.new(0, Themer.Theme.StrokeThickness:get())
+						end),
 					},
 					SettingToggle {
 						Label = "Music",
@@ -60,6 +64,11 @@ local function SettingsMenu(Props: table)
 					},
 					SettingToggle {
 						Label = "Nothing same",
+					},
+					TextInput {
+						Size = UDim2.fromScale(1, 0),
+						AutomaticSize = Enum.AutomaticSize.Y,
+						PlaceholderText = "Nickname",
 					},
 				},
 			},
