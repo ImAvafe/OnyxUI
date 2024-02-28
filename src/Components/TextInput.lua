@@ -23,7 +23,7 @@ local function TextInput(Props: table)
 		Props.FontFace,
 		"Font",
 		Computed(function()
-			return Font.fromName(Themer.Theme.Fonts.Body:get(), Themer.Theme.FontWeights.Body:get())
+			return Font.new(Themer.Theme.Fonts.Body:get(), Themer.Theme.FontWeights.Body:get())
 		end)
 	)
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)

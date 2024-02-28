@@ -3,17 +3,26 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local New = Fusion.New
 local Children = Fusion.Children
+local Out = Fusion.Out
+local Computed = Fusion.Computed
 
 local function Text(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "Text")
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
-	Props.TextColor3 = EnsureValue(Props.TextColor3, "Color3", Color3.fromRGB(255, 255, 255))
-	Props.TextSize = EnsureValue(Props.TextSize, "number", 18)
-	Props.RichText = EnsureValue(Props.RichText, "boolean", false)
-	Props.FontFace = EnsureValue(Props.FontFace, "Font", Font.fromEnum(Enum.Font.GothamMedium))
+	Props.TextColor3 = EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
+	Props.TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize)
+	Props.RichText = EnsureValue(Props.RichText, "boolean", true)
+	Props.FontFace = EnsureValue(
+		Props.FontFace,
+		"Font",
+		Computed(function()
+			return Font.new(Themer.Theme.Fonts.Body:get(), Themer.Theme.FontWeights.Body:get())
+		end)
+	)
 	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)
 	Props.TextXAlignment = EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
 	Props.TextYAlignment = EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
@@ -33,6 +42,7 @@ local function Text(Props: table)
 		ClipsDescendants = Props.ClipsDescendants,
 		Active = Props.Active,
 		Selectable = Props.Selectable,
+		Interactable = Props.Interactable,
 		BackgroundColor3 = Props.BackgroundColor3,
 		BackgroundTransparency = Props.BackgroundTransparency,
 
@@ -47,6 +57,14 @@ local function Text(Props: table)
 		TextYAlignment = Props.TextYAlignment,
 		TextTruncate = Props.TextTruncate,
 		AutoLocalize = Props.AutoLocalize,
+		LineHeight = Props.LineHeight,
+		LocalizedText = Props.LocalizedText,
+		MaxVisibleGraphemes = Props.MaxVisibleGraphemes,
+		TextTransparency = Props.TextTransparency,
+
+		[Out "ContentText"] = Props.ContentText,
+		[Out "TextBounds"] = Props.TextBounds,
+		[Out "TextFits"] = Props.TextFits,
 
 		[Children] = Props[Children],
 	})

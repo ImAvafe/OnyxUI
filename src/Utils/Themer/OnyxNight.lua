@@ -42,9 +42,9 @@ return {
 		},
 	},
 	Fonts = {
-		Body = "GothamSsm",
-		Heading = "GothamSsm",
-		Monospace = "GothamSsm",
+		Body = "rbxasset://fonts/families/GothamSsm.json",
+		Heading = "rbxasset://fonts/families/GothamSSm.json",
+		Monospace = "rbxasset://fonts/families/GothamSSm.json",
 	},
 	FontWeights = {
 		Body = Enum.FontWeight.Medium,
