@@ -1,6 +1,7 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -29,14 +30,12 @@ return function(Target: Instance)
 			Button {
 				Contents = { "rbxassetid://11560341132", "Purchase" },
 				Style = "Filled",
-				BackgroundColor3 = Color3.fromRGB(86, 255, 70),
-				ContentColor3 = Color3.fromRGB(0, 0, 0),
+				Color = Color3.fromRGB(86, 255, 70),
 			},
 			Button {
 				Contents = { "rbxassetid://13405228418", "Delete" },
 				Style = "Empty",
-				BackgroundColor3 = Color3.fromRGB(255, 59, 59),
-				ContentColor3 = Color3.fromRGB(255, 59, 59),
+				Color = Themer.Theme.Colors.Error.Main,
 			},
 		},
 	}

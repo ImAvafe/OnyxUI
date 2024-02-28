@@ -7,7 +7,6 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 
 local New = Fusion.New
-local Value = Fusion.Value
 local Children = Fusion.Children
 local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
@@ -18,21 +17,33 @@ local Icon = require(OnyxUI.Components.Icon)
 
 local function Button(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "Button")
+
 	Props.Contents = EnsureValue(Props.Contents, "table", {})
 	Props.Style = EnsureValue(Props.Style, "string", "Filled")
-	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Primary.Main)
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Contrast)
-	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize:get() * 1.1)
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	Props.ContrastColor = EnsureValue(Props.ContrastColor, "Color3", ColourUtils.Emphasise(Props.Color:get(), 1))
+	Props.ContentSize = EnsureValue(
+		Props.ContentSize,
+		"number",
+		Computed(function()
+			return Themer.Theme.TextSize:get() * 1.1
+		end)
+	)
 
-	local IsHolding = Value(false)
-	local ContentColor3 = Computed(function()
-		if Props.Color:get() ~= nil then
+	Props.IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
+
+	local BackgroundColor = Computed(function()
+		if Props.IsHolding:get() then
+			return ColourUtils.Darken(Props.Color:get(), 0.1)
+		else
 			return Props.Color:get()
 		end
+	end)
+	local ContentColor = Computed(function()
 		if Props.Style:get() == "Filled" then
-			return Color3.fromRGB(0, 0, 0)
+			return Props.ContrastColor:get()
 		else
-			return Color3.fromRGB(255, 255, 255)
+			return Props.Color:get()
 		end
 	end)
 
@@ -58,25 +69,19 @@ local function Button(Props: table)
 				return 1
 			end
 		end),
-		BackgroundColor3 = Computed(function()
-			if IsHolding:get() then
-				return ColourUtils.Darken(Props.BackgroundColor3:get(), 0.08)
-			else
-				return Props.BackgroundColor3:get()
-			end
-		end),
+		BackgroundColor3 = BackgroundColor,
 
-		OnActivated = Props.OnActivated,
 		IsHovering = Props.IsHovering,
 
+		OnActivated = Props.OnActivated,
 		OnMouseButton1Down = function()
-			IsHolding:set(true)
+			Props.IsHolding:set(true)
 		end,
 		OnMouseButton1Up = function()
-			IsHolding:set(false)
+			Props.IsHolding:set(false)
 		end,
 		OnMouseLeave = function()
-			IsHolding:set(false)
+			Props.IsHolding:set(false)
 		end,
 
 		[Children] = {
@@ -86,10 +91,18 @@ local function Button(Props: table)
 				end),
 			},
 			New "UIPadding" {
-				PaddingBottom = UDim.new(0, Themer.Theme.Space:get() * 1),
-				PaddingLeft = UDim.new(0, Themer.Theme.Space:get() * 3),
-				PaddingRight = UDim.new(0, Themer.Theme.Space:get() * 3),
-				PaddingTop = UDim.new(0, Themer.Theme.Space:get() * 1),
+				PaddingBottom = Computed(function()
+					return UDim.new(0, Themer.Theme.Space:get())
+				end),
+				PaddingLeft = Computed(function()
+					return UDim.new(0, Themer.Theme.Space:get() * 3)
+				end),
+				PaddingRight = Computed(function()
+					return UDim.new(0, Themer.Theme.Space:get() * 3)
+				end),
+				PaddingTop = Computed(function()
+					return UDim.new(0, Themer.Theme.Space:get())
+				end),
 			},
 			New "UIListLayout" {
 				SortOrder = Enum.SortOrder.LayoutOrder,
@@ -102,32 +115,24 @@ local function Button(Props: table)
 			},
 			New "UIStroke" {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Color = Computed(function()
-					if Props.Style:get() == "Filled" then
-						return Props.BackgroundColor3:get()
-					else
-						return ColourUtils.Darken(Props.BackgroundColor3:get(), 0.35)
-					end
-				end),
+				Color = BackgroundColor,
 				Thickness = Themer.Theme.StrokeThickness,
 			},
 
-			ForValues(Props.Contents, function(ContentString)
+			ForValues(Props.Contents, function(ContentString: string)
 				if string.find(ContentString, "rbxassetid://", 1, true) then
 					return Icon {
 						Image = ContentString,
-						ImageColor3 = ContentColor3,
+						ImageColor3 = ContentColor,
 						Size = Computed(function()
-							local BaseSize = Props.ContentSize:get()
-							return UDim2.fromOffset(BaseSize, BaseSize)
+							return UDim2.fromOffset(Props.ContentSize:get(), Props.ContentSize:get())
 						end),
 					}
 				else
 					return Text {
 						Text = ContentString,
-						TextColor3 = ContentColor3,
+						TextColor3 = ContentColor,
 						TextSize = Props.ContentSize,
-						ClipsDescendants = false,
 					}
 				end
 			end, Fusion.Cleanup),
