@@ -41,7 +41,7 @@ local function Button(Props: table)
 
 	local BackgroundColor = Computed(function()
 		if Props.IsHolding:get() then
-			return ColourUtils.Darken(Props.Color:get(), 0.1)
+			return ColourUtils.Emphasise(Props.Color:get(), 0.1)
 		else
 			return Props.Color:get()
 		end
