@@ -1,4 +1,3 @@
-local TextService = game:GetService("TextService")
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
@@ -22,7 +21,7 @@ local function SwitchInput(Props: table)
 		Props.Size,
 		"UDim2",
 		Computed(function()
-			return UDim2.fromOffset(Themer.Theme.TextSize:get() * 2.5, Themer.Theme.TextSize:get() * 1.25)
+			return UDim2.fromOffset(Themer.Theme.TextSizes["5"]:get() * 2, Themer.Theme.TextSizes["5"]:get())
 		end)
 	)
 	Props.Padding = EnsureValue(

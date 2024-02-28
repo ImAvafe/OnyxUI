@@ -57,7 +57,19 @@ local THEME_TEMPLATE = {
 		Bold = Value(Enum.FontWeight.Bold),
 		Heading = Value(Enum.FontWeight.Bold),
 	},
-	TextSize = Value(14),
+	TextSizes = {
+		["1"] = Value(12),
+		["2"] = Value(14),
+		["3"] = Value(16),
+		["4"] = Value(18),
+		["5"] = Value(20),
+		["6"] = Value(24),
+		["7"] = Value(30),
+		["8"] = Value(36),
+		["9"] = Value(48),
+		["10"] = Value(60),
+		["11"] = Value(72),
+	},
 	CornerRadius = Value(8),
 	StrokeThickness = Value(2),
 	Space = Value(4),
@@ -94,11 +106,12 @@ function Themer:Add(ThemeName: string, Theme: table)
 end
 
 function Themer:Set(Theme: table)
-	-- ReconcileValues(self.Theme, THEME_TEMPLATE)
+	ReconcileValues(self.Theme, THEME_TEMPLATE)
 	ReconcileValues(self.Theme, Theme)
 	self:ProcessColors(self.Theme)
 end
 
 Themer:Set(OnyxNightTheme)
+-- Themer:Set(Themer.Themes.BitCave)
 
 return Themer

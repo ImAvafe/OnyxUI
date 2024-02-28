@@ -14,13 +14,7 @@ local IconButton = require(OnyxUI.Components.IconButton)
 
 local function TitleBar(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "TitleBar")
-	Props.TextSize = EnsureValue(
-		Props.TextSize,
-		"number",
-		Computed(function()
-			return Themer.Theme.TextSize:get() * 1.4
-		end)
-	)
+	Props.TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSizes["6"])
 	Props.Size = EnsureValue(Props.Size, "Udim2", UDim2.fromScale(1, 0))
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
 	Props.CloseButtonDisabled = EnsureValue(Props.CloseButtonDisabled, "boolean", false)

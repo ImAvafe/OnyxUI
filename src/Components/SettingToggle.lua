@@ -27,7 +27,6 @@ local function SettingToggle(Props: table)
 				AnchorPoint = Vector2.new(0, 0.5),
 				Position = UDim2.fromScale(0, 0.5),
 				Text = Props.Label,
-				TextSize = Themer.Theme.TextSize,
 				TextColor3 = Computed(function()
 					if not Props.Disabled:get() then
 						return Color3.fromRGB(255, 255, 255)
