@@ -21,7 +21,13 @@ local function Button(Props: table)
 	Props.Contents = EnsureValue(Props.Contents, "table", {})
 	Props.Style = EnsureValue(Props.Style, "string", "Filled")
 	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	Props.ContrastColor = EnsureValue(Props.ContrastColor, "Color3", ColourUtils.Emphasise(Props.Color:get(), 1))
+	Props.ContrastColor = EnsureValue(
+		Props.ContrastColor,
+		"Color3",
+		Computed(function()
+			return ColourUtils.Emphasise(Props.Color:get(), 1)
+		end)
+	)
 	Props.ContentSize = EnsureValue(
 		Props.ContentSize,
 		"number",
@@ -66,7 +72,11 @@ local function Button(Props: table)
 			if Props.Style:get() == "Filled" then
 				return 0
 			else
-				return 1
+				if Props.IsHolding:get() then
+					return 0.9
+				else
+					return 1
+				end
 			end
 		end),
 		BackgroundColor3 = BackgroundColor,
