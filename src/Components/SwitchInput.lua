@@ -17,7 +17,13 @@ local function SwitchInput(Props: table)
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
 	Props.Name = EnsureValue(Props.Name, "string", "SwitchInput")
-	Props.Size = EnsureValue(Props.Size, "UDim2", UDim2.fromOffset(50, 25))
+	Props.Size = EnsureValue(
+		Props.Size,
+		"UDim2",
+		Computed(function()
+			return UDim2.fromOffset(Themer.Theme.TextSize:get() * 2.5, Themer.Theme.TextSize:get() * 1.25)
+		end)
+	)
 	Props.Padding = EnsureValue(
 		Props.Padding,
 		"UDim",
@@ -53,10 +59,18 @@ local function SwitchInput(Props: table)
 
 		[Children] = {
 			New "UIPadding" {
-				PaddingTop = UDim.new(0, 2),
-				PaddingBottom = UDim.new(0, 2),
-				PaddingRight = UDim.new(0, 2),
-				PaddingLeft = UDim.new(0, 2),
+				PaddingTop = Computed(function()
+					return UDim.new(0, Themer.Theme.StrokeThickness:get())
+				end),
+				PaddingBottom = Computed(function()
+					return UDim.new(0, Themer.Theme.StrokeThickness:get())
+				end),
+				PaddingRight = Computed(function()
+					return UDim.new(0, Themer.Theme.StrokeThickness:get())
+				end),
+				PaddingLeft = Computed(function()
+					return UDim.new(0, Themer.Theme.StrokeThickness:get())
+				end),
 			},
 			New "Frame" {
 				Name = "Switch",
@@ -90,10 +104,10 @@ local function SwitchInput(Props: table)
 						end),
 					},
 					New "UIPadding" {
-						PaddingBottom = Props.Padding,
-						PaddingLeft = Props.Padding,
-						PaddingRight = Props.Padding,
-						PaddingTop = Props.Padding,
+						PaddingBottom = UDim.new(0, 3),
+						PaddingLeft = UDim.new(0, 3),
+						PaddingRight = UDim.new(0, 3),
+						PaddingTop = UDim.new(0, 3),
 					},
 
 					New "Frame" {
