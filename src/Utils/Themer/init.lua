@@ -61,7 +61,7 @@ local THEME_TEMPLATE = {
 	CornerRadius = Value(8),
 	StrokeThickness = Value(2),
 	Space = Value(4),
-	TransitionTime = Value(0.1),
+	SpringSpeed = Value(0.1),
 }
 
 local Themer = {

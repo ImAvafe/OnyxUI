@@ -10,6 +10,7 @@ local New = Fusion.New
 local Children = Fusion.Children
 local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
+local Spring = Fusion.Spring
 
 local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
@@ -79,7 +80,7 @@ local function Button(Props: table)
 				end
 			end
 		end),
-		BackgroundColor3 = BackgroundColor,
+		BackgroundColor3 = Spring(BackgroundColor, Themer.Theme.SpringSpeed, 1),
 
 		IsHovering = Props.IsHovering,
 
@@ -125,7 +126,7 @@ local function Button(Props: table)
 			},
 			New "UIStroke" {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Color = BackgroundColor,
+				Color = Spring(BackgroundColor, Themer.Theme.SpringSpeed, 1),
 				Thickness = Themer.Theme.StrokeThickness,
 			},
 

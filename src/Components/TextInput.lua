@@ -124,7 +124,7 @@ local function TextInput(Props: table)
 							return Themer.Theme.Colors.Neutral.Light:get()
 						end
 					end),
-					60,
+					Themer.Theme.SpringSpeed,
 					1
 				),
 				Thickness = 2,

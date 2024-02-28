@@ -55,5 +55,5 @@ return {
 	CornerRadius = 8,
 	StrokeThickness = 2,
 	Space = 4,
-	TransitionTime = 0.1,
+	SpringSpeed = 40,
 }
