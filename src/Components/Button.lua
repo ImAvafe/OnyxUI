@@ -29,7 +29,7 @@ local function Button(Props: table)
 			return ColourUtils.Emphasise(Props.Color:get(), 1)
 		end)
 	)
-	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSizes["1.25"])
+	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSizes["1.125"])
 
 	Props.IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
 

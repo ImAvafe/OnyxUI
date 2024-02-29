@@ -48,22 +48,19 @@ local Themer = {
 
 function Themer:_ProcessColors(Theme: table)
 	if Theme.Colors then
-		for _, Color in pairs(Theme.Colors) do
-			if typeof(Color.Main) == "table" and Color.Main.get then
-				local ColorVariations = { "Contrast", "Dark", "Light" }
-				for _, Variation in ipairs(ColorVariations) do
-					if Color[Variation] == nil then
-						Color[Variation] = Value()
+		for ColorName, _ in pairs(Theme.Colors) do
+			local Color = Theme.Colors[ColorName]
+			if Color then
+				if Color.Main then
+					if Color.Contrast == nil then
+						Color.Contrast = ColourUtils.Emphasise(Color.Main, 1)
 					end
-				end
-				if Color.Contrast:get() == nil then
-					Color.Contrast:set(ColourUtils.Emphasise(Color.Main:get(), 1))
-				end
-				if Color.Dark:get() == nil then
-					Color.Dark:set(ColourUtils.Darken(Color.Main:get(), 0.05))
-				end
-				if Color.Light:get() == nil then
-					Color.Light:set(ColourUtils.Lighten(Color.Main:get(), 0.05))
+					if Color.Dark == nil then
+						Color.Dark = ColourUtils.Darken(Color.Main, 0.05)
+					end
+					if Color.Light == nil then
+						Color.Light = ColourUtils.Lighten(Color.Main, 0.05)
+					end
 				end
 			end
 		end
@@ -73,8 +70,8 @@ end
 function Themer:_ProcessSpacings(Theme: table)
 	if Theme.Spacings then
 		for _, Multiplier in ipairs(SPACING_MULTIPLIERS) do
-			if Theme.Spacings[tostring(Multiplier)]:get() == nil then
-				Theme.Spacings[tostring(Multiplier)]:set(Theme.Spacings.Base:get() * Multiplier)
+			if Theme.Spacings[tostring(Multiplier)] == nil then
+				Theme.Spacings[tostring(Multiplier)] = Theme.Spacings.Base * Multiplier
 			end
 		end
 	end
@@ -83,8 +80,8 @@ end
 function Themer:_ProcessTextSizes(Theme: table)
 	if Theme.TextSizes then
 		for _, Multiplier in ipairs(TEXT_SIZE_MULTIPLIERS) do
-			if Theme.TextSizes[tostring(Multiplier)]:get() == nil then
-				Theme.TextSizes[tostring(Multiplier)]:set(Theme.TextSizes.Base:get() * Multiplier)
+			if Theme.TextSizes[tostring(Multiplier)] == nil then
+				Theme.TextSizes[tostring(Multiplier)] = Theme.TextSizes.Base * Multiplier
 			end
 		end
 	end
@@ -98,13 +95,17 @@ end
 
 function Themer:Set(Theme: table)
 	ReconcileValues(self.Theme, ThemeTemplate)
+
+	self:_ProcessColors(Theme)
+	self:_ProcessSpacings(Theme)
+	self:_ProcessTextSizes(Theme)
 	ReconcileValues(self.Theme, Theme)
-	self:_ProcessColors(self.Theme)
-	self:_ProcessSpacings(self.Theme)
-	self:_ProcessTextSizes(self.Theme)
 end
 
 Themer:Set(OnyxNightTheme)
--- Themer:Set(Themer.Themes.BitCave)
+
+task.delay(2, function()
+	Themer:Set(Themer.Themes.BitCave)
+end)
 
 return Themer

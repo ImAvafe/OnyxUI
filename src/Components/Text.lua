@@ -14,7 +14,7 @@ local function Text(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "Text")
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
 	Props.TextColor3 = EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	Props.TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSizes["1.125"])
+	Props.TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSizes["1"])
 	Props.RichText = EnsureValue(Props.RichText, "boolean", true)
 	Props.FontFace = EnsureValue(
 		Props.FontFace,
