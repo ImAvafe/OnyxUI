@@ -41,7 +41,7 @@ local function SettingsMenu(Props: table)
 					New "UIPadding" {
 						PaddingRight = UDim.new(0, 16),
 						PaddingLeft = Computed(function()
-							return UDim.new(0, Themer.Theme.StrokeThickness:get())
+							return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 						end),
 					},
 					SettingToggle {

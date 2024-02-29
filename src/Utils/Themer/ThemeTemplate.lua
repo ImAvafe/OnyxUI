@@ -131,6 +131,14 @@ return {
 		["6"] = Value(nil),
 		Full = Value(9999),
 	},
-	StrokeThickness = Value(2),
+	StrokeThickness = {
+		Base = Value(2),
+		None = Value(0),
+		["1"] = Value(nil),
+		["2"] = Value(nil),
+		["3"] = Value(nil),
+		["4"] = Value(nil),
+		["8"] = Value(nil),
+	},
 	SpringSpeed = Value(0.1),
 }

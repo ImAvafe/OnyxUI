@@ -54,8 +54,12 @@ return {
 	TextSize = {
 		Base = 18,
 	},
-	CornerRadius = 0,
-	StrokeThickness = 2,
+	CornerRadius = {
+		Base = 0,
+	},
+	StrokeThickness = {
+		Base = 2,
+	},
 	Spacing = {
 		Base = 28,
 	},

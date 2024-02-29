@@ -121,7 +121,7 @@ local function Button(Props: table)
 			New "UIStroke" {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 				Color = Spring(BackgroundColor, Themer.Theme.SpringSpeed, 1),
-				Thickness = Themer.Theme.StrokeThickness,
+				Thickness = Themer.Theme.StrokeThickness["1"],
 			},
 
 			ForValues(Props.Contents, function(ContentString: string)

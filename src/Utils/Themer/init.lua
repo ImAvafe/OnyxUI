@@ -47,6 +47,13 @@ local CORNER_RADIUS_MULTIPLIERS = {
 	4,
 	6,
 }
+local STROKE_THICKNESS_MULTIPLIERS = {
+	1,
+	2,
+	3,
+	4,
+	8,
+}
 
 local Themer = {
 	Theme = table.clone(ThemeTemplate),
@@ -104,6 +111,16 @@ function Themer:_ProcessCornerRadii(Theme: table)
 	end
 end
 
+function Themer:_ProcessStrokeThickness(Theme: table)
+	if Theme.StrokeThickness then
+		for _, Multiplier in ipairs(STROKE_THICKNESS_MULTIPLIERS) do
+			if Theme.StrokeThickness[tostring(Multiplier)] == nil then
+				Theme.StrokeThickness[tostring(Multiplier)] = Theme.StrokeThickness.Base * Multiplier
+			end
+		end
+	end
+end
+
 function Themer:Add(ThemeName: string, Theme: table)
 	self.Themes[ThemeName] = {}
 	ReconcileValues(self.Themes[ThemeName], ThemeTemplate)
@@ -117,13 +134,14 @@ function Themer:Set(Theme: table)
 	self:_ProcessSpacings(Theme)
 	self:_ProcessTextSizes(Theme)
 	self:_ProcessCornerRadii(Theme)
+	self:_ProcessStrokeThickness(Theme)
 	ReconcileValues(self.Theme, Theme)
 end
 
 Themer:Set(OnyxNightTheme)
 
--- task.delay(1, function()
--- 	Themer:Set(Themer.Themes.BitCave)
--- end)
+task.delay(1, function()
+	Themer:Set(Themer.Themes.BitCave)
+end)
 
 return Themer

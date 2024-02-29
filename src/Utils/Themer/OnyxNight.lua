@@ -57,7 +57,9 @@ return {
 	CornerRadius = {
 		Base = 6,
 	},
-	StrokeThickness = 2,
+	StrokeThickness = {
+		Base = 2,
+	},
 	Spacing = {
 		Base = 16,
 	},

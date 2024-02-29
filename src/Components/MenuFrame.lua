@@ -17,7 +17,7 @@ local function MenuFrame(Props: table)
 	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Base.Main)
 
 	Props.StrokeColor = EnsureValue(Props.StrokeColor, "Color3", Themer.Theme.Colors.Base.Light)
-	Props.StrokeThickness = EnsureValue(Props.StrokeThickness, "number", Themer.Theme.StrokeThickness)
+	Props.StrokeThickness = EnsureValue(Props.StrokeThickness, "number", Themer.Theme.StrokeThickness["1"])
 	Props.CornerRadius = EnsureValue(
 		Props.CornerRadius,
 		"number",

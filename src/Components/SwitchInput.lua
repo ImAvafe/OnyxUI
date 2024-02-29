@@ -60,16 +60,16 @@ local function SwitchInput(Props: table)
 		[Children] = {
 			New "UIPadding" {
 				PaddingTop = Computed(function()
-					return UDim.new(0, Themer.Theme.StrokeThickness:get())
+					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 				end),
 				PaddingBottom = Computed(function()
-					return UDim.new(0, Themer.Theme.StrokeThickness:get())
+					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 				end),
 				PaddingRight = Computed(function()
-					return UDim.new(0, Themer.Theme.StrokeThickness:get())
+					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 				end),
 				PaddingLeft = Computed(function()
-					return UDim.new(0, Themer.Theme.StrokeThickness:get())
+					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 				end),
 			},
 			New "Frame" {
@@ -96,7 +96,7 @@ local function SwitchInput(Props: table)
 							1
 						),
 						Color = Spring(ContentColor, 30, 1),
-						Thickness = Themer.Theme.StrokeThickness,
+						Thickness = Themer.Theme.StrokeThickness["1"],
 					},
 					New "UICorner" {
 						CornerRadius = Computed(function()
