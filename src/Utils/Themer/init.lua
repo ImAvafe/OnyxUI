@@ -140,8 +140,8 @@ end
 
 Themer:Set(OnyxNightTheme)
 
-task.delay(1, function()
-	Themer:Set(Themer.Themes.BitCave)
-end)
+-- task.delay(1, function()
+-- 	Themer:Set(Themer.Themes.BitCave)
+-- end)
 
 return Themer
