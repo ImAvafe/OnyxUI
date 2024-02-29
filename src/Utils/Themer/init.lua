@@ -75,20 +75,20 @@ function Themer:_ProcessColors(Theme: table)
 end
 
 function Themer:_ProcessSpacings(Theme: table)
-	if Theme.Spacings then
+	if Theme.Spacing then
 		for _, Multiplier in ipairs(SPACING_MULTIPLIERS) do
-			if Theme.Spacings[tostring(Multiplier)] == nil then
-				Theme.Spacings[tostring(Multiplier)] = Theme.Spacings.Base * Multiplier
+			if Theme.Spacing[tostring(Multiplier)] == nil then
+				Theme.Spacing[tostring(Multiplier)] = Theme.Spacing.Base * Multiplier
 			end
 		end
 	end
 end
 
 function Themer:_ProcessTextSizes(Theme: table)
-	if Theme.TextSizes then
+	if Theme.TextSize then
 		for _, Multiplier in ipairs(TEXT_SIZE_MULTIPLIERS) do
-			if Theme.TextSizes[tostring(Multiplier)] == nil then
-				Theme.TextSizes[tostring(Multiplier)] = Theme.TextSizes.Base * Multiplier
+			if Theme.TextSize[tostring(Multiplier)] == nil then
+				Theme.TextSize[tostring(Multiplier)] = Theme.TextSize.Base * Multiplier
 			end
 		end
 	end

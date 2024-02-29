@@ -41,22 +41,22 @@ return {
 			Main = Colors.Cyan["400"],
 		},
 	},
-	Fonts = {
+	Font = {
 		Body = "rbxassetid://12187371840",
 		Heading = "rbxassetid://12187371840",
 		Monospace = "rbxassetid://12187371840",
 	},
-	FontWeights = {
+	FontWeight = {
 		Body = Enum.FontWeight.Bold,
 		Bold = Enum.FontWeight.ExtraBold,
 		Heading = Enum.FontWeight.ExtraBold,
 	},
-	TextSizes = {
+	TextSize = {
 		Base = 18,
 	},
 	CornerRadius = 0,
 	StrokeThickness = 2,
-	Spacings = {
+	Spacing = {
 		Base = 28,
 	},
 	SpringSpeed = 80,

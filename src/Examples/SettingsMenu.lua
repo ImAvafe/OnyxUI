@@ -24,7 +24,7 @@ local function SettingsMenu(Props: table)
 		[Children] = {
 			New "UIListLayout" {
 				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, Themer.Theme.Spacings["0.75"]:get()),
+				Padding = UDim.new(0, Themer.Theme.Spacing["0.75"]:get()),
 			},
 			TitleBar {
 				Title = "Settings",

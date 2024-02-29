@@ -76,17 +76,17 @@ return {
 			Contrast = Value(nil),
 		},
 	},
-	Fonts = {
+	Font = {
 		Body = Value("GothamSsm"),
 		Heading = Value("GothamSsm"),
 		Monospace = Value("GothamSsm"),
 	},
-	FontWeights = {
+	FontWeight = {
 		Body = Value(Enum.FontWeight.Regular),
 		Bold = Value(Enum.FontWeight.Bold),
 		Heading = Value(Enum.FontWeight.Bold),
 	},
-	TextSizes = {
+	TextSize = {
 		Base = Value(16),
 		["0.75"] = Value(nil),
 		["0.875"] = Value(nil),
@@ -100,7 +100,7 @@ return {
 		["3.75"] = Value(nil),
 		["4.5"] = Value(nil),
 	},
-	Spacings = {
+	Spacing = {
 		Base = Value(16),
 		["0.25"] = Value(nil),
 		["0.5"] = Value(nil),

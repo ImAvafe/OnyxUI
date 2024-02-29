@@ -14,13 +14,13 @@ local function Text(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "Text")
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
 	Props.TextColor3 = EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	Props.TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSizes["1"])
+	Props.TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
 	Props.RichText = EnsureValue(Props.RichText, "boolean", true)
 	Props.FontFace = EnsureValue(
 		Props.FontFace,
 		"Font",
 		Computed(function()
-			return Font.new(Themer.Theme.Fonts.Body:get(), Themer.Theme.FontWeights.Body:get())
+			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
 		end)
 	)
 	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)

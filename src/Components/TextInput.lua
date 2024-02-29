@@ -18,12 +18,12 @@ local function TextInput(Props: table)
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 	Props.Text = EnsureValue(Props.Text, "string", "")
 	Props.PlaceholderText = EnsureValue(Props.PlaceholderText, "string", "")
-	Props.TextSize = EnsureValue(Props.TextSize, "string", Themer.Theme.TextSizes["1"])
+	Props.TextSize = EnsureValue(Props.TextSize, "string", Themer.Theme.TextSize["1"])
 	Props.FontFace = EnsureValue(
 		Props.FontFace,
 		"Font",
 		Computed(function()
-			return Font.new(Themer.Theme.Fonts.Body:get(), Themer.Theme.FontWeights.Body:get())
+			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
 		end)
 	)
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
@@ -99,16 +99,16 @@ local function TextInput(Props: table)
 			},
 			New "UIPadding" {
 				PaddingBottom = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacings["0.5"]:get())
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 				end),
 				PaddingLeft = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacings["0.75"]:get())
+					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 				end),
 				PaddingRight = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacings["0.75"]:get())
+					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 				end),
 				PaddingTop = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacings["0.5"]:get())
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 				end),
 			},
 			New "UIStroke" {

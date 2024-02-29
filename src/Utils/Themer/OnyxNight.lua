@@ -41,24 +41,24 @@ return {
 			Main = Colors.Cyan["400"],
 		},
 	},
-	Fonts = {
+	Font = {
 		Body = "rbxasset://fonts/families/GothamSsm.json",
 		Heading = "rbxasset://fonts/families/GothamSSm.json",
 		Monospace = "rbxasset://fonts/families/GothamSSm.json",
 	},
-	FontWeights = {
+	FontWeight = {
 		Body = Enum.FontWeight.Medium,
 		Bold = Enum.FontWeight.Bold,
 		Heading = Enum.FontWeight.Bold,
 	},
-	TextSizes = {
+	TextSize = {
 		Base = 18,
 	},
 	CornerRadius = {
 		Base = 6,
 	},
 	StrokeThickness = 2,
-	Spacings = {
+	Spacing = {
 		Base = 16,
 	},
 	SpringSpeed = 40,
