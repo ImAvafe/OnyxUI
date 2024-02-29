@@ -141,5 +141,17 @@ return {
 		["4"] = Value(nil),
 		["8"] = Value(nil),
 	},
-	SpringSpeed = Value(0.1),
+	SpringSpeed = {
+		Base = Value(40),
+		["0.1"] = Value(nil),
+		["0.175"] = Value(nil),
+		["0.25"] = Value(nil),
+		["0.375"] = Value(nil),
+		["0.5"] = Value(nil),
+		["0.75"] = Value(nil),
+		["1"] = Value(nil),
+		["1.5"] = Value(nil),
+		["2"] = Value(nil),
+		Immediate = Value(1000),
+	},
 }

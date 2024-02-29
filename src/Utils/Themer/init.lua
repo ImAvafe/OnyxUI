@@ -54,6 +54,17 @@ local STROKE_THICKNESS_MULTIPLIERS = {
 	4,
 	8,
 }
+local SPRING_SPEED_MULTIPLIERS = {
+	0.1,
+	0.175,
+	0.25,
+	0.375,
+	0.5,
+	0.75,
+	1,
+	1.5,
+	2,
+}
 
 local Themer = {
 	Theme = table.clone(ThemeTemplate),
@@ -121,6 +132,16 @@ function Themer:_ProcessStrokeThickness(Theme: table)
 	end
 end
 
+function Themer:_ProcessSpringSpeed(Theme: table)
+	if Theme.SpringSpeed then
+		for _, Multiplier in ipairs(SPRING_SPEED_MULTIPLIERS) do
+			if Theme.SpringSpeed[tostring(Multiplier)] == nil then
+				Theme.SpringSpeed[tostring(Multiplier)] = Theme.SpringSpeed.Base * Multiplier
+			end
+		end
+	end
+end
+
 function Themer:Add(ThemeName: string, Theme: table)
 	self.Themes[ThemeName] = {}
 	ReconcileValues(self.Themes[ThemeName], ThemeTemplate)
@@ -135,6 +156,7 @@ function Themer:Set(Theme: table)
 	self:_ProcessTextSizes(Theme)
 	self:_ProcessCornerRadii(Theme)
 	self:_ProcessStrokeThickness(Theme)
+	self:_ProcessSpringSpeed(Theme)
 	ReconcileValues(self.Theme, Theme)
 end
 

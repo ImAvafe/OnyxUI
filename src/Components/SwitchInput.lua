@@ -92,7 +92,7 @@ local function SwitchInput(Props: table)
 									return 0.6
 								end
 							end),
-							Themer.Theme.SpringSpeed,
+							Themer.Theme.SpringSpeed["1"],
 							1
 						),
 						Color = Spring(ContentColor, 30, 1),
@@ -116,14 +116,14 @@ local function SwitchInput(Props: table)
 							Computed(function()
 								return (Props.SwitchedOn:get() and Vector2.new(1, 0.5)) or Vector2.new(0, 0.5)
 							end),
-							Themer.Theme.SpringSpeed,
+							Themer.Theme.SpringSpeed["1"],
 							1
 						),
 						Position = Spring(
 							Computed(function()
 								return (Props.SwitchedOn:get() and UDim2.fromScale(1, 0.5)) or UDim2.fromScale(0, 0.5)
 							end),
-							Themer.Theme.SpringSpeed,
+							Themer.Theme.SpringSpeed["1"],
 							1
 						),
 						Size = UDim2.fromScale(0, 1),
@@ -138,7 +138,7 @@ local function SwitchInput(Props: table)
 									return 0
 								end
 							end),
-							Themer.Theme.SpringSpeed,
+							Themer.Theme.SpringSpeed["1"],
 							1
 						),
 						BackgroundColor3 = Spring(ContentColor, 40, 1),

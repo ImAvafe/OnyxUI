@@ -63,5 +63,7 @@ return {
 	Spacing = {
 		Base = 16,
 	},
-	SpringSpeed = 40,
+	SpringSpeed = {
+		Base = 40,
+	},
 }
