@@ -97,22 +97,22 @@ local function Button(Props: table)
 			},
 			New "UIPadding" {
 				PaddingBottom = Computed(function()
-					return UDim.new(0, Themer.Theme.Space:get())
+					return UDim.new(0, Themer.Theme.Spacings["0.25"]:get())
 				end),
 				PaddingLeft = Computed(function()
-					return UDim.new(0, Themer.Theme.Space:get() * 3)
+					return UDim.new(0, Themer.Theme.Spacings["0.75"]:get())
 				end),
 				PaddingRight = Computed(function()
-					return UDim.new(0, Themer.Theme.Space:get() * 3)
+					return UDim.new(0, Themer.Theme.Spacings["0.75"]:get())
 				end),
 				PaddingTop = Computed(function()
-					return UDim.new(0, Themer.Theme.Space:get())
+					return UDim.new(0, Themer.Theme.Spacings["0.25"]:get())
 				end),
 			},
 			New "UIListLayout" {
 				SortOrder = Enum.SortOrder.LayoutOrder,
 				Padding = Computed(function()
-					return UDim.new(0, Themer.Theme.Space:get())
+					return UDim.new(0, Themer.Theme.Spacings["0.25"]:get())
 				end),
 				FillDirection = Enum.FillDirection.Horizontal,
 				HorizontalAlignment = Enum.HorizontalAlignment.Center,

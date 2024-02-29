@@ -28,7 +28,7 @@ local function SwitchInput(Props: table)
 		Props.Padding,
 		"UDim",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.Space:get())
+			return UDim.new(0, Themer.Theme.Spacings["0.25"]:get())
 		end)
 	)
 

@@ -99,16 +99,16 @@ local function TextInput(Props: table)
 			},
 			New "UIPadding" {
 				PaddingBottom = Computed(function()
-					return UDim.new(0, Themer.Theme.Space:get() * 2)
+					return UDim.new(0, Themer.Theme.Spacings["0.5"]:get())
 				end),
 				PaddingLeft = Computed(function()
-					return UDim.new(0, Themer.Theme.Space:get() * 3)
+					return UDim.new(0, Themer.Theme.Spacings["0.75"]:get())
 				end),
 				PaddingRight = Computed(function()
-					return UDim.new(0, Themer.Theme.Space:get() * 3)
+					return UDim.new(0, Themer.Theme.Spacings["0.75"]:get())
 				end),
 				PaddingTop = Computed(function()
-					return UDim.new(0, Themer.Theme.Space:get() * 2)
+					return UDim.new(0, Themer.Theme.Spacings["0.5"]:get())
 				end),
 			},
 			New "UIStroke" {

@@ -29,7 +29,7 @@ local function MenuFrame(Props: table)
 		Props.Padding,
 		"UDim",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.Space:get() * 3)
+			return UDim.new(0, Themer.Theme.Spacings["0.75"]:get())
 		end)
 	)
 
