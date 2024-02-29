@@ -54,7 +54,9 @@ return {
 	TextSizes = {
 		Base = 18,
 	},
-	CornerRadius = 8,
+	CornerRadius = {
+		Base = 6,
+	},
 	StrokeThickness = 2,
 	Spacings = {
 		Base = 16,

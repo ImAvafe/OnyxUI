@@ -7,8 +7,6 @@ local ThemeTemplate = require(script.ThemeTemplate)
 local Loader = require(OnyxUI.Parent.Loader)
 local ColourUtils = require(OnyxUI.Parent.ColourUtils)
 
-local Value = Fusion.Value
-
 local SPACING_MULTIPLIERS = {
 	0.25,
 	0.5,
@@ -39,6 +37,15 @@ local TEXT_SIZE_MULTIPLIERS = {
 	3,
 	3.75,
 	4.5,
+}
+local CORNER_RADIUS_MULTIPLIERS = {
+	0.5,
+	1,
+	1.5,
+	2,
+	3,
+	4,
+	6,
 }
 
 local Themer = {
@@ -87,6 +94,16 @@ function Themer:_ProcessTextSizes(Theme: table)
 	end
 end
 
+function Themer:_ProcessCornerRadii(Theme: table)
+	if Theme.CornerRadius then
+		for _, Multiplier in ipairs(CORNER_RADIUS_MULTIPLIERS) do
+			if Theme.CornerRadius[tostring(Multiplier)] == nil then
+				Theme.CornerRadius[tostring(Multiplier)] = Theme.CornerRadius.Base * Multiplier
+			end
+		end
+	end
+end
+
 function Themer:Add(ThemeName: string, Theme: table)
 	self.Themes[ThemeName] = {}
 	ReconcileValues(self.Themes[ThemeName], ThemeTemplate)
@@ -99,6 +116,7 @@ function Themer:Set(Theme: table)
 	self:_ProcessColors(Theme)
 	self:_ProcessSpacings(Theme)
 	self:_ProcessTextSizes(Theme)
+	self:_ProcessCornerRadii(Theme)
 	ReconcileValues(self.Theme, Theme)
 end
 

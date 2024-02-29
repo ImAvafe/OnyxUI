@@ -22,7 +22,7 @@ local function MenuFrame(Props: table)
 		Props.CornerRadius,
 		"number",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius:get() * 2)
+			return UDim.new(0, Themer.Theme.CornerRadius["3"]:get())
 		end)
 	)
 	Props.Padding = EnsureValue(

@@ -94,7 +94,7 @@ local function TextInput(Props: table)
 		[Children] = {
 			New "UICorner" {
 				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius:get() / 1.5)
+					return UDim.new(0, Themer.Theme.CornerRadius["0.5"]:get())
 				end),
 			},
 			New "UIPadding" {

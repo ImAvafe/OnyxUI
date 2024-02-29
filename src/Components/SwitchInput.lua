@@ -100,7 +100,7 @@ local function SwitchInput(Props: table)
 					},
 					New "UICorner" {
 						CornerRadius = Computed(function()
-							return UDim.new(0, Themer.Theme.CornerRadius:get() * 2)
+							return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
 						end),
 					},
 					New "UIPadding" {
@@ -151,7 +151,7 @@ local function SwitchInput(Props: table)
 							},
 							New "UICorner" {
 								CornerRadius = Computed(function()
-									return UDim.new(0, Themer.Theme.CornerRadius:get() * 2)
+									return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
 								end),
 							},
 						},

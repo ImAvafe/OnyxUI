@@ -19,7 +19,7 @@ local function IconButton(Props: table)
 		Props.CornerRadius,
 		"number",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius:get())
+			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
 		end)
 	)
 
