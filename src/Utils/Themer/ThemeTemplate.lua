@@ -102,6 +102,7 @@ return {
 	},
 	Spacing = {
 		Base = Value(16),
+		["0"] = Value(0),
 		["0.25"] = Value(nil),
 		["0.5"] = Value(nil),
 		["0.75"] = Value(nil),
@@ -121,7 +122,7 @@ return {
 	},
 	CornerRadius = {
 		Base = Value(4),
-		None = Value(0),
+		["0"] = Value(0),
 		["0.5"] = Value(nil),
 		["1"] = Value(nil),
 		["1.5"] = Value(nil),
@@ -133,7 +134,7 @@ return {
 	},
 	StrokeThickness = {
 		Base = Value(2),
-		None = Value(0),
+		["0"] = Value(0),
 		["1"] = Value(nil),
 		["2"] = Value(nil),
 		["3"] = Value(nil),
