@@ -21,7 +21,7 @@ local function SwitchInput(Props: table)
 		Props.Size,
 		"UDim2",
 		Computed(function()
-			return UDim2.fromOffset(Themer.Theme.TextSizes["5"]:get() * 2, Themer.Theme.TextSizes["5"]:get())
+			return UDim2.fromOffset(Themer.Theme.TextSizes["1.25"]:get() * 2, Themer.Theme.TextSizes["1.25"]:get())
 		end)
 	)
 	Props.Padding = EnsureValue(

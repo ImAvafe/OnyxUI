@@ -18,7 +18,7 @@ local function TextInput(Props: table)
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 	Props.Text = EnsureValue(Props.Text, "string", "")
 	Props.PlaceholderText = EnsureValue(Props.PlaceholderText, "string", "")
-	Props.TextSize = EnsureValue(Props.TextSize, "string", Themer.Theme.TextSizes["4"])
+	Props.TextSize = EnsureValue(Props.TextSize, "string", Themer.Theme.TextSizes["1.125"])
 	Props.FontFace = EnsureValue(
 		Props.FontFace,
 		"Font",
