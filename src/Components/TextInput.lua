@@ -125,7 +125,7 @@ local function TextInput(Props: table)
 						end
 					end),
 					Themer.Theme.SpringSpeed["1"],
-					1
+					Themer.Theme.SpringDampening
 				),
 				Thickness = 2,
 			},

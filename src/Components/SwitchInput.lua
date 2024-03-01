@@ -93,9 +93,9 @@ local function SwitchInput(Props: table)
 								end
 							end),
 							Themer.Theme.SpringSpeed["1"],
-							1
+							Themer.Theme.SpringDampening
 						),
-						Color = Spring(ContentColor, 30, 1),
+						Color = Spring(ContentColor, 30, Themer.Theme.SpringDampening),
 						Thickness = Themer.Theme.StrokeThickness["1"],
 					},
 					New "UICorner" {
@@ -117,14 +117,14 @@ local function SwitchInput(Props: table)
 								return (Props.SwitchedOn:get() and Vector2.new(1, 0.5)) or Vector2.new(0, 0.5)
 							end),
 							Themer.Theme.SpringSpeed["1"],
-							1
+							Themer.Theme.SpringDampening
 						),
 						Position = Spring(
 							Computed(function()
 								return (Props.SwitchedOn:get() and UDim2.fromScale(1, 0.5)) or UDim2.fromScale(0, 0.5)
 							end),
 							Themer.Theme.SpringSpeed["1"],
-							1
+							Themer.Theme.SpringDampening
 						),
 						Size = UDim2.fromScale(0, 1),
 						BackgroundTransparency = Spring(
@@ -139,9 +139,9 @@ local function SwitchInput(Props: table)
 								end
 							end),
 							Themer.Theme.SpringSpeed["1"],
-							1
+							Themer.Theme.SpringDampening
 						),
-						BackgroundColor3 = Spring(ContentColor, 40, 1),
+						BackgroundColor3 = Spring(ContentColor, 40, Themer.Theme.SpringDampening),
 
 						[Children] = {
 							New "UIAspectRatioConstraint" {

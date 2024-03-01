@@ -161,9 +161,6 @@ function Themer:Set(Theme: table)
 end
 
 Themer:Set(OnyxNightTheme)
-
--- task.delay(0.1, function()
--- 	Themer:Set(Themer.Themes.BitCave)
--- end)
+-- Themer:Set(Themer.Themes.BitCave)
 
 return Themer

@@ -74,7 +74,7 @@ local function Button(Props: table)
 				end
 			end
 		end),
-		BackgroundColor3 = Spring(BackgroundColor, Themer.Theme.SpringSpeed["1"], 1),
+		BackgroundColor3 = Spring(BackgroundColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
 
 		IsHovering = Props.IsHovering,
 
@@ -120,7 +120,7 @@ local function Button(Props: table)
 			},
 			New "UIStroke" {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Color = Spring(BackgroundColor, Themer.Theme.SpringSpeed["1"], 1),
+				Color = Spring(BackgroundColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
 				Thickness = Themer.Theme.StrokeThickness["1"],
 			},
 

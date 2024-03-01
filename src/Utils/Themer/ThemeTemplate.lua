@@ -154,4 +154,5 @@ return {
 		["2"] = Value(nil),
 		Immediate = Value(1000),
 	},
+	SpringDampening = Value(1),
 }
