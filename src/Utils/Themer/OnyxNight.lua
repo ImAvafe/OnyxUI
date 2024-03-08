@@ -42,17 +42,17 @@ return {
 		},
 	},
 	Font = {
-		Body = "rbxasset://fonts/families/GothamSsm.json",
-		Heading = "rbxasset://fonts/families/GothamSSm.json",
-		Monospace = "rbxasset://fonts/families/GothamSSm.json",
+		Body = "rbxasset://fonts/families/Montserrat.json",
+		Heading = "rbxasset://fonts/families/Montserrat.json",
+		Monospace = "rbxasset://fonts/families/Montserrat.json",
 	},
 	FontWeight = {
-		Body = Enum.FontWeight.Medium,
+		Body = Enum.FontWeight.SemiBold,
 		Bold = Enum.FontWeight.Bold,
 		Heading = Enum.FontWeight.Bold,
 	},
 	TextSize = {
-		Base = 18,
+		Base = 19,
 	},
 	CornerRadius = {
 		Base = 6,
