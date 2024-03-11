@@ -17,25 +17,35 @@ return function(Target: Instance)
 
 		[Children] = {
 			New "UIListLayout" {
-				Padding = UDim.new(0, 8),
-				FillDirection = Enum.FillDirection.Horizontal,
+				Padding = UDim.new(0, Themer.Theme.Spacing["0.75"]:get()),
+				FillDirection = Enum.FillDirection.Vertical,
 			},
 			Button {
 				Contents = { "Button" },
-				Style = "Filled",
 			},
 			Button {
 				Contents = { "Button" },
+				Style = "Outlined",
 			},
 			Button {
 				Contents = { "rbxassetid://11560341132", "Purchase" },
-				Style = "Filled",
 				Color = Color3.fromRGB(86, 255, 70),
 			},
 			Button {
 				Contents = { "rbxassetid://13405228418", "Delete" },
-				Style = "Empty",
+				Style = "Outlined",
 				Color = Themer.Theme.Colors.Error.Main,
+			},
+			Button {
+				Contents = { "rbxassetid://11560341132", "Bobux" },
+				Color = Color3.fromRGB(86, 255, 70),
+				Disabled = true,
+			},
+			Button {
+				Contents = { "Testing" },
+				Color = Color3.fromRGB(86, 255, 70),
+				Disabled = true,
+				Style = "Outlined",
 			},
 		},
 	}

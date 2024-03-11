@@ -61,7 +61,6 @@ local function Button(Props: table)
 		AutoLocalize = false,
 
 		[OnEvent "Activated"] = function()
-			print(1)
 			if not Props.Disabled:get() then
 				SoundService:PlayLocalSound(Props.ClickSound:get())
 				Props.OnActivated:get()()
@@ -80,8 +79,10 @@ local function Button(Props: table)
 			Props.OnMouseLeave:get()()
 		end,
 		[OnEvent "MouseButton1Down"] = function()
-			Props.IsHolding:set(true)
-			Props.OnMouseButton1Down:get()()
+			if not Props.Disabled:get() then
+				Props.IsHolding:set(true)
+				Props.OnMouseButton1Down:get()()
+			end
 		end,
 		[OnEvent "MouseButton1Up"] = function()
 			Props.IsHolding:set(false)

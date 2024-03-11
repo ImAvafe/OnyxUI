@@ -74,9 +74,10 @@ local function SettingsMenu(Props: table)
 			},
 			Button {
 				Contents = { "Close" },
-				Style = "Filled",
 				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
+				-- Style = "Outlined",
+				-- Disabled = true,
 			},
 		},
 	}

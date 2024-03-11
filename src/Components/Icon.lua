@@ -31,6 +31,7 @@ local function Text(Props: table)
 
 		Image = Props.Image,
 		ImageColor3 = Props.ImageColor3,
+		ImageTransparency = Props.ImageTransparency,
 
 		[Children] = Props[Children],
 	}

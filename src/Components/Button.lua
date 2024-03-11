@@ -16,9 +16,14 @@ local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 
+local DISABLED_BACKGROUND_TRANSPARENCY = 0.95
+local DISABLED_CONTENT_TRANSPARENCY = 0.8
+
 local function Button(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "Button")
+	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)
 
+	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 	Props.Contents = EnsureValue(Props.Contents, "table", {})
 	Props.Style = EnsureValue(Props.Style, "string", "Filled")
 	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
@@ -33,18 +38,33 @@ local function Button(Props: table)
 
 	Props.IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
 
-	local BackgroundColor = Computed(function()
-		if Props.IsHolding:get() then
-			return ColourUtils.Emphasise(Props.Color:get(), 0.1)
+	local Color = Computed(function()
+		if Props.Disabled:get() then
+			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
-			return Props.Color:get()
+			if Props.IsHolding:get() then
+				return ColourUtils.Emphasise(Props.Color:get(), 0.1)
+			else
+				return Props.Color:get()
+			end
 		end
 	end)
 	local ContentColor = Computed(function()
-		if Props.Style:get() == "Filled" then
-			return Props.ContrastColor:get()
+		if Props.Disabled:get() then
+			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
-			return Props.Color:get()
+			if Props.Style:get() == "Filled" then
+				return Props.ContrastColor:get()
+			elseif Props.Style:get() == "Outlined" then
+				return Props.Color:get()
+			end
+		end
+	end)
+	local ContentTransparency = Computed(function()
+		if Props.Disabled:get() then
+			return DISABLED_CONTENT_TRANSPARENCY
+		else
+			return 0
 		end
 	end)
 
@@ -66,8 +86,12 @@ local function Button(Props: table)
 
 		BackgroundTransparency = Computed(function()
 			if Props.Style:get() == "Filled" then
-				return 0
-			else
+				if Props.Disabled:get() then
+					return DISABLED_BACKGROUND_TRANSPARENCY
+				else
+					return 0
+				end
+			elseif Props.Style:get() == "Outlined" then
 				if Props.IsHolding:get() then
 					return 0.9
 				else
@@ -75,20 +99,13 @@ local function Button(Props: table)
 				end
 			end
 		end),
-		BackgroundColor3 = Spring(BackgroundColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		BackgroundColor3 = Spring(Color, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
 
 		IsHovering = Props.IsHovering,
-
+		IsHolding = Props.IsHolding,
 		OnActivated = Props.OnActivated,
-		OnMouseButton1Down = function()
-			Props.IsHolding:set(true)
-		end,
-		OnMouseButton1Up = function()
-			Props.IsHolding:set(false)
-		end,
-		OnMouseLeave = function()
-			Props.IsHolding:set(false)
-		end,
+
+		Disabled = Props.Disabled,
 
 		[Children] = {
 			New "UICorner" {
@@ -121,8 +138,15 @@ local function Button(Props: table)
 			},
 			New "UIStroke" {
 				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Color = Spring(BackgroundColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+				Color = Spring(Color, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
 				Thickness = Themer.Theme.StrokeThickness["1"],
+				Transparency = Computed(function()
+					if Props.Disabled:get() then
+						return DISABLED_BACKGROUND_TRANSPARENCY
+					else
+						return 0
+					end
+				end),
 			},
 
 			ForValues(Props.Contents, function(ContentString: string)
@@ -133,12 +157,14 @@ local function Button(Props: table)
 						Size = Computed(function()
 							return UDim2.fromOffset(Props.ContentSize:get(), Props.ContentSize:get())
 						end),
+						ImageTransparency = ContentTransparency,
 					}
 				else
 					return Text {
 						Text = ContentString,
 						TextColor3 = ContentColor,
 						TextSize = Props.ContentSize,
+						TextTransparency = ContentTransparency,
 					}
 				end
 			end, Fusion.Cleanup),
