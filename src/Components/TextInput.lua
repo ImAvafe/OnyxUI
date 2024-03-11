@@ -35,6 +35,7 @@ local function TextInput(Props: table)
 	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Base.Light)
 	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)
 	Props.AutoLocalize = EnsureValue(Props.AutoLocalize, "boolean", false)
+	Props.TextXAlignment = EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
 
 	Props.CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
 	Props.RemainingCharaters = EnsureValue(Props.RemainingCharaters, "number", -1)
