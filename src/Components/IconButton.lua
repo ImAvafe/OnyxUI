@@ -42,7 +42,15 @@ local function IconButton(Props: table)
 		BackgroundColor3 = Props.BackgroundColor3,
 		BackgroundTransparency = Props.BackgroundTransparency,
 
+		Image = Props.Image,
 		ImageColor3 = Props.ImageColor3,
+		ImageTransparency = Props.ImageTransparency,
+		ImageRectSize = Props.ImageRectSize,
+		ResampleMode = Props.ResampleMode,
+		ScaleType = Props.ScaleType,
+		SliceCenter = Props.SliceCenter,
+		SliceScale = Props.SliceScale,
+		TileSize = Props.TileSize,
 
 		IsHovering = Props.IsHovering,
 		OnActivated = Props.OnActivated,

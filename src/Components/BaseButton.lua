@@ -16,6 +16,8 @@ local function Button(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "BaseButton")
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
+	Props.Text = EnsureValue(Props.Text, "string", "")
+	Props.AutoLocalize = EnsureValue(Props.AutoLocalize, "boolean", false)
 
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
@@ -57,8 +59,21 @@ local function Button(Props: table)
 		BackgroundColor3 = Props.BackgroundColor3,
 		BackgroundTransparency = Props.BackgroundTransparency,
 
-		Text = "",
-		AutoLocalize = false,
+		RichText = Props.RichText,
+		TextSize = Props.TextSize,
+		TextColor3 = Props.TextColor3,
+		FontFace = Props.FontFace,
+		TextScaled = Props.TextScaled,
+		Text = Props.Text,
+		TextWrapped = Props.TextWrapped,
+		TextXAlignment = Props.TextXAlignment,
+		TextYAlignment = Props.TextYAlignment,
+		TextTruncate = Props.TextTruncate,
+		AutoLocalize = Props.AutoLocalize,
+		LineHeight = Props.LineHeight,
+		LocalizedText = Props.LocalizedText,
+		MaxVisibleGraphemes = Props.MaxVisibleGraphemes,
+		TextTransparency = Props.TextTransparency,
 
 		[OnEvent "Activated"] = function()
 			if not Props.Disabled:get() then

@@ -34,6 +34,7 @@ local function TextInput(Props: table)
 	Props.PlaceholderColor3 = EnsureValue(Props.PlaceholderColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark)
 	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Base.Light)
 	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)
+	Props.AutoLocalize = EnsureValue(Props.AutoLocalize, "boolean", false)
 
 	Props.CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
 	Props.RemainingCharaters = EnsureValue(Props.RemainingCharaters, "number", -1)
@@ -62,6 +63,22 @@ local function TextInput(Props: table)
 		BackgroundColor3 = Props.BackgroundColor3,
 		BackgroundTransparency = Props.BackgroundTransparency,
 
+		RichText = Props.RichText,
+		TextSize = Props.TextSize,
+		TextColor3 = Props.TextColor3,
+		FontFace = Props.FontFace,
+		TextScaled = Props.TextScaled,
+		Text = Props.Text,
+		TextWrapped = Props.TextWrapped,
+		TextXAlignment = Props.TextXAlignment,
+		TextYAlignment = Props.TextYAlignment,
+		TextTruncate = Props.TextTruncate,
+		AutoLocalize = Props.AutoLocalize,
+		LineHeight = Props.LineHeight,
+		LocalizedText = Props.LocalizedText,
+		MaxVisibleGraphemes = Props.MaxVisibleGraphemes,
+		TextTransparency = Props.TextTransparency,
+
 		PlaceholderColor3 = Computed(function()
 			if Props.Disabled:get() then
 				return Themer.Theme.Colors.Neutral.Light:get()
@@ -69,18 +86,9 @@ local function TextInput(Props: table)
 				return Props.PlaceholderColor3:get()
 			end
 		end),
-		TextSize = Props.TextSize,
-		TextColor3 = Props.TextColor3,
-		FontFace = Props.FontFace,
-		Text = Props.Text,
-		RichText = Props.RichText,
 		PlaceholderText = Props.PlaceholderText,
-		TextWrapped = Props.TextWrapped,
-		TextXAlignment = Props.TextXAlignment or Enum.TextXAlignment.Left,
-		TextYAlignment = Props.TextYAlignment or Enum.TextYAlignment.Top,
 		MultiLine = Props.MultiLine,
 		ClearTextOnFocus = Props.ClearTextOnFocus,
-		AutoLocalize = false,
 		TextEditable = Computed(function()
 			return not Props.Disabled:get()
 		end),

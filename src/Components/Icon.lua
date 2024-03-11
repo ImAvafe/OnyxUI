@@ -32,6 +32,12 @@ local function Text(Props: table)
 		Image = Props.Image,
 		ImageColor3 = Props.ImageColor3,
 		ImageTransparency = Props.ImageTransparency,
+		ImageRectSize = Props.ImageRectSize,
+		ResampleMode = Props.ResampleMode,
+		ScaleType = Props.ScaleType,
+		SliceCenter = Props.SliceCenter,
+		SliceScale = Props.SliceScale,
+		TileSize = Props.TileSize,
 
 		[Children] = Props[Children],
 	}
