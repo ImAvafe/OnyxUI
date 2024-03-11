@@ -1,3 +1,5 @@
+local SoundService = game:GetService("SoundService")
+
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
@@ -39,6 +41,9 @@ local function TextInput(Props: table)
 	Props.IsFocused = EnsureValue(Props.IsFocused, "boolean", false)
 	Props.OnFocused = EnsureValue(Props.OnFocused, "function", function() end)
 	Props.OnFocusLost = EnsureValue(Props.OnFocusLost, "function", function() end)
+
+	Props.FocusSound = EnsureValue(Props.FocusSound, "Sound", Themer.Theme.Sound.Focus)
+	Props.HoverSound = EnsureValue(Props.HoverSound, "Sound", Themer.Theme.Sound.Hover)
 
 	local TextInputInstance = New "TextBox" {
 		Name = Props.Name,
@@ -82,11 +87,15 @@ local function TextInput(Props: table)
 
 		[OnEvent "Focused"] = function()
 			Props.IsFocused:set(true)
+			SoundService:PlayLocalSound(Props.FocusSound:get())
 			Props.OnFocused:get()()
 		end,
 		[OnEvent "FocusLost"] = function()
 			Props.IsFocused:set(false)
 			Props.OnFocusLost:get()()
+		end,
+		[OnEvent "MouseEnter"] = function()
+			SoundService:PlayLocalSound(Props.HoverSound:get())
 		end,
 
 		[Out "Text"] = Props.Text,

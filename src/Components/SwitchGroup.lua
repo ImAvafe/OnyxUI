@@ -3,6 +3,7 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 
@@ -13,19 +14,29 @@ local function SwitchGroup(Props: table)
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
 	return Finalize(BaseButton {
-		Name = Props.Name or "SwitchGroup",
+		Name = Props.Name,
 		Parent = Props.Parent,
-		LayoutOrder = Props.LayoutOrder,
 		Position = Props.Position,
+		Rotation = Props.Rotation,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
 		AutomaticSize = Props.AutomaticSize,
+		Visible = Props.Visible,
 		ZIndex = Props.ZIndex,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
+		Selectable = Props.Selectable,
+		Interactable = Props.Interactable,
+		BackgroundColor3 = Props.BackgroundColor3,
+		BackgroundTransparency = Props.BackgroundTransparency,
+
+		ClickSound = Themer.Theme.Sound.Switch,
+
+		Disabled = Props.Disabled,
 
 		OnActivated = function()
-			if not Props.Disabled:get() then
-				Props.SwitchedOn:set(not Props.SwitchedOn:get())
-			end
+			Props.SwitchedOn:set(not Props.SwitchedOn:get())
 		end,
 
 		[Children] = Props[Children],

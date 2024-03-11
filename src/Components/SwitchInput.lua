@@ -13,9 +13,6 @@ local Spring = Fusion.Spring
 local BaseButton = require(OnyxUI.Components.BaseButton)
 
 local function SwitchInput(Props: table)
-	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
-	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
-
 	Props.Name = EnsureValue(Props.Name, "string", "SwitchInput")
 	Props.Size = EnsureValue(
 		Props.Size,
@@ -24,6 +21,7 @@ local function SwitchInput(Props: table)
 			return UDim2.fromOffset(Themer.Theme.TextSize["1.125"]:get() * 2, Themer.Theme.TextSize["1.125"]:get())
 		end)
 	)
+
 	Props.Padding = EnsureValue(
 		Props.Padding,
 		"UDim",
@@ -31,6 +29,9 @@ local function SwitchInput(Props: table)
 			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
 		end)
 	)
+
+	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
+	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
 	local ContentColor = Computed(function()
 		if Props.SwitchedOn:get() then
@@ -41,20 +42,29 @@ local function SwitchInput(Props: table)
 	end)
 
 	return Finalize(BaseButton {
-		Name = Props.Name or "SwitchInput",
+		Name = Props.Name,
 		Parent = Props.Parent,
-		LayoutOrder = Props.LayoutOrder,
 		Position = Props.Position,
+		Rotation = Props.Rotation,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
 		AutomaticSize = Props.AutomaticSize,
+		Visible = Props.Visible,
 		ZIndex = Props.ZIndex,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
 		Selectable = Props.Selectable,
+		Interactable = Props.Interactable,
+		BackgroundColor3 = Props.BackgroundColor3,
+		BackgroundTransparency = Props.BackgroundTransparency,
+
+		ClickSound = Themer.Theme.Sound.Switch,
+
+		Disabled = Props.Disabled,
 
 		OnActivated = function()
-			if not Props.Disabled:get() then
-				Props.SwitchedOn:set(not Props.SwitchedOn:get())
-			end
+			Props.SwitchedOn:set(not Props.SwitchedOn:get())
 		end,
 
 		[Children] = {

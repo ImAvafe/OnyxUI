@@ -1,12 +1,16 @@
+local SoundService = game:GetService("SoundService")
+
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Finalize = require(OnyxUI.Utils.Finalize)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local New = Fusion.New
 local OnEvent = Fusion.OnEvent
 local Children = Fusion.Children
+local Computed = Fusion.Computed
 
 local function Button(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "BaseButton")
@@ -24,30 +28,49 @@ local function Button(Props: table)
 	Props.OnMouseButton1Down = EnsureValue(Props.OnMouseButton1Down, "function", function() end)
 	Props.OnMouseButton1Up = EnsureValue(Props.OnMouseButton1Up, "function", function() end)
 
+	Props.HoverSound = EnsureValue(Props.HoverSound, "Sound", Themer.Theme.Sound.Hover)
+	Props.ClickSound = EnsureValue(Props.ClickSound, "Sound", Themer.Theme.Sound.Click)
+
+	Props.Active = EnsureValue(
+		Props.Active,
+		"boolean",
+		Computed(function()
+			return not Props.Disabled:get()
+		end)
+	)
+
 	return Finalize(New "TextButton" {
 		Name = Props.Name,
 		Parent = Props.Parent,
-		LayoutOrder = Props.LayoutOrder,
 		Position = Props.Position,
+		Rotation = Props.Rotation,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
 		AutomaticSize = Props.AutomaticSize,
-		ZIndex = Props.ZIndex,
 		Visible = Props.Visible,
+		ZIndex = Props.ZIndex,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
 		Selectable = Props.Selectable,
+		Interactable = Props.Interactable,
+		BackgroundColor3 = Props.BackgroundColor3,
+		BackgroundTransparency = Props.BackgroundTransparency,
 
 		Text = "",
 		AutoLocalize = false,
-		BackgroundTransparency = Props.BackgroundTransparency,
-		BackgroundColor3 = Props.BackgroundColor3,
-		ClipsDescendants = Props.ClipsDescendants,
 
 		[OnEvent "Activated"] = function()
+			print(1)
 			if not Props.Disabled:get() then
+				SoundService:PlayLocalSound(Props.ClickSound:get())
 				Props.OnActivated:get()()
 			end
 		end,
 		[OnEvent "MouseEnter"] = function()
+			if Props.Active:get() then
+				SoundService:PlayLocalSound(Props.HoverSound:get())
+			end
 			Props.IsHovering:set(true)
 			Props.OnMouseEnter:get()()
 		end,

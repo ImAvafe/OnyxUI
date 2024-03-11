@@ -1,11 +1,11 @@
 local SettingsMenu = require(script.Parent.SettingsMenu)
 
 return function(Target: Instance)
-  local Instance = SettingsMenu {
-    Parent = Target,
-  }
+	local Instance = SettingsMenu {
+		Parent = Target,
+	}
 
-  return function()
-    Instance:Destroy()
-  end
+	return function()
+		Instance:Destroy()
+	end
 end

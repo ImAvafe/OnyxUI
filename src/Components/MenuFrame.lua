@@ -35,13 +35,19 @@ local function MenuFrame(Props: table)
 
 	return New "CanvasGroup" {
 		Name = Props.Name,
-		LayoutOrder = Props.LayoutOrder,
+		Parent = Props.Parent,
 		Position = Props.Position,
+		Rotation = Props.Rotation,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
 		AutomaticSize = Props.AutomaticSize,
+		Visible = Props.Visible,
 		ZIndex = Props.ZIndex,
-		Parent = Props.Parent,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
+		Selectable = Props.Selectable,
+		Interactable = Props.Interactable,
 
 		GroupTransparency = Props.GroupTransparency,
 		BackgroundColor3 = Props.BackgroundColor3,

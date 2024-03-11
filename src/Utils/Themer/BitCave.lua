@@ -66,5 +66,5 @@ return {
 	SpringSpeed = {
 		Base = 60,
 	},
-	SpringDampening = 0.55,
+	SpringDampening = 0.75,
 }

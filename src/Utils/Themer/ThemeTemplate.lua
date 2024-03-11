@@ -3,6 +3,7 @@ local OnyxUI = script.Parent.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 
 local Value = Fusion.Value
+local New = Fusion.New
 
 return {
 	Colors = {
@@ -155,4 +156,22 @@ return {
 		Immediate = Value(1000),
 	},
 	SpringDampening = Value(1),
+	Sound = {
+		Hover = Value(New "Sound" {
+			SoundId = "rbxassetid://10066936758",
+			Volume = 0.05,
+		}),
+		Click = Value(New "Sound" {
+			SoundId = "rbxassetid://16480549841",
+			Volume = 0.5,
+		}),
+		Focus = Value(New "Sound" {
+			SoundId = "rbxassetid://16480549841",
+			Volume = 0.5,
+		}),
+		Switch = Value(New "Sound" {
+			SoundId = "rbxassetid://9119713951",
+			Volume = 0.5,
+		}),
+	},
 }

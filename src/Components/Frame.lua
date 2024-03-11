@@ -15,14 +15,19 @@ local function Frame(Props: table)
 	return Finalize(New "Frame" {
 		Name = Props.Name,
 		Parent = Props.Parent,
-		LayoutOrder = Props.LayoutOrder,
 		Position = Props.Position,
+		Rotation = Props.Rotation,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
 		AutomaticSize = Props.AutomaticSize,
-		ZIndex = Props.ZIndex,
 		Visible = Props.Visible,
-
+		ZIndex = Props.ZIndex,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
+		Selectable = Props.Selectable,
+		Interactable = Props.Interactable,
+		BackgroundColor3 = Props.BackgroundColor3,
 		BackgroundTransparency = Props.BackgroundTransparency,
 
 		[Children] = Props[Children],

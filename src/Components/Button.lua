@@ -62,6 +62,7 @@ local function Button(Props: table)
 		ClipsDescendants = Props.ClipsDescendants,
 		Active = Props.Active,
 		Selectable = Props.Selectable,
+		Interactable = Props.Interactable,
 
 		BackgroundTransparency = Computed(function()
 			if Props.Style:get() == "Filled" then

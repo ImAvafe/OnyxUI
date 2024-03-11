@@ -28,12 +28,20 @@ return function(Props: table)
 	return Finalize(Frame {
 		Name = Props.Name,
 		Parent = Props.Parent,
-		LayoutOrder = Props.LayoutOrder,
 		Position = Props.Position,
+		Rotation = Props.Rotation,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize or Enum.AutomaticSize.XY,
+		AutomaticSize = Props.AutomaticSize,
+		Visible = Props.Visible,
 		ZIndex = Props.ZIndex,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
+		Selectable = Props.Selectable,
+		Interactable = Props.Interactable,
+		BackgroundColor3 = Props.BackgroundColor3,
+		BackgroundTransparency = Props.BackgroundTransparency,
 
 		[Children] = {
 			New "UIScale" {
