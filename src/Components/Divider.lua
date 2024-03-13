@@ -52,9 +52,9 @@ return function(Props: table)
 
 		Size = Computed(function()
 			if Props.FillDirection:get() == Enum.FillDirection.Horizontal then
-				return UDim2.new(Props.Length:get(), UDim.new(1, 0))
+				return UDim2.new(Props.Length:get(), UDim.new(0, 0))
 			else
-				return UDim2.new(UDim.new(1, 0), Props.Length:get())
+				return UDim2.new(UDim.new(0, 0), Props.Length:get())
 			end
 		end),
 		AutomaticSize = Computed(function()
