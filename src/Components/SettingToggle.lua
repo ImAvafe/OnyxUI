@@ -36,8 +36,8 @@ local function SettingToggle(Props: table)
 				end),
 			},
 			SwitchInput {
-				AnchorPoint = Vector2.new(1, 0.5),
-				Position = UDim2.fromScale(1, 0.5),
+				AnchorPoint = Vector2.new(1, 0),
+				Position = UDim2.fromScale(1, 0),
 				SwitchedOn = Props.SwitchedOn,
 				Disabled = Props.Disabled,
 				Selectable = false,
