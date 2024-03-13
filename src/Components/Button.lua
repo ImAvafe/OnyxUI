@@ -167,7 +167,7 @@ local function Button(Props: table)
 						TextTransparency = ContentTransparency,
 					}
 				end
-			end, Fusion.Cleanup),
+			end, Fusion.cleanup),
 		},
 	})
 end
