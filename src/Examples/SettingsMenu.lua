@@ -36,11 +36,19 @@ local function SettingsMenu(Props: table)
 				[Children] = {
 					New "UIListLayout" {
 						SortOrder = Enum.SortOrder.LayoutOrder,
-						Padding = UDim.new(0, 6),
+						Padding = Computed(function()
+							return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+						end),
 					},
 					New "UIPadding" {
+						PaddingBottom = Computed(function()
+							return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+						end),
 						PaddingRight = UDim.new(0, 16),
 						PaddingLeft = Computed(function()
+							return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+						end),
+						PaddingTop = Computed(function()
 							return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 						end),
 					},
