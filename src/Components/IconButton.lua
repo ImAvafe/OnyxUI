@@ -9,23 +9,32 @@ local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
-local Icon = require(OnyxUI.Components.Icon)
+local Button = require(OnyxUI.Components.Button)
 
 local function IconButton(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "IconButton")
-	Props.ImageColor3 = EnsureValue(Props.ImageColor3, "Color3", Color3.fromRGB(255, 255, 255))
-	Props.CornerRadius = EnsureValue(
-		Props.CornerRadius,
-		"number",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-		end)
+
+	Props.Image = EnsureValue(Props.Image, "string", "")
+	Props.Padding = EnsureValue(
+		Props.Padding,
+		"UIPadding",
+		New "UIPadding" {
+			PaddingBottom = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+			end),
+			PaddingLeft = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+			end),
+			PaddingRight = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+			end),
+			PaddingTop = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+			end),
+		}
 	)
 
-	Props.IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
-
-	return BaseButton {
+	return Button {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -39,32 +48,21 @@ local function IconButton(Props: table)
 		ClipsDescendants = Props.ClipsDescendants,
 		Active = Props.Active,
 		Selectable = Props.Selectable,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
+		Interactable = Props.Interactable,
 
-		Image = Props.Image,
-		ImageColor3 = Props.ImageColor3,
-		ImageTransparency = Props.ImageTransparency,
-		ImageRectSize = Props.ImageRectSize,
-		ResampleMode = Props.ResampleMode,
-		ScaleType = Props.ScaleType,
-		SliceCenter = Props.SliceCenter,
-		SliceScale = Props.SliceScale,
-		TileSize = Props.TileSize,
+		Contents = Computed(function()
+			return { Props.Image:get() }
+		end),
+		Padding = Props.Padding,
 
-		IsHovering = Props.IsHovering,
-		OnActivated = Props.OnActivated,
+		Disabled = Props.Disabled,
+		Style = Props.Style,
+		Color = Props.Color,
+		ContrastColor = Props.ContrastColor,
+		ContentSize = Props.ContentSize,
 
 		[Children] = {
-			New "UIListLayout" {},
-			New "UICorner" {
-				CornerRadius = Props.CornerRadius,
-			},
-			Icon {
-				Image = Props.Image,
-				Size = Props.Size,
-				ImageColor3 = Props.ImageColor3,
-			},
+			Props[Children],
 		},
 	}
 end

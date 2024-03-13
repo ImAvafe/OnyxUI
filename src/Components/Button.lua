@@ -36,6 +36,24 @@ local function Button(Props: table)
 		end)
 	)
 	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1.125"])
+	Props.Padding = EnsureValue(
+		Props.Padding,
+		"UIPadding",
+		New "UIPadding" {
+			PaddingBottom = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+			end),
+			PaddingLeft = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			end),
+			PaddingRight = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			end),
+			PaddingTop = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+			end),
+		}
+	)
 
 	Props.IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
 
@@ -116,20 +134,7 @@ local function Button(Props: table)
 					return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
 				end),
 			},
-			New "UIPadding" {
-				PaddingBottom = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-				end),
-				PaddingLeft = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-				end),
-				PaddingRight = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-				end),
-				PaddingTop = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-				end),
-			},
+			Props.Padding,
 			New "UIListLayout" {
 				SortOrder = Enum.SortOrder.LayoutOrder,
 				Padding = Computed(function()

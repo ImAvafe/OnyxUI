@@ -60,11 +60,11 @@ local function TitleBar(Props: table)
 					return IconButton {
 						Name = "CloseButton",
 						Image = Props.CloseButtonImage,
+						Style = "Ghost",
+						Color = Themer.Theme.Colors.BaseContent.Main,
+						ContentSize = Props.TextSize,
 						AnchorPoint = Vector2.new(1, 0),
 						Position = UDim2.fromScale(1, 0),
-						Size = Computed(function()
-							return UDim2.fromOffset(Props.TextSize:get(), Props.TextSize:get())
-						end),
 						OnActivated = function()
 							if Props.OnClose:get() then
 								Props.OnClose:get()()
