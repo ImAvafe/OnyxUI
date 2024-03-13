@@ -8,8 +8,6 @@ local Themer = require(OnyxUI.Utils.Themer)
 local New = Fusion.New
 local Children = Fusion.Children
 
-local Frame = require(OnyxUI.Components.Frame)
-
 local function ScrollingFrame(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "ScrollingFrame")
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "Enum", Enum.AutomaticSize.None)

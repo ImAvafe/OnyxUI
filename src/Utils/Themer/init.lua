@@ -1,7 +1,6 @@
 local OnyxUI = script.Parent.Parent
 
 local ReconcileValues = require(script.Parent.Parent.Utils.ReconcileValues)
-local Fusion = require(OnyxUI.Parent.Fusion)
 local OnyxNightTheme = require(script.OnyxNight)
 local ThemeTemplate = require(script.ThemeTemplate)
 local Loader = require(OnyxUI.Parent.Loader)

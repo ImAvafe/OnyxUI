@@ -1,9 +1,6 @@
 local OnyxUI = script.Parent.Parent.Parent
 
 local Colors = require(OnyxUI.Utils.Colors)
-local Fusion = require(OnyxUI.Parent.Fusion)
-
-local New = Fusion.New
 
 return {
 	Colors = {
