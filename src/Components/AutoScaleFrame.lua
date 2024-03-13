@@ -2,7 +2,6 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Finalize = require(OnyxUI.Utils.Finalize)
 
 local New = Fusion.New
 local Value = Fusion.Value
@@ -25,7 +24,7 @@ return function(Props: table)
 		[Out "ViewportSize"] = ViewportSize,
 	}
 
-	return Finalize(Frame {
+	return Frame {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -57,5 +56,5 @@ return function(Props: table)
 
 			Props[Children],
 		},
-	})
+	}
 end

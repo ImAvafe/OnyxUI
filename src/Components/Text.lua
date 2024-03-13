@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Finalize = require(OnyxUI.Utils.Finalize)
+
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -28,7 +28,7 @@ local function Text(Props: table)
 	Props.TextYAlignment = EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 
-	return Finalize(New "TextLabel" {
+	return New "TextLabel" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -67,7 +67,7 @@ local function Text(Props: table)
 		[Out "TextFits"] = Props.TextFits,
 
 		[Children] = Props[Children],
-	})
+	}
 end
 
 return Text

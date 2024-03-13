@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Finalize = require(OnyxUI.Utils.Finalize)
+
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -25,7 +25,7 @@ local function IconButton(Props: table)
 
 	Props.IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
 
-	return Finalize(BaseButton {
+	return BaseButton {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -66,7 +66,7 @@ local function IconButton(Props: table)
 				ImageColor3 = Props.ImageColor3,
 			},
 		},
-	})
+	}
 end
 
 return IconButton

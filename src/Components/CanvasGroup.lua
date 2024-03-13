@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Finalize = require(OnyxUI.Utils.Finalize)
+
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
@@ -12,7 +12,7 @@ local function Frame(Props: table)
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
 
-	return Finalize(New "CanvasGroup" {
+	return New "CanvasGroup" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -34,7 +34,7 @@ local function Frame(Props: table)
 		GroupColor3 = Props.GroupColor3,
 
 		[Children] = Props[Children],
-	})
+	}
 end
 
 return Frame

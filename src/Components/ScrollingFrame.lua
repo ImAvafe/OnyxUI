@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Finalize = require(OnyxUI.Utils.Finalize)
+
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -19,7 +19,7 @@ local function ScrollingFrame(Props: table)
 	Props.ScrollBarImageColor3 =
 		EnsureValue(Props.ScrollBarImageColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark)
 
-	return Finalize(New "ScrollingFrame" {
+	return New "ScrollingFrame" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -49,7 +49,7 @@ local function ScrollingFrame(Props: table)
 		[Children] = {
 			[Children] = Props[Children],
 		},
-	})
+	}
 end
 
 return ScrollingFrame

@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Finalize = require(OnyxUI.Utils.Finalize)
+
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -13,7 +13,7 @@ local function SwitchGroup(Props: table)
 	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
-	return Finalize(BaseButton {
+	return BaseButton {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -40,7 +40,7 @@ local function SwitchGroup(Props: table)
 		end,
 
 		[Children] = Props[Children],
-	})
+	}
 end
 
 return SwitchGroup

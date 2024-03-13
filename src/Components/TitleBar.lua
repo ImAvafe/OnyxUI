@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Finalize = require(OnyxUI.Utils.Finalize)
+
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -28,7 +28,7 @@ local function TitleBar(Props: table)
 	Props.CloseButtonImage = EnsureValue(Props.CloseButtonImage, "string", "rbxassetid://13405228418")
 	Props.OnClose = EnsureValue(Props.OnClose, "function", function() end)
 
-	return Finalize(Frame {
+	return Frame {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -74,7 +74,7 @@ local function TitleBar(Props: table)
 				end
 			end, Fusion.cleanup),
 		},
-	})
+	}
 end
 
 return TitleBar

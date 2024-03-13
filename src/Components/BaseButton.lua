@@ -3,7 +3,7 @@ local SoundService = game:GetService("SoundService")
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Finalize = require(OnyxUI.Utils.Finalize)
+
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -41,7 +41,7 @@ local function Button(Props: table)
 		end)
 	)
 
-	return Finalize(New "TextButton" {
+	return New "TextButton" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -105,7 +105,7 @@ local function Button(Props: table)
 		end,
 
 		[Children] = Props[Children],
-	})
+	}
 end
 
 return Button

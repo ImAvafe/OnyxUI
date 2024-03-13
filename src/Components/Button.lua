@@ -2,7 +2,7 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local ColourUtils = require(OnyxUI.Parent.ColourUtils)
-local Finalize = require(OnyxUI.Utils.Finalize)
+
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 
@@ -68,7 +68,7 @@ local function Button(Props: table)
 		end
 	end)
 
-	return Finalize(BaseButton {
+	return BaseButton {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -169,7 +169,7 @@ local function Button(Props: table)
 				end
 			end, Fusion.cleanup),
 		},
-	})
+	}
 end
 
 return Button
