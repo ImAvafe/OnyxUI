@@ -16,9 +16,13 @@ return function(Target: Instance)
 	local NotificationCount = Value(0)
 
 	local CountLoop = task.spawn(function()
-		for Count = 1, 10 do
-			NotificationCount:set(Count)
-			task.wait(0.5)
+		while task.wait(0.08) do
+			if NotificationCount:get() == 100 then
+				task.wait(3)
+				NotificationCount:set(1)
+			else
+				NotificationCount:set(NotificationCount:get() + 1)
+			end
 		end
 	end)
 
@@ -48,8 +52,8 @@ return function(Target: Instance)
 			},
 			Badge {
 				Contents = Computed(function()
-					if NotificationCount:get() == 10 then
-						return { "9+" }
+					if NotificationCount:get() >= 100 then
+						return { "99+" }
 					else
 						return { NotificationCount:get() }
 					end
