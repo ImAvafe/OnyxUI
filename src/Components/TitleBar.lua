@@ -62,7 +62,9 @@ local function TitleBar(Props: table)
 						Image = Props.CloseButtonImage,
 						Style = "Ghost",
 						Color = Themer.Theme.Colors.BaseContent.Main,
-						ContentSize = Props.TextSize,
+						ContentSize = Computed(function()
+							return Props.TextSize:get() * 0.9
+						end),
 						AnchorPoint = Vector2.new(1, 0),
 						Position = UDim2.fromScale(1, 0),
 						OnActivated = function()
