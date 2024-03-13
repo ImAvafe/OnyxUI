@@ -37,6 +37,10 @@ return function(Target: Instance)
 				Color = Themer.Theme.Colors.Error.Main,
 			},
 			Button {
+				Contents = { "Ghost" },
+				Style = "Ghost",
+			},
+			Button {
 				Contents = { "rbxassetid://11560341132", "Bobux" },
 				Color = Color3.fromRGB(86, 255, 70),
 				Disabled = true,
