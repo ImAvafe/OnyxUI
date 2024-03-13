@@ -68,20 +68,6 @@ local function SwitchInput(Props: table)
 		end,
 
 		[Children] = {
-			New "UIPadding" {
-				PaddingTop = Computed(function()
-					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-				end),
-				PaddingBottom = Computed(function()
-					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-				end),
-				PaddingRight = Computed(function()
-					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-				end),
-				PaddingLeft = Computed(function()
-					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-				end),
-			},
 			New "Frame" {
 				Name = "Switch",
 				Size = Props.Size,
