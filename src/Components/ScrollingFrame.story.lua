@@ -1,4 +1,4 @@
-local Component = require(script.Parent.IconButton)
+local Component = require(script.Parent.ScrollingFrame)
 
 return function(Target: Instance)
 	local Instance = Component {
