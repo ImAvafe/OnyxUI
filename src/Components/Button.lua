@@ -16,8 +16,8 @@ local BaseButton = require(OnyxUI.Components.BaseButton)
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 
-local DISABLED_BACKGROUND_TRANSPARENCY = 0.95
-local DISABLED_CONTENT_TRANSPARENCY = 0.8
+local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
+local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
 local function Button(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "Button")
