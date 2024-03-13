@@ -49,13 +49,7 @@ local function ScrollingFrame(Props: table)
 		TopImage = "rbxassetid://16547667444",
 
 		[Children] = {
-			Frame {
-				Name = "Contents",
-				Size = UDim2.fromScale(1, 1),
-				AutomaticSize = Enum.AutomaticSize.None,
-
-				[Children] = Props[Children],
-			},
+			[Children] = Props[Children],
 		},
 	})
 end
