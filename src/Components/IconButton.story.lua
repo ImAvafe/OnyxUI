@@ -23,7 +23,7 @@ return function(Target: Instance)
 				SortOrder = Enum.SortOrder.LayoutOrder,
 			},
 			IconButton {
-				Image = "rbxassetid://16735398592",
+				Image = "rbxassetid://10814531047",
 			},
 			IconButton {
 				Image = "rbxassetid://11560341132",
@@ -38,6 +38,15 @@ return function(Target: Instance)
 				Image = "rbxassetid://13405228418",
 				Color = Colors.Red["500"],
 				Style = "Ghost",
+			},
+			IconButton {
+				Image = "rbxassetid://10814531047",
+				Disabled = true,
+			},
+			IconButton {
+				Image = "rbxassetid://10814531047",
+				Style = "Ghost",
+				Disabled = true,
 			},
 		},
 	}

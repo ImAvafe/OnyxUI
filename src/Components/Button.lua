@@ -18,7 +18,7 @@ local Icon = require(OnyxUI.Components.Icon)
 
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
-local HOLDING_BACKGROUND_TRANSPARENCY = 0.9
+local HOLDING_BACKGROUND_TRANSPARENCY = 0.95
 
 local function Button(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "Button")
@@ -75,9 +75,9 @@ local function Button(Props: table)
 			if Props.Style:get() == "Filled" then
 				return Props.ContrastColor:get()
 			elseif Props.Style:get() == "Outlined" then
-				return Props.Color:get()
+				return Color:get()
 			elseif Props.Style:get() == "Ghost" then
-				return Props.Color:get()
+				return Color:get()
 			end
 		end
 	end)
@@ -149,10 +149,10 @@ local function Button(Props: table)
 				Color = Spring(Color, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
 				Thickness = Themer.Theme.StrokeThickness["1"],
 				Transparency = Computed(function()
-					if Props.Disabled:get() then
-						return DISABLED_BACKGROUND_TRANSPARENCY
-					elseif Props.Style:get() == "Ghost" then
+					if Props.Style:get() == "Ghost" then
 						return 1
+					elseif Props.Disabled:get() then
+						return DISABLED_BACKGROUND_TRANSPARENCY
 					else
 						return 0
 					end
