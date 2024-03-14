@@ -59,7 +59,7 @@ function Digit.new(Spinner, LayoutOrder, Value)
 			end
 
 			local Success = pcall(function()
-				local x = d.Labels[1][key]
+				local _x = d.Labels[1][key]
 			end)
 			if Success then
 				return d.Labels[1][key]
@@ -76,7 +76,7 @@ function Digit.new(Spinner, LayoutOrder, Value)
 			end
 
 			local Success = pcall(function()
-				local x = d.Labels[1][key]
+				local _x = d.Labels[1][key]
 			end)
 			if Success then
 				for i = 0, 9 do
@@ -88,13 +88,13 @@ function Digit.new(Spinner, LayoutOrder, Value)
 	})
 
 	function d:Destroy()
-		local Size = TextService:GetTextSize(
+		local _Size = TextService:GetTextSize(
 			"8",
 			Spinner.TextSize,
 			Spinner.Font,
 			Vector2.new(Spinner.TextSize, Spinner.TextSize)
 		)
-		local shrinkTween = TweenService:Create(Frame, sizeTweenInfo, { Size = UDim2.new(0, 0, 0, Size.Y + 10) })
+		local shrinkTween = TweenService:Create(Frame, sizeTweenInfo, { Size = UDim2.new(0, 0, 0, _Size.Y + 10) })
 		shrinkTween.Completed:Connect(function()
 			Frame:Destroy()
 			table.clear(d)
@@ -103,22 +103,22 @@ function Digit.new(Spinner, LayoutOrder, Value)
 		shrinkTween:Play()
 	end
 
-	function d:Update(Type, Value)
+	function d:Update(Type, _Value)
 		if Type == "Duration" then
-			tweenInfo = TweenInfo.new(Value)
+			tweenInfo = TweenInfo.new(_Value)
 			for i = 0, 9 do
 				d.CanvasTweens[i] = TweenService:Create(Canvas, tweenInfo, { Position = UDim2.new(0, 0, -i, 0) })
 			end
 		elseif Type == "Value" then
-			d.CanvasTweens[Value]:Play()
+			d.CanvasTweens[_Value]:Play()
 		elseif Type == "TextSize" or Type == "Font" then
-			local Size = TextService:GetTextSize(
+			local _Size = TextService:GetTextSize(
 				"8",
 				Spinner.TextSize,
 				Spinner.Font,
 				Vector2.new(Spinner.TextSize, Spinner.TextSize)
 			)
-			TweenService:Create(Frame, sizeTweenInfo, { Size = UDim2.new(0, Size.X + 1, 0, Size.Y + 10) }):Play()
+			TweenService:Create(Frame, sizeTweenInfo, { Size = UDim2.new(0, _Size.X + 1, 0, _Size.Y + 10) }):Play()
 		end
 	end
 

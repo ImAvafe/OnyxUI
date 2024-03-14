@@ -1,5 +1,3 @@
-local TweenService = game:GetService("TweenService")
-
 local DigitModule = require(script.Digit)
 
 local NumberSpinner = {}
@@ -59,16 +57,16 @@ local function newSpinner()
 			end
 
 			local Success = pcall(function()
-				local x = DUMMY_FRAME[key]
+				local _x = DUMMY_FRAME[key]
 			end)
 			if Success then
 				return Spinner.Frame[key]
 			end
 
-			local Success, TextProp = pcall(function()
+			local _Success, TextProp = pcall(function()
 				return DUMMY_LABEL[key]
 			end)
-			if Success then
+			if _Success then
 				local d = Spinner.Digits.Whole[1]
 				if d then
 					return d[key]
@@ -88,7 +86,7 @@ local function newSpinner()
 
 			-- Handle setting of Frame properties
 			local Success = pcall(function()
-				local x = DUMMY_FRAME[key]
+				local _x = DUMMY_FRAME[key]
 			end)
 			if Success then
 				local t = typeof(DUMMY_FRAME[key])
@@ -107,22 +105,22 @@ local function newSpinner()
 			end
 
 			-- Handle setting of text related properties
-			local Success = pcall(function()
-				local x = DUMMY_LABEL[key]
+			local _Success = pcall(function()
+				local _x = DUMMY_LABEL[key]
 			end)
-			if Success then
+			if _Success then
 				local t = typeof(DUMMY_LABEL[key])
 				if (t ~= "nil") and (t ~= typeof(value)) then
 					warn("Attempted to set Spinner." .. key .. " to invalid value (" .. tostring(value) .. ")")
 					return
 				end
-				for i, Digit in pairs(Spinner.Digits.Whole) do
+				for _i, Digit in pairs(Spinner.Digits.Whole) do
 					Digit[key] = value
 				end
-				for i, Digit in pairs(Spinner.Digits.Decimal) do
+				for _i, Digit in pairs(Spinner.Digits.Decimal) do
 					Digit[key] = value
 				end
-				for i, Comma in pairs(Spinner.CommaLabels) do
+				for _i, Comma in pairs(Spinner.CommaLabels) do
 					Comma[key] = value
 				end
 				Spinner.PrefixLabel[key] = value
@@ -150,7 +148,7 @@ local function newSpinner()
 		table.clear(self)
 	end
 
-	function Spinner:Update(Type, Value)
+	function Spinner:Update(Type, _Value)
 		if Type == "Prefix" then
 			Spinner.PrefixLabel.Text = Spinner.Prefix
 			return

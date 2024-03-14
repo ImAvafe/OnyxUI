@@ -5,7 +5,6 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local New = Fusion.New
 local Children = Fusion.Children
 local Value = Fusion.Value
-local Computed = Fusion.Computed
 
 local Frame = require(OnyxUI.Components.Frame)
 local NumberSpinner = require(OnyxUI.Components.NumberSpinner)
