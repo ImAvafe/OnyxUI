@@ -1,34 +1,41 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-
+local NumberSpinner = require(script.NumberSpinner)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 
-local New = Fusion.New
-local Children = Fusion.Children
-local Out = Fusion.Out
+local Cleanup = Fusion.Cleanup
+local Observer = Fusion.Observer
 local Computed = Fusion.Computed
 
-local function Text(Props: table)
-	Props.Name = EnsureValue(Props.Name, "string", "Text")
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
-	Props.TextColor3 = EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
+local Text = require(OnyxUI.Components.Text)
+
+local SPINNER_PROPS = { "Value", "Prefix", "Suffix", "Decimals", "Duration", "Commas" }
+
+return function(Props: table)
+	Props.Name = EnsureValue(Props.Name, "string", "NumberSpinner")
+	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)
 	Props.TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
-	Props.RichText = EnsureValue(Props.RichText, "boolean", true)
-	Props.FontFace = EnsureValue(
-		Props.FontFace,
-		"Font",
+	Props.Size = EnsureValue(
+		Props.Size,
+		"UDim2",
 		Computed(function()
-			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
+			return UDim2.new(UDim.new(1, 0), UDim.new(0, Props.TextSize:get()))
 		end)
 	)
-	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)
-	Props.TextXAlignment = EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
-	Props.TextYAlignment = EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
-	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
+	Props.Font = EnsureValue(Props.Font, "EnumItem", Enum.Font.GothamBold)
 
-	return New "TextLabel" {
+	Props.Value = EnsureValue(Props.Value, "number", 0)
+	Props.Prefix = EnsureValue(Props.Prefix, "string", "")
+	Props.Suffix = EnsureValue(Props.Suffix, "string", "")
+	Props.Decimals = EnsureValue(Props.Decimals, "number", 0)
+	Props.Duration = EnsureValue(Props.Duration, "number", 0.3)
+	Props.Commas = EnsureValue(Props.Commas, "boolean", false)
+
+	local PropObservers = {}
+
+	local Spinner = NumberSpinner.fromGuiObject(Text {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -63,12 +70,18 @@ local function Text(Props: table)
 		MaxVisibleGraphemes = Props.MaxVisibleGraphemes,
 		TextTransparency = Props.TextTransparency,
 
-		[Out "ContentText"] = Props.ContentText,
-		[Out "TextBounds"] = Props.TextBounds,
-		[Out "TextFits"] = Props.TextFits,
+		[Cleanup] = PropObservers,
+	})
 
-		[Children] = Props[Children],
-	}
+	for _, PROP_NAME in ipairs(SPINNER_PROPS) do
+		Spinner[PROP_NAME] = Props[PROP_NAME]:get()
+		table.insert(
+			PropObservers,
+			Observer(Props[PROP_NAME]):onChange(function()
+				Spinner[PROP_NAME] = Props[PROP_NAME]:get()
+			end)
+		)
+	end
+
+	return Spinner.GuiObject
 end
-
-return Text
