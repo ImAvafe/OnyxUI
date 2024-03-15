@@ -29,7 +29,7 @@ return function(Target: Instance)
 				end),
 			},
 			Card {
-				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 150)),
+				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 75)),
 				AutomaticSize = Enum.AutomaticSize.None,
 			},
 			Card {
