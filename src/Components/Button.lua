@@ -175,6 +175,7 @@ local function Button(Props: table)
 						TextColor3 = ContentColor,
 						TextSize = Props.ContentSize,
 						TextTransparency = ContentTransparency,
+						TextWrapped = false,
 					}
 				end
 			end, Fusion.cleanup),

@@ -32,6 +32,7 @@ local function SettingToggle(Props: table)
 						return Color3.fromRGB(207, 207, 207)
 					end
 				end),
+				TextWrapped = false,
 			},
 			SwitchInput {
 				AnchorPoint = Vector2.new(1, 0),

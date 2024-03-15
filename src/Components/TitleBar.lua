@@ -51,6 +51,7 @@ local function TitleBar(Props: table)
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = UDim2.fromScale(0.5, 0),
 				Text = Props.Title,
+				TextWrapped = false,
 				TextSize = Props.TextSize,
 				FontFace = Props.FontFace,
 				AutoLocalize = Props.AutoLocalize,

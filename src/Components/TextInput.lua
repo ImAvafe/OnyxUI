@@ -36,6 +36,7 @@ local function TextInput(Props: table)
 	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)
 	Props.AutoLocalize = EnsureValue(Props.AutoLocalize, "boolean", false)
 	Props.TextXAlignment = EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
+	Props.TextWrapped = EnsureValue(Props.TextWrapped, "boolean", false)
 
 	Props.CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
 	Props.RemainingCharaters = EnsureValue(Props.RemainingCharaters, "number", -1)
