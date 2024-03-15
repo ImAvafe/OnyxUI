@@ -3,7 +3,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="/gh-assets/Logo.svg"></source>
       <source media="(prefers-color-scheme: light)" srcset="/gh-assets/Logo.svg"></source>
-      <img alt="OnyxUI" src="/gh-assets/Logo.svg" height="100"></img>
+      <img alt="OnyxUI" src="/gh-assets/Logo.svg" height="90"></img>
     </picture>
   </a>
 </p>
