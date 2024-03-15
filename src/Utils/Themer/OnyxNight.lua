@@ -15,7 +15,7 @@ return {
 		},
 
 		Neutral = {
-			Main = Colors.Stone["700"],
+			Main = Colors.Stone["800"],
 		},
 		NeutralContent = {
 			Main = Colors.Stone["300"],
