@@ -49,7 +49,7 @@ return {
 	FontWeight = {
 		Body = Enum.FontWeight.SemiBold,
 		Bold = Enum.FontWeight.Bold,
-		Heading = Enum.FontWeight.SemiBold,
+		Heading = Enum.FontWeight.Bold,
 	},
 	TextSize = {
 		Base = 19,

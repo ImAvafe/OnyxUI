@@ -10,6 +10,7 @@ local Computed = Fusion.Computed
 local Frame = require(OnyxUI.Components.Frame)
 local Card = require(OnyxUI.Components.Card)
 local Text = require(OnyxUI.Components.Text)
+local Divider = require(OnyxUI.Components.Divider)
 
 return function(Target: Instance)
 	local Instance = Frame {
@@ -40,10 +41,18 @@ return function(Target: Instance)
 						Padding = Computed(function()
 							return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
 						end),
+						SortOrder = Enum.SortOrder.LayoutOrder,
 					},
 					Text {
+						Text = "Title",
+						TextSize = Themer.Theme.TextSize["1.25"],
+						FontFace = Computed(function()
+							return Font.new(Themer.Theme.Font.Heading:get(), Themer.Theme.FontWeight.Heading:get())
+						end),
+					},
+					Divider {},
+					Text {
 						Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-						TextWrapped = true,
 					},
 				},
 			},

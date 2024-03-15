@@ -12,12 +12,12 @@ local Frame = require(OnyxUI.Components.Frame)
 
 return function(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "Divider")
-	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Neutral.Dark)
 
 	Props.Length = EnsureValue(Props.Length, "UDim", UDim.new(1, 0))
 	Props.FillDirection = EnsureValue(Props.FillDirection, "EnumItem", Enum.FillDirection.Horizontal)
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Dark)
-	Props.Spacing = EnsureValue(Props.Spacing, "number", Themer.Theme.Spacing["0.75"])
+	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.BaseContent.Main)
+	Props.Transparency = EnsureValue(Props.Transparency, "number", 0.9)
+	Props.Spacing = EnsureValue(Props.Spacing, "number", Themer.Theme.Spacing["0.5"])
 
 	local VerticalPadding = Computed(function()
 		if Props.FillDirection:get() == Enum.FillDirection.Horizontal then
@@ -83,7 +83,7 @@ return function(Props: table)
 				end),
 				AutomaticSize = Enum.AutomaticSize.None,
 				BackgroundColor3 = Props.Color,
-				BackgroundTransparency = 0,
+				BackgroundTransparency = Props.Transparency,
 			},
 		},
 	}
