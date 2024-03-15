@@ -35,7 +35,7 @@ local function Button(Props: table)
 			return ColourUtils.Emphasise(Props.Color:get(), 1)
 		end)
 	)
-	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1.125"])
+	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
 	Props.Padding = EnsureValue(
 		Props.Padding,
 		"UIPadding",
