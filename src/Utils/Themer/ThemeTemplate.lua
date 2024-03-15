@@ -156,6 +156,7 @@ return {
 		Immediate = Value(1000),
 	},
 	SpringDampening = Value(1),
+	Emphasis = Value(0.15),
 	Sound = {
 		Hover = Value(New "Sound" {
 			SoundId = "rbxassetid://10066936758",

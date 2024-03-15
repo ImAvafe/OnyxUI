@@ -62,7 +62,7 @@ local function Button(Props: table)
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
 			if Props.IsHolding:get() then
-				return ColourUtils.Emphasise(Props.Color:get(), 0.1)
+				return ColourUtils.Emphasise(Props.Color:get(), Themer.Theme.Emphasis:get())
 			else
 				return Props.Color:get()
 			end
