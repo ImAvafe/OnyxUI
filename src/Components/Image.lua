@@ -26,7 +26,6 @@ return function(Props: table)
 				return ContentProvider:PreloadAsync(
 					{ Props.Image:get() },
 					function(AssetId: string, FetchStatus: EnumItem)
-						print(FetchStatus, AssetId)
 						if FetchStatus == Enum.AssetFetchStatus.Success then
 							Image:set(AssetId)
 						else
