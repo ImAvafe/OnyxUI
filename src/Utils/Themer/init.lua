@@ -160,6 +160,6 @@ function Themer:Set(Theme: table)
 end
 
 Themer:Set(OnyxNightTheme)
--- Themer:Set(Themer.Themes.BitCave)
+Themer:Set(Themer.Themes.BitCave)
 
 return Themer

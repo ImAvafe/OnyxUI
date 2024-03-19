@@ -2,9 +2,9 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
 
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
@@ -20,10 +20,11 @@ local function SettingsMenu(Props: table)
 		Size = UDim2.fromOffset(330, 0),
 
 		[Children] = {
-			New "UIListLayout" {
+			Modifier.ListLayout {
 				SortOrder = Enum.SortOrder.LayoutOrder,
 				Padding = UDim.new(0, Themer.Theme.Spacing["0.75"]:get()),
 			},
+
 			TitleBar {
 				Title = "Settings",
 			},
@@ -32,24 +33,19 @@ local function SettingsMenu(Props: table)
 				AutomaticSize = Enum.AutomaticSize.None,
 
 				[Children] = {
-					New "UIListLayout" {
+					Modifier.ListLayout {
 						SortOrder = Enum.SortOrder.LayoutOrder,
 						Padding = Computed(function()
 							return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 						end),
 					},
-					New "UIPadding" {
-						PaddingBottom = Computed(function()
+					Modifier.Padding {
+						Padding = Computed(function()
 							return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 						end),
 						PaddingRight = UDim.new(0, 16),
-						PaddingLeft = Computed(function()
-							return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-						end),
-						PaddingTop = Computed(function()
-							return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-						end),
 					},
+
 					SettingToggle {
 						Label = "Music",
 						SwitchedOn = true,
