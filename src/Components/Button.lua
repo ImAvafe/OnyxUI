@@ -5,6 +5,7 @@ local ColourUtils = require(OnyxUI.Parent.ColourUtils)
 
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -39,7 +40,7 @@ local function Button(Props: table)
 	Props.Padding = EnsureValue(
 		Props.Padding,
 		"UIPadding",
-		New "UIPadding" {
+		Modifier.Padding {
 			PaddingBottom = Computed(function()
 				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
 			end),
