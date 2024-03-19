@@ -29,7 +29,7 @@ return function(Props: Props)
 		Props.Padding,
 		"UDim",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end)
 	)
 

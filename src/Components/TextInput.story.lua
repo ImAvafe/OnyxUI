@@ -2,8 +2,8 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
@@ -12,24 +12,19 @@ local Frame = require(script.Parent.Frame)
 
 return {
 	story = function(Parent: GuiObject, _Props: table)
-		local PreviewPadding = Computed(function()
-			return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-		end)
-
 		local Instance = Frame {
 			Parent = Parent,
+			Size = UDim2.fromOffset(300, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
 
 			[Children] = {
-				New "UIPadding" {
-					PaddingBottom = PreviewPadding,
-					PaddingLeft = PreviewPadding,
-					PaddingRight = PreviewPadding,
-					PaddingTop = PreviewPadding,
+				Modifier.ListLayout {},
+				Modifier.Padding {
+					Padding = Computed(function()
+						return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+					end),
 				},
-				New "UIListLayout" {
-					Padding = UDim.new(0, 8),
-					FillDirection = Enum.FillDirection.Vertical,
-				},
+
 				TextInput {
 					PlaceholderText = "You can type here!",
 				},
@@ -42,7 +37,17 @@ return {
 					CharacterLimit = 20,
 				},
 				TextInput {
+					PlaceholderText = "Description..",
+					CharacterLimit = 80,
+					Multiline = true,
+					TextWrapped = true,
+					Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
+					AutomaticSize = Enum.AutomaticSize.None,
+				},
+				TextInput {
 					PlaceholderText = "This one wrap-expands!",
+					Multiline = true,
+					TextWrapped = true,
 				},
 			},
 		}
