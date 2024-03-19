@@ -13,12 +13,20 @@ local Checkbox = require(OnyxUI.Components.Checkbox)
 
 return {
 	story = function(Parent: GuiObject, _Props: table)
+		local PreviewPadding = Computed(function()
+			return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+		end)
+
 		local Instance = Frame {
 			Parent = Parent,
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
 
 			[Children] = {
+				New "UIPadding" {
+					PaddingBottom = PreviewPadding,
+					PaddingLeft = PreviewPadding,
+					PaddingRight = PreviewPadding,
+					PaddingTop = PreviewPadding,
+				},
 				New "UIListLayout" {
 					SortOrder = Enum.SortOrder.LayoutOrder,
 					FillDirection = Enum.FillDirection.Horizontal,

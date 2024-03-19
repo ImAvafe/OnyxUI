@@ -19,8 +19,6 @@ return {
 
 		local Instance = Frame {
 			Parent = Parent,
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
 
 			[Children] = {
 				New "UIListLayout" {

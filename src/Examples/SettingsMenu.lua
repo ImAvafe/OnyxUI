@@ -17,8 +17,6 @@ local TextInput = require(OnyxUI.Components.TextInput)
 local function SettingsMenu(Props: table)
 	return MenuFrame {
 		Parent = Props.Parent,
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		Position = UDim2.fromScale(0.5, 0.5),
 		Size = UDim2.fromOffset(330, 0),
 
 		[Children] = {

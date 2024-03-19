@@ -6,18 +6,27 @@ local Colors = require(OnyxUI.Utils.Colors)
 
 local New = Fusion.New
 local Children = Fusion.Children
+local Computed = Fusion.Computed
 
 local IconButton = require(script.Parent.IconButton)
 local Frame = require(script.Parent.Frame)
 
 return {
 	story = function(Parent: GuiObject, _Props: table)
+		local PreviewPadding = Computed(function()
+			return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+		end)
+
 		local Instance = Frame {
 			Parent = Parent,
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
 
 			[Children] = {
+				New "UIPadding" {
+					PaddingBottom = PreviewPadding,
+					PaddingLeft = PreviewPadding,
+					PaddingRight = PreviewPadding,
+					PaddingTop = PreviewPadding,
+				},
 				New "UIListLayout" {
 					Padding = UDim.new(0, Themer.Theme.Spacing["0.5"]:get()),
 					FillDirection = Enum.FillDirection.Horizontal,

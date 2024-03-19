@@ -5,18 +5,28 @@ local Themer = require(OnyxUI.Utils.Themer)
 
 local New = Fusion.New
 local Children = Fusion.Children
+local Computed = Fusion.Computed
 
 local Button = require(script.Parent.Button)
 local Frame = require(script.Parent.Frame)
 
 return {
+	clipsDescendants = false,
 	story = function(Parent: GuiObject, _Props: table)
+		local PreviewPadding = Computed(function()
+			return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+		end)
+
 		local Instance = Frame {
 			Parent = Parent,
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
 
 			[Children] = {
+				New "UIPadding" {
+					PaddingBottom = PreviewPadding,
+					PaddingLeft = PreviewPadding,
+					PaddingRight = PreviewPadding,
+					PaddingTop = PreviewPadding,
+				},
 				New "UIListLayout" {
 					Padding = UDim.new(0, Themer.Theme.Spacing["0.75"]:get()),
 					FillDirection = Enum.FillDirection.Vertical,

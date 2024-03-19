@@ -13,7 +13,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local Badge = require(OnyxUI.Components.Badge)
 
 return {
-	story = function(Parent: GuiObject, Props: table)
+	story = function(Parent: GuiObject, _Props: table)
 		local NotificationCount = Value(0)
 
 		local CountLoop = task.spawn(function()
@@ -29,8 +29,6 @@ return {
 
 		local Instance = Frame {
 			Parent = Parent,
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
 
 			[Children] = {
 				New "UIListLayout" {
