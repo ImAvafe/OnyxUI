@@ -40,6 +40,13 @@ local function Button(Props: table)
 			return not Props.Disabled:get()
 		end)
 	)
+	Props.Selectable = EnsureValue(
+		Props.Selectable,
+		"boolean",
+		Computed(function()
+			return not Props.Disabled:get()
+		end)
+	)
 
 	return New "TextButton" {
 		Name = Props.Name,
@@ -82,6 +89,13 @@ local function Button(Props: table)
 			end
 		end,
 		[OnEvent "MouseEnter"] = function()
+			if Props.Active:get() then
+				SoundService:PlayLocalSound(Props.HoverSound:get())
+			end
+			Props.IsHovering:set(true)
+			Props.OnMouseEnter:get()()
+		end,
+		[OnEvent "SelectionGained"] = function()
 			if Props.Active:get() then
 				SoundService:PlayLocalSound(Props.HoverSound:get())
 			end

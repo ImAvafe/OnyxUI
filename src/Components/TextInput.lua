@@ -37,6 +37,13 @@ local function TextInput(Props: table)
 	Props.AutoLocalize = EnsureValue(Props.AutoLocalize, "boolean", false)
 	Props.TextXAlignment = EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
 	Props.TextWrapped = EnsureValue(Props.TextWrapped, "boolean", false)
+	Props.Active = EnsureValue(
+		Props.Active,
+		"boolean",
+		Computed(function()
+			return not Props.Disabled:get()
+		end)
+	)
 
 	Props.CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
 	Props.RemainingCharaters = EnsureValue(Props.RemainingCharaters, "number", -1)
@@ -106,6 +113,11 @@ local function TextInput(Props: table)
 		end,
 		[OnEvent "MouseEnter"] = function()
 			SoundService:PlayLocalSound(Props.HoverSound:get())
+		end,
+		[OnEvent "SelectionGained"] = function()
+			if Props.Active:get() then
+				SoundService:PlayLocalSound(Props.HoverSound:get())
+			end
 		end,
 
 		[Out "Text"] = Props.Text,

@@ -18,6 +18,7 @@ local function ScrollingFrame(Props: table)
 	Props.ScrollBarImageTransparency = EnsureValue(Props.ScrollBarImageTransparency, "number", 0)
 	Props.ScrollBarImageColor3 =
 		EnsureValue(Props.ScrollBarImageColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark)
+	Props.Selectable = EnsureValue(Props.Selectable, "boolean", false)
 
 	return New "ScrollingFrame" {
 		Name = Props.Name,
