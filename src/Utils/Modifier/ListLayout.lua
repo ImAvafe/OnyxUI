@@ -33,7 +33,7 @@ return function(Props: Props)
 		end)
 	)
 
-	return New "UIStroke" {
+	return New "UIListLayout" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Padding = Props.Padding,

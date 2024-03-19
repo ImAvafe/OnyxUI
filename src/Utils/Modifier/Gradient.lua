@@ -15,7 +15,7 @@ type Props = {
 }
 
 return function(Props: Props)
-	return New "UIStroke" {
+	return New "UIGradient" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Enabled = Props.Enabled,

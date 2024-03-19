@@ -12,7 +12,7 @@ type Props = {
 }
 
 return function(Props: Props)
-	return New "UIStroke" {
+	return New "UIFlexItem" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		FlexMode = Props.FlexMode,

@@ -22,7 +22,7 @@ return function(Props: Props)
 		end)
 	)
 
-	return New "UIStroke" {
+	return New "UICorner" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		CornerRadius = Props.CornerRadius,

@@ -12,7 +12,7 @@ type Props = {
 }
 
 return function(Props: Props)
-	return New "UIStroke" {
+	return New "UISizeConstraint" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		MaxSize = Props.MaxSize,

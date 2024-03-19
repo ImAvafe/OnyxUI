@@ -29,7 +29,7 @@ return function(Props: Props)
 		end)
 	)
 
-	return New "UIStroke" {
+	return New "UITableLayout" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Padding = Props.Padding,

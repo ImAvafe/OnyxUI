@@ -36,7 +36,7 @@ return function(Props: Props)
 		end)
 	)
 
-	return New "UIStroke" {
+	return New "UIGridLayout" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		CellPadding = Props.CellPadding,

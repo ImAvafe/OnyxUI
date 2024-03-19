@@ -16,7 +16,7 @@ type Props = {
 return function(Props: Props)
 	Props.AspectType = EnsureValue(Props.AspectType, "EnumItem", Enum.AspectType.ScaleWithParentSize)
 
-	return New "UIStroke" {
+	return New "UIAspectRatioConstraint" {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		AspectRatio = Props.AspectRatio,
