@@ -3,8 +3,8 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
@@ -66,12 +66,13 @@ return function(Props: table)
 		end),
 
 		[Children] = {
-			New "UIPadding" {
+			Modifier.Padding {
 				PaddingTop = VerticalPadding,
 				PaddingBottom = VerticalPadding,
 				PaddingLeft = HorizontalPadding,
 				PaddingRight = HorizontalPadding,
 			},
+
 			Frame {
 				Name = "DividingLine",
 				Size = Computed(function()

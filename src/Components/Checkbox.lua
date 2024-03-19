@@ -4,9 +4,9 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 local ColourUtils = require(OnyxUI.Parent.ColourUtils)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 
@@ -76,13 +76,12 @@ return function(Props: table)
 		end,
 
 		[Children] = {
-			New "UICorner" {
+			Modifier.Corner {
 				CornerRadius = Computed(function()
 					return UDim.new(0, Themer.Theme.CornerRadius["0.5"]:get())
 				end),
 			},
-			New "UIStroke" {
-				Thickness = Themer.Theme.StrokeThickness["1"],
+			Modifier.Stroke {
 				Color = Computed(function()
 					if Props.Disabled:get() then
 						return Themer.Theme.Colors.BaseContent.Main:get()
@@ -97,8 +96,8 @@ return function(Props: table)
 						return 0
 					end
 				end),
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 			},
+
 			Icon {
 				Name = "CheckIcon",
 				Image = Props.Icon,

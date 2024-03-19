@@ -4,8 +4,8 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
@@ -18,17 +18,8 @@ local function IconButton(Props: table)
 	Props.Padding = EnsureValue(
 		Props.Padding,
 		"UIPadding",
-		New "UIPadding" {
-			PaddingBottom = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-			end),
-			PaddingLeft = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-			end),
-			PaddingRight = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-			end),
-			PaddingTop = Computed(function()
+		Modifier.Padding {
+			Padding = Computed(function()
 				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
 			end),
 		}
@@ -61,9 +52,7 @@ local function IconButton(Props: table)
 		ContrastColor = Props.ContrastColor,
 		ContentSize = Props.ContentSize,
 
-		[Children] = {
-			Props[Children],
-		},
+		[Children] = Props[Children],
 	}
 end
 

@@ -3,9 +3,9 @@ local SoundService = game:GetService("SoundService")
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -124,12 +124,8 @@ local function TextInput(Props: table)
 		[Out "Text"] = Props.Text,
 
 		[Children] = {
-			New "UICorner" {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["0.5"]:get())
-				end),
-			},
-			New "UIPadding" {
+			Modifier.Corner {},
+			Modifier.Padding {
 				PaddingBottom = Computed(function()
 					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 				end),
@@ -143,8 +139,7 @@ local function TextInput(Props: table)
 					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 				end),
 			},
-			New "UIStroke" {
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+			Modifier.Stroke {
 				Color = Spring(
 					Computed(function()
 						if Props.Disabled:get() then
@@ -159,7 +154,6 @@ local function TextInput(Props: table)
 					Themer.Theme.SpringSpeed["1"],
 					Themer.Theme.SpringDampening
 				),
-				Thickness = 2,
 			},
 
 			Props[Children],

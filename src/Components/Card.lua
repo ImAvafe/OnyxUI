@@ -3,9 +3,9 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
-local New = Fusion.New
 local Computed = Fusion.Computed
 
 local Frame = require(OnyxUI.Components.Frame)
@@ -16,24 +16,7 @@ return function(Props: table)
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0)
 
 	Props.CornerRadius = EnsureValue(Props.CornerRadius, "number", Themer.Theme.CornerRadius["1"])
-	Props.Padding = EnsureValue(
-		Props.Padding,
-		"UIPadding",
-		New "UIPadding" {
-			PaddingBottom = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-			end),
-			PaddingLeft = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-			end),
-			PaddingRight = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-			end),
-			PaddingTop = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-			end),
-		}
-	)
+	Props.Padding = EnsureValue(Props.Padding, "UIPadding", Modifier.Padding {})
 
 	return Frame {
 		Name = Props.Name,
@@ -55,7 +38,7 @@ return function(Props: table)
 		BackgroundTransparency = Props.BackgroundTransparency,
 
 		[Children] = {
-			New "UICorner" {
+			Modifier.Corner {
 				CornerRadius = Computed(function()
 					return UDim.new(0, Props.CornerRadius:get())
 				end),

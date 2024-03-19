@@ -7,7 +7,6 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 local Modifier = require(OnyxUI.Utils.Modifier)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
@@ -130,14 +129,9 @@ local function Button(Props: table)
 		Disabled = Props.Disabled,
 
 		[Children] = {
-			New "UICorner" {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
-				end),
-			},
 			Props.Padding,
-			New "UIListLayout" {
-				SortOrder = Enum.SortOrder.LayoutOrder,
+			Modifier.Corner {},
+			Modifier.ListLayout {
 				Padding = Computed(function()
 					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
 				end),
@@ -145,10 +139,8 @@ local function Button(Props: table)
 				HorizontalAlignment = Enum.HorizontalAlignment.Center,
 				VerticalAlignment = Enum.VerticalAlignment.Center,
 			},
-			New "UIStroke" {
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+			Modifier.Stroke {
 				Color = Spring(Color, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
-				Thickness = Themer.Theme.StrokeThickness["1"],
 				Transparency = Computed(function()
 					if Props.Style:get() == "Ghost" then
 						return 1

@@ -32,6 +32,7 @@ return function(Props: Props)
 			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end)
 	)
+	Props.SortOrder = EnsureValue(Props.SortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
 
 	return New "UIListLayout" {
 		Name = Props.Name,

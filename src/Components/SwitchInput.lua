@@ -4,12 +4,13 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 
+local Frame = require(OnyxUI.Components.Frame)
 local BaseButton = require(OnyxUI.Components.BaseButton)
 
 local function SwitchInput(Props: table)
@@ -22,6 +23,9 @@ local function SwitchInput(Props: table)
 		end)
 	)
 
+	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
+	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
+
 	Props.Padding = EnsureValue(
 		Props.Padding,
 		"UDim",
@@ -29,9 +33,6 @@ local function SwitchInput(Props: table)
 			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
 		end)
 	)
-
-	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
-	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
 	local ContentColor = Computed(function()
 		if Props.SwitchedOn:get() then
@@ -68,15 +69,15 @@ local function SwitchInput(Props: table)
 		end,
 
 		[Children] = {
-			New "Frame" {
+			Frame {
 				Name = "Switch",
 				Size = Props.Size,
+				AutomaticSize = Enum.AutomaticSize.None,
 				BackgroundColor3 = Themer.Theme.Colors.Base.Light,
 				BackgroundTransparency = 0,
 
 				[Children] = {
-					New "UIStroke" {
-						ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+					Modifier.Stroke {
 						Transparency = Spring(
 							Computed(function()
 								if Props.Disabled:get() then
@@ -92,21 +93,19 @@ local function SwitchInput(Props: table)
 							Themer.Theme.SpringDampening
 						),
 						Color = Spring(ContentColor, 30, Themer.Theme.SpringDampening),
-						Thickness = Themer.Theme.StrokeThickness["1"],
 					},
-					New "UICorner" {
+					Modifier.Corner {
 						CornerRadius = Computed(function()
 							return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
 						end),
 					},
-					New "UIPadding" {
-						PaddingBottom = UDim.new(0, 3),
-						PaddingLeft = UDim.new(0, 3),
-						PaddingRight = UDim.new(0, 3),
-						PaddingTop = UDim.new(0, 3),
+					Modifier.Padding {
+						Padding = Computed(function()
+							return Props.Padding:get()
+						end),
 					},
 
-					New "Frame" {
+					Frame {
 						Name = "Ball",
 						AnchorPoint = Spring(
 							Computed(function()
@@ -123,6 +122,7 @@ local function SwitchInput(Props: table)
 							Themer.Theme.SpringDampening
 						),
 						Size = UDim2.fromScale(0, 1),
+						AutomaticSize = Enum.AutomaticSize.None,
 						BackgroundTransparency = Spring(
 							Computed(function()
 								if Props.Disabled:get() then
@@ -140,12 +140,12 @@ local function SwitchInput(Props: table)
 						BackgroundColor3 = Spring(ContentColor, 40, Themer.Theme.SpringDampening),
 
 						[Children] = {
-							New "UIAspectRatioConstraint" {
+							Modifier.AspectRatioConstraint {
 								AspectRatio = 1,
 								AspectType = Enum.AspectType.ScaleWithParentSize,
 								DominantAxis = Enum.DominantAxis.Height,
 							},
-							New "UICorner" {
+							Modifier.Corner {
 								CornerRadius = Computed(function()
 									return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
 								end),

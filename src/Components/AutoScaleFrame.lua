@@ -2,6 +2,7 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local New = Fusion.New
 local Value = Fusion.Value
@@ -43,7 +44,7 @@ return function(Props: table)
 		BackgroundTransparency = Props.BackgroundTransparency,
 
 		[Children] = {
-			New "UIScale" {
+			Modifier.Scale {
 				Scale = Computed(function()
 					local Ratio = Props.ScaleMultiplier:get()
 						/ math.max(

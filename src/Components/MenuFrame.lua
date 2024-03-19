@@ -3,6 +3,7 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -17,20 +18,14 @@ local function MenuFrame(Props: table)
 	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Base.Main)
 
 	Props.StrokeColor = EnsureValue(Props.StrokeColor, "Color3", Themer.Theme.Colors.Neutral.Main)
-	Props.StrokeThickness = EnsureValue(Props.StrokeThickness, "number", Themer.Theme.StrokeThickness["1"])
-	Props.CornerRadius = EnsureValue(
-		Props.CornerRadius,
-		"number",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["3"]:get())
-		end)
-	)
 	Props.Padding = EnsureValue(
 		Props.Padding,
-		"UDim",
+		"UIPadding",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-		end)
+			return Modifier.Padding {
+				Padding = UDim.new(0, Themer.Theme.Spacing["1"]:get()),
+			}
+		end, Fusion.cleanup)
 	)
 
 	return New "CanvasGroup" {
@@ -54,20 +49,16 @@ local function MenuFrame(Props: table)
 		BackgroundTransparency = Props.BackgroundTransparency,
 
 		[Children] = {
-			New "UICorner" {
-				CornerRadius = Props.CornerRadius,
+			Props.Padding,
+			Modifier.Corner {
+				CornerRadius = Computed(function()
+					return UDim.new(0, Themer.Theme.CornerRadius["3"]:get())
+				end),
 			},
-			New "UIStroke" {
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+			Modifier.Stroke {
 				Color = Props.StrokeColor,
-				Thickness = Props.StrokeThickness,
 			},
-			New "UIPadding" {
-				PaddingBottom = Props.Padding,
-				PaddingLeft = Props.Padding,
-				PaddingRight = Props.Padding,
-				PaddingTop = Props.Padding,
-			},
+
 			Frame {
 				Name = "Contents",
 				AutomaticSize = Props.AutomaticSize,

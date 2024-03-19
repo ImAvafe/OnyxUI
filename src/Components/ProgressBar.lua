@@ -3,8 +3,8 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
@@ -49,11 +49,12 @@ return function(Props: table)
 		BackgroundTransparency = Props.BackgroundTransparency,
 
 		[Children] = {
-			New "UICorner" {
+			Modifier.Corner {
 				CornerRadius = Computed(function()
 					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
 				end),
 			},
+
 			Frame {
 				Name = "ProgressFill",
 				Size = Spring(

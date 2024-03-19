@@ -4,8 +4,8 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 local ColourUtils = require(OnyxUI.Parent.ColourUtils)
+local Modifier = require(OnyxUI.Utils.Modifier)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local ForValues = Fusion.ForValues
@@ -28,13 +28,6 @@ return function(Props: table)
 		end)
 	)
 	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
-	Props.Padding = EnsureValue(
-		Props.Padding,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end)
-	)
 	Props.CornerRadius = EnsureValue(Props.CornerRadius, "number", Themer.Theme.CornerRadius["2"])
 
 	return Frame {
@@ -57,7 +50,7 @@ return function(Props: table)
 		BackgroundColor3 = Props.Color,
 
 		[Children] = {
-			New "UIPadding" {
+			Modifier.Padding {
 				PaddingTop = Computed(function()
 					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
 				end),
@@ -71,13 +64,12 @@ return function(Props: table)
 					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 				end),
 			},
-			New "UICorner" {
+			Modifier.Corner {
 				CornerRadius = Computed(function()
 					return UDim.new(0, Props.CornerRadius:get())
 				end),
 			},
-			New "UIListLayout" {
-				SortOrder = Enum.SortOrder.LayoutOrder,
+			Modifier.ListLayout {
 				Padding = Computed(function()
 					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
 				end),
