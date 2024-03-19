@@ -48,6 +48,8 @@ return {
 					PlaceholderText = "This one wrap-expands!",
 					Multiline = true,
 					TextWrapped = true,
+					Size = UDim2.fromScale(1, 0),
+					AutomaticSize = Enum.AutomaticSize.Y,
 				},
 			},
 		}
