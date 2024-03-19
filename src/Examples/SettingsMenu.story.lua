@@ -1,11 +1,13 @@
 local SettingsMenu = require(script.Parent.SettingsMenu)
 
-return function(Target: Instance)
-	local Instance = SettingsMenu {
-		Parent = Target,
-	}
+return {
+	story = function(Parent: GuiObject, _Props: table)
+		local Instance = SettingsMenu {
+			Parent = Parent,
+		}
 
-	return function()
-		Instance:Destroy()
-	end
-end
+		return function()
+			Instance:Destroy()
+		end
+	end,
+}
