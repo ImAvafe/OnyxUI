@@ -7,6 +7,7 @@ local Themer = require(OnyxUI.Utils.Themer)
 
 local New = Fusion.New
 local Children = Fusion.Children
+local Computed = Fusion.Computed
 
 local function ScrollingFrame(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "ScrollingFrame")
@@ -19,6 +20,7 @@ local function ScrollingFrame(Props: table)
 	Props.ScrollBarImageColor3 =
 		EnsureValue(Props.ScrollBarImageColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark)
 	Props.Selectable = EnsureValue(Props.Selectable, "boolean", false)
+	Props.MidImage = EnsureValue(Props.MidImage, "string", "rbxassetid://16547330984")
 
 	return New "ScrollingFrame" {
 		Name = Props.Name,
@@ -43,13 +45,23 @@ local function ScrollingFrame(Props: table)
 		ScrollBarThickness = Props.ScrollBarThickness,
 		ScrollBarImageTransparency = Props.ScrollBarImageTransparency,
 		ScrollBarImageColor3 = Props.ScrollBarImageColor3,
-		BottomImage = "rbxassetid://16547643439",
-		MidImage = "rbxassetid://16547330984",
-		TopImage = "rbxassetid://16547667444",
+		MidImage = Props.MidImage,
+		BottomImage = Computed(function()
+			if Themer.Theme.CornerRadius["1"]:get() >= 3 then
+				return "rbxassetid://16547643439"
+			else
+				return "rbxassetid://16547330984"
+			end
+		end),
+		TopImage = Computed(function()
+			if Themer.Theme.CornerRadius["1"]:get() >= 3 then
+				return "rbxassetid://16547667444"
+			else
+				return "rbxassetid://16547330984"
+			end
+		end),
 
-		[Children] = {
-			[Children] = Props[Children],
-		},
+		[Children] = Props[Children],
 	}
 end
 
