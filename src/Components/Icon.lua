@@ -3,8 +3,9 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
-local New = Fusion.New
 local Children = Fusion.Children
+
+local Image = require(OnyxUI.Components.Image)
 
 local function Text(Props: table)
 	Props.Name = EnsureValue(Props.Name, "string", "Icon")
@@ -12,7 +13,7 @@ local function Text(Props: table)
 	Props.ImageColor3 = EnsureValue(Props.ImageColor3, "Color3", Color3.fromRGB(255, 255, 255))
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 
-	return New "ImageLabel" {
+	return Image {
 		Name = Props.Name,
 		Parent = Props.Parent,
 		Position = Props.Position,
