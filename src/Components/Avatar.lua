@@ -7,6 +7,7 @@ local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
+local Spring = Fusion.Spring
 
 local Image = require(OnyxUI.Components.Image)
 local CanvasGroup = require(OnyxUI.Components.CanvasGroup)
@@ -32,7 +33,10 @@ return function(Props: table)
 	Props.IndicatorEnabled = EnsureValue(Props.IndicatorEnabled, "boolean", false)
 	Props.IndicatorColor = EnsureValue(Props.IndicatorColor, "Color3", Themer.Theme.Colors.Primary.Main)
 	Props.IndicatorCornerRadius = EnsureValue(Props.IndicatorCornerRadius, "number", Themer.Theme.CornerRadius.Full)
-	Props.IndicatorImage = EnsureValue(Props.IndicatorImage, "string", nil)
+	Props.IndicatorIcon = EnsureValue(Props.IndicatorIcon, "string", nil)
+	Props.IndicatorIconColor = EnsureValue(Props.IndicatorIconColor, "Color3", Color3.fromRGB(255, 255, 255))
+
+	Props.SpringSpeed = EnsureValue(Props.SpringSpeed, "number", Themer.Theme.SpringSpeed["0.5"])
 
 	return Image {
 		Name = Props.Name,
@@ -62,15 +66,19 @@ return function(Props: table)
 			},
 			Modifier.Stroke {
 				Enabled = Props.RingEnabled,
-				Color = Props.RingColor,
-				Thickness = Props.RingThickness,
+				Color = Spring(Props.RingColor, Props.SpringSpeed, Themer.Theme.SpringDampening),
+				Thickness = Spring(Props.RingThickness, Props.SpringSpeed, Themer.Theme.SpringDampening),
 			},
 
 			Computed(function()
 				if Props.IndicatorEnabled:get() then
 					return CanvasGroup {
 						Name = "Indicator",
-						BackgroundColor3 = Props.IndicatorColor,
+						BackgroundColor3 = Spring(
+							Props.IndicatorColor,
+							Props.SpringSpeed,
+							Themer.Theme.SpringDampening
+						),
 						BackgroundTransparency = 0,
 						Size = UDim2.fromScale(0.25, 0.25),
 						AutomaticSize = Enum.AutomaticSize.None,
@@ -86,9 +94,10 @@ return function(Props: table)
 							},
 
 							Icon {
-								Image = Props.IndicatorImage,
+								Image = Props.IndicatorIcon,
+								ImageColor3 = Props.IndicatorIconColor,
 								ImageTransparency = Computed(function()
-									if Props.IndicatorImage:get() then
+									if Props.IndicatorIcon:get() then
 										return 0
 									else
 										return 1
