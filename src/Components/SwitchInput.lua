@@ -100,9 +100,7 @@ local function SwitchInput(Props: table)
 						end),
 					},
 					Modifier.Padding {
-						Padding = Computed(function()
-							return Props.Padding:get()
-						end),
+						Padding = UDim.new(0, 3),
 					},
 
 					Frame {
