@@ -51,6 +51,15 @@ local function IconButton(Props: table)
 		Color = Props.Color,
 		ContrastColor = Props.ContrastColor,
 		ContentSize = Props.ContentSize,
+		IsHovering = Props.IsHovering,
+		IsHolding = Props.IsHolding,
+		OnActivated = Props.OnActivated,
+		OnMouseEnter = Props.OnMouseEnter,
+		OnMouseLeave = Props.OnMouseLeave,
+		OnMouseButton1Down = Props.OnMouseButton1Down,
+		OnMouseButton1Up = Props.OnMouseButton1Up,
+		HoverSound = Props.HoverSound,
+		ClickSound = Props.ClickSound,
 
 		[Children] = Props[Children],
 	}
