@@ -1,5 +1,3 @@
-local ContentProvider = game:GetService("ContentProvider")
-
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
@@ -7,8 +5,6 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local Children = Fusion.Children
-local Observer = Fusion.Observer
-local Cleanup = Fusion.Cleanup
 local Value = Fusion.Value
 
 return function(Props: { [any]: any })
@@ -18,33 +14,7 @@ return function(Props: { [any]: any })
 	Props.Image = EnsureValue(Props.Image, "string", nil)
 	Props.FallbackImage = EnsureValue(Props.FallbackImage, "string", "rbxasset://textures/ui/GuiImagePlaceholder.png")
 
-	local Image = Value("rbxasset://textures/ui/GuiImagePlaceholder.png")
-
-	local function UpdateImage()
-		if Props.Image:get() then
-			local Success, Result = pcall(function()
-				return ContentProvider:PreloadAsync(
-					{ Props.Image:get() },
-					function(AssetId: string, FetchStatus: EnumItem)
-						if FetchStatus == Enum.AssetFetchStatus.Success then
-							Image:set(AssetId)
-						else
-							Image:set(Props.FallbackImage:get())
-						end
-					end
-				)
-			end)
-			if not Success then
-				Image:set(Props.FallbackImage:get())
-
-				warn(Result)
-			end
-		else
-			Image:set(Props.FallbackImage:get())
-		end
-	end
-	local ImageObserver = Observer(Props.Image):onChange(UpdateImage)
-	task.spawn(UpdateImage)
+	local Image = Value(Props.Image:get() or Props.FallbackImage:get())
 
 	return New "ImageLabel" {
 		Name = Props.Name,
@@ -73,10 +43,6 @@ return function(Props: { [any]: any })
 		TileSize = Props.TileSize,
 
 		Image = Image,
-
-		[Cleanup] = function()
-			ImageObserver()
-		end,
 
 		[Children] = Props[Children],
 	}
