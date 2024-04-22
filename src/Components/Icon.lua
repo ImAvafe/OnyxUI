@@ -2,6 +2,7 @@ local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Colors = require(OnyxUI.Utils.Colors)
 
 local Children = Fusion.Children
 
@@ -10,7 +11,7 @@ local Image = require(OnyxUI.Components.Image)
 local function Text(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Icon")
 	Props.Size = EnsureValue(Props.Size, "number", UDim2.fromOffset(20, 20))
-	Props.ImageColor3 = EnsureValue(Props.ImageColor3, "Color3", Color3.fromRGB(255, 255, 255))
+	Props.ImageColor3 = EnsureValue(Props.ImageColor3, "Color3", Colors.White)
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 
 	return Image {

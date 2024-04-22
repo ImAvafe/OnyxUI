@@ -4,6 +4,7 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 local Modifier = require(OnyxUI.Utils.Modifier)
+local Colors = require(OnyxUI.Utils.Colors)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -34,7 +35,7 @@ return function(Props: { [any]: any })
 	Props.IndicatorColor = EnsureValue(Props.IndicatorColor, "Color3", Themer.Theme.Colors.Primary.Main)
 	Props.IndicatorCornerRadius = EnsureValue(Props.IndicatorCornerRadius, "number", Themer.Theme.CornerRadius.Full)
 	Props.IndicatorIcon = EnsureValue(Props.IndicatorIcon, "string", nil)
-	Props.IndicatorIconColor = EnsureValue(Props.IndicatorIconColor, "Color3", Color3.fromRGB(255, 255, 255))
+	Props.IndicatorIconColor = EnsureValue(Props.IndicatorIconColor, "Color3", Colors.White)
 
 	Props.SpringSpeed = EnsureValue(Props.SpringSpeed, "number", Themer.Theme.SpringSpeed["0.5"])
 
