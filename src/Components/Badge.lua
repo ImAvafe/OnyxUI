@@ -51,17 +51,13 @@ return function(Props: { [any]: any })
 
 		[Children] = {
 			Modifier.Padding {
-				PaddingTop = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-				end),
-				PaddingBottom = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-				end),
+				PaddingTop = UDim.new(0, 0),
+				PaddingBottom = UDim.new(0, 0),
 				PaddingLeft = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 				end),
 				PaddingRight = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 				end),
 			},
 			Modifier.Corner {
