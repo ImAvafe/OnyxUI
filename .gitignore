@@ -3,3 +3,5 @@ ExtPackages
 
 *.lock
 *.rbxl.lock
+
+sourcemap.json
