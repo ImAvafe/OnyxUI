@@ -16,7 +16,7 @@ local Icon = require(OnyxUI.Components.Icon)
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Checkbox")
 
 	Props.Checked = EnsureValue(Props.Checked, "boolean", false)

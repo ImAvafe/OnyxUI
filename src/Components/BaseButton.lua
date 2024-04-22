@@ -12,7 +12,7 @@ local OnEvent = Fusion.OnEvent
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local function Button(Props: table)
+local function Button(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "BaseButton")
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)

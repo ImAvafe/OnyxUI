@@ -7,7 +7,7 @@ local Children = Fusion.Children
 
 local Image = require(OnyxUI.Components.Image)
 
-local function Text(Props: table)
+local function Text(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Icon")
 	Props.Size = EnsureValue(Props.Size, "number", UDim2.fromOffset(20, 20))
 	Props.ImageColor3 = EnsureValue(Props.ImageColor3, "Color3", Color3.fromRGB(255, 255, 255))

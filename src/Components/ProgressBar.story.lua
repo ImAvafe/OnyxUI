@@ -13,7 +13,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local ProgressBar = require(OnyxUI.Components.ProgressBar)
 
 return {
-	story = function(Parent: GuiObject, _Props: table)
+	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local Progress = Value(0)
 		local Color = Value(Color3.fromRGB(255, 0, 0))
 

@@ -10,7 +10,7 @@ local Divider = require(OnyxUI.Components.Divider)
 local Text = require(OnyxUI.Components.Text)
 
 return {
-	story = function(Parent: GuiObject, _Props: table)
+	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local Instance = Frame {
 			Parent = Parent,
 			Size = UDim2.fromOffset(300, 0),

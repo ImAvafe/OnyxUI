@@ -11,7 +11,7 @@ local Computed = Fusion.Computed
 
 local Frame = require(OnyxUI.Components.Frame)
 
-local function MenuFrame(Props: table)
+local function MenuFrame(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "MenuFrame")
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0.015)

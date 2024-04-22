@@ -13,7 +13,7 @@ local Children = Fusion.Children
 
 local Frame = require(OnyxUI.Components.Frame)
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "AutoScaleFrame")
 
 	Props.BaseResolution = EnsureValue(Props.BaseResolution, "Vector2", Vector2.new())

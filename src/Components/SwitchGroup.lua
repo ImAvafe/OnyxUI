@@ -9,7 +9,7 @@ local Children = Fusion.Children
 
 local BaseButton = require(OnyxUI.Components.BaseButton)
 
-local function SwitchGroup(Props: table)
+local function SwitchGroup(Props: { [any]: any })
 	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 

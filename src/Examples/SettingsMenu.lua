@@ -14,7 +14,7 @@ local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local SettingToggle = require(OnyxUI.Components.SettingToggle)
 local TextInput = require(OnyxUI.Components.TextInput)
 
-local function SettingsMenu(Props: table)
+local function SettingsMenu(Props: { [any]: any })
 	return MenuFrame {
 		Parent = Props.Parent,
 		Size = UDim2.fromOffset(330, 0),

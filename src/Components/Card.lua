@@ -10,7 +10,7 @@ local Computed = Fusion.Computed
 
 local Frame = require(OnyxUI.Components.Frame)
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Card")
 	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Neutral.Dark)
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0)

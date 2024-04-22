@@ -13,7 +13,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local Badge = require(OnyxUI.Components.Badge)
 
 return {
-	story = function(Parent: GuiObject, _Props: table)
+	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local NotificationCount = Value(0)
 
 		local CountLoop = task.spawn(function()

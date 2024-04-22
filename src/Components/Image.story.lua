@@ -11,7 +11,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local Image = require(OnyxUI.Components.Image)
 
 return {
-	story = function(Parent: GuiObject, _Props: table)
+	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local Instance = Frame {
 			Parent = Parent,
 			AutomaticSize = Enum.AutomaticSize.XY,

@@ -12,7 +12,7 @@ local Spring = Fusion.Spring
 local Frame = require(OnyxUI.Components.Frame)
 local CanvasGroup = require(OnyxUI.Components.CanvasGroup)
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "ProgressBar")
 	Props.Size = EnsureValue(
 		Props.Size,

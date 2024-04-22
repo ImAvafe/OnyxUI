@@ -7,7 +7,7 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local New = Fusion.New
 local Children = Fusion.Children
 
-local function Frame(Props: table)
+local function Frame(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Frame")
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)

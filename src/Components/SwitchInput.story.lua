@@ -12,7 +12,7 @@ local Text = require(script.Parent.Text)
 local Frame = require(script.Parent.Frame)
 
 return {
-	story = function(Parent: GuiObject, _Props: table)
+	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local PreviewPadding = Computed(function()
 			return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 		end)

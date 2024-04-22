@@ -1,7 +1,7 @@
 local Component = require(script.Parent.ScrollingFrame)
 
 return {
-	story = function(Parent: GuiObject, _Props: table)
+	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local Instance = Component {
 			Parent = Parent,
 			Size = UDim2.fromOffset(200, 200),

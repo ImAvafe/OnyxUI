@@ -1,4 +1,4 @@
-function SetValuesInDictionary(Target: table, Source: table)
+function SetValuesInDictionary(Target: { [any]: any }, Source: { [any]: any })
 	for Key, Value in pairs(Target) do
 		if typeof(Value) == "table" and Value.set then
 			if typeof(Source[Key]) == "table" and Source[Key].get then

@@ -10,7 +10,7 @@ local Children = Fusion.Children
 local Out = Fusion.Out
 local Computed = Fusion.Computed
 
-local function Text(Props: table)
+local function Text(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Text")
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
 	Props.TextColor3 = EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)

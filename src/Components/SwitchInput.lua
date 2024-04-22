@@ -13,7 +13,7 @@ local Spring = Fusion.Spring
 local Frame = require(OnyxUI.Components.Frame)
 local BaseButton = require(OnyxUI.Components.BaseButton)
 
-local function SwitchInput(Props: table)
+local function SwitchInput(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "SwitchInput")
 	Props.Size = EnsureValue(
 		Props.Size,

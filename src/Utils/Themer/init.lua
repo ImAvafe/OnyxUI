@@ -70,7 +70,7 @@ local Themer = {
 	Themes = Loader.LoadChildren(script),
 }
 
-function Themer:_ProcessColors(Theme: table)
+function Themer:_ProcessColors(Theme: { [any]: any })
 	if Theme.Colors then
 		for ColorName, _ in pairs(Theme.Colors) do
 			local Color = Theme.Colors[ColorName]
@@ -91,7 +91,7 @@ function Themer:_ProcessColors(Theme: table)
 	end
 end
 
-function Themer:_ProcessSpacings(Theme: table)
+function Themer:_ProcessSpacings(Theme: { [any]: any })
 	if Theme.Spacing then
 		for _, Multiplier in ipairs(SPACING_MULTIPLIERS) do
 			if Theme.Spacing[tostring(Multiplier)] == nil then
@@ -101,7 +101,7 @@ function Themer:_ProcessSpacings(Theme: table)
 	end
 end
 
-function Themer:_ProcessTextSizes(Theme: table)
+function Themer:_ProcessTextSizes(Theme: { [any]: any })
 	if Theme.TextSize then
 		for _, Multiplier in ipairs(TEXT_SIZE_MULTIPLIERS) do
 			if Theme.TextSize[tostring(Multiplier)] == nil then
@@ -111,7 +111,7 @@ function Themer:_ProcessTextSizes(Theme: table)
 	end
 end
 
-function Themer:_ProcessCornerRadii(Theme: table)
+function Themer:_ProcessCornerRadii(Theme: { [any]: any })
 	if Theme.CornerRadius then
 		for _, Multiplier in ipairs(CORNER_RADIUS_MULTIPLIERS) do
 			if Theme.CornerRadius[tostring(Multiplier)] == nil then
@@ -121,7 +121,7 @@ function Themer:_ProcessCornerRadii(Theme: table)
 	end
 end
 
-function Themer:_ProcessStrokeThickness(Theme: table)
+function Themer:_ProcessStrokeThickness(Theme: { [any]: any })
 	if Theme.StrokeThickness then
 		for _, Multiplier in ipairs(STROKE_THICKNESS_MULTIPLIERS) do
 			if Theme.StrokeThickness[tostring(Multiplier)] == nil then
@@ -131,7 +131,7 @@ function Themer:_ProcessStrokeThickness(Theme: table)
 	end
 end
 
-function Themer:_ProcessSpringSpeed(Theme: table)
+function Themer:_ProcessSpringSpeed(Theme: { [any]: any })
 	if Theme.SpringSpeed then
 		for _, Multiplier in ipairs(SPRING_SPEED_MULTIPLIERS) do
 			if Theme.SpringSpeed[tostring(Multiplier)] == nil then
@@ -141,13 +141,13 @@ function Themer:_ProcessSpringSpeed(Theme: table)
 	end
 end
 
-function Themer:Add(ThemeName: string, Theme: table)
+function Themer:Add(ThemeName: string, Theme: { [any]: any })
 	self.Themes[ThemeName] = {}
 	ReconcileValues(self.Themes[ThemeName], ThemeTemplate)
 	ReconcileValues(self.Themes[ThemeName], Theme)
 end
 
-function Themer:Set(Theme: table)
+function Themer:Set(Theme: { [any]: any })
 	ReconcileValues(self.Theme, ThemeTemplate)
 
 	self:_ProcessColors(Theme)

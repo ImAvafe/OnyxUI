@@ -13,7 +13,7 @@ local Image = require(OnyxUI.Components.Image)
 local CanvasGroup = require(OnyxUI.Components.CanvasGroup)
 local Icon = require(OnyxUI.Components.Icon)
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Avatar")
 	Props.Size = EnsureValue(
 		Props.Size,

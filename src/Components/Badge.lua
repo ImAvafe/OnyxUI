@@ -14,7 +14,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Badge")
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0)
 

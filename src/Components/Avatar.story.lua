@@ -15,7 +15,7 @@ local Avatar = require(OnyxUI.Components.Avatar)
 local INDICATOR_COLORS = { Colors.Red["500"], Colors.Green["400"], Colors.Orange["500"], Colors.Stone["600"] }
 
 return {
-	story = function(Parent: GuiObject, Props: table)
+	story = function(Parent: GuiObject, Props: { [any]: any })
 		local IndicatorColor = Value(INDICATOR_COLORS[2])
 		local RingThickness = Value(Themer.Theme.StrokeThickness["2"]:get())
 

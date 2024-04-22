@@ -12,7 +12,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
 local IconButton = require(OnyxUI.Components.IconButton)
 
-local function TitleBar(Props: table)
+local function TitleBar(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "TitleBar")
 	Props.TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1.5"])
 	Props.FontFace = EnsureValue(

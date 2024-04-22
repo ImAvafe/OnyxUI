@@ -11,7 +11,7 @@ local Computed = Fusion.Computed
 
 local Button = require(OnyxUI.Components.Button)
 
-local function IconButton(Props: table)
+local function IconButton(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "IconButton")
 
 	Props.Image = EnsureValue(Props.Image, "string", "")

@@ -11,7 +11,7 @@ local Observer = Fusion.Observer
 local Cleanup = Fusion.Cleanup
 local Value = Fusion.Value
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Image")
 	Props.Size = EnsureValue(Props.Size, "UDim2", UDim2.fromOffset(100, 100))
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)

@@ -9,7 +9,7 @@ local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local function ScrollingFrame(Props: table)
+local function ScrollingFrame(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "ScrollingFrame")
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "Enum", Enum.AutomaticSize.None)
 	Props.ScrollingDirection = EnsureValue(Props.ScrollingDirection, "Enum", Enum.ScrollingDirection.Y)

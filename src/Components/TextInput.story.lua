@@ -11,7 +11,7 @@ local TextInput = require(script.Parent.TextInput)
 local Frame = require(script.Parent.Frame)
 
 return {
-	story = function(Parent: GuiObject, _Props: table)
+	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local Instance = Frame {
 			Parent = Parent,
 			Size = UDim2.fromOffset(300, 0),

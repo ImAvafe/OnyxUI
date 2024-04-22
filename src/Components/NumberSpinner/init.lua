@@ -13,7 +13,7 @@ local Text = require(OnyxUI.Components.Text)
 
 local SPINNER_PROPS = { "Value", "Prefix", "Suffix", "Decimals", "Duration", "Commas" }
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "NumberSpinner")
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)
 	Props.TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])

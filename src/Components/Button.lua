@@ -20,7 +20,7 @@ local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
 local HOLDING_BACKGROUND_TRANSPARENCY = 0.95
 
-local function Button(Props: table)
+local function Button(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Button")
 	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)
 

@@ -10,7 +10,7 @@ local Frame = require(OnyxUI.Components.Frame)
 local NumberSpinner = require(OnyxUI.Components.NumberSpinner)
 
 return {
-	story = function(Parent: GuiObject, _Props: table)
+	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local RandomNumber = Value(0)
 		local RandomDecimalNumber = Value(0)
 		local CountNumber = Value(0)

@@ -10,7 +10,7 @@ local SwitchGroup = require(OnyxUI.Components.SwitchGroup)
 local SwitchInput = require(OnyxUI.Components.SwitchInput)
 local Text = require(OnyxUI.Components.Text)
 
-local function SettingToggle(Props: table)
+local function SettingToggle(Props: { [any]: any })
 	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 

@@ -10,7 +10,7 @@ local Computed = Fusion.Computed
 
 local Frame = require(OnyxUI.Components.Frame)
 
-return function(Props: table)
+return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Divider")
 
 	Props.Length = EnsureValue(Props.Length, "UDim", UDim.new(1, 0))
