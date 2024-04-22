@@ -4,7 +4,6 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Modifier = require(OnyxUI.Utils.Modifier)
 
-local New = Fusion.New
 local Value = Fusion.Value
 local Computed = Fusion.Computed
 local Out = Fusion.Out
