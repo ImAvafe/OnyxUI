@@ -5,16 +5,22 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local New = Fusion.New
 local Children = Fusion.Children
-local Value = Fusion.Value
+local Computed = Fusion.Computed
 
 return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "Image")
 	Props.Size = EnsureValue(Props.Size, "UDim2", UDim2.fromOffset(100, 100))
 	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)
-	Props.Image = EnsureValue(Props.Image, "string", nil)
 	Props.FallbackImage = EnsureValue(Props.FallbackImage, "string", "rbxasset://textures/ui/GuiImagePlaceholder.png")
+	Props.Image = EnsureValue(Props.Image, "string", nil)
 
-	local Image = Value(Props.Image:get() or Props.FallbackImage:get())
+	local Image = Computed(function()
+		if Props.Image:get() then
+			return Props.Image:get()
+		else
+			return Props.FallbackImage:get()
+		end
+	end)
 
 	return New "ImageLabel" {
 		Name = Props.Name,
