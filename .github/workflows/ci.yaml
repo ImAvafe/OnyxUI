@@ -29,7 +29,7 @@ jobs:
         run: selene src
 
       - name: Build package rbxm
-        run: rojo build -o OnyxUI.rbxm pack.project.json
+        run: rojo build -o OnyxUI.rbxm standalone.project.json
 
       - name: Upload package rbxm as build artifact
         uses: actions/upload-artifact@v4
@@ -87,7 +87,7 @@ jobs:
         run: mkdir -p Packages
 
       - name: Build test-pack.rbxm
-        run: rojo build -o test-pack.rbxm pack.project.json
+        run: rojo build -o test-pack.rbxm standalone.project.json
 
       - name: Upload test-pack.rbxm as build artifact
         uses: actions/upload-artifact@v4
