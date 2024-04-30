@@ -1,7 +1,7 @@
 {
   "name": "OnyxUI",
   "tree": {
-    "$path": "include/PackBundle.lua",
+    "$path": "include/StandaloneBundler.lua",
     "Packages": {
       "$path": "Packages",
       "OnyxUI": {

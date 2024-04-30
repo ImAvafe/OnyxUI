@@ -5,7 +5,7 @@
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
       "OnyxUI": {
-        "$path": "Include/Linking.lua",
+        "$path": "include/StandaloneBundler.lua",
         "Packages": {
           "$path": "Packages",
           "OnyxUI": {
