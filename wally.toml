@@ -1,6 +1,10 @@
 [package]
-name = "avafe/neka-ui"
+name = "imavafe/onyx-ui"
+description = "Quick, quality UI for Fusion"
 version = "0.1.0"
+license = "MIT"
+authors = ["Avafe"]
+
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
