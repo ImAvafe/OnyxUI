@@ -1,0 +1,96 @@
+name: Releases
+
+on: push
+
+jobs:
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Main
+        uses: actions/checkout@v4
+
+      - name: Setup Aftman
+        uses: ok-nick/setup-aftman@v0.4.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Aftman Toolchains
+        run: aftman install
+
+      - name: Install Dependencies
+        run: wally install
+
+      - name: Create Packages Directory
+        run: mkdir -p Packages
+
+      - name: Run Selene
+        run: selene src
+
+      - name: Build package rbxm
+        run: rojo build -o OnyxUI.rbxm pack.project.json
+
+      - name: Upload package rbxm as build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OnyxUI
+          path: OnyxUI.rbxm
+
+      - name: Get Release from wally.toml
+        uses: SebRollen/toml-action@v1.0.0
+        id: read_toml
+        with:
+          file: "wally.toml"
+          field: "package.version"
+
+      - name: Publish to Wally
+        env:
+          WALLY_TOKEN: ${{ secrets.WALLY_AUTH_TOKEN }}
+        run: |
+          mkdir =p ~/.wally
+          printf "[tokens]\n\"https://api.wally.run/\" = \"%s\"" "$WALLY_TOKEN" >> ~/.wally/auth.toml
+          wally publish
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ steps.read_toml.outputs.value }}
+          tag_name: ${{ steps.read_toml.outputs.value }}
+          files: OnyxUI.rbxm
+          generate_release_notes: true
+          draft: true
+
+  development:
+    if: ${{ github.ref == 'refs/heads/dev' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout development
+        uses: actions/checkout@v4
+
+      - name: Setup Aftman
+        uses: ok-nick/setup-aftman@v0.4.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Aftman Toolchains
+        run: aftman install
+
+      - name: Run Selene
+        run: selene src
+
+      - name: Install Dependencies
+        run: wally install
+
+      - name: Create Packages Directory
+        run: mkdir -p Packages
+
+      - name: Build test-pack.rbxm
+        run: rojo build -o test-pack.rbxm pack.project.json
+
+      - name: Upload test-pack.rbxm as build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OnyxUI
+          path: test-pack.rbxm
