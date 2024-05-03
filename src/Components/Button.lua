@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 
 local Fusion = require(OnyxUI.Parent.Fusion)
-local ColourUtils = require(OnyxUI.Parent.ColourUtils)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
@@ -32,7 +32,7 @@ local function Button(Props: { [any]: any })
 		Props.ContrastColor,
 		"Color3",
 		Computed(function()
-			return ColourUtils.Emphasise(Props.Color:get(), 1)
+			return ColorUtils.Emphasize(Props.Color:get(), 1)
 		end)
 	)
 	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
@@ -62,7 +62,7 @@ local function Button(Props: { [any]: any })
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
 			if Props.IsHolding:get() then
-				return ColourUtils.Emphasise(Props.Color:get(), Themer.Theme.Emphasis:get())
+				return ColorUtils.Emphasize(Props.Color:get(), Themer.Theme.Emphasis:get())
 			else
 				return Props.Color:get()
 			end

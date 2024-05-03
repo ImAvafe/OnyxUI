@@ -3,7 +3,7 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
-local ColourUtils = require(OnyxUI.Parent.ColourUtils)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
@@ -24,7 +24,7 @@ return function(Props: { [any]: any })
 		Props.ContentColor,
 		"Color3",
 		Computed(function()
-			return ColourUtils.Emphasise(Props.Color:get(), 1)
+			return ColorUtils.Emphasize(Props.Color:get(), 1)
 		end)
 	)
 	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
