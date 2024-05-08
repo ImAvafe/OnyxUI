@@ -18,6 +18,7 @@ return function(Props: { [any]: any })
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0)
 
 	Props.Contents = EnsureValue(Props.Contents, "table", {})
+	Props.ContentsWrapped = EnsureValue(Props.ContentsWrapped, "boolean", false)
 	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
 	Props.ContentColor = EnsureValue(
 		Props.ContentColor,
@@ -71,6 +72,7 @@ return function(Props: { [any]: any })
 				FillDirection = Enum.FillDirection.Horizontal,
 				HorizontalAlignment = Enum.HorizontalAlignment.Center,
 				VerticalAlignment = Enum.VerticalAlignment.Center,
+				Wraps = Props.ContentsWrapped,
 			},
 
 			ForValues(Props.Contents, function(ContentString: string)
@@ -90,6 +92,7 @@ return function(Props: { [any]: any })
 						FontFace = Computed(function()
 							return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Bold:get())
 						end),
+						TextWrapped = Props.ContentsWrapped,
 					}
 				end
 			end, Fusion.cleanup),
