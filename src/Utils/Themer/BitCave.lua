@@ -1,5 +1,4 @@
-local OnyxUI = script.Parent.Parent.Parent
-
+local OnyxUI = require(script.Parent.Parent.Parent)
 local Colors = require(OnyxUI.Utils.Colors)
 
 return {
