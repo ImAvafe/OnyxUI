@@ -18,7 +18,7 @@ return function(Props: { [any]: any })
 	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0)
 
 	Props.Contents = EnsureValue(Props.Contents, "table", {})
-	Props.ContentsWrapped = EnsureValue(Props.ContentsWrapped, "boolean", false)
+	Props.ContentsWrapped = EnsureValue(Props.ContentsWrapped, "boolean", true)
 	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
 	Props.ContentColor = EnsureValue(
 		Props.ContentColor,
