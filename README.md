@@ -44,6 +44,28 @@ None as of yet. I'll work on Moonwave documentation along with component typings
 
 OnyxUI is not finished. I make no guarantees on the stability or consistency of the  API and will introduce  breaking updates as it evolves. If that doesn't deter you, get ready to enjoy how easy UI can be. ✨
 
+## Ideals ✒️
+
+OnyxUI should provide a beautiful, simple and flexible components toolset for developers to integrate into their games and applications.
+
+It should follow Roblox Fusion's way of doing things, while innovating upon areas as necessary.
+
+### Props
+
+- **Component props should be as consistent as possible**: `Color` for a `Button` should mean the same as `Color` does for a `Badge`.
+
+- **Props should be inherited across components**: `Button` should support the props from `BaseButton`, `Frame` and `GuiObject`.
+
+- **Engine-provided properties should be supported**: `Size`, `AutomaticSize`, etc are useful nearly everywhere, and should be supported nearly everywhere.
+
+### Theming
+
+- **Theming should be both easy and comprehensive**, letting the developer choose how much, or how little they need to customize.
+
+### Utilities
+
+- **Utilities should enhance the developer experience, while remaining optional**: use `EnsureValue`, `Colors` and `Modifier`, or don't. It's up to you.
+
 ##
 
 [![By Avafe](/gh-assets/watermark.svg)](https://avafe.me)
