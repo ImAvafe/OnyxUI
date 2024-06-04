@@ -43,7 +43,7 @@ export type BaseProps = {
 	StrokeApplyMode: PubTypes.CanBeState<Enum.ApplyStrokeMode>?,
 
 	GradientEnabled: PubTypes.CanBeState<boolean>?,
-	GradientColor: PubTypes.CanBeState<Color3>?,
+	GradientColor: PubTypes.CanBeState<ColorSequence>?,
 	GradientOffset: PubTypes.CanBeState<UDim>?,
 	GradientRotation: PubTypes.CanBeState<number>?,
 	GradientTransparency: PubTypes.CanBeState<number>?,
