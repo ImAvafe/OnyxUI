@@ -149,7 +149,10 @@ return function(ClassName: string)
 
 				Computed(function()
 					local CornerRadiusValue = GetValue(Props.CornerRadius)
-					if (typeof(CornerRadiusValue) == "number") and (CornerRadiusValue ~= 0) then
+					if
+						(typeof(CornerRadiusValue) == "UDim")
+						and ((CornerRadiusValue.Offset ~= 0) or (CornerRadiusValue.Scale ~= 0))
+					then
 						return New "UICorner" {
 							CornerRadius = Props.CornerRadius,
 						}
