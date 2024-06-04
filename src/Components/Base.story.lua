@@ -25,14 +25,16 @@ return {
 					Padding = UDim.new(0, Themer.Theme.StrokeThickness["4"]:get()),
 				},
 
-				Base "Frame" {
+				Base {
+					ClassName = "Frame",
 					Size = UDim2.fromOffset(100, 100),
 					CornerRadius = UDim.new(0, 0),
 					PaddingLeft = UDim.new(0, 10),
 					StrokeThickness = 5,
 					StrokeColor = Color3.fromRGB(255, 0, 0),
 				},
-				Base "Frame" {
+				Base {
+					ClassName = "Frame",
 					ListEnabled = true,
 					ListPadding = UDim.new(0, 15),
 					-- Size = UDim2.fromOffset(300, 600),
@@ -41,7 +43,8 @@ return {
 					Padding = UDim.new(0, 30),
 
 					[Children] = {
-						Base "TextButton" {
+						Base {
+							ClassName = "TextButton",
 							BackgroundColor3 = Color3.fromRGB(255, 0, 0),
 							StrokeEnabled = true,
 							StrokeThickness = 3,
@@ -50,7 +53,8 @@ return {
 							StrokeLineJoinMode = Enum.LineJoinMode.Miter,
 							Size = UDim2.fromOffset(200, 50),
 						},
-						Base "TextButton" {
+						Base {
+							ClassName = "TextButton",
 							BackgroundColor3 = Color3.fromRGB(255, 0, 0),
 							StrokeEnabled = true,
 							StrokeThickness = 3,
@@ -62,7 +66,8 @@ return {
 							GradientEnabled = true,
 							GradientColor = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(0, 0, 0)),
 						},
-						Base "TextButton" {
+						Base {
+							ClassName = "TextButton",
 							BackgroundColor3 = Color3.fromRGB(255, 0, 0),
 							StrokeEnabled = true,
 							StrokeThickness = 3,
@@ -75,7 +80,8 @@ return {
 						},
 					},
 				},
-				Base "Frame" {
+				Base {
+					ClassName = "Frame",
 					Size = UDim2.fromOffset(200, 200),
 					GridEnabled = true,
 					GridCellSize = UDim2.fromOffset(50, 50),
@@ -84,21 +90,30 @@ return {
 					CornerRadius = UDim.new(0, 10),
 
 					[Children] = {
-						Base "Frame" {},
-						Base "Frame" {
+						Base {
+							ClassName = "Frame",
+						},
+						Base {
+							ClassName = "Frame",
 							StrokeEnabled = true,
 							StrokeColor = Color3.fromRGB(0, 0, 255),
 							StrokeThickness = 2,
 						},
-						Base "Frame" {},
-						Base "Frame" {},
-						Base "Frame" {},
+						Base {
+							ClassName = "Frame",
+						},
+						Base {
+							ClassName = "Frame",
+						},
+						Base {
+							ClassName = "Frame",
+						},
 					},
 				},
 			},
 		}
 
-		local WorkspaceObject = Base "Frame" {
+		local WorkspaceObject = Base {
 			Size = UDim2.fromOffset(100, 100),
 			CornerRadius = UDim.new(),
 			-- Padding = UDim.new(0, 50),

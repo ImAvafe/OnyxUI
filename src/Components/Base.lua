@@ -8,6 +8,8 @@ local Computed = Fusion.Computed
 local Children = Fusion.Children
 
 export type BaseProps = {
+	ClassName: string?,
+
 	Name: PubTypes.CanBeState<string>?,
 	Parent: PubTypes.CanBeState<Instance>?,
 	Position: PubTypes.CanBeState<UDim2>?,
@@ -110,264 +112,261 @@ export type BaseProps = {
 	MinTextSize: PubTypes.CanBeState<number>?,
 }
 
-return function(ClassName: string)
-	return function(Props: BaseProps)
-		local PaddingInEffect = Computed(function()
-			local Paddings =
-				{ Props.Padding, Props.PaddingTop, Props.PaddingLeft, Props.PaddingRight, Props.PaddingBottom }
+return function(Props: BaseProps)
+	local PaddingInEffect = Computed(function()
+		local Paddings = { Props.Padding, Props.PaddingTop, Props.PaddingLeft, Props.PaddingRight, Props.PaddingBottom }
 
-			for _, PaddingProp in pairs(Paddings) do
-				local PaddingValue = GetValue(PaddingProp)
-				if typeof(PaddingValue) == "UDim" then
-					return true
-				end
+		for _, PaddingProp in pairs(Paddings) do
+			local PaddingValue = GetValue(PaddingProp)
+			if typeof(PaddingValue) == "UDim" then
+				return true
 			end
+		end
 
-			return false
-		end)
+		return false
+	end)
 
-		return New(ClassName) {
-			Name = Props.Name,
-			Parent = Props.Parent,
-			Position = Props.Position,
-			Rotation = Props.Rotation,
-			AnchorPoint = Props.AnchorPoint,
-			Size = Props.Size,
-			AutomaticSize = Props.AutomaticSize,
-			Visible = Props.Visible,
-			ZIndex = Props.ZIndex,
-			LayoutOrder = Props.LayoutOrder,
-			ClipsDescendants = Props.ClipsDescendants,
-			Active = Props.Active,
-			Selectable = Props.Selectable,
-			Interactable = Props.Interactable,
-			BackgroundColor3 = Props.BackgroundColor3,
-			BackgroundTransparency = Props.BackgroundTransparency,
+	return New(Props.ClassName or "Frame") {
+		Name = Props.Name,
+		Parent = Props.Parent,
+		Position = Props.Position,
+		Rotation = Props.Rotation,
+		AnchorPoint = Props.AnchorPoint,
+		Size = Props.Size,
+		AutomaticSize = Props.AutomaticSize,
+		Visible = Props.Visible,
+		ZIndex = Props.ZIndex,
+		LayoutOrder = Props.LayoutOrder,
+		ClipsDescendants = Props.ClipsDescendants,
+		Active = Props.Active,
+		Selectable = Props.Selectable,
+		Interactable = Props.Interactable,
+		BackgroundColor3 = Props.BackgroundColor3,
+		BackgroundTransparency = Props.BackgroundTransparency,
 
-			[Children] = {
-				Props[Children],
+		[Children] = {
+			Props[Children],
 
-				Computed(function()
-					local CornerRadiusValue = GetValue(Props.CornerRadius)
-					if
-						(typeof(CornerRadiusValue) == "UDim")
-						and ((CornerRadiusValue.Offset ~= 0) or (CornerRadiusValue.Scale ~= 0))
-					then
-						return New "UICorner" {
-							CornerRadius = Props.CornerRadius,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					if PaddingInEffect:get() == true then
-						return New "UIPadding" {
-							PaddingTop = Computed(function()
-								local PaddingTop = GetValue(Props.PaddingTop)
-								local Padding = GetValue(Props.Padding)
-								if typeof(PaddingTop) == "UDim" then
-									return PaddingTop
-								elseif typeof(Padding) == "UDim" then
-									return GetValue(Props.Padding)
-								else
-									return UDim.new()
-								end
-							end),
-							PaddingLeft = Computed(function()
-								local PaddingLeft = GetValue(Props.PaddingLeft)
-								local Padding = GetValue(Props.Padding)
-								if typeof(PaddingLeft) == "UDim" then
-									return PaddingLeft
-								elseif typeof(Padding) == "UDim" then
-									return GetValue(Props.Padding)
-								else
-									return UDim.new()
-								end
-							end),
-							PaddingRight = Computed(function()
-								local PaddingRight = GetValue(Props.PaddingRight)
-								local Padding = GetValue(Props.Padding)
-								if typeof(PaddingRight) == "UDim" then
-									return PaddingRight
-								elseif typeof(Padding) == "UDim" then
-									return GetValue(Props.Padding)
-								else
-									return UDim.new()
-								end
-							end),
-							PaddingBottom = Computed(function()
-								local PaddingBottom = GetValue(Props.PaddingBottom)
-								local Padding = GetValue(Props.Padding)
-								if typeof(PaddingBottom) == "UDim" then
-									return PaddingBottom
-								elseif typeof(Padding) == "UDim" then
-									return GetValue(Props.Padding)
-								else
-									return UDim.new()
-								end
-							end),
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					local ScaleValue = GetValue(Props.Scale)
-					if (typeof(ScaleValue) == "number") and (ScaleValue ~= 1) then
-						return New "UIScale" {
-							Scale = Props.Scale,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					if GetValue(Props.StrokeEnabled) == true then
-						return New "UIStroke" {
-							Enabled = Props.StrokeEnabled,
-							Thickness = Props.StrokeThickness,
-							Color = Props.StrokeColor,
-							Transparency = Props.StrokeTransparency,
-							ApplyStrokeMode = Props.StrokeApplyMode,
-							LineJoinMode = Props.StrokeLineJoinMode,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					if GetValue(Props.GradientEnabled) == true then
-						return New "UIGradient" {
-							Enabled = Props.GradientEnabled,
-							Color = Props.GradientColor,
-							Offset = Props.GradientOffset,
-							Rotation = Props.GradientRotation,
-							Transparency = Props.GradientTransparency,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					local AspectRatioValue = GetValue(Props.AspectRatio)
-					if typeof(AspectRatioValue) == "number" then
-						return New "UIAspectRatioConstraint" {
-							AspectRatio = Props.AspectRatio,
-							DominantAxis = Props.DominantAxis,
-							AspectType = Props.AspectType,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					if (Props.MaxSize ~= nil) or (Props.MinSize ~= nil) then
-						return New "UISizeConstraint" {
-							MaxSize = Props.MaxSize,
-							MinSize = Props.MinSize,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					if
-						(typeof(GetValue(Props.MaxTextSize)) == "number")
-						or (typeof(GetValue(Props.MinTextSize)) == "number")
-					then
-						return New "UITextSizeConstraint" {
-							MaxTextSize = Props.MaxTextSize,
-							MinTextSize = Props.MinTextSize,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					if GetValue(Props.ListEnabled) == true then
-						return New "UIListLayout" {
-							Padding = Props.ListPadding,
-							FillDirection = Props.ListFillDirection,
-							SortOrder = Props.ListSortOrder,
-							Wraps = Props.ListWraps,
-							HorizontalAlignment = Props.ListHorizontalAlignment,
-							HorizontalFlex = Props.ListHorizontalFlex,
-							ItemLineAlignment = Props.ListItemLineAlignment,
-							VerticalAlignment = Props.ListVerticalAlignment,
-							VerticalFlex = Props.ListVerticalFlex,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					if GetValue(Props.GridEnabled) then
-						return New "UIGridLayout" {
-							CellPadding = Props.GridCellPadding,
-							CellSize = Props.GridCellSize,
-							FillDirection = Props.GridFillDirection,
-							FillDirectionMaxCells = Props.GridFillDirectionMaxCells,
-							SortOrder = Props.GridSortOrder,
-							StartCorner = Props.GridStartCorner,
-							HorizontalAlignment = Props.GridHorizontalAlignment,
-							VerticalAlignment = Props.GridVerticalAlignment,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					if GetValue(Props.TableEnabled) then
-						return New "UITableLayout" {
-							Padding = Props.TablePadding,
-							FillEmptySpaceColumns = Props.TableFillEmptySpaceColumns,
-							FillEmptySpaceRows = Props.TableFillEmptySpaceRows,
-							FillDirection = Props.TableFillDirection,
-							SortOrder = Props.TableSortOrder,
-							MajorAxis = Props.TableMajorAxis,
-							HorizontalAlignment = Props.TableHorizontalAlignment,
-							VerticalAlignment = Props.TableVerticalAlignment,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					if GetValue(Props.PageEnabled) then
-						return New "UIPageLayout" {
-							Animated = Props.PageAnimated,
-							Circular = Props.PageCircular,
-							EasingDirection = Props.PageEasingDirection,
-							EasingStyle = Props.PageEasingStyle,
-							Padding = Props.PagePadding,
-							TweenTime = Props.PageTweenTime,
-							FillDirection = Props.PageFillDirection,
-							SortOrder = Props.PageSortOrder,
-							HorizontalAlignment = Props.PageHorizontalAlignment,
-							VerticalAlignment = Props.PageVerticalAlignment,
-							GamepadInputEnabled = Props.PageGamepadInputEnabled,
-							ScrollWheelInputEnabled = Props.PageScrollWheelInputEnabled,
-							TouchInputEnabled = Props.PageTouchInputEnabled,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-				Computed(function()
-					local FlexMode = GetValue(Props.FlexMode)
-					if (FlexMode ~= nil) and (FlexMode ~= Enum.UIFlexMode.None) then
-						return New "UIFlexItem" {
-							FlexMode = Props.FlexMode,
-							FlexItemLineAlignment = Props.FlexItemLineAlignment,
-							FlexGrowRatio = Props.FlexGrowRatio,
-							FlexShrinkRatio = Props.FlexShrinkRatio,
-						}
-					else
-						return
-					end
-				end, Fusion.cleanup),
-			},
-		}
-	end
+			Computed(function()
+				local CornerRadiusValue = GetValue(Props.CornerRadius)
+				if
+					(typeof(CornerRadiusValue) == "UDim")
+					and ((CornerRadiusValue.Offset ~= 0) or (CornerRadiusValue.Scale ~= 0))
+				then
+					return New "UICorner" {
+						CornerRadius = Props.CornerRadius,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				if PaddingInEffect:get() == true then
+					return New "UIPadding" {
+						PaddingTop = Computed(function()
+							local PaddingTop = GetValue(Props.PaddingTop)
+							local Padding = GetValue(Props.Padding)
+							if typeof(PaddingTop) == "UDim" then
+								return PaddingTop
+							elseif typeof(Padding) == "UDim" then
+								return GetValue(Props.Padding)
+							else
+								return UDim.new()
+							end
+						end),
+						PaddingLeft = Computed(function()
+							local PaddingLeft = GetValue(Props.PaddingLeft)
+							local Padding = GetValue(Props.Padding)
+							if typeof(PaddingLeft) == "UDim" then
+								return PaddingLeft
+							elseif typeof(Padding) == "UDim" then
+								return GetValue(Props.Padding)
+							else
+								return UDim.new()
+							end
+						end),
+						PaddingRight = Computed(function()
+							local PaddingRight = GetValue(Props.PaddingRight)
+							local Padding = GetValue(Props.Padding)
+							if typeof(PaddingRight) == "UDim" then
+								return PaddingRight
+							elseif typeof(Padding) == "UDim" then
+								return GetValue(Props.Padding)
+							else
+								return UDim.new()
+							end
+						end),
+						PaddingBottom = Computed(function()
+							local PaddingBottom = GetValue(Props.PaddingBottom)
+							local Padding = GetValue(Props.Padding)
+							if typeof(PaddingBottom) == "UDim" then
+								return PaddingBottom
+							elseif typeof(Padding) == "UDim" then
+								return GetValue(Props.Padding)
+							else
+								return UDim.new()
+							end
+						end),
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				local ScaleValue = GetValue(Props.Scale)
+				if (typeof(ScaleValue) == "number") and (ScaleValue ~= 1) then
+					return New "UIScale" {
+						Scale = Props.Scale,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				if GetValue(Props.StrokeEnabled) == true then
+					return New "UIStroke" {
+						Enabled = Props.StrokeEnabled,
+						Thickness = Props.StrokeThickness,
+						Color = Props.StrokeColor,
+						Transparency = Props.StrokeTransparency,
+						ApplyStrokeMode = Props.StrokeApplyMode,
+						LineJoinMode = Props.StrokeLineJoinMode,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				if GetValue(Props.GradientEnabled) == true then
+					return New "UIGradient" {
+						Enabled = Props.GradientEnabled,
+						Color = Props.GradientColor,
+						Offset = Props.GradientOffset,
+						Rotation = Props.GradientRotation,
+						Transparency = Props.GradientTransparency,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				local AspectRatioValue = GetValue(Props.AspectRatio)
+				if typeof(AspectRatioValue) == "number" then
+					return New "UIAspectRatioConstraint" {
+						AspectRatio = Props.AspectRatio,
+						DominantAxis = Props.DominantAxis,
+						AspectType = Props.AspectType,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				if (Props.MaxSize ~= nil) or (Props.MinSize ~= nil) then
+					return New "UISizeConstraint" {
+						MaxSize = Props.MaxSize,
+						MinSize = Props.MinSize,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				if
+					(typeof(GetValue(Props.MaxTextSize)) == "number")
+					or (typeof(GetValue(Props.MinTextSize)) == "number")
+				then
+					return New "UITextSizeConstraint" {
+						MaxTextSize = Props.MaxTextSize,
+						MinTextSize = Props.MinTextSize,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				if GetValue(Props.ListEnabled) == true then
+					return New "UIListLayout" {
+						Padding = Props.ListPadding,
+						FillDirection = Props.ListFillDirection,
+						SortOrder = Props.ListSortOrder,
+						Wraps = Props.ListWraps,
+						HorizontalAlignment = Props.ListHorizontalAlignment,
+						HorizontalFlex = Props.ListHorizontalFlex,
+						ItemLineAlignment = Props.ListItemLineAlignment,
+						VerticalAlignment = Props.ListVerticalAlignment,
+						VerticalFlex = Props.ListVerticalFlex,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				if GetValue(Props.GridEnabled) then
+					return New "UIGridLayout" {
+						CellPadding = Props.GridCellPadding,
+						CellSize = Props.GridCellSize,
+						FillDirection = Props.GridFillDirection,
+						FillDirectionMaxCells = Props.GridFillDirectionMaxCells,
+						SortOrder = Props.GridSortOrder,
+						StartCorner = Props.GridStartCorner,
+						HorizontalAlignment = Props.GridHorizontalAlignment,
+						VerticalAlignment = Props.GridVerticalAlignment,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				if GetValue(Props.TableEnabled) then
+					return New "UITableLayout" {
+						Padding = Props.TablePadding,
+						FillEmptySpaceColumns = Props.TableFillEmptySpaceColumns,
+						FillEmptySpaceRows = Props.TableFillEmptySpaceRows,
+						FillDirection = Props.TableFillDirection,
+						SortOrder = Props.TableSortOrder,
+						MajorAxis = Props.TableMajorAxis,
+						HorizontalAlignment = Props.TableHorizontalAlignment,
+						VerticalAlignment = Props.TableVerticalAlignment,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				if GetValue(Props.PageEnabled) then
+					return New "UIPageLayout" {
+						Animated = Props.PageAnimated,
+						Circular = Props.PageCircular,
+						EasingDirection = Props.PageEasingDirection,
+						EasingStyle = Props.PageEasingStyle,
+						Padding = Props.PagePadding,
+						TweenTime = Props.PageTweenTime,
+						FillDirection = Props.PageFillDirection,
+						SortOrder = Props.PageSortOrder,
+						HorizontalAlignment = Props.PageHorizontalAlignment,
+						VerticalAlignment = Props.PageVerticalAlignment,
+						GamepadInputEnabled = Props.PageGamepadInputEnabled,
+						ScrollWheelInputEnabled = Props.PageScrollWheelInputEnabled,
+						TouchInputEnabled = Props.PageTouchInputEnabled,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+			Computed(function()
+				local FlexMode = GetValue(Props.FlexMode)
+				if (FlexMode ~= nil) and (FlexMode ~= Enum.UIFlexMode.None) then
+					return New "UIFlexItem" {
+						FlexMode = Props.FlexMode,
+						FlexItemLineAlignment = Props.FlexItemLineAlignment,
+						FlexGrowRatio = Props.FlexGrowRatio,
+						FlexShrinkRatio = Props.FlexShrinkRatio,
+					}
+				else
+					return
+				end
+			end, Fusion.cleanup),
+		},
+	}
 end
