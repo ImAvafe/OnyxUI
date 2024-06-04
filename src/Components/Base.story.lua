@@ -35,9 +35,10 @@ return {
 				Base "Frame" {
 					ListEnabled = true,
 					ListPadding = UDim.new(0, 15),
-					Size = UDim2.fromOffset(300, 600),
+					-- Size = UDim2.fromOffset(300, 600),
+					AutomaticSize = Enum.AutomaticSize.XY,
 					PaddingLeft = UDim.new(0, 10),
-					-- Padding = UDim.new(0, 50),
+					Padding = UDim.new(0, 30),
 
 					[Children] = {
 						Base "TextButton" {
@@ -45,7 +46,9 @@ return {
 							StrokeEnabled = true,
 							StrokeThickness = 3,
 							StrokeApplyMode = Enum.ApplyStrokeMode.Border,
-							Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 50)),
+							StrokeTransparency = 0.5,
+							StrokeLineJoinMode = Enum.LineJoinMode.Miter,
+							Size = UDim2.fromOffset(200, 50),
 						},
 						Base "TextButton" {
 							BackgroundColor3 = Color3.fromRGB(255, 0, 0),
@@ -55,15 +58,41 @@ return {
 							StrokeApplyMode = Enum.ApplyStrokeMode.Border,
 							CornerRadius = UDim.new(0, 15),
 							Scale = 0.95,
-							Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 50)),
+							Size = UDim2.fromOffset(200, 50),
+							GradientEnabled = true,
+							GradientColor = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(0, 0, 0)),
 						},
 						Base "TextButton" {
 							BackgroundColor3 = Color3.fromRGB(255, 0, 0),
 							StrokeEnabled = true,
 							StrokeThickness = 3,
 							StrokeApplyMode = Enum.ApplyStrokeMode.Border,
-							Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 50)),
+							Size = UDim2.fromOffset(200, 50),
+							AspectRatio = 1,
+							DominantAxis = Enum.DominantAxis.Height,
+							AspectType = Enum.AspectType.ScaleWithParentSize,
+							-- MaxSize = Vector2.new(10, 20),
 						},
+					},
+				},
+				Base "Frame" {
+					Size = UDim2.fromOffset(200, 200),
+					GridEnabled = true,
+					GridCellSize = UDim2.fromOffset(50, 50),
+					BackgroundColor3 = Color3.fromRGB(255, 0, 0),
+					Padding = UDim.new(0, 10),
+					CornerRadius = UDim.new(0, 10),
+
+					[Children] = {
+						Base "Frame" {},
+						Base "Frame" {
+							StrokeEnabled = true,
+							StrokeColor = Color3.fromRGB(0, 0, 255),
+							StrokeThickness = 2,
+						},
+						Base "Frame" {},
+						Base "Frame" {},
+						Base "Frame" {},
 					},
 				},
 			},
