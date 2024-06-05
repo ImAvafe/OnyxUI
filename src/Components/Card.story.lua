@@ -54,6 +54,14 @@ return {
 						},
 					},
 				},
+				Card {
+					Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 75)),
+					AutomaticSize = Enum.AutomaticSize.None,
+					PaddingLeft = UDim.new(0, 50),
+					CornerRadius = Computed(function()
+						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+					end),
+				},
 			},
 		}
 

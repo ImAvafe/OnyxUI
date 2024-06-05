@@ -2,49 +2,45 @@ local OnyxUI = require(script.Parent.Parent)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Modifier = require(OnyxUI.Utils.Modifier)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
-local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local Frame = require(OnyxUI.Components.Frame)
+local Frame = require(script.Parent.Frame)
 
-return function(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "Card")
-	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Neutral.Dark)
-	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0)
+export type Props = Frame.Props & {}
 
-	Props.CornerRadius = EnsureValue(Props.CornerRadius, "number", Themer.Theme.CornerRadius["1"])
-	Props.Padding = EnsureValue(Props.Padding, "UIPadding", Modifier.Padding {})
+return function(Props: Props)
+	local Name = EnsureValue(Props.Name, "string", "Card")
+	local BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Neutral.Dark)
+	local BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0)
+	local CornerRadius = EnsureValue(
+		Props.CornerRadius,
+		"UDim",
+		Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+		end)
+	)
+	local Padding = EnsureValue(
+		Props.Padding,
+		"UDim",
+		Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+		end)
+	)
+	local PaddingBottom = EnsureValue(Props.PaddingBottom, "UDim", Padding)
+	local PaddingLeft = EnsureValue(Props.PaddingLeft, "UDim", Padding)
+	local PaddingRight = EnsureValue(Props.PaddingRight, "UDim", Padding)
+	local PaddingTop = EnsureValue(Props.PaddingTop, "UDim", Padding)
 
-	return Frame {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		Interactable = Props.Interactable,
-
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
-
-		[Children] = {
-			Modifier.Corner {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Props.CornerRadius:get())
-				end),
-			},
-			Props.Padding,
-
-			Props[Children],
-		},
-	}
+	return Frame(CombineProps(Props, {
+		Name = Name,
+		BackgroundColor3 = BackgroundColor3,
+		BackgroundTransparency = BackgroundTransparency,
+		CornerRadius = CornerRadius,
+		PaddingBottom = PaddingBottom,
+		PaddingLeft = PaddingLeft,
+		PaddingRight = PaddingRight,
+		PaddingTop = PaddingTop,
+	}))
 end
