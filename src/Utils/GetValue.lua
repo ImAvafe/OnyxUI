@@ -1,6 +1,6 @@
 local PubTypes = require(script.Parent.Parent.PubTypes)
 
-local function GetValue(Value: PubTypes.CanBeState<nil>): any
+local function GetValue(Value: PubTypes.CanBeState<any>): any
 	if (typeof(Value) == "table") and (typeof(Value.type) == "string") then
 		return Value:get()
 	else
