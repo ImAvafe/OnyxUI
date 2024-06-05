@@ -1,11 +1,9 @@
-local function CombineProps(PreferredProps: { [string]: any }, Props: { [string]: any })
-	for Key, Value in pairs(PreferredProps) do
-		if Props[Key] == nil then
-			Props[Key] = Value
-		end
+local function CombineProps(Source: { [string]: any }, Target: { [string]: any })
+	for Key, Value in pairs(Source) do
+		Target[Key] = Value
 	end
 
-	return Props
+	return Target
 end
 
 return CombineProps
