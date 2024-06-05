@@ -1,36 +1,22 @@
 local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
-
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
-local New = Fusion.New
-local Children = Fusion.Children
+local Base = require(script.Parent.Base)
 
-local function Frame(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "Frame")
-	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
+type Props = Base.BaseProps & {}
 
-	return New "Frame" {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		Interactable = Props.Interactable,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
+local function Frame(Props: Props)
+	local Name = EnsureValue(Props.Name, "string", "Frame")
+	local BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
+	local AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
 
-		[Children] = Props[Children],
-	}
+	return Base(CombineProps(Props, {
+		ClassName = "Frame",
+		Name = Name,
+		BackgroundTransparency = BackgroundTransparency,
+		AutomaticSize = AutomaticSize,
+	}))
 end
 
 return Frame
