@@ -1,47 +1,31 @@
 local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local CombineProps = require(script.Parent.Parent.Utils.CombineProps)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Colors = require(OnyxUI.Utils.Colors)
+local Fusion = require(OnyxUI.Packages.Fusion)
 
-local Children = Fusion.Children
+local Computed = Fusion.Computed
 
-local Image = require(OnyxUI.Components.Image)
+local Image = require(script.Parent.Image)
+local Themer = require(script.Parent.Parent.Utils.Themer)
 
-local function Text(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "Icon")
-	Props.Size = EnsureValue(Props.Size, "number", UDim2.fromOffset(20, 20))
-	Props.ImageColor3 = EnsureValue(Props.ImageColor3, "Color3", Colors.White)
-	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
+type Props = Image.Props & {}
 
-	return Image {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
+local function Text(Props: Props)
+	local Name = EnsureValue(Props.Name, "string", "Icon")
+	local Size = EnsureValue(
+		Props.Size,
+		"number",
+		Computed(function()
+			return UDim2.fromOffset(Themer.Theme.TextSize["1"]:get(), Themer.Theme.TextSize["1"]:get())
+		end)
+	)
+	local BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 
-		Image = Props.Image,
-		ImageColor3 = Props.ImageColor3,
-		ImageTransparency = Props.ImageTransparency,
-		ImageRectSize = Props.ImageRectSize,
-		ResampleMode = Props.ResampleMode,
-		ScaleType = Props.ScaleType,
-		SliceCenter = Props.SliceCenter,
-		SliceScale = Props.SliceScale,
-		TileSize = Props.TileSize,
-
-		[Children] = Props[Children],
-	}
+	return Image(CombineProps(Props, {
+		Name = Name,
+		Size = Size,
+		BackgroundTransparency = BackgroundTransparency,
+	}))
 end
 
 return Text

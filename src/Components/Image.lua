@@ -9,7 +9,7 @@ local Hydrate = Fusion.Hydrate
 
 local Base = require(script.Parent.Base)
 
-type Props = Base.BaseProps & {
+export type Props = Base.BaseProps & {
 	Image: PubTypes.CanBeState<string>?,
 	FallbackImage: PubTypes.CanBeState<string>?,
 	ImageColor3: PubTypes.CanBeState<Color3>?,
