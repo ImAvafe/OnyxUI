@@ -44,5 +44,13 @@ return function(Props: Props)
 		AutomaticSize = AutomaticSize,
 	}))) {
 		Image = ImageInUse,
+		ImageColor3 = Props.ImageColor3,
+		ImageTransparency = Props.ImageTransparency,
+		ImageRectSize = Props.ImageRectSize,
+		ResampleMode = Props.ResampleMode,
+		ScaleType = Props.Scale,
+		SliceCenter = Props.SliceCenter,
+		SliceScale = Props.SliceScale,
+		TileSize = Props.TileSize,
 	}
 end
