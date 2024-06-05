@@ -12,8 +12,8 @@ local Hydrate = Fusion.Hydrate
 local Base = require(script.Parent.Base)
 local Frame = require(script.Parent.Frame)
 
-type Props = Base.BaseProps & {
-	BaseResolution: PubTypes.CanBeState<Vector2>,
+export type Props = Base.Props & {
+	BaseResolution: PubTypes.CanBeState<Vector2>?,
 	MinScale: PubTypes.CanBeState<number>?,
 	MaxScale: PubTypes.CanBeState<number>?,
 	ScaleMultiplier: PubTypes.CanBeState<number>?,

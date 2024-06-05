@@ -9,12 +9,12 @@ local Hydrate = Fusion.Hydrate
 
 local Base = require(script.Parent.Base)
 
-export type Props = Base.BaseProps & {
+export type Props = Base.Props & {
 	Image: PubTypes.CanBeState<string>?,
 	FallbackImage: PubTypes.CanBeState<string>?,
 	ImageColor3: PubTypes.CanBeState<Color3>?,
 	ImageTransparency: PubTypes.CanBeState<number>?,
-	ImageRectSize: PubTypes.CanBeState<Vector2>,
+	ImageRectSize: PubTypes.CanBeState<Vector2>?,
 	ResampleMode: PubTypes.CanBeState<Enum.ResamplerMode>?,
 	ScaleType: PubTypes.CanBeState<Enum.ScaleType>?,
 	SliceCenter: PubTypes.CanBeState<Rect>?,

@@ -11,17 +11,15 @@ local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
-local Text = require(OnyxUI.Components.Text)
-local Icon = require(OnyxUI.Components.Icon)
+local BaseButton = require(script.Parent.BaseButton)
+local Text = require(script.Parent.Text)
+local Icon = require(script.Parent.Icon)
 
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
 local HOLDING_BACKGROUND_TRANSPARENCY = 0.95
 
-local Base = require(script.Parent.Base)
-
-type Props = Base.BaseProps & {
+export type Props = BaseButton.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
 	Contents: PubTypes.CanBeState<{ string }>?,
 	Style: PubTypes.CanBeState<string>?,

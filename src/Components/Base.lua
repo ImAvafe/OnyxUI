@@ -9,7 +9,7 @@ local New = Fusion.New
 local Computed = Fusion.Computed
 local Children = Fusion.Children
 
-export type BaseProps = {
+export type Props = {
 	ClassName: string?,
 
 	Name: PubTypes.CanBeState<string>?,
@@ -128,7 +128,7 @@ export type BaseProps = {
 	MinTextSize: PubTypes.CanBeState<number>?,
 }
 
-return function(Props: BaseProps)
+return function(Props: Props)
 	local Name = EnsureValue(Props.Name, "string", "Base")
 	local CornerRadius = EnsureValue(
 		Props.CornerRadius,

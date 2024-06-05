@@ -8,7 +8,7 @@ local Computed = Fusion.Computed
 local Image = require(script.Parent.Image)
 local Themer = require(script.Parent.Parent.Utils.Themer)
 
-type Props = Image.Props & {}
+export type Props = Image.Props & {}
 
 local function Text(Props: Props)
 	local Name = EnsureValue(Props.Name, "string", "Icon")

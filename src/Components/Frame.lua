@@ -4,7 +4,7 @@ local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Base = require(script.Parent.Base)
 
-type Props = Base.BaseProps & {}
+export type Props = Base.Props & {}
 
 local function Frame(Props: Props)
 	local Name = EnsureValue(Props.Name, "string", "Frame")

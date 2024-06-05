@@ -10,7 +10,7 @@ local Base = require(script.Parent.Base)
 local PubTypes = require(script.Parent.Parent.PubTypes)
 local CombineProps = require(script.Parent.Parent.Utils.CombineProps)
 
-type Props = Base.BaseProps & {
+export type Props = Base.Props & {
 	Text: PubTypes.CanBeState<string>?,
 	TextColor3: PubTypes.CanBeState<Color3>?,
 	TextSize: PubTypes.CanBeState<number>?,

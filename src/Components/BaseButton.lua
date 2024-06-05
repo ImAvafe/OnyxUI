@@ -13,7 +13,7 @@ local Hydrate = Fusion.Hydrate
 
 local Base = require(script.Parent.Base)
 
-type BaseButtonProps = Base.BaseProps & {
+export type Props = Base.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
 
 	OnActivated: PubTypes.CanBeState<() -> ()>?,
@@ -29,7 +29,7 @@ type BaseButtonProps = Base.BaseProps & {
 	ClickSound: PubTypes.CanBeState<Sound>?,
 }
 
-local function Button(Props: BaseButtonProps): () -> TextButton
+local function Button(Props: Props): () -> TextButton
 	local Name = EnsureValue(Props.Name, "string", "BaseButton")
 	local BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 	local AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
