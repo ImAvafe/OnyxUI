@@ -57,6 +57,11 @@ return {
 					Style = "Ghost",
 					Disabled = true,
 				},
+				IconButton {
+					Image = "rbxassetid://10814531047",
+					PaddingLeft = UDim.new(0, 30),
+					CornerRadius = UDim.new(0, 0),
+				},
 			},
 		}
 
