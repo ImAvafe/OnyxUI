@@ -1,39 +1,21 @@
 local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
+local PubTypes = require(script.Parent.Parent.PubTypes)
 
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Base = require(script.Parent.Base)
 
-local New = Fusion.New
-local Children = Fusion.Children
+export type Props = Base.Props & {
+	GroupTransparency: PubTypes.CanBeState<number>?,
+	GroupColor3: PubTypes.CanBeState<Color3>?,
+}
 
-local function Frame(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "Frame")
-	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
-
-	return New "CanvasGroup" {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		Interactable = Props.Interactable,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
-
+return function(Props: { [any]: any })
+	return Base(CombineProps(Props, {
+		ClassName = "CanvasGroup",
+		Name = "CanvasGroup",
+		BackgroundTransparency = 1,
+		AutomaticSize = Enum.AutomaticSize.XY,
 		GroupTransparency = Props.GroupTransparency,
 		GroupColor3 = Props.GroupColor3,
-
-		[Children] = Props[Children],
-	}
+	}))
 end
-
-return Frame
