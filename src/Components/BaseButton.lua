@@ -5,9 +5,9 @@ local Fusion = require(OnyxUI.Packages.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 local PubTypes = require(script.Parent.Parent.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local OnEvent = Fusion.OnEvent
-local Children = Fusion.Children
 local Computed = Fusion.Computed
 local Hydrate = Fusion.Hydrate
 
@@ -63,28 +63,13 @@ local function Button(Props: BaseButtonProps): () -> TextButton
 		end)
 	)
 
-	return Hydrate(Base {
+	return Hydrate(Base(CombineProps(Props, {
 		ClassName = "TextButton",
 		Name = Name,
 		AutomaticSize = AutomaticSize,
 		Selectable = Selectable,
 		BackgroundTransparency = BackgroundTransparency,
-
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Interactable = Props.Interactable,
-		BackgroundColor3 = Props.BackgroundColor3,
-
-		[Children] = Props[Children],
-	}) {
+	}))) {
 		Text = "",
 		RichText = false,
 		TextSize = 0,
