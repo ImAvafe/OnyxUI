@@ -1,6 +1,5 @@
 local OnyxUI = require(script.Parent.Parent)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 local Colors = require(OnyxUI.Utils.Colors)
 
@@ -8,8 +7,8 @@ local Children = Fusion.Children
 local Value = Fusion.Value
 local Computed = Fusion.Computed
 
-local Frame = require(OnyxUI.Components.Frame)
-local Avatar = require(OnyxUI.Components.Avatar)
+local Frame = require(script.Parent.Frame)
+local Avatar = require(script.Parent.Avatar)
 
 local INDICATOR_COLORS = { Colors.Red["500"], Colors.Green["400"], Colors.Orange["500"], Colors.Stone["600"] }
 
@@ -32,54 +31,64 @@ return {
 
 		local Instance = Frame {
 			Parent = Parent,
+			Padding = Computed(function()
+				return UDim.new(0, Themer.Theme.StrokeThickness["4"]:get())
+			end),
+			ListEnabled = true,
+			ListFillDirection = Enum.FillDirection.Horizontal,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+			end),
 
 			[Children] = {
-				Modifier.ListLayout {
-					Padding = Computed(function()
-						return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+				Avatar {
+					Image = "rbxthumb://type=AvatarHeadShot&id=144146784&w=150&h=150",
+				},
+				Avatar {
+					Image = "rbxthumb://type=AvatarHeadShot&id=144146784&w=150&h=150",
+					CornerRadius = Computed(function()
+						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
 					end),
-					FillDirection = Enum.FillDirection.Horizontal,
-				},
-				Modifier.Padding {
-					Padding = UDim.new(0, Themer.Theme.StrokeThickness["4"]:get()),
-				},
-
-				Avatar {
-					Image = "rbxthumb://type=AvatarHeadShot&id=144146784&w=150&h=150",
 				},
 				Avatar {
 					Image = "rbxthumb://type=AvatarHeadShot&id=144146784&w=150&h=150",
-					CornerRadius = Themer.Theme.CornerRadius.Full,
-				},
-				Avatar {
-					Image = "rbxthumb://type=AvatarHeadShot&id=144146784&w=150&h=150",
-					CornerRadius = Themer.Theme.CornerRadius.Full,
+					CornerRadius = Computed(function()
+						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+					end),
 					RingEnabled = true,
 					RingColor = IndicatorColor,
 				},
 				Avatar {
 					Image = "rbxthumb://type=AvatarHeadShot&id=144146784&w=150&h=150",
-					CornerRadius = Themer.Theme.CornerRadius.Full,
+					CornerRadius = Computed(function()
+						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+					end),
 					IndicatorEnabled = true,
 					IndicatorColor = IndicatorColor,
 				},
 				Avatar {
 					Image = "rbxthumb://type=AvatarHeadShot&id=144146784&w=150&h=150",
-					CornerRadius = Themer.Theme.CornerRadius.Full,
+					CornerRadius = Computed(function()
+						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+					end),
 					RingEnabled = true,
 					RingColor = Colors.Green["400"],
 					RingThickness = RingThickness,
 				},
 				Avatar {
 					Image = "rbxthumb://type=AvatarHeadShot&id=144146784&w=150&h=150",
-					CornerRadius = Themer.Theme.CornerRadius.Full,
+					CornerRadius = Computed(function()
+						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+					end),
 					IndicatorEnabled = true,
 					IndicatorColor = Colors.Sky["500"],
 					IndicatorIcon = "rbxassetid://13805569043",
 				},
 				Avatar {
 					Image = "rbxthumb://type=AvatarHeadShot&id=144146784&w=150&h=150",
-					CornerRadius = Themer.Theme.CornerRadius.Full,
+					CornerRadius = Computed(function()
+						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+					end),
 					IndicatorEnabled = true,
 					Size = UDim2.fromOffset(150, 150),
 				},
