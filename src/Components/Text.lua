@@ -52,7 +52,6 @@ local function Text(Props: Props)
 		Name = Name,
 		AutomaticSize = AutomaticSize,
 	}))) {
-		Text = Props.Text,
 		TextColor3 = TextColor3,
 		TextSize = TextSize,
 		RichText = RichText,
@@ -62,6 +61,15 @@ local function Text(Props: Props)
 		TextXAlignment = TextXAlignment,
 		TextYAlignment = TextYAlignment,
 		BackgroundTransparency = BackgroundTransparency,
+
+		Text = Props.Text,
+		TextTransparency = Props.TextTransparency,
+		MaxVisibleGraphemes = Props.MaxVisibleGraphemes,
+		LocalizedText = Props.LocalizedText,
+		LineHeight = Props.LineHeight,
+		TextTruncate = Props.TextTruncate,
+		TextScaled = Props.TextScaled,
+		Font = Props.Font,
 	}
 end
 
