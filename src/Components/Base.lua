@@ -155,7 +155,7 @@ return function(Props: Props)
 		Props.ListPadding,
 		"UDim",
 		Computed(function()
-			return Themer.Theme.Spacing["0.5"]:get()
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end)
 	)
 	local ListSortOrder = EnsureValue(Props.ListSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
