@@ -1,10 +1,10 @@
 local OnyxUI = require(script.Parent.Parent)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local ColorUtils = require(OnyxUI.Packages.ColorUtils)
-
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 local PubTypes = require(script.Parent.Parent.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Children = Fusion.Children
 local ForValues = Fusion.ForValues
@@ -30,7 +30,6 @@ export type Props = BaseButton.Props & {
 }
 
 local function Button(Props: Props)
-	local Name = EnsureValue(Props.Name, "string", "Button")
 	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
 	local Contents = EnsureValue(Props.Contents, "table", {})
 	local Style = EnsureValue(Props.Style, "string", "Filled")
@@ -43,34 +42,6 @@ local function Button(Props: Props)
 		end)
 	)
 	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
-	local PaddingLeft = EnsureValue(
-		Props.PaddingLeft,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-		end)
-	)
-	local PaddingRight = EnsureValue(
-		Props.PaddingRight,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-		end)
-	)
-	local PaddingTop = EnsureValue(
-		Props.PaddingTop,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-		end)
-	)
-	local PaddingBottom = EnsureValue(
-		Props.PaddingBottom,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-		end)
-	)
 	local IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
 
 	local BackgroundColor3 = Computed(function()
@@ -107,8 +78,8 @@ local function Button(Props: Props)
 		end
 	end)
 
-	return BaseButton {
-		Name = Name,
+	return BaseButton(CombineProps(Props, {
+		Name = "Button",
 		BackgroundTransparency = Computed(function()
 			if Style:get() == "Filled" then
 				if Disabled:get() then
@@ -125,10 +96,18 @@ local function Button(Props: Props)
 			end
 		end),
 		BackgroundColor3 = Spring(BackgroundColor3, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
-		PaddingLeft = PaddingLeft,
-		PaddingRight = PaddingRight,
-		PaddingTop = PaddingTop,
-		PaddingBottom = PaddingBottom,
+		PaddingLeft = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingRight = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingTop = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+		end),
+		PaddingBottom = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+		end),
 		CornerRadius = Computed(function()
 			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
 		end),
@@ -174,7 +153,7 @@ local function Button(Props: Props)
 				end
 			end, Fusion.cleanup),
 		},
-	}
+	}))
 end
 
 return Button

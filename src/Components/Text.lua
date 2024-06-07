@@ -29,8 +29,6 @@ export type Props = Base.Props & {
 }
 
 local function Text(Props: Props)
-	local Name = EnsureValue(Props.Name, "string", "Text")
-	local AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
 	local TextColor3 = EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
 	local TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
 	local RichText = EnsureValue(Props.RichText, "boolean", true)
@@ -42,25 +40,23 @@ local function Text(Props: Props)
 		end)
 	)
 	local TextWrapped = EnsureValue(Props.TextWrapped, "boolean", true)
-	local ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", false)
 	local TextXAlignment = EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
 	local TextYAlignment = EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
-	local BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
 
 	return Hydrate(Base(CombineProps(Props, {
 		ClassName = "TextLabel",
-		Name = Name,
-		AutomaticSize = AutomaticSize,
+		Name = "Text",
+		AutomaticSize = Enum.AutomaticSize.XY,
 	}))) {
 		TextColor3 = TextColor3,
 		TextSize = TextSize,
 		RichText = RichText,
 		FontFace = FontFace,
 		TextWrapped = TextWrapped,
-		ClipsDescendants = ClipsDescendants,
+		ClipsDescendants = false,
 		TextXAlignment = TextXAlignment,
 		TextYAlignment = TextYAlignment,
-		BackgroundTransparency = BackgroundTransparency,
+		BackgroundTransparency = 1,
 
 		Text = Props.Text,
 		TextTransparency = Props.TextTransparency,

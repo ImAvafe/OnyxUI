@@ -19,7 +19,6 @@ type Props = Frame.Props & {
 }
 
 return function(Props: Props)
-	local Name = EnsureValue(Props.Name, "string", "Divider")
 	local Length = EnsureValue(Props.Length, "UDim", UDim.new(1, 0))
 	local FillDirection = EnsureValue(Props.FillDirection, "EnumItem", Enum.FillDirection.Horizontal)
 	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.BaseContent.Main)
@@ -48,7 +47,7 @@ return function(Props: Props)
 	end)
 
 	return Frame(CombineProps(Props, {
-		Name = Name,
+		Name = "Divider",
 		Size = Computed(function()
 			if FillDirection:get() == Enum.FillDirection.Horizontal then
 				return UDim2.new(Length:get(), UDim.new(0, 0))

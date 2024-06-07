@@ -20,7 +20,6 @@ export type Props = Base.Props & {
 }
 
 return function(Props: Props)
-	local Name = EnsureValue(Props.Name, "string", "AutoScaleFrame")
 	local BaseResolution = EnsureValue(Props.BaseResolution, "Vector2", Vector2.new())
 	local MinScale = EnsureValue(Props.MinScale, "number", 0.8)
 	local MaxScale = EnsureValue(Props.MaxScale, "number", math.huge)
@@ -32,7 +31,7 @@ return function(Props: Props)
 	}
 
 	return Frame {
-		Name = Name,
+		Name = "AutoScaleFrame",
 		Scale = Computed(function()
 			local Ratio = ScaleMultiplier:get()
 				/ math.max(

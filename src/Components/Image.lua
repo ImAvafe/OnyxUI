@@ -23,9 +23,6 @@ export type Props = Base.Props & {
 }
 
 return function(Props: Props)
-	local Name = EnsureValue(Props.Name, "string", "Image")
-	local Size = EnsureValue(Props.Size, "UDim2", UDim2.fromOffset(100, 100))
-	local AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)
 	local FallbackImage = EnsureValue(Props.FallbackImage, "string", "rbxasset://textures/ui/GuiImagePlaceholder.png")
 	local Image = EnsureValue(Props.Image, "string", nil)
 
@@ -39,9 +36,9 @@ return function(Props: Props)
 
 	return Hydrate(Base(CombineProps(Props, {
 		ClassName = "ImageLabel",
-		Name = Name,
-		Size = Size,
-		AutomaticSize = AutomaticSize,
+		Name = "Image",
+		Size = UDim2.fromOffset(100, 100),
+		AutomaticSize = Enum.AutomaticSize.None,
 	}))) {
 		Image = ImageInUse,
 		ImageColor3 = Props.ImageColor3,

@@ -9,7 +9,7 @@ export type Props = Base.Props & {
 	GroupColor3: PubTypes.CanBeState<Color3>?,
 }
 
-return function(Props: { [any]: any })
+return function(Props: Props)
 	return Base(CombineProps(Props, {
 		ClassName = "CanvasGroup",
 		Name = "CanvasGroup",

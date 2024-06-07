@@ -30,10 +30,6 @@ export type Props = Base.Props & {
 }
 
 local function Button(Props: Props): () -> TextButton
-	local Name = EnsureValue(Props.Name, "string", "BaseButton")
-	local BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
-	local AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
-
 	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
 	local IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
@@ -65,10 +61,10 @@ local function Button(Props: Props): () -> TextButton
 
 	return Hydrate(Base(CombineProps(Props, {
 		ClassName = "TextButton",
-		Name = Name,
-		AutomaticSize = AutomaticSize,
+		Name = "BaseButton",
+		AutomaticSize = Enum.AutomaticSize.XY,
 		Selectable = Selectable,
-		BackgroundTransparency = BackgroundTransparency,
+		BackgroundTransparency = 1,
 	}))) {
 		Text = "",
 		RichText = false,

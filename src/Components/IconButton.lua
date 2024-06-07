@@ -14,26 +14,17 @@ export type Props = Button.Props & {
 }
 
 local function IconButton(Props: Props)
-	local Name = EnsureValue(Props.Name, "string", "IconButton")
 	local Image = EnsureValue(Props.Image, "string", "")
-	local Padding = EnsureValue(
-		Props.Padding,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-		end)
-	)
-	local PaddingLeft = EnsureValue(Props.PaddingLeft, "UDim", Padding)
-	local PaddingRight = EnsureValue(Props.PaddingRight, "UDim", Padding)
-	local PaddingTop = EnsureValue(Props.PaddingTop, "UDim", Padding)
-	local PaddingBottom = EnsureValue(Props.PaddingBottom, "UDim", Padding)
+	local Padding = Computed(function()
+		return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+	end)
 
 	return Button(CombineProps(Props, {
-		Name = Name,
-		PaddingLeft = PaddingLeft,
-		PaddingRight = PaddingRight,
-		PaddingTop = PaddingTop,
-		PaddingBottom = PaddingBottom,
+		Name = "IconButton",
+		PaddingLeft = Padding,
+		PaddingRight = Padding,
+		PaddingTop = Padding,
+		PaddingBottom = Padding,
 		Contents = Computed(function()
 			return { Image:get() }
 		end),
