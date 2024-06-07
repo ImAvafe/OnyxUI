@@ -1,63 +1,38 @@
 local OnyxUI = require(script.Parent.Parent)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Modifier = require(OnyxUI.Utils.Modifier)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
+local Value = Fusion.Value
+local Out = Fusion.Out
 
-local Frame = require(OnyxUI.Components.Frame)
+local Frame = require(script.Parent.Frame)
+local CanvasGroup = require(script.Parent.CanvasGroup)
 
-local function MenuFrame(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "MenuFrame")
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
-	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0.015)
-	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Base.Main)
+type Props = CanvasGroup.Props & {}
 
-	Props.StrokeColor = EnsureValue(Props.StrokeColor, "Color3", Themer.Theme.Colors.Neutral.Main)
-	Props.Padding = EnsureValue(
-		Props.Padding,
-		"UIPadding",
-		Computed(function()
-			return Modifier.Padding {
-				Padding = UDim.new(0, Themer.Theme.Spacing["1"]:get()),
-			}
-		end, Fusion.cleanup)
-	)
+return function(Props: Props)
+	local AutomaticSize = Value(Enum.AutomaticSize.None)
 
-	return New "CanvasGroup" {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		Interactable = Props.Interactable,
-
+	return CanvasGroup(CombineProps(Props, {
+		Name = "MenuFrame",
 		GroupTransparency = Props.GroupTransparency,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
+		BackgroundColor3 = Themer.Theme.Colors.Base.Main,
+		BackgroundTransparency = 0,
+		Padding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+		end),
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["3"]:get())
+		end),
+		StrokeEnabled = true,
+		StrokeColor = Themer.Theme.Colors.Neutral.Main,
+
+		[Out "AutomaticSize"] = AutomaticSize,
 
 		[Children] = {
-			Props.Padding,
-			Modifier.Corner {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["3"]:get())
-				end),
-			},
-			Modifier.Stroke {
-				Color = Props.StrokeColor,
-			},
-
 			Frame {
 				Name = "Contents",
 				AutomaticSize = Props.AutomaticSize,
@@ -68,15 +43,11 @@ local function MenuFrame(Props: { [any]: any })
 						[Enum.AutomaticSize.X] = UDim2.fromScale(0, 1),
 						[Enum.AutomaticSize.Y] = UDim2.fromScale(1, 0),
 					}
-					return AutomaticSizeScales[Props.AutomaticSize:get()]
+					return AutomaticSizeScales[AutomaticSize:get()]
 				end),
 
 				[Children] = Props[Children],
 			},
-
-			Props.TopChildren,
 		},
-	}
+	}, { Children }))
 end
-
-return MenuFrame
