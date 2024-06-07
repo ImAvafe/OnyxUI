@@ -15,6 +15,12 @@ export type Props = Frame.Props & {
 	Progress: PubTypes.CanBeState<number>?,
 	Color: PubTypes.CanBeState<Color3>?,
 }
+local Frame = require(script.Parent.Frame)
+
+export type Props = Frame.Props & {
+	Progress: PubTypes.CanBeState<number>?,
+	Color: PubTypes.CanBeState<Color3>?,
+}
 
 return function(Props: Props)
 	local Progress = EnsureValue(Props.Progress, "number", 0)
@@ -33,6 +39,11 @@ return function(Props: Props)
 		BackgroundTransparency = 0,
 		BackgroundColor3 = Themer.Theme.Colors.Neutral.Dark,
 		CornerRadius = CornerRadius,
+		end),
+		AutomaticSize = Enum.AutomaticSize.None,
+		BackgroundTransparency = 0,
+		BackgroundColor3 = Themer.Theme.Colors.Neutral.Dark,
+		CornerRadius = CornerRadius,
 
 		[Children] = {
 			Frame {
@@ -40,7 +51,10 @@ return function(Props: Props)
 				Size = Spring(
 					Computed(function()
 						return UDim2.fromScale(Progress:get(), 1)
+						return UDim2.fromScale(Progress:get(), 1)
 					end),
+					Themer.Theme.SpringSpeed["0.5"],
+					Themer.Theme.SpringDampening
 					Themer.Theme.SpringSpeed["0.5"],
 					Themer.Theme.SpringDampening
 				),
@@ -48,7 +62,10 @@ return function(Props: Props)
 				BackgroundTransparency = 0,
 				BackgroundColor3 = Color,
 				CornerRadius = CornerRadius,
+				BackgroundColor3 = Color,
+				CornerRadius = CornerRadius,
 			},
 		},
+	}))
 	}))
 end
