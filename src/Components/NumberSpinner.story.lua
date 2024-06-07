@@ -52,6 +52,7 @@ return {
 					Decimals = 2,
 					Commas = true,
 					Prefix = "$",
+					Font = Enum.Font.FredokaOne,
 				},
 			},
 		}
