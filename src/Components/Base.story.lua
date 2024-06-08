@@ -1,30 +1,23 @@
 local OnyxUI = require(script.Parent.Parent)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local Modifier = require(OnyxUI.Utils.Modifier)
 local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local Frame = require(OnyxUI.Components.Frame)
+local Frame = require(script.Parent.Frame)
 local Base = require(script.Parent.Base)
 
 return {
 	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local Instance = Frame {
 			Parent = Parent,
+			ListEnabled = true,
+			Padding = Computed(function()
+				return UDim.new(0, Themer.Theme.StrokeThickness["4"]:get())
+			end),
 
 			[Children] = {
-				Modifier.ListLayout {
-					Padding = Computed(function()
-						return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-					end),
-					FillDirection = Enum.FillDirection.Horizontal,
-				},
-				Modifier.Padding {
-					Padding = UDim.new(0, Themer.Theme.StrokeThickness["4"]:get()),
-				},
-
 				Base {
 					ClassName = "Frame",
 					Size = UDim2.fromOffset(100, 100),
