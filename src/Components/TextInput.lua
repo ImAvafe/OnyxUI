@@ -1,7 +1,7 @@
 local SoundService = game:GetService("SoundService")
 
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 local Modifier = require(OnyxUI.Utils.Modifier)

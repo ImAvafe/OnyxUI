@@ -1,5 +1,5 @@
 local OnyxUI = require(script.Parent.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local Fusion = require(OnyxUI.Parent.Fusion)
 
 local Value = Fusion.Value
 local New = Fusion.New

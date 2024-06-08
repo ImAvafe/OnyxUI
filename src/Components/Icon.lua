@@ -1,6 +1,6 @@
-local OnyxUI = require(script.Parent.Parent)
+local OnyxUI = script.Parent.Parent
 local CombineProps = require(script.Parent.Parent.Utils.CombineProps)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local Fusion = require(OnyxUI.Parent.Fusion)
 
 local Computed = Fusion.Computed
 

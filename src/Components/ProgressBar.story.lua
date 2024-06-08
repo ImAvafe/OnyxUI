@@ -1,6 +1,6 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
-local ColorUtils = require(OnyxUI.Packages.ColorUtils)
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 
 local Children = Fusion.Children
 local Value = Fusion.Value

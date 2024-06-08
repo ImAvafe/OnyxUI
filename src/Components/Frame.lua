@@ -1,4 +1,4 @@
-local OnyxUI = require(script.Parent.Parent)
+local OnyxUI = script.Parent.Parent
 local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Base = require(script.Parent.Base)

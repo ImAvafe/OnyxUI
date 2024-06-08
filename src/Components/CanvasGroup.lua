@@ -1,6 +1,6 @@
-local OnyxUI = require(script.Parent.Parent)
+local OnyxUI = script.Parent.Parent
 local CombineProps = require(OnyxUI.Utils.CombineProps)
-local PubTypes = require(script.Parent.Parent.PubTypes)
+local PubTypes = require(OnyxUI.Utils.PubTypes)
 
 local Base = require(script.Parent.Base)
 

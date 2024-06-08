@@ -1,4 +1,7 @@
-local function CombineProps(Source: { any: any }, Target: { any: any }, ExcludedKeys: { any }?)
+local OnyxUI = script.Parent.Parent
+local PubTypes = require(OnyxUI.Utils.PubTypes)
+
+local function CombineProps(Source: { [any]: PubTypes.CanBeState<any> }, Target: { [any]: PubTypes.CanBeState<any> }, ExcludedKeys: { any }?)
 	for Key, Value in pairs(Source) do
 		if (ExcludedKeys ~= nil) and (table.find(ExcludedKeys, Key) ~= nil) then
 			continue
