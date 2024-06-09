@@ -24,7 +24,7 @@ export type Props = BaseButton.Props & {
 	Contents: PubTypes.CanBeState<{ string }>?,
 	Style: PubTypes.CanBeState<string>?,
 	Color: PubTypes.CanBeState<Color3>?,
-	ContrastColor: PubTypes.CanBeState<Color3>?,
+	ContentColor: PubTypes.CanBeState<Color3>?,
 	ContentSize: PubTypes.CanBeState<number>?,
 	IsHolding: PubTypes.CanBeState<boolean>?,
 }
@@ -34,8 +34,8 @@ local function Button(Props: Props)
 	local Contents = EnsureValue(Props.Contents, "table", {})
 	local Style = EnsureValue(Props.Style, "string", "Filled")
 	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local ContrastColor = EnsureValue(
-		Props.ContrastColor,
+	local ContentColor = EnsureValue(
+		Props.ContentColor,
 		"Color3",
 		Computed(function()
 			return ColorUtils.Emphasize(Color:get(), 1)
@@ -44,7 +44,7 @@ local function Button(Props: Props)
 	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
 	local IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
 
-	local BackgroundColor3 = Computed(function()
+	local EffectiveColor = Computed(function()
 		if Disabled:get() then
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
@@ -55,22 +55,22 @@ local function Button(Props: Props)
 			end
 		end
 	end)
-	local ContentColor = Computed(function()
+	local EffectiveContentColor = Computed(function()
 		if Disabled:get() then
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
 			if Style:get() == "Filled" then
-				return ContrastColor:get()
+				return ContentColor:get()
 			elseif Style:get() == "Outlined" then
-				return BackgroundColor3:get()
+				return EffectiveColor:get()
 			elseif Style:get() == "Ghost" then
-				return BackgroundColor3:get()
+				return EffectiveColor:get()
 			else
-				return ContrastColor:get()
+				return ContentColor:get()
 			end
 		end
 	end)
-	local ContentTransparency = Computed(function()
+	local EffectiveContentTransparency = Computed(function()
 		if Disabled:get() then
 			return DISABLED_CONTENT_TRANSPARENCY
 		else
@@ -95,7 +95,7 @@ local function Button(Props: Props)
 				end
 			end
 		end),
-		BackgroundColor3 = Spring(BackgroundColor3, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
 		PaddingLeft = Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 		end),
@@ -119,7 +119,7 @@ local function Button(Props: Props)
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
 		StrokeEnabled = true,
-		StrokeColor = Spring(BackgroundColor3, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
 		StrokeTransparency = Computed(function()
 			if Style:get() == "Ghost" then
 				return 1
@@ -136,18 +136,18 @@ local function Button(Props: Props)
 				if string.find(ContentString, "rbxassetid://", 1, true) then
 					return Icon {
 						Image = ContentString,
-						ImageColor3 = ContentColor,
+						ImageColor3 = EffectiveContentColor,
 						Size = Computed(function()
 							return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
 						end),
-						ImageTransparency = ContentTransparency,
+						ImageTransparency = EffectiveContentTransparency,
 					}
 				else
 					return Text {
 						Text = ContentString,
-						TextColor3 = ContentColor,
+						TextColor3 = EffectiveContentColor,
 						TextSize = ContentSize,
-						TextTransparency = ContentTransparency,
+						TextTransparency = EffectiveContentTransparency,
 						TextWrapped = false,
 					}
 				end
