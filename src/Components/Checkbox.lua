@@ -8,6 +8,7 @@ local PubTypes = require(OnyxUI.Utils.PubTypes)
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
+local Value = Fusion.Value
 
 local BaseButton = require(script.Parent.BaseButton)
 local Icon = require(script.Parent.Icon)
@@ -27,15 +28,25 @@ return function(Props: Props)
 	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
 	local IconId = EnsureValue(Props.Icon, "string", "rbxassetid://13858821963")
 
-	return BaseButton {
-		Name = "Checkbox",
-		BackgroundColor3 = Computed(function()
-			if Disabled:get() then
-				return Themer.Theme.Colors.BaseContent.Main:get()
+	local IsHovering = Value(false)
+	local IsHolding = Value(false)
+	local EffectiveColor = Computed(function()
+		if Disabled:get() then
+			return Themer.Theme.Colors.BaseContent.Main:get()
+		else
+			if IsHolding:get() then
+				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Regular:get())
+			elseif IsHovering:get() then
+				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Light:get())
 			else
 				return Color:get()
 			end
-		end),
+		end
+	end)
+
+	return BaseButton {
+		Name = "Checkbox",
+		BackgroundColor3 = EffectiveColor,
 		BackgroundTransparency = Spring(
 			Computed(function()
 				if Disabled:get() then
@@ -56,13 +67,7 @@ return function(Props: Props)
 			return UDim.new(0, Themer.Theme.CornerRadius["0.5"]:get())
 		end),
 		StrokeEnabled = true,
-		StrokeColor = Computed(function()
-			if Disabled:get() then
-				return Themer.Theme.Colors.BaseContent.Main:get()
-			else
-				return Color:get()
-			end
-		end),
+		StrokeColor = EffectiveColor,
 		StrokeTransparency = Computed(function()
 			if Disabled:get() then
 				return DISABLED_BACKGROUND_TRANSPARENCY
@@ -70,6 +75,9 @@ return function(Props: Props)
 				return 0
 			end
 		end),
+
+		IsHovering = IsHovering,
+		IsHolding = IsHolding,
 
 		OnActivated = function()
 			Checked:set(not Checked:get())

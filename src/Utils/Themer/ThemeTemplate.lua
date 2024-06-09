@@ -174,8 +174,8 @@ return {
 		}),
 	},
 	Emphasis = {
-		Light = Value(0.1),
-		Regular = Value(0.25),
+		Light = Value(0.15),
+		Regular = Value(0.3),
 		Strong = Value(0.5),
 		Contrast = Value(1),
 	},

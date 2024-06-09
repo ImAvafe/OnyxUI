@@ -10,6 +10,7 @@ local Children = Fusion.Children
 local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
+local Value = Fusion.Value
 
 local BaseButton = require(script.Parent.BaseButton)
 local Text = require(script.Parent.Text)
@@ -42,14 +43,17 @@ local function Button(Props: Props)
 		end)
 	)
 	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
-	local IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
 
+	local IsHolding = Value(false)
+	local IsHovering = Value(false)
 	local EffectiveColor = Computed(function()
 		if Disabled:get() then
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
 			if IsHolding:get() then
 				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Regular:get())
+			elseif IsHovering:get() then
+				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Light:get())
 			else
 				return Color:get()
 			end
@@ -130,6 +134,7 @@ local function Button(Props: Props)
 			end
 		end),
 		IsHolding = IsHolding,
+		IsHovering = IsHovering,
 
 		[Children] = {
 			ForValues(Contents, function(ContentString: string)
