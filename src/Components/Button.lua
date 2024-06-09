@@ -38,7 +38,7 @@ local function Button(Props: Props)
 		Props.ContentColor,
 		"Color3",
 		Computed(function()
-			return ColorUtils.Emphasize(Color:get(), 1)
+			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
 		end)
 	)
 	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
@@ -49,7 +49,7 @@ local function Button(Props: Props)
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
 			if IsHolding:get() then
-				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis:get())
+				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Regular:get())
 			else
 				return Color:get()
 			end

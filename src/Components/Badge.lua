@@ -30,7 +30,7 @@ return function(Props: Props)
 		Props.ContentColor,
 		"Color3",
 		Computed(function()
-			return ColorUtils.Emphasize(Color:get(), 1)
+			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
 		end)
 	)
 	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])

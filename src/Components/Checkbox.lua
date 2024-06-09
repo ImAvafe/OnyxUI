@@ -95,7 +95,7 @@ return function(Props: Props)
 					Themer.Theme.SpringDampening
 				),
 				ImageColor3 = Computed(function()
-					return ColorUtils.Emphasize(Color:get(), 1)
+					return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
 				end),
 				Rotation = Spring(
 					Computed(function()
