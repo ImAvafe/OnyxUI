@@ -26,44 +26,50 @@ export type Props = Image.Props & {
 	IndicatorCornerRadius: PubTypes.CanBeState<UDim>?,
 }
 
-return function(Props: { [any]: any })
-	Props.Image = EnsureValue(Props.Image, "string", nil)
-	Props.RingEnabled = EnsureValue(Props.RingEnabled, "boolean", false)
-	Props.RingColor = EnsureValue(Props.RingColor, "Color3", Themer.Theme.Colors.Primary.Main)
-	Props.RingThickness = EnsureValue(Props.RingThickness, "number", Themer.Theme.StrokeThickness["2"])
-	Props.IndicatorEnabled = EnsureValue(Props.IndicatorEnabled, "boolean", false)
-	Props.IndicatorColor = EnsureValue(Props.IndicatorColor, "Color3", Themer.Theme.Colors.Primary.Main)
-	Props.IndicatorCornerRadius = EnsureValue(
-		Props.IndicatorCornerRadius,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
-		end)
-	)
-	Props.IndicatorIcon = EnsureValue(Props.IndicatorIcon, "string", nil)
-	Props.IndicatorIconColor = EnsureValue(Props.IndicatorIconColor, "Color3", Colors.White)
+return function(Props: Props)
+	local EnsuredProps = {
+		Image = EnsureValue(Props.Image, "string", nil),
+		RingEnabled = EnsureValue(Props.RingEnabled, "boolean", false),
+		RingColor = EnsureValue(Props.RingColor, "Color3", Themer.Theme.Colors.Primary.Main),
+		RingThickness = EnsureValue(Props.RingThickness, "number", Themer.Theme.StrokeThickness["2"]),
+		IndicatorEnabled = EnsureValue(Props.IndicatorEnabled, "boolean", false),
+		IndicatorColor = EnsureValue(Props.IndicatorColor, "Color3", Themer.Theme.Colors.Primary.Main),
+		IndicatorCornerRadius = EnsureValue(
+			Props.IndicatorCornerRadius,
+			"UDim",
+			Computed(function()
+				return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+			end)
+		),
+		IndicatorIcon = EnsureValue(Props.IndicatorIcon, "string", nil),
+		IndicatorIconColor = EnsureValue(Props.IndicatorIconColor, "Color3", Colors.White),
+	}
 
 	return Image(CombineProps(Props, {
 		Name = "Avatar",
-		Image = Props.Image,
+		Image = EnsuredProps.Image,
 		Size = Computed(function()
 			return UDim2.fromOffset(Themer.Theme.TextSize["4.5"]:get(), Themer.Theme.TextSize["4.5"]:get())
 		end),
 		BackgroundColor3 = Themer.Theme.Colors.Neutral.Dark,
-		StrokeEnabled = Props.RingEnabled,
-		StrokeColor = Spring(Props.RingColor, Themer.Theme.SpringSpeed["0.5"], Themer.Theme.SpringDampening),
-		StrokeThickness = Spring(Props.RingThickness, Themer.Theme.SpringSpeed["0.5"], Themer.Theme.SpringDampening),
+		StrokeEnabled = EnsuredProps.RingEnabled,
+		StrokeColor = Spring(EnsuredProps.RingColor, Themer.Theme.SpringSpeed["0.5"], Themer.Theme.SpringDampening),
+		StrokeThickness = Spring(
+			EnsuredProps.RingThickness,
+			Themer.Theme.SpringSpeed["0.5"],
+			Themer.Theme.SpringDampening
+		),
 		CornerRadius = Computed(function()
 			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
 		end),
 
 		[Children] = {
 			Computed(function()
-				if Props.IndicatorEnabled:get() then
+				if EnsuredProps.IndicatorEnabled:get() then
 					return CanvasGroup {
 						Name = "Indicator",
 						BackgroundColor3 = Spring(
-							Props.IndicatorColor,
+							EnsuredProps.IndicatorColor,
 							Themer.Theme.SpringSpeed["0.5"],
 							Themer.Theme.SpringDampening
 						),
@@ -73,14 +79,14 @@ return function(Props: { [any]: any })
 						AnchorPoint = Vector2.new(1, 1),
 						Position = UDim2.fromScale(1, 1),
 						AspectRatio = 1,
-						CornerRadius = Props.IndicatorCornerRadius,
+						CornerRadius = EnsuredProps.IndicatorCornerRadius,
 
 						[Children] = {
 							Icon {
-								Image = Props.IndicatorIcon,
-								ImageColor3 = Props.IndicatorIconColor,
+								Image = EnsuredProps.IndicatorIcon,
+								ImageColor3 = EnsuredProps.IndicatorIconColor,
 								ImageTransparency = Computed(function()
-									if Props.IndicatorIcon:get() then
+									if EnsuredProps.IndicatorIcon:get() then
 										return 0
 									else
 										return 1
