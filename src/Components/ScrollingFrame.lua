@@ -1,50 +1,37 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
+local PubTypes = require(OnyxUI.Utils.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
-local New = Fusion.New
-local Children = Fusion.Children
+local Hydrate = Fusion.Hydrate
 local Computed = Fusion.Computed
 
-local function ScrollingFrame(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "ScrollingFrame")
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "Enum", Enum.AutomaticSize.None)
-	Props.ScrollingDirection = EnsureValue(Props.ScrollingDirection, "Enum", Enum.ScrollingDirection.Y)
-	Props.AutomaticCanvasSize = EnsureValue(Props.AutomaticCanvasSize, "Enum", Enum.AutomaticSize.Y)
-	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
-	Props.ScrollBarThickness = EnsureValue(Props.ScrollBarThickness, "number", 8)
-	Props.ScrollBarImageTransparency = EnsureValue(Props.ScrollBarImageTransparency, "number", 0)
-	Props.ScrollBarImageColor3 =
-		EnsureValue(Props.ScrollBarImageColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark)
-	Props.Selectable = EnsureValue(Props.Selectable, "boolean", false)
-	Props.MidImage = EnsureValue(Props.MidImage, "string", "rbxassetid://16547330984")
+local Base = require(script.Parent.Base)
 
-	return New "ScrollingFrame" {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
+export type Props = Base.Props & {
+	AutomaticCanvasSize: PubTypes.CanBeState<Enum.AutomaticSize>?,
+	BottomImage: PubTypes.CanBeState<string>?,
+	CanvasPosition: PubTypes.CanBeState<Vector2>?,
+	CanvasSize: PubTypes.CanBeState<UDim2>?,
+	ElasticBehavior: PubTypes.CanBeState<Enum.ElasticBehavior>?,
+	HorizontalScrollBarInset: PubTypes.CanBeState<Enum.ScrollBarInset>?,
+	MidImage: PubTypes.CanBeState<string>?,
+	ScrollBarImageColor3: PubTypes.CanBeState<Color3>?,
+	ScrollBarImageTransparency: PubTypes.CanBeState<number>?,
+	ScrollBarThickness: PubTypes.CanBeState<number>?,
+	ScrollingDirection: PubTypes.CanBeState<Enum.ScrollingDirection>?,
+	ScrollingEnabled: PubTypes.CanBeState<boolean>?,
+	TopImage: PubTypes.CanBeState<string>?,
+	VerticalScrollBarInset: PubTypes.CanBeState<Enum.ScrollBarInset>?,
+	VerticalScrollBarPosition: PubTypes.CanBeState<Enum.VerticalScrollBarPosition>?,
+}
 
-		ScrollingDirection = Props.ScrollingDirection,
-		AutomaticCanvasSize = Props.AutomaticCanvasSize,
-		CanvasSize = Props.CanvasSize,
-		ScrollBarThickness = Props.ScrollBarThickness,
-		ScrollBarImageTransparency = Props.ScrollBarImageTransparency,
-		ScrollBarImageColor3 = Props.ScrollBarImageColor3,
-		MidImage = Props.MidImage,
+return function(Props: Props)
+	return Hydrate(Base(CombineProps(Props, {
+		ClassName = "ScrollingFrame",
+		Name = "ScrollingFrame",
+	}))) {
 		BottomImage = Computed(function()
 			if Themer.Theme.CornerRadius["1"]:get() >= 3 then
 				return "rbxassetid://16547643439"
@@ -59,9 +46,22 @@ local function ScrollingFrame(Props: { [any]: any })
 				return "rbxassetid://16547330984"
 			end
 		end),
+		MidImage = "rbxassetid://16547330984",
+		Selectable = false,
+		ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
+		ScrollBarImageTransparency = 0,
+		ScrollBarThickness = 8,
+		BackgroundTransparency = 1,
+		AutomaticCanvasSize = Enum.AutomaticSize.Y,
+		ScrollingDirection = Enum.ScrollingDirection.Y,
+		AutomaticSize = Enum.AutomaticSize.None,
 
-		[Children] = Props[Children],
+		CanvasPosition = Props.CanvasPosition,
+		CanvasSize = Props.CanvasSize,
+		ElasticBehavior = Props.ElasticBehavior,
+		HorizontalScrollBarInset = Props.HorizontalScrollBarInset,
+		ScrollingEnabled = Props.ScrollingEnabled,
+		VerticalScrollBarInset = Props.VerticalScrollBarInset,
+		VerticalScrollBarPosition = Props.VerticalScrollBarPosition,
 	}
 end
-
-return ScrollingFrame
