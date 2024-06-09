@@ -1,45 +1,25 @@
 local OnyxUI = script.Parent.Parent
-local Fusion = require(OnyxUI.Parent.Fusion)
-
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
-local Children = Fusion.Children
+local BaseButton = require(script.Parent.BaseButton)
+local SwitchInput = require(script.Parent.SwitchInput)
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
+export type Props = SwitchInput.Props & {}
 
-local function SwitchGroup(Props: { [any]: any })
-	Props.SwitchedOn = EnsureValue(Props.SwitchedOn, "boolean", false)
-	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
+local function SwitchGroup(Props: Props)
+	local Switched = EnsureValue(Props.Switched, "boolean", false)
 
-	return BaseButton {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		Interactable = Props.Interactable,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
-
+	return BaseButton(CombineProps(Props, {
+		Name = "SwitchGroup",
 		ClickSound = Themer.Theme.Sound.Switch,
-
 		Disabled = Props.Disabled,
 
 		OnActivated = function()
-			Props.SwitchedOn:set(not Props.SwitchedOn:get())
+			Switched:set(not Switched:get())
 		end,
-
-		[Children] = Props[Children],
-	}
+	}))
 end
 
 return SwitchGroup

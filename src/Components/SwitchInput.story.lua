@@ -27,14 +27,14 @@ return {
 					PaddingTop = PreviewPadding,
 				},
 				SwitchInput {
-					[Children] = {
-						Text {
-							AnchorPoint = Vector2.new(0, 0.5),
-							Position = UDim2.fromScale(0, 0.5),
-							Text = "uwu",
-							TextSize = 19,
-						},
-					},
+					-- [Children] = {
+					-- 	Text {
+					-- 		AnchorPoint = Vector2.new(0, 0.5),
+					-- 		Position = UDim2.fromScale(0, 0.5),
+					-- 		Text = "uwu",
+					-- 		TextSize = 19,
+					-- 	},
+					-- },
 				},
 			},
 		}
