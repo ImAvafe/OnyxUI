@@ -26,6 +26,7 @@ export type Props = Base.Props & {
 	CharacterLimit: PubTypes.CanBeState<number>?,
 	ClearTextOnFocus: PubTypes.CanBeState<boolean>?,
 	TextWrapped: PubTypes.CanBeState<boolean>?,
+	MultiLine: PubTypes.CanBeState<boolean>?,
 	IsFocused: PubTypes.CanBeState<boolean>?,
 	OnFocused: PubTypes.CanBeState<() -> ()>?,
 	OnFocusLost: PubTypes.CanBeState<() -> ()>?,
@@ -58,16 +59,7 @@ return function(Props: Props)
 		CornerRadius = Computed(function()
 			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
 		end),
-		PaddingBottom = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-		end),
-		PaddingLeft = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-		end),
-		PaddingRight = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-		end),
-		PaddingTop = Computed(function()
+		Padding = Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end),
 		StrokeEnabled = true,
@@ -96,6 +88,14 @@ return function(Props: Props)
 			Themer.Theme.SpringSpeed["1"],
 			Themer.Theme.SpringDampening
 		),
+		AutomaticSize = Enum.AutomaticSize.XY,
+		AutoLocalize = false,
+		Active = Computed(function()
+			return not Disabled:get()
+		end),
+		BackgroundColor3 = Computed(function()
+			return Themer.Theme.Colors.Base.Light:get()
+		end),
 
 		[Cleanup] = Observers,
 	}))) {
@@ -115,22 +115,14 @@ return function(Props: Props)
 			end
 		end),
 		PlaceholderText = PlaceholderText,
-		MultiLine = false,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		TextYAlignment = Enum.TextYAlignment.Top,
+		MultiLine = Props.MultiLine,
 		ClearTextOnFocus = ClearTextOnFocus,
 		TextEditable = Computed(function()
 			return not Disabled:get()
 		end),
-		Active = Computed(function()
-			return not Disabled:get()
-		end),
-		BackgroundColor3 = Computed(function()
-			return Themer.Theme.Colors.Base.Light:get()
-		end),
-		AutoLocalize = false,
 		TextWrapped = Props.TextWrapped,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		TextYAlignment = Enum.TextYAlignment.Top,
-		AutomaticSize = Enum.AutomaticSize.XY,
 
 		[OnEvent "Focused"] = function()
 			if not Disabled:get() then

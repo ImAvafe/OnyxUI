@@ -5,7 +5,7 @@ local Themer = require(OnyxUI.Utils.Themer)
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local TextInput = require(script.Parent.TextInput)
+local TextArea = require(script.Parent.TextArea)
 local Frame = require(script.Parent.Frame)
 
 return {
@@ -20,20 +20,12 @@ return {
 			end),
 
 			[Children] = {
-				TextInput {
-					PlaceholderText = "You can type here!",
+				TextArea {
+					Size = UDim2.fromOffset(200, 50),
 				},
-				TextInput {
-					PlaceholderText = "You can't type here!",
-					Disabled = true,
-				},
-				TextInput {
-					PlaceholderText = "Twenty characters only!",
+				TextArea {
+					Size = UDim2.fromOffset(200, 100),
 					CharacterLimit = 20,
-				},
-				TextInput {
-					PlaceholderText = "Something dangerous!",
-					Color = Themer.Theme.Colors.Error.Main,
 				},
 			},
 		}
