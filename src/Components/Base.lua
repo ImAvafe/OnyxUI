@@ -128,7 +128,7 @@ export type Props = {
 	MinTextSize: PubTypes.CanBeState<number>?,
 }
 
-return function(Props: Props)
+return function(Props: Props): GuiObject
 	local Name = EnsureValue(Props.Name, "string", "Base")
 	local CornerRadius = EnsureValue(
 		Props.CornerRadius,

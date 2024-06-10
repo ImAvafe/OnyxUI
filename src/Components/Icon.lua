@@ -9,7 +9,7 @@ local Themer = require(script.Parent.Parent.Utils.Themer)
 
 export type Props = Image.Props & {}
 
-local function Text(Props: Props)
+return function(Props: Props)
 	return Image(CombineProps(Props, {
 		Name = "Icon",
 		Size = Computed(function()
@@ -18,5 +18,3 @@ local function Text(Props: Props)
 		BackgroundTransparency = 1,
 	}))
 end
-
-return Text

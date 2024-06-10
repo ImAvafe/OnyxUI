@@ -14,7 +14,7 @@ local Out = Fusion.Out
 local Observer = Fusion.Observer
 local Spring = Fusion.Spring
 
-local function TextInput(Props: { [any]: any })
+return function(Props: { [any]: any })
 	Props.Name = EnsureValue(Props.Name, "string", "TextInput")
 	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
 	Props.Text = EnsureValue(Props.Text, "string", "")
@@ -175,5 +175,3 @@ local function TextInput(Props: { [any]: any })
 
 	return TextInputInstance
 end
-
-return TextInput

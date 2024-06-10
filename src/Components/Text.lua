@@ -28,7 +28,7 @@ export type Props = Base.Props & {
 	TextTransparency: PubTypes.CanBeState<number>?,
 }
 
-local function Text(Props: Props)
+return function(Props: Props)
 	local TextColor3 = EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
 	local TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
 	local RichText = EnsureValue(Props.RichText, "boolean", true)
@@ -68,5 +68,3 @@ local function Text(Props: Props)
 		Font = Props.Font,
 	}
 end
-
-return Text

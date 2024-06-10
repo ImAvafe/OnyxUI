@@ -30,7 +30,7 @@ export type Props = BaseButton.Props & {
 	IsHolding: PubTypes.CanBeState<boolean>?,
 }
 
-local function Button(Props: Props)
+return function(Props: Props)
 	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
 	local Contents = EnsureValue(Props.Contents, "table", {})
 	local Style = EnsureValue(Props.Style, "string", "Filled")
@@ -160,5 +160,3 @@ local function Button(Props: Props)
 		},
 	}))
 end
-
-return Button
