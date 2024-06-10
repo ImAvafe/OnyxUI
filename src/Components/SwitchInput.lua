@@ -5,6 +5,7 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 local PubTypes = require(OnyxUI.Utils.PubTypes)
 local CombineProps = require(OnyxUI.Utils.CombineProps)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -36,17 +37,43 @@ return function(Props: Props)
 	local IsHolding = Value(false)
 	local IsHovering = Value(false)
 	local EffectiveColor = Computed(function()
+		local ActiveColor
 		if Switched:get() then
-			return Color:get()
+			ActiveColor = Color:get()
 		else
-			return Themer.Theme.Colors.NeutralContent.Dark:get()
+			ActiveColor = Themer.Theme.Colors.NeutralContent.Dark:get()
+		end
+
+		if IsHolding:get() then
+			return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
+		elseif IsHovering:get() then
+			return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
+		else
+			return ActiveColor
 		end
 	end)
 	local EffectiveBallColor = Computed(function(): any
+		local ActiveColor
 		if Switched:get() then
-			return Themer.Theme.Colors.Base.Main:get()
+			ActiveColor = Themer.Theme.Colors.Base.Main:get()
 		else
-			return Themer.Theme.Colors.NeutralContent.Dark:get()
+			ActiveColor = Themer.Theme.Colors.NeutralContent.Dark:get()
+		end
+
+		if IsHolding:get() then
+			if not Switched:get() then
+				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
+			else
+				return ActiveColor
+			end
+		elseif IsHovering:get() then
+			if not Switched:get() then
+				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
+			else
+				return ActiveColor
+			end
+		else
+			return ActiveColor
 		end
 	end)
 
