@@ -2,7 +2,6 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
@@ -11,20 +10,17 @@ local TitleBar = require(OnyxUI.Components.TitleBar)
 local Frame = require(OnyxUI.Components.Frame)
 
 return {
-	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local PreviewPadding = Computed(function()
-			return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-		end)
-
+	story = function(Parent: GuiObject, _Props)
 		local Instance = Frame {
 			Parent = Parent,
+			Padding = Computed(function()
+				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+			end),
+			ListEnabled = true,
 
 			[Children] = {
-				New "UIPadding" {
-					PaddingBottom = PreviewPadding,
-					PaddingLeft = PreviewPadding,
-					PaddingRight = PreviewPadding,
-					PaddingTop = PreviewPadding,
+				TitleBar {
+					Content = { "Title" },
 				},
 				MenuFrame {
 					Size = UDim2.fromOffset(300, 0),
@@ -32,7 +28,7 @@ return {
 
 					[Children] = {
 						TitleBar {
-							Title = "Shopping",
+							Content = { "Title" },
 						},
 					},
 				},
