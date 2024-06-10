@@ -11,6 +11,12 @@ local Button = require(script.Parent.Button)
 
 export type Props = Button.Props & {
 	Image: PubTypes.CanBeState<string>?,
+	Disabled: PubTypes.CanBeState<boolean>?,
+	Style: PubTypes.CanBeState<string>?,
+	Color: PubTypes.CanBeState<Color3>?,
+	ContentColor: PubTypes.CanBeState<Color3>?,
+	ContentSize: PubTypes.CanBeState<number>?,
+	IsHolding: PubTypes.CanBeState<boolean>?,
 }
 
 return function(Props: Props)
