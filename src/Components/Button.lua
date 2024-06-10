@@ -18,7 +18,6 @@ local Icon = require(script.Parent.Icon)
 
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
-local HOLDING_BACKGROUND_TRANSPARENCY = 0.95
 
 export type Props = BaseButton.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
@@ -92,11 +91,7 @@ return function(Props: Props)
 					return 0
 				end
 			else
-				if (not Disabled:get()) and IsHolding:get() then
-					return HOLDING_BACKGROUND_TRANSPARENCY
-				else
-					return 1
-				end
+				return 1
 			end
 		end),
 		BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
