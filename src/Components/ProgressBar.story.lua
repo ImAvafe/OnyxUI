@@ -1,12 +1,17 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local OnyxUI = script.Parent.Parent
+local Colors = require(ReplicatedStorage.OnyxUI.Packages.OnyxUI.Utils.Colors)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
+local Themer = require(OnyxUI.Utils.Themer)
 
 local Children = Fusion.Children
 local Value = Fusion.Value
+local Computed = Fusion.Computed
 
 local Frame = require(script.Parent.Frame)
 local ProgressBar = require(script.Parent.ProgressBar)
+local Text = require(script.Parent.Text)
 
 return {
 	story = function(Parent: GuiObject, _Props: { [any]: any })
@@ -28,6 +33,33 @@ return {
 				ProgressBar {
 					Progress = Progress,
 					Color = Color,
+				},
+				Frame {
+					ListEnabled = true,
+					ListFillDirection = Enum.FillDirection.Horizontal,
+					ListVerticalAlignment = Enum.VerticalAlignment.Center,
+
+					[Children] = {
+						Text {
+							Text = "Label",
+						},
+						ProgressBar {
+							Progress = Progress,
+							Color = Colors.Emerald["500"],
+							Size = Computed(function()
+								return UDim2.fromOffset(150, Themer.Theme.TextSize["0.75"]:get())
+							end),
+						},
+					},
+				},
+				ProgressBar {
+					Progress = Progress,
+					Inverted = true,
+				},
+				ProgressBar {
+					Direction = Enum.FillDirection.Vertical,
+					Progress = Progress,
+					Inverted = true,
 				},
 			},
 		}
