@@ -1,72 +1,92 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
+local PubTypes = require(OnyxUI.Utils.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 
-local Frame = require(OnyxUI.Components.Frame)
-local CanvasGroup = require(OnyxUI.Components.CanvasGroup)
+local Frame = require(script.Parent.Frame)
 
-return function(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "ProgressBar")
-	Props.Size = EnsureValue(
-		Props.Size,
-		"UDim2",
+export type Props = Frame.Props & {
+	Progress: PubTypes.CanBeState<number>?,
+	Color: PubTypes.CanBeState<Color3>?,
+	Direction: PubTypes.CanBeState<Enum.FillDirection>?,
+	Inverted: PubTypes.CanBeState<boolean>?,
+}
+
+return function(Props: Props)
+	local Progress = EnsureValue(Props.Progress, "number", 0)
+	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local Direction = EnsureValue(Props.Direction, "EnumItem", Enum.FillDirection.Horizontal)
+	local Inverted = EnsureValue(Props.Inverted, "boolean", false)
+
+	local EffectiveCornerRadius = EnsureValue(
+		Props.CornerRadius,
+		"UDim",
 		Computed(function()
-			return UDim2.fromOffset(250, Themer.Theme.TextSize["1"]:get())
+			return UDim.new(0, Themer.Theme.CornerRadius["Full"]:get())
 		end)
 	)
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)
-	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0)
-	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Neutral.Dark)
 
-	Props.Progress = EnsureValue(Props.Progress, "number", 0)
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	Props.SpringSpeed = EnsureValue(Props.SpringSpeed, "number", Themer.Theme.SpringSpeed["0.5"])
-	Props.SpringDampening = EnsureValue(Props.SpringDampening, "number", Themer.Theme.SpringDampening)
-
-	return CanvasGroup {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		Interactable = Props.Interactable,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
+	return Frame(CombineProps(Props, {
+		Name = "ProgressBar",
+		Size = Computed(function()
+			if Direction:get() == Enum.FillDirection.Horizontal then
+				return UDim2.fromOffset(250, Themer.Theme.TextSize["0.75"]:get())
+			else
+				return UDim2.fromOffset(Themer.Theme.TextSize["0.75"]:get(), 250)
+			end
+		end),
+		AutomaticSize = Enum.AutomaticSize.None,
+		BackgroundTransparency = 0,
+		BackgroundColor3 = Themer.Theme.Colors.Neutral.Dark,
+		CornerRadius = EffectiveCornerRadius,
 
 		[Children] = {
-			Modifier.Corner {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
-				end),
-			},
-
 			Frame {
 				Name = "ProgressFill",
 				Size = Spring(
 					Computed(function()
-						return UDim2.fromScale(Props.Progress:get(), 1)
+						if Direction:get() == Enum.FillDirection.Horizontal then
+							return UDim2.fromScale(Progress:get(), 1)
+						else
+							return UDim2.fromScale(1, Progress:get())
+						end
 					end),
-					Props.SpringSpeed,
-					Props.SpringDampening
+					Themer.Theme.SpringSpeed["0.5"],
+					Themer.Theme.SpringDampening
 				),
+				AnchorPoint = Computed(function()
+					if Inverted:get() then
+						if Direction:get() == Enum.FillDirection.Horizontal then
+							return Vector2.new(1, 0)
+						else
+							return Vector2.new(0, 1)
+						end
+					else
+						return Vector2.new(0, 0)
+					end
+				end),
+				Position = Computed(function()
+					if Inverted:get() then
+						if Direction:get() == Enum.FillDirection.Horizontal then
+							return UDim2.fromScale(1, 0)
+						else
+							return UDim2.fromScale(0, 1)
+						end
+					else
+						return UDim2.fromScale(0, 0)
+					end
+				end),
 				AutomaticSize = Enum.AutomaticSize.None,
 				BackgroundTransparency = 0,
-				BackgroundColor3 = Props.Color,
+				BackgroundColor3 = Color,
+				CornerRadius = EffectiveCornerRadius,
 			},
 		},
-	}
+	}))
 end

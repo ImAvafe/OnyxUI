@@ -1,15 +1,17 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
-local ColorUtils = require(OnyxUI.Packages.ColorUtils)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local OnyxUI = script.Parent.Parent
+local Colors = require(ReplicatedStorage.OnyxUI.Packages.OnyxUI.Utils.Colors)
+local Fusion = require(OnyxUI.Parent.Fusion)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local Themer = require(OnyxUI.Utils.Themer)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Value = Fusion.Value
 local Computed = Fusion.Computed
 
-local Frame = require(OnyxUI.Components.Frame)
-local ProgressBar = require(OnyxUI.Components.ProgressBar)
+local Frame = require(script.Parent.Frame)
+local ProgressBar = require(script.Parent.ProgressBar)
+local Text = require(script.Parent.Text)
 
 return {
 	story = function(Parent: GuiObject, _Props: { [any]: any })
@@ -18,28 +20,51 @@ return {
 
 		local Instance = Frame {
 			Parent = Parent,
+			ListEnabled = true,
 
 			[Children] = {
-				New "UIListLayout" {
-					Padding = Computed(function()
-						return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-					end),
-				},
 				ProgressBar {
-					Parent = Parent,
 					Progress = 0.75,
 				},
 				ProgressBar {
-					Parent = Parent,
 					Progress = Progress,
 					Color = Color,
 				},
 				ProgressBar {
-					Parent = Parent,
 					Progress = Progress,
 					Color = Color,
-					SpringDampening = 0.5,
-					SpringSpeed = 30,
+				},
+				Frame {
+					ListEnabled = true,
+					ListFillDirection = Enum.FillDirection.Horizontal,
+					ListVerticalAlignment = Enum.VerticalAlignment.Center,
+
+					[Children] = {
+						Text {
+							Text = "Label",
+						},
+						ProgressBar {
+							Progress = Progress,
+							Color = Colors.Emerald["500"],
+							Size = Computed(function()
+								return UDim2.fromOffset(150, Themer.Theme.TextSize["0.75"]:get())
+							end),
+						},
+					},
+				},
+				ProgressBar {
+					Progress = Progress,
+					Inverted = true,
+				},
+				ProgressBar {
+					Direction = Enum.FillDirection.Vertical,
+					Progress = Progress,
+					Inverted = true,
+				},
+				ProgressBar {
+					Progress = Progress,
+					Color = Color,
+					CornerRadius = UDim.new(0, 0),
 				},
 			},
 		}

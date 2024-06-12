@@ -4,7 +4,7 @@ return {
 	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local Instance = Text {
 			Parent = Parent,
-			Text = "Hi this is some text uwu",
+			Text = "This is some sample text\n\navafe.me!",
 		}
 
 		return function()

@@ -1,9 +1,8 @@
-local OnyxUI = require(script.Parent.Parent)
+local OnyxUI = script.Parent.Parent
 local ReconcileValues = require(script.Parent.Parent.Utils.ReconcileValues)
 local OnyxNightTheme = require(script.OnyxNight)
 local ThemeTemplate = require(script.ThemeTemplate)
-local Loader = require(OnyxUI.Packages.Loader)
-local ColorUtils = require(OnyxUI.Packages.ColorUtils)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 
 local SPACING_MULTIPLIERS = {
 	0.25,
@@ -66,8 +65,14 @@ local SPRING_SPEED_MULTIPLIERS = {
 
 local Themer = {
 	Theme = table.clone(ThemeTemplate),
-	Themes = Loader.LoadChildren(script),
+	Themes = {},
 }
+
+function Themer:_LoadDefaultThemes()
+	for _, ThemeModule in ipairs(script:GetChildren()) do
+		self.Themes[ThemeModule.Name] = require(ThemeModule)
+	end
+end
 
 function Themer:_ProcessColors(Theme: { [any]: any })
 	if Theme.Colors then
@@ -117,6 +122,10 @@ function Themer:_ProcessCornerRadii(Theme: { [any]: any })
 				Theme.CornerRadius[tostring(Multiplier)] = Theme.CornerRadius.Base * Multiplier
 			end
 		end
+
+		if Theme.CornerRadius.Full == nil then
+			Theme.CornerRadius.Full = Theme.CornerRadius["1"] * 9999
+		end
 	end
 end
 
@@ -158,7 +167,7 @@ function Themer:Set(Theme: { [any]: any })
 	ReconcileValues(self.Theme, Theme)
 end
 
+Themer:_LoadDefaultThemes()
 Themer:Set(OnyxNightTheme)
--- Themer:Set(Themer.Themes.BitCave)
 
 return Themer

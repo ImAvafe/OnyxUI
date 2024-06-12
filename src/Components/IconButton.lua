@@ -1,67 +1,38 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
-
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
+local PubTypes = require(OnyxUI.Utils.PubTypes)
 
-local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local Button = require(OnyxUI.Components.Button)
+local Button = require(script.Parent.Button)
 
-local function IconButton(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "IconButton")
+export type Props = Button.Props & {
+	Image: PubTypes.CanBeState<string>?,
+	Disabled: PubTypes.CanBeState<boolean>?,
+	Style: PubTypes.CanBeState<string>?,
+	Color: PubTypes.CanBeState<Color3>?,
+	ContentColor: PubTypes.CanBeState<Color3>?,
+	ContentSize: PubTypes.CanBeState<number>?,
+	IsHolding: PubTypes.CanBeState<boolean>?,
+}
 
-	Props.Image = EnsureValue(Props.Image, "string", "")
-	Props.Padding = EnsureValue(
-		Props.Padding,
-		"UIPadding",
-		Modifier.Padding {
-			Padding = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-			end),
-		}
-	)
+return function(Props: Props)
+	local Image = EnsureValue(Props.Image, "string", "")
+	local Padding = Computed(function()
+		return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+	end)
 
-	return Button {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		Interactable = Props.Interactable,
-
+	return Button(CombineProps(Props, {
+		Name = "IconButton",
+		PaddingLeft = Padding,
+		PaddingRight = Padding,
+		PaddingTop = Padding,
+		PaddingBottom = Padding,
 		Contents = Computed(function()
-			return { Props.Image:get() }
+			return { Image:get() }
 		end),
-		Padding = Props.Padding,
-
-		Disabled = Props.Disabled,
-		Style = Props.Style,
-		Color = Props.Color,
-		ContrastColor = Props.ContrastColor,
-		ContentSize = Props.ContentSize,
-		IsHovering = Props.IsHovering,
-		IsHolding = Props.IsHolding,
-		OnActivated = Props.OnActivated,
-		OnMouseEnter = Props.OnMouseEnter,
-		OnMouseLeave = Props.OnMouseLeave,
-		OnMouseButton1Down = Props.OnMouseButton1Down,
-		OnMouseButton1Up = Props.OnMouseButton1Up,
-		HoverSound = Props.HoverSound,
-		ClickSound = Props.ClickSound,
-
-		[Children] = Props[Children],
-	}
+	}))
 end
-
-return IconButton

@@ -1,5 +1,5 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
 
 local New = Fusion.New
@@ -53,6 +53,14 @@ return {
 							Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						},
 					},
+				},
+				Card {
+					Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 75)),
+					AutomaticSize = Enum.AutomaticSize.None,
+					PaddingLeft = UDim.new(0, 50),
+					CornerRadius = Computed(function()
+						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+					end),
 				},
 			},
 		}

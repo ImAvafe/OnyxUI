@@ -1,7 +1,6 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -13,38 +12,32 @@ local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local SettingToggle = require(OnyxUI.Components.SettingToggle)
 local TextInput = require(OnyxUI.Components.TextInput)
 
-local function SettingsMenu(Props: { [any]: any })
+return function(Props)
 	return MenuFrame {
 		Parent = Props.Parent,
 		Size = UDim2.fromOffset(330, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		ListEnabled = true,
+		ListPadding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
 
 		[Children] = {
-			Modifier.ListLayout {
-				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, Themer.Theme.Spacing["0.75"]:get()),
-			},
-
 			TitleBar {
-				Title = "Settings",
+				Content = { "Settings" },
 			},
 			ScrollingFrame {
 				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 175)),
 				AutomaticSize = Enum.AutomaticSize.None,
+				ListEnabled = true,
+				Padding = Computed(function()
+					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+				end),
+				PaddingRight = Computed(function()
+					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get() + Themer.Theme.Spacing["1"]:get())
+				end),
 
 				[Children] = {
-					Modifier.ListLayout {
-						SortOrder = Enum.SortOrder.LayoutOrder,
-						Padding = Computed(function()
-							return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-						end),
-					},
-					Modifier.Padding {
-						Padding = Computed(function()
-							return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-						end),
-						PaddingRight = UDim.new(0, 16),
-					},
-
 					SettingToggle {
 						Label = "Music",
 						SwitchedOn = true,
@@ -83,5 +76,3 @@ local function SettingsMenu(Props: { [any]: any })
 		},
 	}
 end
-
-return SettingsMenu

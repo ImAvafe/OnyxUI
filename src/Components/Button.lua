@@ -1,183 +1,157 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
-local ColorUtils = require(OnyxUI.Packages.ColorUtils)
-
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
+local PubTypes = require(OnyxUI.Utils.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Children = Fusion.Children
 local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
+local Value = Fusion.Value
 
-local BaseButton = require(OnyxUI.Components.BaseButton)
-local Text = require(OnyxUI.Components.Text)
-local Icon = require(OnyxUI.Components.Icon)
+local BaseButton = require(script.Parent.BaseButton)
+local Text = require(script.Parent.Text)
+local Icon = require(script.Parent.Icon)
 
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
-local HOLDING_BACKGROUND_TRANSPARENCY = 0.95
 
-local function Button(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "Button")
-	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)
+export type Props = BaseButton.Props & {
+	Disabled: PubTypes.CanBeState<boolean>?,
+	Contents: PubTypes.CanBeState<{ string }>?,
+	Style: PubTypes.CanBeState<string>?,
+	Color: PubTypes.CanBeState<Color3>?,
+	ContentColor: PubTypes.CanBeState<Color3>?,
+	ContentSize: PubTypes.CanBeState<number>?,
+	IsHolding: PubTypes.CanBeState<boolean>?,
+}
 
-	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
-	Props.Contents = EnsureValue(Props.Contents, "table", {})
-	Props.Style = EnsureValue(Props.Style, "string", "Filled")
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	Props.ContrastColor = EnsureValue(
-		Props.ContrastColor,
+return function(Props: Props)
+	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
+	local Contents = EnsureValue(Props.Contents, "table", {})
+	local Style = EnsureValue(Props.Style, "string", "Filled")
+	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local ContentColor = EnsureValue(
+		Props.ContentColor,
 		"Color3",
 		Computed(function()
-			return ColorUtils.Emphasize(Props.Color:get(), 1)
+			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
 		end)
 	)
-	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
-	Props.Padding = EnsureValue(
-		Props.Padding,
-		"UIPadding",
-		Modifier.Padding {
-			PaddingBottom = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-			end),
-			PaddingLeft = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-			end),
-			PaddingRight = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-			end),
-			PaddingTop = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-			end),
-		}
-	)
+	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
 
-	Props.IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
-
-	local Color = Computed(function()
-		if Props.Disabled:get() then
+	local IsHolding = Value(false)
+	local IsHovering = Value(false)
+	local EffectiveColor = Computed(function()
+		if Disabled:get() then
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
-			if Props.IsHolding:get() then
-				return ColorUtils.Emphasize(Props.Color:get(), Themer.Theme.Emphasis:get())
+			if IsHolding:get() then
+				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Regular:get())
+			elseif IsHovering:get() then
+				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Light:get())
 			else
-				return Props.Color:get()
+				return Color:get()
 			end
 		end
 	end)
-	local ContentColor = Computed(function()
-		if Props.Disabled:get() then
+	local EffectiveContentColor = Computed(function()
+		if Disabled:get() then
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
-			if Props.Style:get() == "Filled" then
-				return Props.ContrastColor:get()
-			elseif Props.Style:get() == "Outlined" then
-				return Color:get()
-			elseif Props.Style:get() == "Ghost" then
-				return Color:get()
+			if Style:get() == "Filled" then
+				return ContentColor:get()
+			elseif Style:get() == "Outlined" then
+				return EffectiveColor:get()
+			elseif Style:get() == "Ghost" then
+				return EffectiveColor:get()
+			else
+				return ContentColor:get()
 			end
 		end
 	end)
-	local ContentTransparency = Computed(function()
-		if Props.Disabled:get() then
+	local EffectiveContentTransparency = Computed(function()
+		if Disabled:get() then
 			return DISABLED_CONTENT_TRANSPARENCY
 		else
 			return 0
 		end
 	end)
 
-	return BaseButton {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		Interactable = Props.Interactable,
-
+	return BaseButton(CombineProps(Props, {
+		Name = "Button",
 		BackgroundTransparency = Computed(function()
-			if Props.Style:get() == "Filled" then
-				if Props.Disabled:get() then
+			if Style:get() == "Filled" then
+				if Disabled:get() then
 					return DISABLED_BACKGROUND_TRANSPARENCY
 				else
 					return 0
 				end
 			else
-				if Props.IsHolding:get() then
-					return HOLDING_BACKGROUND_TRANSPARENCY
-				else
-					return 1
-				end
+				return 1
 			end
 		end),
-		BackgroundColor3 = Spring(Color, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
-
-		IsHovering = Props.IsHovering,
-		IsHolding = Props.IsHolding,
-		OnActivated = Props.OnActivated,
-		Disabled = Props.Disabled,
-		OnMouseEnter = Props.OnMouseEnter,
-		OnMouseLeave = Props.OnMouseLeave,
-		OnMouseButton1Down = Props.OnMouseButton1Down,
-		OnMouseButton1Up = Props.OnMouseButton1Up,
-		HoverSound = Props.HoverSound,
-		ClickSound = Props.ClickSound,
+		BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		PaddingLeft = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingRight = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		end),
+		PaddingTop = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+		end),
+		PaddingBottom = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+		end),
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+		end),
+		ListEnabled = true,
+		ListPadding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+		end),
+		ListFillDirection = Enum.FillDirection.Horizontal,
+		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+		ListVerticalAlignment = Enum.VerticalAlignment.Center,
+		StrokeEnabled = true,
+		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		StrokeTransparency = Computed(function()
+			if Style:get() == "Ghost" then
+				return 1
+			elseif Disabled:get() then
+				return DISABLED_BACKGROUND_TRANSPARENCY
+			else
+				return 0
+			end
+		end),
+		IsHolding = IsHolding,
+		IsHovering = IsHovering,
 
 		[Children] = {
-			Props.Padding,
-			Modifier.Corner {},
-			Modifier.ListLayout {
-				Padding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-				end),
-				FillDirection = Enum.FillDirection.Horizontal,
-				HorizontalAlignment = Enum.HorizontalAlignment.Center,
-				VerticalAlignment = Enum.VerticalAlignment.Center,
-			},
-			Modifier.Stroke {
-				Color = Spring(Color, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
-				Transparency = Computed(function()
-					if Props.Style:get() == "Ghost" then
-						return 1
-					elseif Props.Disabled:get() then
-						return DISABLED_BACKGROUND_TRANSPARENCY
-					else
-						return 0
-					end
-				end),
-			},
-
-			ForValues(Props.Contents, function(ContentString: string)
+			ForValues(Contents, function(ContentString: string)
 				if string.find(ContentString, "rbxassetid://", 1, true) then
 					return Icon {
 						Image = ContentString,
-						ImageColor3 = ContentColor,
+						ImageColor3 = EffectiveContentColor,
 						Size = Computed(function()
-							return UDim2.fromOffset(Props.ContentSize:get(), Props.ContentSize:get())
+							return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
 						end),
-						ImageTransparency = ContentTransparency,
+						ImageTransparency = EffectiveContentTransparency,
 					}
 				else
 					return Text {
 						Text = ContentString,
-						TextColor3 = ContentColor,
-						TextSize = Props.ContentSize,
-						TextTransparency = ContentTransparency,
+						TextColor3 = EffectiveContentColor,
+						TextSize = ContentSize,
+						TextTransparency = EffectiveContentTransparency,
 						TextWrapped = false,
 					}
 				end
 			end, Fusion.cleanup),
 		},
-	}
+	}))
 end
-
-return Button

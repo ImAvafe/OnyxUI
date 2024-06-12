@@ -67,4 +67,5 @@ return {
 	},
 	SpringDampening = 1,
 	Sound = {},
+	Emphasis = {},
 }

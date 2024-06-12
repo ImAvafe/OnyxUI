@@ -1,179 +1,147 @@
 local SoundService = game:GetService("SoundService")
 
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
+local PubTypes = require(OnyxUI.Utils.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
-local New = Fusion.New
-local Children = Fusion.Children
+local Hydrate = Fusion.Hydrate
 local Computed = Fusion.Computed
 local OnEvent = Fusion.OnEvent
 local Out = Fusion.Out
 local Observer = Fusion.Observer
 local Spring = Fusion.Spring
+local Cleanup = Fusion.Cleanup
+local Value = Fusion.Value
 
-local function TextInput(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "TextInput")
-	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
-	Props.Text = EnsureValue(Props.Text, "string", "")
-	Props.PlaceholderText = EnsureValue(Props.PlaceholderText, "string", "")
-	Props.TextSize = EnsureValue(Props.TextSize, "string", Themer.Theme.TextSize["1"])
-	Props.FontFace = EnsureValue(
-		Props.FontFace,
-		"Font",
-		Computed(function()
-			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
-		end)
-	)
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
-	Props.FocusColor = EnsureValue(Props.FocusColor, "Color3", Themer.Theme.Colors.Primary.Main)
-	Props.TextColor3 = EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	Props.PlaceholderColor3 = EnsureValue(Props.PlaceholderColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark)
-	Props.BackgroundColor3 = EnsureValue(Props.BackgroundColor3, "Color3", Themer.Theme.Colors.Base.Light)
-	Props.ClipsDescendants = EnsureValue(Props.ClipsDescendants, "boolean", true)
-	Props.AutoLocalize = EnsureValue(Props.AutoLocalize, "boolean", false)
-	Props.TextXAlignment = EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
-	Props.TextYAlignment = EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
-	Props.TextWrapped = EnsureValue(Props.TextWrapped, "boolean", false)
-	Props.Active = EnsureValue(
-		Props.Active,
-		"boolean",
-		Computed(function()
-			return not Props.Disabled:get()
-		end)
-	)
+local Base = require(script.Parent.Base)
 
-	Props.CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
-	Props.RemainingCharaters = EnsureValue(Props.RemainingCharaters, "number", -1)
+export type Props = Base.Props & {
+	Disabled: PubTypes.CanBeState<boolean>?,
+	Text: PubTypes.CanBeState<string>?,
+	PlaceholderText: PubTypes.CanBeState<string>?,
+	Color: PubTypes.CanBeState<Color3>?,
+	CharacterLimit: PubTypes.CanBeState<number>?,
+	ClearTextOnFocus: PubTypes.CanBeState<boolean>?,
+	TextWrapped: PubTypes.CanBeState<boolean>?,
+	MultiLine: PubTypes.CanBeState<boolean>?,
+	IsFocused: PubTypes.CanBeState<boolean>?,
+	OnFocused: PubTypes.CanBeState<() -> ()>?,
+	OnFocusLost: PubTypes.CanBeState<() -> ()>?,
+}
 
-	Props.IsFocused = EnsureValue(Props.IsFocused, "boolean", false)
-	Props.OnFocused = EnsureValue(Props.OnFocused, "function", function() end)
-	Props.OnFocusLost = EnsureValue(Props.OnFocusLost, "function", function() end)
+return function(Props: Props)
+	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
+	local Text = EnsureValue(Props.Text, "string", "")
+	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
+	local ClearTextOnFocus = EnsureValue(Props.ClearTextOnFocus, "boolean", false)
+	local PlaceholderText = EnsureValue(Props.PlaceholderText, "string", "")
 
-	Props.FocusSound = EnsureValue(Props.FocusSound, "Sound", Themer.Theme.Sound.Focus)
-	Props.HoverSound = EnsureValue(Props.HoverSound, "Sound", Themer.Theme.Sound.Hover)
+	local RemainingCharaters = Value(-1)
+	local IsFocused = EnsureValue(Props.IsFocused, "boolean", false)
+	local OnFocused = EnsureValue(Props.OnFocused, "function", function() end)
+	local OnFocusLost = EnsureValue(Props.OnFocusLost, "function", function() end)
 
-	local TextInputInstance = New "TextBox" {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
-
-		RichText = Props.RichText,
-		TextSize = Props.TextSize,
-		TextColor3 = Props.TextColor3,
-		FontFace = Props.FontFace,
-		TextScaled = Props.TextScaled,
-		Text = Props.Text,
-		TextWrapped = Props.TextWrapped,
-		TextXAlignment = Props.TextXAlignment,
-		TextYAlignment = Props.TextYAlignment,
-		TextTruncate = Props.TextTruncate,
-		AutoLocalize = Props.AutoLocalize,
-		LineHeight = Props.LineHeight,
-		LocalizedText = Props.LocalizedText,
-		MaxVisibleGraphemes = Props.MaxVisibleGraphemes,
-		TextTransparency = Props.TextTransparency,
-
-		PlaceholderColor3 = Computed(function()
-			if Props.Disabled:get() then
-				return Themer.Theme.Colors.Neutral.Light:get()
-			else
-				return Props.PlaceholderColor3:get()
-			end
+	local Observers = {
+		Observer(Text):onChange(function()
+			local TextValue = Text:get() or ""
+			Text:set(TextValue:sub(1, utf8.offset(TextValue, CharacterLimit:get())))
+			RemainingCharaters:set(CharacterLimit:get() - (utf8.len(TextValue or "") or CharacterLimit:get()))
 		end),
-		PlaceholderText = Props.PlaceholderText,
-		MultiLine = Props.MultiLine,
-		ClearTextOnFocus = Props.ClearTextOnFocus,
-		TextEditable = Computed(function()
-			return not Props.Disabled:get()
-		end),
-
-		[OnEvent "Focused"] = function()
-			Props.IsFocused:set(true)
-			SoundService:PlayLocalSound(Props.FocusSound:get())
-			Props.OnFocused:get()()
-		end,
-		[OnEvent "FocusLost"] = function()
-			Props.IsFocused:set(false)
-			Props.OnFocusLost:get()()
-		end,
-		[OnEvent "MouseEnter"] = function()
-			SoundService:PlayLocalSound(Props.HoverSound:get())
-		end,
-		[OnEvent "SelectionGained"] = function()
-			if Props.Active:get() then
-				SoundService:PlayLocalSound(Props.HoverSound:get())
-			end
-		end,
-
-		[Out "Text"] = Props.Text,
-
-		[Children] = {
-			Modifier.Corner {},
-			Modifier.Padding {
-				PaddingBottom = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-				end),
-				PaddingLeft = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-				end),
-				PaddingRight = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-				end),
-				PaddingTop = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-				end),
-			},
-			Modifier.Stroke {
-				Color = Spring(
-					Computed(function()
-						if Props.Disabled:get() then
-							return Themer.Theme.Colors.Neutral.Dark:get()
-						end
-						if Props.IsFocused:get() then
-							return Props.FocusColor:get()
-						else
-							return Themer.Theme.Colors.Neutral.Light:get()
-						end
-					end),
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
-				),
-			},
-
-			Props[Children],
-		},
 	}
 
-	local DisconnectTextObs = Observer(Props.Text):onChange(function()
-		local Text = Props.Text:get() or ""
-		Props.Text:set(Text:sub(1, utf8.offset(Text, Props.CharacterLimit:get())))
-		Props.RemainingCharaters:set(
-			Props.CharacterLimit:get() - (utf8.len(Props.Text:get() or "") or Props.CharacterLimit:get())
-		)
-	end)
+	return Hydrate(Base(CombineProps(Props, {
+		ClassName = "TextBox",
+		Name = "TextInput",
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+		end),
+		Padding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+		end),
+		StrokeEnabled = true,
+		StrokeColor = Spring(
+			Computed(function()
+				if IsFocused:get() then
+					return Color:get()
+				else
+					return Themer.Theme.Colors.NeutralContent.Dark:get()
+				end
+			end),
+			Themer.Theme.SpringSpeed["1"],
+			Themer.Theme.SpringDampening
+		),
+		StrokeTransparency = Spring(
+			Computed(function()
+				if Disabled:get() then
+					return 0.95
+				end
+				if IsFocused:get() then
+					return 0
+				else
+					return 0.8
+				end
+			end),
+			Themer.Theme.SpringSpeed["1"],
+			Themer.Theme.SpringDampening
+		),
+		AutomaticSize = Enum.AutomaticSize.XY,
+		AutoLocalize = false,
+		Active = Computed(function()
+			return not Disabled:get()
+		end),
+		BackgroundTransparency = 1,
 
-	TextInputInstance:GetPropertyChangedSignal("Parent"):Connect(function()
-		if TextInputInstance.Parent == nil then
-			DisconnectTextObs()
-		end
-	end)
+		[Cleanup] = Observers,
+	}))) {
+		Text = Text,
+		TextColor3 = Computed(function()
+			return Themer.Theme.Colors.BaseContent.Main:get()
+		end),
+		TextSize = Themer.Theme.TextSize["1"],
+		FontFace = Computed(function()
+			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
+		end),
+		PlaceholderColor3 = Computed(function()
+			if Disabled:get() then
+				return Themer.Theme.Colors.NeutralContent.Dark:get()
+			else
+				return Themer.Theme.Colors.NeutralContent.Light:get()
+			end
+		end),
+		PlaceholderText = PlaceholderText,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		TextYAlignment = Enum.TextYAlignment.Top,
+		MultiLine = Props.MultiLine,
+		ClearTextOnFocus = ClearTextOnFocus,
+		TextEditable = Computed(function()
+			return not Disabled:get()
+		end),
+		TextWrapped = Props.TextWrapped,
 
-	return TextInputInstance
+		[OnEvent "Focused"] = function()
+			if not Disabled:get() then
+				IsFocused:set(true)
+				SoundService:PlayLocalSound(Themer.Theme.Sound.Focus:get())
+				OnFocused:get()()
+			end
+		end,
+		[OnEvent "FocusLost"] = function()
+			IsFocused:set(false)
+			OnFocusLost:get()()
+		end,
+		[OnEvent "MouseEnter"] = function()
+			SoundService:PlayLocalSound(Themer.Theme.Sound.Hover:get())
+		end,
+		[OnEvent "SelectionGained"] = function()
+			if not Disabled:get() then
+				SoundService:PlayLocalSound(Themer.Theme.Sound.Hover:get())
+			end
+		end,
+
+		[Out "Text"] = Text,
+	}
 end
-
-return TextInput

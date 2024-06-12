@@ -1,5 +1,5 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 
 local New = Fusion.New
 local Children = Fusion.Children
@@ -52,6 +52,7 @@ return {
 					Decimals = 2,
 					Commas = true,
 					Prefix = "$",
+					Font = Enum.Font.FredokaOne,
 				},
 			},
 		}

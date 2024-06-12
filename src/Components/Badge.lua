@@ -1,101 +1,87 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
-local ColorUtils = require(OnyxUI.Packages.ColorUtils)
-local Modifier = require(OnyxUI.Utils.Modifier)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
+local PubTypes = require(OnyxUI.Utils.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 local ForValues = Fusion.ForValues
 
-local Frame = require(OnyxUI.Components.Frame)
-local Text = require(OnyxUI.Components.Text)
-local Icon = require(OnyxUI.Components.Icon)
+local Frame = require(script.Parent.Frame)
+local Text = require(script.Parent.Text)
+local Icon = require(script.Parent.Icon)
 
-return function(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "Badge")
-	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 0)
+export type Props = Frame.Props & {
+	Contents: PubTypes.CanBeState<{ string }>?,
+	ContentsWrapped: PubTypes.CanBeState<boolean>?,
+	Color: PubTypes.CanBeState<Color3>?,
+	ContentColor: PubTypes.CanBeState<Color3>?,
+	ContentSize: PubTypes.CanBeState<number>?,
+}
 
-	Props.Contents = EnsureValue(Props.Contents, "table", {})
-	Props.ContentsWrapped = EnsureValue(Props.ContentsWrapped, "boolean", true)
-	Props.Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
-	Props.ContentColor = EnsureValue(
+return function(Props: Props)
+	local Contents = EnsureValue(Props.Contents, "table", {})
+	local ContentWraps = EnsureValue(Props.ContentsWrapped, "boolean", true)
+	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
+	local ContentColor = EnsureValue(
 		Props.ContentColor,
 		"Color3",
 		Computed(function()
-			return ColorUtils.Emphasize(Props.Color:get(), 1)
+			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
 		end)
 	)
-	Props.ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
-	Props.CornerRadius = EnsureValue(Props.CornerRadius, "number", Themer.Theme.CornerRadius["2"])
+	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
 
-	return Frame {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		Interactable = Props.Interactable,
-		BackgroundTransparency = Props.BackgroundTransparency,
-
-		BackgroundColor3 = Props.Color,
+	return Frame(CombineProps(Props, {
+		Name = "Badge",
+		BackgroundColor3 = Color,
+		BackgroundTransparency = 0,
+		Padding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0"]:get())
+		end),
+		PaddingLeft = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+		end),
+		PaddingRight = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+		end),
+		CornerRadius = Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+		end),
+		ListEnabled = true,
+		ListPadding = Computed(function()
+			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+		end),
+		ListFillDirection = Enum.FillDirection.Horizontal,
+		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+		ListWrapsVerticalAlignment = Enum.VerticalAlignment.Center,
+		ListWraps = ContentWraps,
 
 		[Children] = {
-			Modifier.Padding {
-				PaddingTop = UDim.new(0, 0),
-				PaddingBottom = UDim.new(0, 0),
-				PaddingLeft = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-				end),
-				PaddingRight = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-				end),
-			},
-			Modifier.Corner {
-				CornerRadius = Computed(function()
-					return UDim.new(0, Props.CornerRadius:get())
-				end),
-			},
-			Modifier.ListLayout {
-				Padding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-				end),
-				FillDirection = Enum.FillDirection.Horizontal,
-				HorizontalAlignment = Enum.HorizontalAlignment.Center,
-				VerticalAlignment = Enum.VerticalAlignment.Center,
-				Wraps = Props.ContentsWrapped,
-			},
-
-			ForValues(Props.Contents, function(ContentString: string)
+			ForValues(Contents, function(ContentString: string)
 				if string.find(ContentString, "rbxassetid://", 1, true) then
 					return Icon {
 						Image = ContentString,
-						ImageColor3 = Props.ContentColor,
+						ImageColor3 = ContentColor,
 						Size = Computed(function()
-							return UDim2.fromOffset(Props.ContentSize:get(), Props.ContentSize:get())
+							return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
 						end),
 					}
 				else
 					return Text {
 						Text = ContentString,
-						TextColor3 = Props.ContentColor,
-						TextSize = Props.ContentSize,
+						TextColor3 = ContentColor,
+						TextSize = ContentSize,
 						FontFace = Computed(function()
 							return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Bold:get())
 						end),
-						TextWrapped = Props.ContentsWrapped,
+						TextWrapped = ContentWraps,
 					}
 				end
 			end, Fusion.cleanup),
 		},
-	}
+	}))
 end

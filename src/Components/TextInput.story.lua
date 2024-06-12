@@ -1,7 +1,6 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
-local Modifier = require(OnyxUI.Utils.Modifier)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -15,20 +14,17 @@ return {
 			Parent = Parent,
 			Size = UDim2.fromOffset(300, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
+			ListEnabled = true,
+			Padding = Computed(function()
+				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+			end),
 
 			[Children] = {
-				Modifier.ListLayout {},
-				Modifier.Padding {
-					Padding = Computed(function()
-						return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-					end),
-				},
-
 				TextInput {
 					PlaceholderText = "You can type here!",
 				},
 				TextInput {
-					PlaceholderText = "You can't type here!",
+					PlaceholderText = "You cannot type here!",
 					Disabled = true,
 				},
 				TextInput {
@@ -36,19 +32,8 @@ return {
 					CharacterLimit = 20,
 				},
 				TextInput {
-					PlaceholderText = "Description..",
-					CharacterLimit = 80,
-					Multiline = true,
-					TextWrapped = true,
-					Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
-					AutomaticSize = Enum.AutomaticSize.None,
-				},
-				TextInput {
-					PlaceholderText = "This one wrap-expands!",
-					Multiline = true,
-					TextWrapped = true,
-					Size = UDim2.fromScale(1, 0),
-					AutomaticSize = Enum.AutomaticSize.Y,
+					PlaceholderText = "Something dangerous!",
+					Color = Themer.Theme.Colors.Error.Main,
 				},
 			},
 		}

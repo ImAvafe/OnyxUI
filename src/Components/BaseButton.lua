@@ -1,124 +1,110 @@
 local SoundService = game:GetService("SoundService")
 
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
-
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
+local PubTypes = require(OnyxUI.Utils.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
-local New = Fusion.New
 local OnEvent = Fusion.OnEvent
-local Children = Fusion.Children
 local Computed = Fusion.Computed
+local Hydrate = Fusion.Hydrate
 
-local function Button(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "BaseButton")
-	Props.BackgroundTransparency = EnsureValue(Props.BackgroundTransparency, "number", 1)
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.XY)
-	Props.Text = EnsureValue(Props.Text, "string", "")
-	Props.AutoLocalize = EnsureValue(Props.AutoLocalize, "boolean", false)
+local Base = require(script.Parent.Base)
 
-	Props.Disabled = EnsureValue(Props.Disabled, "boolean", false)
+export type Props = Base.Props & {
+	Disabled: PubTypes.CanBeState<boolean>?,
 
-	Props.IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
-	Props.IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
+	OnActivated: PubTypes.CanBeState<() -> ()>?,
+	OnMouseEnter: PubTypes.CanBeState<() -> ()>?,
+	OnMouseLeave: PubTypes.CanBeState<() -> ()>?,
+	OnMouseButton1Down: PubTypes.CanBeState<() -> ()>?,
+	OnMouseButton1Up: PubTypes.CanBeState<() -> ()>?,
 
-	Props.OnActivated = EnsureValue(Props.OnActivated, "function", function() end)
-	Props.OnMouseEnter = EnsureValue(Props.OnMouseEnter, "function", function() end)
-	Props.OnMouseLeave = EnsureValue(Props.OnMouseLeave, "function", function() end)
-	Props.OnMouseButton1Down = EnsureValue(Props.OnMouseButton1Down, "function", function() end)
-	Props.OnMouseButton1Up = EnsureValue(Props.OnMouseButton1Up, "function", function() end)
+	IsHovering: PubTypes.CanBeState<boolean>?,
+	IsHolding: PubTypes.CanBeState<boolean>?,
 
-	Props.HoverSound = EnsureValue(Props.HoverSound, "Sound", Themer.Theme.Sound.Hover)
-	Props.ClickSound = EnsureValue(Props.ClickSound, "Sound", Themer.Theme.Sound.Click)
+	HoverSound: PubTypes.CanBeState<Sound>?,
+	ClickSound: PubTypes.CanBeState<Sound>?,
+}
 
-	Props.Active = EnsureValue(
+return function(Props: Props)
+	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
+
+	local IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
+	local IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
+
+	local OnActivated = EnsureValue(Props.OnActivated, "function", function() end)
+	local OnMouseEnter = EnsureValue(Props.OnMouseEnter, "function", function() end)
+	local OnMouseLeave = EnsureValue(Props.OnMouseLeave, "function", function() end)
+	local OnMouseButton1Down = EnsureValue(Props.OnMouseButton1Down, "function", function() end)
+	local OnMouseButton1Up = EnsureValue(Props.OnMouseButton1Up, "function", function() end)
+
+	local HoverSound = EnsureValue(Props.HoverSound, "Sound", Themer.Theme.Sound.Hover)
+	local ClickSound = EnsureValue(Props.ClickSound, "Sound", Themer.Theme.Sound.Click)
+
+	local Active = EnsureValue(
 		Props.Active,
 		"boolean",
 		Computed(function()
-			return not Props.Disabled:get()
+			return not Disabled:get()
 		end)
 	)
-	Props.Selectable = EnsureValue(
+	local Selectable = EnsureValue(
 		Props.Selectable,
 		"boolean",
 		Computed(function()
-			return not Props.Disabled:get()
+			return not Disabled:get()
 		end)
 	)
 
-	return New "TextButton" {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		Interactable = Props.Interactable,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
-
-		RichText = Props.RichText,
-		TextSize = Props.TextSize,
-		TextColor3 = Props.TextColor3,
-		FontFace = Props.FontFace,
-		TextScaled = Props.TextScaled,
-		Text = Props.Text,
-		TextWrapped = Props.TextWrapped,
-		TextXAlignment = Props.TextXAlignment,
-		TextYAlignment = Props.TextYAlignment,
-		TextTruncate = Props.TextTruncate,
-		AutoLocalize = Props.AutoLocalize,
-		LineHeight = Props.LineHeight,
-		LocalizedText = Props.LocalizedText,
-		MaxVisibleGraphemes = Props.MaxVisibleGraphemes,
-		TextTransparency = Props.TextTransparency,
+	return Hydrate(Base(CombineProps(Props, {
+		ClassName = "TextButton",
+		Name = "BaseButton",
+		AutomaticSize = Enum.AutomaticSize.XY,
+		Selectable = Selectable,
+		BackgroundTransparency = 1,
+	}))) {
+		Text = "",
+		RichText = false,
+		TextSize = 0,
+		AutoLocalize = false,
 
 		[OnEvent "Activated"] = function()
-			if not Props.Disabled:get() then
-				SoundService:PlayLocalSound(Props.ClickSound:get())
-				Props.OnActivated:get()()
+			if not Disabled:get() then
+				SoundService:PlayLocalSound(ClickSound:get())
+				OnActivated:get()()
 			end
 		end,
 		[OnEvent "MouseEnter"] = function()
-			if Props.Active:get() then
-				SoundService:PlayLocalSound(Props.HoverSound:get())
+			if Active:get() then
+				SoundService:PlayLocalSound(HoverSound:get())
 			end
-			Props.IsHovering:set(true)
-			Props.OnMouseEnter:get()()
+			IsHovering:set(true)
+			OnMouseEnter:get()()
 		end,
 		[OnEvent "SelectionGained"] = function()
-			if Props.Active:get() then
-				SoundService:PlayLocalSound(Props.HoverSound:get())
+			if Active:get() then
+				SoundService:PlayLocalSound(HoverSound:get())
 			end
-			Props.IsHovering:set(true)
-			Props.OnMouseEnter:get()()
+			IsHovering:set(true)
+			OnMouseEnter:get()()
 		end,
 		[OnEvent "MouseLeave"] = function()
-			Props.IsHovering:set(false)
-			Props.IsHolding:set(false)
-			Props.OnMouseLeave:get()()
+			IsHovering:set(false)
+			IsHolding:set(false)
+			OnMouseLeave:get()()
 		end,
 		[OnEvent "MouseButton1Down"] = function()
-			if not Props.Disabled:get() then
-				Props.IsHolding:set(true)
-				Props.OnMouseButton1Down:get()()
+			if not Disabled:get() then
+				IsHolding:set(true)
+				OnMouseButton1Down:get()()
 			end
 		end,
 		[OnEvent "MouseButton1Up"] = function()
-			Props.IsHolding:set(false)
-			Props.OnMouseButton1Up:get()()
+			IsHolding:set(false)
+			OnMouseButton1Up:get()()
 		end,
-
-		[Children] = Props[Children],
 	}
 end
-
-return Button

@@ -1,5 +1,5 @@
 local OnyxUI = require(script.Parent.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local Fusion = require(OnyxUI.Parent.Fusion)
 
 local Value = Fusion.Value
 local New = Fusion.New
@@ -130,7 +130,7 @@ return {
 		["3"] = Value(nil),
 		["4"] = Value(nil),
 		["6"] = Value(nil),
-		Full = Value(9999),
+		Full = Value(nil),
 	},
 	StrokeThickness = {
 		Base = Value(2),
@@ -155,7 +155,6 @@ return {
 		Immediate = Value(1000),
 	},
 	SpringDampening = Value(1),
-	Emphasis = Value(0.15),
 	Sound = {
 		Hover = Value(New "Sound" {
 			SoundId = "rbxassetid://10066936758",
@@ -173,5 +172,11 @@ return {
 			SoundId = "rbxassetid://9119713951",
 			Volume = 0.5,
 		}),
+	},
+	Emphasis = {
+		Light = Value(0.15),
+		Regular = Value(0.3),
+		Strong = Value(0.5),
+		Contrast = Value(1),
 	},
 }

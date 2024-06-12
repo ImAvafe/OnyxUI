@@ -1,82 +1,101 @@
-local OnyxUI = require(script.Parent.Parent)
-local Fusion = require(OnyxUI.Packages.Fusion)
-
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
+local PubTypes = require(OnyxUI.Utils.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
+local ForValues = Fusion.ForValues
 
-local Frame = require(OnyxUI.Components.Frame)
-local Text = require(OnyxUI.Components.Text)
-local IconButton = require(OnyxUI.Components.IconButton)
+local Frame = require(script.Parent.Frame)
+local Text = require(script.Parent.Text)
+local IconButton = require(script.Parent.IconButton)
+local Icon = require(script.Parent.Icon)
 
-local function TitleBar(Props: { [any]: any })
-	Props.Name = EnsureValue(Props.Name, "string", "TitleBar")
-	Props.TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1.5"])
-	Props.FontFace = EnsureValue(
-		Props.FontFace,
+export type Props = Frame.Props & {
+	Content: PubTypes.CanBeState<{ string }>?,
+	ContentSize: PubTypes.CanBeState<number>?,
+	ContentColor: PubTypes.CanBeState<Color3>?,
+	ContentFontFace: PubTypes.CanBeState<Font>?,
+	CloseButtonIcon: PubTypes.CanBeState<string>?,
+	CloseButtonDisabled: PubTypes.CanBeState<boolean>?,
+	OnClose: PubTypes.CanBeState<() -> ()>?,
+	AutoLocalize: PubTypes.CanBeState<boolean>?,
+}
+
+return function(Props: Props)
+	local Content = EnsureValue(Props.Content, "table", {})
+	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1.5"])
+	local ContentColor = EnsureValue(Props.ContentColor, "Color3", Themer.Theme.Colors.BaseContent.Main)
+	local ContentFontFace = EnsureValue(
+		Props.ContentFontFace,
 		"Font",
 		Computed(function()
 			return Font.new(Themer.Theme.Font.Heading:get(), Themer.Theme.FontWeight.Heading:get())
 		end)
 	)
-	Props.Size = EnsureValue(Props.Size, "Udim2", UDim2.fromScale(1, 0))
-	Props.AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.Y)
-	Props.CloseButtonDisabled = EnsureValue(Props.CloseButtonDisabled, "boolean", false)
-	Props.CloseButtonImage = EnsureValue(Props.CloseButtonImage, "string", "rbxassetid://13405228418")
-	Props.OnClose = EnsureValue(Props.OnClose, "function", function() end)
+	local CloseButtonDisabled = EnsureValue(Props.CloseButtonDisabled, "boolean", false)
+	local CloseButtonIcon = EnsureValue(Props.CloseButtonIcon, "string", "rbxassetid://13405228418")
+	local OnClose = EnsureValue(Props.OnClose, "function", function() end)
 
-	return Frame {
-		Name = Props.Name,
-		Parent = Props.Parent,
-		Position = Props.Position,
-		Rotation = Props.Rotation,
-		AnchorPoint = Props.AnchorPoint,
-		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
-		Visible = Props.Visible,
-		ZIndex = Props.ZIndex,
-		LayoutOrder = Props.LayoutOrder,
-		ClipsDescendants = Props.ClipsDescendants,
-		Active = Props.Active,
-		Selectable = Props.Selectable,
-		BackgroundColor3 = Props.BackgroundColor3,
-		BackgroundTransparency = Props.BackgroundTransparency,
+	return Frame(CombineProps(Props, {
+		Name = "TitleBar",
+		Size = UDim2.fromScale(1, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
 
 		[Children] = {
-			Text {
-				Name = "Title",
+			Frame {
+				Name = "Content",
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = UDim2.fromScale(0.5, 0),
-				Text = Props.Title,
-				TextWrapped = false,
-				TextSize = Props.TextSize,
-				FontFace = Props.FontFace,
-				AutoLocalize = Props.AutoLocalize,
+
+				[Children] = {
+					ForValues(Content, function(ContentString: string)
+						if string.find(ContentString, "rbxassetid://", 1, true) then
+							return Icon {
+								Image = ContentString,
+								ImageColor3 = ContentColor,
+								Size = Computed(function()
+									return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
+								end),
+							}
+						else
+							return Text {
+								Text = ContentString,
+								TextColor3 = ContentColor,
+								TextSize = ContentSize,
+								FontFace = ContentFontFace,
+								TextWrapped = false,
+								AutoLocalize = Props.AutoLocalize,
+							}
+						end
+					end, Fusion.cleanup),
+				},
 			},
 			Computed(function()
-				if not Props.CloseButtonDisabled:get() then
+				if CloseButtonDisabled:get() == false then
 					return IconButton {
 						Name = "CloseButton",
-						Image = Props.CloseButtonImage,
+						Image = CloseButtonIcon,
+						ContentSize = ContentSize,
+						ContentColor = ContentColor,
+						Color = ContentColor,
 						Style = "Ghost",
-						Color = Themer.Theme.Colors.BaseContent.Main,
-						ContentSize = Computed(function()
-							return Props.TextSize:get() * 0.9
-						end),
-						AnchorPoint = Vector2.new(1, 0),
-						Position = UDim2.fromScale(1, 0),
+						AnchorPoint = Vector2.new(1, 0.5),
+						Position = UDim2.fromScale(1, 0.5),
+
 						OnActivated = function()
-							if Props.OnClose:get() then
-								Props.OnClose:get()()
+							if OnClose:get() then
+								OnClose:get()()
 							end
 						end,
 					}
+				else
+					return
 				end
 			end, Fusion.cleanup),
 		},
-	}
+	}))
 end
-
-return TitleBar

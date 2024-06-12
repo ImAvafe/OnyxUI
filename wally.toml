@@ -1,7 +1,7 @@
 [package]
 name = "imavafe/onyx-ui"
 description = "Quick, quality UI for Fusion"
-version = "0.1.2"
+version = "0.2.0"
 license = "MIT"
 authors = ["Avafe"]
 
@@ -11,4 +11,3 @@ realm = "shared"
 [dependencies]
 ColorUtils = "csqrl/colour-utils@1.4.1"
 Fusion = "elttob/fusion@0.2.0"
-Loader = "sleitnick/loader@2.0.0"
