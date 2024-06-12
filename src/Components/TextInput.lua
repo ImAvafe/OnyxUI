@@ -93,9 +93,7 @@ return function(Props: Props)
 		Active = Computed(function()
 			return not Disabled:get()
 		end),
-		BackgroundColor3 = Computed(function()
-			return Themer.Theme.Colors.Base.Light:get()
-		end),
+		BackgroundTransparency = 1,
 
 		[Cleanup] = Observers,
 	}))) {
