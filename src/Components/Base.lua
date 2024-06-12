@@ -134,7 +134,7 @@ return function(Props: Props): GuiObject
 		Props.CornerRadius,
 		"UDim",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+			return UDim.new(0, 0)
 		end)
 	)
 	local StrokeThickness = EnsureValue(Props.StrokeThickness, "number", Themer.Theme.StrokeThickness["1"])
