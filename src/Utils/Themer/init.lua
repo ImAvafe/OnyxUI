@@ -2,7 +2,6 @@ local OnyxUI = script.Parent.Parent
 local ReconcileValues = require(script.Parent.Parent.Utils.ReconcileValues)
 local OnyxNightTheme = require(script.OnyxNight)
 local ThemeTemplate = require(script.ThemeTemplate)
-local Loader = require(OnyxUI.Parent.Loader)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 
 local SPACING_MULTIPLIERS = {
@@ -66,8 +65,14 @@ local SPRING_SPEED_MULTIPLIERS = {
 
 local Themer = {
 	Theme = table.clone(ThemeTemplate),
-	Themes = Loader.LoadChildren(script),
+	Themes = {},
 }
+
+function Themer:_LoadDefaultThemes()
+	for ThemeName, ThemeModule in ipairs(script:GetChildren()) do
+		self.Themes[ThemeName] = require(ThemeModule)
+	end
+end
 
 function Themer:_ProcessColors(Theme: { [any]: any })
 	if Theme.Colors then
@@ -158,6 +163,7 @@ function Themer:Set(Theme: { [any]: any })
 	ReconcileValues(self.Theme, Theme)
 end
 
+Themer:_LoadDefaultThemes()
 Themer:Set(OnyxNightTheme)
 -- Themer:Set(Themer.Themes.BitCave)
 
