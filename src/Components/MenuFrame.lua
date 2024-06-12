@@ -3,12 +3,10 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
 local CombineProps = require(OnyxUI.Utils.CombineProps)
 
-local Children = Fusion.Children
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 local Out = Fusion.Out
 
-local Frame = require(script.Parent.Frame)
 local CanvasGroup = require(script.Parent.CanvasGroup)
 
 type Props = CanvasGroup.Props & {}
@@ -31,23 +29,5 @@ return function(Props: Props)
 		StrokeColor = Themer.Theme.Colors.Neutral.Main,
 
 		[Out "AutomaticSize"] = AutomaticSize,
-
-		[Children] = {
-			Frame {
-				Name = "Contents",
-				AutomaticSize = Props.AutomaticSize,
-				Size = Computed(function()
-					local AutomaticSizeScales = {
-						[Enum.AutomaticSize.None] = UDim2.fromScale(1, 1),
-						[Enum.AutomaticSize.XY] = UDim2.fromScale(0, 0),
-						[Enum.AutomaticSize.X] = UDim2.fromScale(0, 1),
-						[Enum.AutomaticSize.Y] = UDim2.fromScale(1, 0),
-					}
-					return AutomaticSizeScales[AutomaticSize:get()]
-				end),
-
-				[Children] = Props[Children],
-			},
-		},
-	}, { Children }))
+	}))
 end
