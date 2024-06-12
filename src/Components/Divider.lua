@@ -27,7 +27,7 @@ return function(Props: Props)
 		Props.Spacing,
 		"number",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
 		end)
 	)
 
