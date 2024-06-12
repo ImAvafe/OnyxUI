@@ -77,7 +77,7 @@ return function(Props: Props)
 		StrokeTransparency = Spring(
 			Computed(function()
 				if Disabled:get() then
-					return 0.9
+					return 0.95
 				end
 				if IsFocused:get() then
 					return 0
@@ -109,9 +109,9 @@ return function(Props: Props)
 		end),
 		PlaceholderColor3 = Computed(function()
 			if Disabled:get() then
-				return Themer.Theme.Colors.Neutral.Light:get()
-			else
 				return Themer.Theme.Colors.NeutralContent.Dark:get()
+			else
+				return Themer.Theme.Colors.NeutralContent.Light:get()
 			end
 		end),
 		PlaceholderText = PlaceholderText,

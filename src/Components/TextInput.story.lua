@@ -24,7 +24,7 @@ return {
 					PlaceholderText = "You can type here!",
 				},
 				TextInput {
-					PlaceholderText = "You can't type here!",
+					PlaceholderText = "You cannot type here!",
 					Disabled = true,
 				},
 				TextInput {
