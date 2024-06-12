@@ -61,6 +61,11 @@ return {
 					Progress = Progress,
 					Inverted = true,
 				},
+				ProgressBar {
+					Progress = Progress,
+					Color = Color,
+					CornerRadius = UDim.new(0, 0),
+				},
 			},
 		}
 

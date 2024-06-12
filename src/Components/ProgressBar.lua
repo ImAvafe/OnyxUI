@@ -24,9 +24,13 @@ return function(Props: Props)
 	local Direction = EnsureValue(Props.Direction, "EnumItem", Enum.FillDirection.Horizontal)
 	local Inverted = EnsureValue(Props.Inverted, "boolean", false)
 
-	local EffectiveCornerRadius = Computed(function()
-		return UDim.new(0, Themer.Theme.CornerRadius["Full"]:get())
-	end)
+	local EffectiveCornerRadius = EnsureValue(
+		Props.CornerRadius,
+		"UDim",
+		Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius["Full"]:get())
+		end)
+	)
 
 	return Frame(CombineProps(Props, {
 		Name = "ProgressBar",
@@ -40,7 +44,7 @@ return function(Props: Props)
 		AutomaticSize = Enum.AutomaticSize.None,
 		BackgroundTransparency = 0,
 		BackgroundColor3 = Themer.Theme.Colors.Neutral.Dark,
-		EffectiveCornerRadius = EffectiveCornerRadius,
+		CornerRadius = EffectiveCornerRadius,
 
 		[Children] = {
 			Frame {
@@ -81,7 +85,7 @@ return function(Props: Props)
 				AutomaticSize = Enum.AutomaticSize.None,
 				BackgroundTransparency = 0,
 				BackgroundColor3 = Color,
-				EffectiveCornerRadius = EffectiveCornerRadius,
+				CornerRadius = EffectiveCornerRadius,
 			},
 		},
 	}))

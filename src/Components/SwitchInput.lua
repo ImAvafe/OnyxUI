@@ -44,13 +44,15 @@ return function(Props: Props)
 			ActiveColor = Themer.Theme.Colors.NeutralContent.Dark:get()
 		end
 
-		if IsHolding:get() then
-			return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
-		elseif IsHovering:get() then
-			return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
-		else
-			return ActiveColor
+		if not Disabled:get() then
+			if IsHolding:get() then
+				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
+			elseif IsHovering:get() then
+				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
+			end
 		end
+
+		return ActiveColor
 	end)
 	local EffectiveBallColor = Computed(function(): any
 		local ActiveColor
@@ -60,22 +62,31 @@ return function(Props: Props)
 			ActiveColor = Themer.Theme.Colors.NeutralContent.Dark:get()
 		end
 
-		if IsHolding:get() then
-			if not Switched:get() then
-				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
-			else
-				return ActiveColor
+		if not Disabled:get() then
+			if IsHolding:get() then
+				if not Switched:get() then
+					return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
+				else
+					return ActiveColor
+				end
+			elseif IsHovering:get() then
+				if not Switched:get() then
+					return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
+				else
+					return ActiveColor
+				end
 			end
-		elseif IsHovering:get() then
-			if not Switched:get() then
-				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
-			else
-				return ActiveColor
-			end
-		else
-			return ActiveColor
 		end
+
+		return ActiveColor
 	end)
+	local EffectiveCornerRadius = EnsureValue(
+		Props.CornerRadius,
+		"UDim",
+		Computed(function()
+			return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+		end)
+	)
 
 	return BaseButton(CombineProps(Props, {
 		Name = "SwitchInput",
@@ -86,7 +97,7 @@ return function(Props: Props)
 		StrokeTransparency = Spring(
 			Computed(function()
 				if Disabled:get() then
-					return 0.7
+					return 0.9
 				end
 				if Switched:get() then
 					return 0
@@ -98,9 +109,7 @@ return function(Props: Props)
 			Themer.Theme.SpringDampening
 		),
 		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["Full"]:get())
-		end),
+		CornerRadius = EffectiveCornerRadius,
 		ClickSound = Themer.Theme.Sound.Switch,
 
 		IsHovering = IsHovering,
@@ -127,6 +136,7 @@ return function(Props: Props)
 					Themer.Theme.SpringDampening
 				),
 				Padding = UDim.new(0, 2),
+				CornerRadius = EffectiveCornerRadius,
 
 				[Children] = {
 					Frame {
@@ -177,9 +187,7 @@ return function(Props: Props)
 						AspectRatio = 1,
 						AspectType = Enum.AspectType.ScaleWithParentSize,
 						DominantAxis = Enum.DominantAxis.Height,
-						CornerRadius = Computed(function()
-							return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
-						end),
+						CornerRadius = EffectiveCornerRadius,
 					},
 				},
 			},
