@@ -69,8 +69,8 @@ local Themer = {
 }
 
 function Themer:_LoadDefaultThemes()
-	for ThemeName, ThemeModule in ipairs(script:GetChildren()) do
-		self.Themes[ThemeName] = require(ThemeModule)
+	for _, ThemeModule in ipairs(script:GetChildren()) do
+		self.Themes[ThemeModule.Name] = require(ThemeModule)
 	end
 end
 
@@ -122,6 +122,10 @@ function Themer:_ProcessCornerRadii(Theme: { [any]: any })
 				Theme.CornerRadius[tostring(Multiplier)] = Theme.CornerRadius.Base * Multiplier
 			end
 		end
+
+		if Theme.CornerRadius.Full == nil then
+			Theme.CornerRadius.Full = Theme.CornerRadius["1"] * 9999
+		end
 	end
 end
 
@@ -165,6 +169,5 @@ end
 
 Themer:_LoadDefaultThemes()
 Themer:Set(OnyxNightTheme)
--- Themer:Set(Themer.Themes.BitCave)
 
 return Themer
