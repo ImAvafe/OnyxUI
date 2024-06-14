@@ -3,6 +3,7 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local PubTypes = require(OnyxUI.Utils.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Value = Fusion.Value
 local Computed = Fusion.Computed
@@ -30,7 +31,7 @@ return function(Props: Props)
 		[Out "ViewportSize"] = ViewportSize,
 	}
 
-	return Frame {
+	return Frame(CombineProps(Props, {
 		Name = "AutoScaleFrame",
 		Scale = Computed(function()
 			local Ratio = ScaleMultiplier:get()
@@ -40,5 +41,5 @@ return function(Props: Props)
 				)
 			return math.clamp(Ratio, MinScale:get(), MaxScale:get())
 		end),
-	}
+	}))
 end

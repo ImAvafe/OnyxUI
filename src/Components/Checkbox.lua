@@ -4,6 +4,7 @@ local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local Themer = require(OnyxUI.Utils.Themer)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local PubTypes = require(OnyxUI.Utils.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -44,7 +45,7 @@ return function(Props: Props)
 		end
 	end)
 
-	return BaseButton {
+	return BaseButton(CombineProps(Props, {
 		Name = "Checkbox",
 		BackgroundColor3 = EffectiveColor,
 		BackgroundTransparency = Spring(
@@ -114,5 +115,5 @@ return function(Props: Props)
 				),
 			},
 		},
-	}
+	}))
 end
