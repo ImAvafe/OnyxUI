@@ -45,7 +45,7 @@ return function(Props: Props)
 		ImageTransparency = Props.ImageTransparency,
 		ImageRectSize = Props.ImageRectSize,
 		ResampleMode = Props.ResampleMode,
-		ScaleType = Props.Scale,
+		ScaleType = Props.ScaleType,
 		SliceCenter = Props.SliceCenter,
 		SliceScale = Props.SliceScale,
 		TileSize = Props.TileSize,
