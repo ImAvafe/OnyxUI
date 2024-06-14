@@ -77,7 +77,7 @@ return function(Props: Props)
 		StrokeTransparency = Spring(
 			Computed(function()
 				if Disabled:get() then
-					return 0.95
+					return 0.9
 				end
 				if IsFocused:get() then
 					return 0
