@@ -47,16 +47,16 @@ return function(Props: Props)
 		ClassName = "TextLabel",
 		Name = "Text",
 		AutomaticSize = Enum.AutomaticSize.XY,
+		ClipsDescendants = false,
+		BackgroundTransparency = 1,
 	}))) {
 		TextColor3 = TextColor3,
 		TextSize = TextSize,
 		RichText = RichText,
 		FontFace = FontFace,
 		TextWrapped = TextWrapped,
-		ClipsDescendants = false,
 		TextXAlignment = TextXAlignment,
 		TextYAlignment = TextYAlignment,
-		BackgroundTransparency = 1,
 
 		Text = Props.Text,
 		TextTransparency = Props.TextTransparency,

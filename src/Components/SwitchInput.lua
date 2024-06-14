@@ -97,12 +97,12 @@ return function(Props: Props)
 		StrokeTransparency = Spring(
 			Computed(function()
 				if Disabled:get() then
-					return 0.9
+					return 0.8
 				end
 				if Switched:get() then
 					return 0
 				else
-					return 0.5
+					return 0.6
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
