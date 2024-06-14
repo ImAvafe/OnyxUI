@@ -27,6 +27,13 @@ export type Props = Base.Props & {
 	ClearTextOnFocus: PubTypes.CanBeState<boolean>?,
 	TextWrapped: PubTypes.CanBeState<boolean>?,
 	MultiLine: PubTypes.CanBeState<boolean>?,
+	TextSize: PubTypes.CanBeState<number>?,
+	TextColor3: PubTypes.CanBeState<Color3>?,
+	FontFace: PubTypes.CanBeState<Font>?,
+	PlaceholderColor3: PubTypes.CanBeState<Color3>?,
+	TextXAlignment: PubTypes.CanBeState<Enum.TextXAlignment>?,
+	TextYAlignment: PubTypes.CanBeState<Enum.TextYAlignment>?,
+
 	IsFocused: PubTypes.CanBeState<boolean>?,
 	OnFocused: PubTypes.CanBeState<() -> ()>?,
 	OnFocusLost: PubTypes.CanBeState<() -> ()>?,
@@ -39,6 +46,34 @@ return function(Props: Props)
 	local CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
 	local ClearTextOnFocus = EnsureValue(Props.ClearTextOnFocus, "boolean", false)
 	local PlaceholderText = EnsureValue(Props.PlaceholderText, "string", "")
+	local TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
+	local PlaceholderColor3 = EnsureValue(
+		Props.PlaceholderColor3,
+		"Color3",
+		Computed(function()
+			if Disabled:get() then
+				return Themer.Theme.Colors.NeutralContent.Dark:get()
+			else
+				return Themer.Theme.Colors.NeutralContent.Light:get()
+			end
+		end)
+	)
+	local TextColor3 = EnsureValue(
+		Props.TextColor3,
+		"Color3",
+		Computed(function()
+			return Themer.Theme.Colors.BaseContent.Main:get()
+		end)
+	)
+	local FontFace = EnsureValue(
+		Props.FontFace,
+		"Font",
+		Computed(function()
+			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
+		end)
+	)
+	local TextXAlignment = EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
+	local TextYAlignment = EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
 
 	local RemainingCharaters = Value(-1)
 	local IsFocused = EnsureValue(Props.IsFocused, "boolean", false)
@@ -98,29 +133,20 @@ return function(Props: Props)
 		[Cleanup] = Observers,
 	}))) {
 		Text = Text,
-		TextColor3 = Computed(function()
-			return Themer.Theme.Colors.BaseContent.Main:get()
-		end),
-		TextSize = Themer.Theme.TextSize["1"],
-		FontFace = Computed(function()
-			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
-		end),
-		PlaceholderColor3 = Computed(function()
-			if Disabled:get() then
-				return Themer.Theme.Colors.NeutralContent.Dark:get()
-			else
-				return Themer.Theme.Colors.NeutralContent.Light:get()
-			end
-		end),
+		TextColor3 = TextColor3,
+		TextSize = TextSize,
+		FontFace = FontFace,
+		PlaceholderColor3 = PlaceholderColor3,
 		PlaceholderText = PlaceholderText,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		TextYAlignment = Enum.TextYAlignment.Top,
-		MultiLine = Props.MultiLine,
+		TextXAlignment = TextXAlignment,
+		TextYAlignment = TextYAlignment,
 		ClearTextOnFocus = ClearTextOnFocus,
+		MultiLine = Props.MultiLine,
+		TextWrapped = Props.TextWrapped,
+
 		TextEditable = Computed(function()
 			return not Disabled:get()
 		end),
-		TextWrapped = Props.TextWrapped,
 
 		[OnEvent "Focused"] = function()
 			if not Disabled:get() then

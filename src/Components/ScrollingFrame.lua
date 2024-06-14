@@ -3,6 +3,7 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
 local PubTypes = require(OnyxUI.Utils.PubTypes)
 local CombineProps = require(OnyxUI.Utils.CombineProps)
+local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 
 local Hydrate = Fusion.Hydrate
 local Computed = Fusion.Computed
@@ -28,34 +29,51 @@ export type Props = Base.Props & {
 }
 
 return function(Props: Props)
-	return Hydrate(Base(CombineProps(Props, {
-		ClassName = "ScrollingFrame",
-		Name = "ScrollingFrame",
-	}))) {
-		BottomImage = Computed(function()
+	local BottomImage = EnsureValue(
+		Props.BottomImage,
+		"string",
+		Computed(function()
 			if Themer.Theme.CornerRadius["1"]:get() >= 3 then
 				return "rbxassetid://16547643439"
 			else
 				return "rbxassetid://16547330984"
 			end
-		end),
-		TopImage = Computed(function()
+		end)
+	)
+	local TopImage = EnsureValue(
+		Props.TopImage,
+		"string",
+		Computed(function()
 			if Themer.Theme.CornerRadius["1"]:get() >= 3 then
 				return "rbxassetid://16547667444"
 			else
 				return "rbxassetid://16547330984"
 			end
-		end),
-		MidImage = "rbxassetid://16547330984",
-		Selectable = false,
-		ScrollBarImageColor3 = Themer.Theme.Colors.NeutralContent.Dark,
-		ScrollBarImageTransparency = 0,
-		ScrollBarThickness = 8,
-		BackgroundTransparency = 1,
-		AutomaticCanvasSize = Enum.AutomaticSize.Y,
-		ScrollingDirection = Enum.ScrollingDirection.Y,
-		AutomaticSize = Enum.AutomaticSize.None,
+		end)
+	)
+	local MidImage = EnsureValue(Props.MidImage, "string", "rbxassetid://16547330984")
+	local ScrollBarImageColor3 =
+		EnsureValue(Props.ScrollBarImageColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark)
+	local ScrollBarImageTransparency = EnsureValue(Props.ScrollBarImageTransparency, "number", 0)
+	local ScrollBarThickness = EnsureValue(Props.ScrollBarThickness, "number", 8)
+	local AutomaticCanvasSize = EnsureValue(Props.AutomaticCanvasSize, "EnumItem", Enum.AutomaticSize.Y)
+	local ScrollingDirection = EnsureValue(Props.ScrollingDirection, "EnumItem", Enum.ScrollingDirection.Y)
 
+	return Hydrate(Base(CombineProps(Props, {
+		ClassName = "ScrollingFrame",
+		Name = "ScrollingFrame",
+		Selectable = false,
+		BackgroundTransparency = 1,
+		AutomaticSize = Enum.AutomaticSize.None,
+	}))) {
+		BottomImage = BottomImage,
+		TopImage = TopImage,
+		MidImage = MidImage,
+		ScrollBarImageColor3 = ScrollBarImageColor3,
+		ScrollBarImageTransparency = ScrollBarImageTransparency,
+		ScrollBarThickness = ScrollBarThickness,
+		AutomaticCanvasSize = AutomaticCanvasSize,
+		ScrollingDirection = ScrollingDirection,
 		CanvasPosition = Props.CanvasPosition,
 		CanvasSize = Props.CanvasSize,
 		ElasticBehavior = Props.ElasticBehavior,
