@@ -12,10 +12,11 @@ local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local SettingToggle = require(OnyxUI.Components.SettingToggle)
 local TextInput = require(OnyxUI.Components.TextInput)
 
-local function SettingsMenu(Props: { [any]: any })
+return function(Props)
 	return MenuFrame {
 		Parent = Props.Parent,
 		Size = UDim2.fromOffset(330, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
 		ListEnabled = true,
 		ListPadding = Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
@@ -23,7 +24,7 @@ local function SettingsMenu(Props: { [any]: any })
 
 		[Children] = {
 			TitleBar {
-				Title = "Settings",
+				Content = { "Settings" },
 			},
 			ScrollingFrame {
 				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 175)),
@@ -31,6 +32,9 @@ local function SettingsMenu(Props: { [any]: any })
 				ListEnabled = true,
 				Padding = Computed(function()
 					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+				end),
+				PaddingRight = Computed(function()
+					return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get() + Themer.Theme.Spacing["1"]:get())
 				end),
 
 				[Children] = {
@@ -72,5 +76,3 @@ local function SettingsMenu(Props: { [any]: any })
 		},
 	}
 end
-
-return SettingsMenu

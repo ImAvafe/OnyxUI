@@ -130,7 +130,7 @@ return {
 		["3"] = Value(nil),
 		["4"] = Value(nil),
 		["6"] = Value(nil),
-		Full = Value(9999),
+		Full = Value(nil),
 	},
 	StrokeThickness = {
 		Base = Value(2),

@@ -24,7 +24,7 @@ return {
 					PlaceholderText = "You can type here!",
 				},
 				TextInput {
-					PlaceholderText = "You can't type here!",
+					PlaceholderText = "You cannot type here!",
 					Disabled = true,
 				},
 				TextInput {
@@ -32,19 +32,8 @@ return {
 					CharacterLimit = 20,
 				},
 				TextInput {
-					PlaceholderText = "Description..",
-					CharacterLimit = 80,
-					Multiline = true,
-					TextWrapped = true,
-					Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 80)),
-					AutomaticSize = Enum.AutomaticSize.None,
-				},
-				TextInput {
-					PlaceholderText = "This one wrap-expands!",
-					Multiline = true,
-					TextWrapped = true,
-					Size = UDim2.fromScale(1, 0),
-					AutomaticSize = Enum.AutomaticSize.Y,
+					PlaceholderText = "Something dangerous!",
+					Color = Themer.Theme.Colors.Error.Main,
 				},
 			},
 		}

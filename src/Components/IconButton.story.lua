@@ -3,7 +3,6 @@ local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Utils.Themer)
 local Colors = require(OnyxUI.Utils.Colors)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
@@ -12,25 +11,18 @@ local Frame = require(script.Parent.Frame)
 
 return {
 	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local PreviewPadding = Computed(function()
-			return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
-		end)
-
 		local Instance = Frame {
 			Parent = Parent,
+			Padding = Computed(function()
+				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+			end),
+			ListEnabled = true,
+			ListFillDirection = Enum.FillDirection.Horizontal,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			end),
 
 			[Children] = {
-				New "UIPadding" {
-					PaddingBottom = PreviewPadding,
-					PaddingLeft = PreviewPadding,
-					PaddingRight = PreviewPadding,
-					PaddingTop = PreviewPadding,
-				},
-				New "UIListLayout" {
-					Padding = UDim.new(0, Themer.Theme.Spacing["0.5"]:get()),
-					FillDirection = Enum.FillDirection.Horizontal,
-					SortOrder = Enum.SortOrder.LayoutOrder,
-				},
 				IconButton {
 					Image = "rbxassetid://10814531047",
 				},

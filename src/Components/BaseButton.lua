@@ -29,7 +29,7 @@ export type Props = Base.Props & {
 	ClickSound: PubTypes.CanBeState<Sound>?,
 }
 
-local function Button(Props: Props): () -> TextButton
+return function(Props: Props)
 	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
 	local IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
@@ -108,5 +108,3 @@ local function Button(Props: Props): () -> TextButton
 		end,
 	}
 end
-
-return Button

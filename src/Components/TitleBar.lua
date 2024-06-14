@@ -15,7 +15,7 @@ local IconButton = require(script.Parent.IconButton)
 local Icon = require(script.Parent.Icon)
 
 export type Props = Frame.Props & {
-	Content: PubTypes.CanBeState<{string}>?,
+	Content: PubTypes.CanBeState<{ string }>?,
 	ContentSize: PubTypes.CanBeState<number>?,
 	ContentColor: PubTypes.CanBeState<Color3>?,
 	ContentFontFace: PubTypes.CanBeState<Font>?,
@@ -72,7 +72,7 @@ return function(Props: Props)
 							}
 						end
 					end, Fusion.cleanup),
-				}
+				},
 			},
 			Computed(function()
 				if CloseButtonDisabled:get() == false then
@@ -81,15 +81,19 @@ return function(Props: Props)
 						Image = CloseButtonIcon,
 						ContentSize = ContentSize,
 						ContentColor = ContentColor,
+						Color = ContentColor,
 						Style = "Ghost",
-						AnchorPoint = Vector2.new(1, 0),
-						Position = UDim2.fromScale(1, 0),
+						AnchorPoint = Vector2.new(1, 0.5),
+						Position = UDim2.fromScale(1, 0.5),
+
 						OnActivated = function()
 							if OnClose:get() then
 								OnClose:get()()
 							end
 						end,
 					}
+				else
+					return
 				end
 			end, Fusion.cleanup),
 		},

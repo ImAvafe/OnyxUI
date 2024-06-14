@@ -128,13 +128,13 @@ export type Props = {
 	MinTextSize: PubTypes.CanBeState<number>?,
 }
 
-return function(Props: Props)
+return function(Props: Props): GuiObject
 	local Name = EnsureValue(Props.Name, "string", "Base")
 	local CornerRadius = EnsureValue(
 		Props.CornerRadius,
 		"UDim",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+			return UDim.new(0, 0)
 		end)
 	)
 	local StrokeThickness = EnsureValue(Props.StrokeThickness, "number", Themer.Theme.StrokeThickness["1"])
@@ -155,7 +155,7 @@ return function(Props: Props)
 		Props.ListPadding,
 		"UDim",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
 		end)
 	)
 	local ListSortOrder = EnsureValue(Props.ListSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)

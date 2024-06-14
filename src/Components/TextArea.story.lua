@@ -5,32 +5,27 @@ local Themer = require(OnyxUI.Utils.Themer)
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
-local MenuFrame = require(OnyxUI.Components.MenuFrame)
-local TitleBar = require(OnyxUI.Components.TitleBar)
-local Frame = require(OnyxUI.Components.Frame)
+local TextArea = require(script.Parent.TextArea)
+local Frame = require(script.Parent.Frame)
 
 return {
-	story = function(Parent: GuiObject, _Props)
+	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local Instance = Frame {
 			Parent = Parent,
+			Size = UDim2.fromOffset(300, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			ListEnabled = true,
 			Padding = Computed(function()
 				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 			end),
-			ListEnabled = true,
 
 			[Children] = {
-				TitleBar {
-					Content = { "Title" },
+				TextArea {
+					Size = UDim2.fromOffset(200, 50),
 				},
-				MenuFrame {
-					Size = UDim2.fromOffset(300, 0),
-					AutomaticSize = Enum.AutomaticSize.Y,
-
-					[Children] = {
-						TitleBar {
-							Content = { "Title" },
-						},
-					},
+				TextArea {
+					Size = UDim2.fromOffset(200, 100),
+					CharacterLimit = 20,
 				},
 			},
 		}

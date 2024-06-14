@@ -5,7 +5,7 @@ local Base = require(script.Parent.Base)
 
 export type Props = Base.Props & {}
 
-local function Frame(Props: Props)
+return function(Props: Props)
 	return Base(CombineProps(Props, {
 		ClassName = "Frame",
 		Name = "Frame",
@@ -13,5 +13,3 @@ local function Frame(Props: Props)
 		AutomaticSize = Enum.AutomaticSize.XY,
 	}))
 end
-
-return Frame

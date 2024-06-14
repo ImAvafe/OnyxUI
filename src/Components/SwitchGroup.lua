@@ -8,7 +8,7 @@ local SwitchInput = require(script.Parent.SwitchInput)
 
 export type Props = SwitchInput.Props & {}
 
-local function SwitchGroup(Props: Props)
+return function(Props: Props)
 	local Switched = EnsureValue(Props.Switched, "boolean", false)
 
 	return BaseButton(CombineProps(Props, {
@@ -21,5 +21,3 @@ local function SwitchGroup(Props: Props)
 		end,
 	}))
 end
-
-return SwitchGroup
