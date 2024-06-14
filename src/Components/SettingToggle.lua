@@ -3,6 +3,7 @@ local Themer = require(script.Parent.Parent.Utils.Themer)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
 local PubTypes = require(OnyxUI.Utils.PubTypes)
+local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -21,7 +22,7 @@ local function SettingToggle(Props: Props)
 	local Switched = EnsureValue(Props.Switched, "boolean", false)
 	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
-	return SwitchGroup {
+	return SwitchGroup(CombineProps(Props, {
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		SwitchedOn = Switched,
@@ -50,7 +51,7 @@ local function SettingToggle(Props: Props)
 				Selectable = false,
 			},
 		},
-	}
+	}))
 end
 
 return SettingToggle
