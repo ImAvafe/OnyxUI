@@ -29,16 +29,16 @@
 
 ### [Model 🤓](https://github.com/ImAvafe/OnyxUI/releases/latest)
 
+## Features ✨
+
+- Dozens of fully-typed prebuilt components 🧩
+- Comprehensive theming system 🎨
+- Simplify styling UI with styling props 🖌️
+- Guarantee props with EnsureValue ✅
+
 ## Documentation 📄
 
 None as of yet. I'll work on Moonwave documentation in a future update. Sorry! Components are fully typed however, so props will autocomplete.
-
-## Features ✨
-
-- Dozens of prebuilt components 🧩
-- Comprehensive theming system 🎨
-- Ensure prop values with EnsureValue ✅
-- Simplify styling UI with Modifier🖌️
 
 ## In alpha ⚠️
 
@@ -50,11 +50,11 @@ OnyxUI should provide a beautiful, simple and flexible components toolset for de
 
 It should follow Roblox Fusion's way of doing things, while innovating upon areas as necessary.
 
-- **Component props should be as consistent as possible**: `Color` for a `Button` should mean the same as `Color` does for a `Badge`.
+- **Component props should be consistent**: `Color` for a `Button` should mean the same as `Color` does for a `Badge`.
 
 - **Props should be inherited across components**: `Button` should support the props from `BaseButton`, `Frame` and `GuiObject`.
 
-- **Engine-provided properties should be supported**: `Size`, `AutomaticSize`, etc are useful nearly everywhere, and should be supported nearly everywhere.
+- **Engine-provided properties should be supported**: `Size`, `AutomaticSize`, etc are useful everywhere, and should be supported everywhere.
 
 - **Theming should be both easy and comprehensive**, letting the developer choose how much, or how little they need to customize.
 
