@@ -22,10 +22,12 @@ local function SettingToggle(Props: Props)
 	local Switched = EnsureValue(Props.Switched, "boolean", false)
 	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
 
+	Props.Switched = Switched
+
 	return SwitchGroup(CombineProps(Props, {
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		SwitchedOn = Switched,
+		Switched = Switched,
 		Disabled = Disabled,
 
 		[Children] = {
@@ -46,7 +48,7 @@ local function SettingToggle(Props: Props)
 			SwitchInput {
 				AnchorPoint = Vector2.new(1, 0),
 				Position = UDim2.fromScale(1, 0),
-				SwitchedOn = Switched,
+				Switched = Switched,
 				Disabled = Props.Disabled,
 				Selectable = false,
 			},
