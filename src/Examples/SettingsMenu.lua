@@ -10,7 +10,7 @@ local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local Button = require(OnyxUI.Components.Button)
 local TitleBar = require(OnyxUI.Components.TitleBar)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
-local SettingToggle = require(OnyxUI.Components.SettingToggle)
+local SettingToggle = require(OnyxUI.Examples.SettingToggle)
 local TextInput = require(OnyxUI.Components.TextInput)
 
 return function(Props)
@@ -41,14 +41,14 @@ return function(Props)
 				[Children] = {
 					SettingToggle {
 						Label = "Music",
-						SwitchedOn = true,
+						Switched = true,
 					},
 					SettingToggle {
 						Label = "Low quality",
 					},
 					SettingToggle {
 						Label = "Copyrighted audio",
-						SwitchedOn = true,
+						Switched = true,
 					},
 					SettingToggle {
 						Label = "Infinite Bobux",

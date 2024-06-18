@@ -11,6 +11,8 @@ export type Props = SwitchInput.Props & {}
 return function(Props: Props)
 	local Switched = EnsureValue(Props.Switched, "boolean", false)
 
+	Props.Switched = Switched
+
 	return BaseButton(CombineProps(Props, {
 		Name = "SwitchGroup",
 		ClickSound = Themer.Theme.Sound.Switch,
