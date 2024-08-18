@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/imavafe/OnyxUI/actions"><img src="https://img.shields.io/github/actions/workflow/status/imavafe/OnyxUI/ci.yaml?branch=main" alt="Build Status"></a>
+  <a href="https://github.com/imavafe/OnyxUI/actions"><img src="https://img.shields.io/github/actions/workflow/status/imavafe/OnyxUI/ci.yaml?branch=main" alt="Build Status"></img></a>
   <img title="MIT licensed" alt="License" src="https://img.shields.io/github/license/ImAvafe/OnyxUI"></img>
 </p>
 
@@ -62,4 +62,4 @@ It should follow Roblox Fusion's way of doing things, while innovating upon area
 
 ##
 
-[![By Avafe](/gh-assets/watermark.svg)](https://avafe.me)
+<!-- [![By Avafe](/gh-assets/watermark.svg)](https://avafe.me) -->
