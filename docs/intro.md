@@ -25,7 +25,7 @@ OnyxUI is structured as a collection of modules, separated by folders. This is u
 local OnyxUI = require(path.to.OnyxUI)
 
 -- Utils
-local Themer = require(OnyxUI.Utils.Themer)
+local Themer = require(OnyxUI.Themer)
 local Colors = require(OnyxUI.Utils.Color)
 
 -- Components

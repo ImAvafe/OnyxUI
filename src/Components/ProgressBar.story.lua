@@ -3,7 +3,7 @@ local OnyxUI = script.Parent.Parent
 local Colors = require(ReplicatedStorage.OnyxUI.Packages.OnyxUI.Utils.Colors)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
-local Themer = require(OnyxUI.Utils.Themer)
+local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
 local Value = Fusion.Value

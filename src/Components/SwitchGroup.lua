@@ -1,6 +1,6 @@
 local OnyxUI = script.Parent.Parent
 local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Themer = require(OnyxUI.Utils.Themer)
+local Themer = require(OnyxUI.Themer)
 local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local BaseButton = require(script.Parent.BaseButton)
