@@ -63,16 +63,20 @@ local SPRING_SPEED_MULTIPLIERS = {
 	2,
 }
 
+--[=[
+	@class Themer
+	
+	Themer allows you to customize components throughout OnyxUI, with support for things like colors, corner radiuses, paddings, etc. You'll also probably want to incorporate it within your own UI for a more consistent design.
+]=]
+--[=[
+	@prop Theme { [any]: any }
+	@within Themer
+
+	The currently active theme. Use this to reference theme properties.
+]=]
 local Themer = {
 	Theme = table.clone(ThemeTemplate),
-	Themes = {},
 }
-
-function Themer:_LoadDefaultThemes()
-	for _, ThemeModule in ipairs(script:GetChildren()) do
-		self.Themes[ThemeModule.Name] = require(ThemeModule)
-	end
-end
 
 function Themer:_ProcessColors(Theme: { [any]: any })
 	if Theme.Colors then
@@ -149,12 +153,14 @@ function Themer:_ProcessSpringSpeed(Theme: { [any]: any })
 	end
 end
 
-function Themer:Add(ThemeName: string, Theme: { [any]: any })
-	self.Themes[ThemeName] = {}
-	ReconcileValues(self.Themes[ThemeName], ThemeTemplate)
-	ReconcileValues(self.Themes[ThemeName], Theme)
-end
+--[=[
+	@function Set
+	@within Themer
 
+	@param Theme { [any]: any }
+
+	Sets the current theme to the given Theme parameter.
+]=]
 function Themer:Set(Theme: { [any]: any })
 	ReconcileValues(self.Theme, ThemeTemplate)
 
@@ -167,7 +173,6 @@ function Themer:Set(Theme: { [any]: any })
 	ReconcileValues(self.Theme, Theme)
 end
 
-Themer:_LoadDefaultThemes()
 Themer:Set(OnyxNightTheme)
 
 return Themer

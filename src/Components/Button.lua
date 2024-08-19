@@ -1,3 +1,9 @@
+--[=[
+		@class Button
+		
+		A robust button component.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
@@ -29,6 +35,15 @@ export type Props = BaseButton.Props & {
 	IsHolding: PubTypes.CanBeState<boolean>?,
 }
 
+--[=[
+		@within Button
+		@interface ButtonProps
+
+		@field ... BaseProps
+		@field ... ButtonProps
+		
+		This is my first class.
+]=]
 return function(Props: Props)
 	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
 	local Contents = EnsureValue(Props.Contents, "table", {})

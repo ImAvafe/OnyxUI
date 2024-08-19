@@ -36,7 +36,7 @@ return function(Props)
 
 ## CombineProps
 
-Let's say you have a "CustomButton" component, and you want it to support `Size`, `Position`, and other arbitrary properties. Manually implementing all that boilerplate in the component itself is tedious. So let's take advantage of `CombineProps` to do the passthrough for us:
+Let's say you have a "CustomButton" component, and you want it to support `Size`, `Position`, and other arbitrary properties. Manually implementing all that boilerplate in the component itself is tedious. So let's have `CombineProps` do the passthrough for us:
 
 ```lua
 return function(Props)
@@ -46,8 +46,9 @@ return function(Props)
       return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
     end),
 
-    -- All properties from OnyxUI's `Base` component will now work.
+    -- All properties from OnyxUI's `BaseButton` component will now work.
   }))
+end
 ```
 
 ## Colors

@@ -1,3 +1,11 @@
+--[=[
+		@prop Colors { [string]: any }
+		@within Utils
+		@readonly
+		
+		Color shorthands imported from [TailwindCSS's color palette](https://tailwindcss.com/docs/customizing-colors#default-color-palette). So you don't have to worry about color picking anymore.
+]=]
+
 return {
 	Black = Color3.fromHex("#000"),
 	White = Color3.fromHex("#fff"),

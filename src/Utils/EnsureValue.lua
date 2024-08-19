@@ -4,6 +4,16 @@ local PubTypes = require(OnyxUI.Utils.PubTypes)
 
 local Value = Fusion.Value
 
+--[=[
+	@function EnsureValue
+	@within Utils
+
+	@param PreferredValue any
+	@param ValueType string
+	@param FallbackValue any
+	
+	Converts the given value to a Fusion `Value`, if it is not one already. Also supports an optional fallback value.
+]=]
 return function(PreferredValue: any, ValueType: string, FallbackValue: any): PubTypes.CanBeState<any>
 	if PreferredValue == nil then
 		if typeof(FallbackValue) == "table" and FallbackValue.get then

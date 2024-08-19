@@ -1,3 +1,13 @@
+--[=[
+		@class Base
+
+		The foundational component of OnyxUI, from which all other components are built off of. Props supported here typically work in all other components.
+
+		:::info
+		View the source code to see supported props.
+		:::
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local PubTypes = require(OnyxUI.Utils.PubTypes)
@@ -128,6 +138,12 @@ export type Props = {
 	MinTextSize: PubTypes.CanBeState<number>?,
 }
 
+--[=[
+	@within Base
+	@interface BaseProps
+
+	@field ... BaseProps
+]=]
 return function(Props: Props): GuiObject
 	local Name = EnsureValue(Props.Name, "string", "Base")
 	local CornerRadius = EnsureValue(

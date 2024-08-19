@@ -1,3 +1,5 @@
+autoSectionPath = "src"
+
 [docusaurus]
 title = "OnyxUI"
 tagline = "Quick, quality UI components for Fusion"
