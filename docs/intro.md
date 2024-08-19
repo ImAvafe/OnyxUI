@@ -19,7 +19,7 @@ sidebar_position: 1
 
 ## Project structure
 
-OnyxUI is structured as a collection of modules, separated by folders. This is unconventional, but necessary for exposing types so you can properly build off of OnyxUI. Here's a basic usage sample below:
+OnyxUI is structured as a collection of modules. This is unconventional, but necessary for exposing types so you can properly build off of OnyxUI. Here's a basic usage sample below:
 
 ```lua
 local OnyxUI = require(path.to.OnyxUI)

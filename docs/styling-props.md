@@ -10,4 +10,4 @@ For a full list of supported styling props, see the [`Base`](/api/Base) componen
 
 ## Use in custom components
 
-To support styling props in your own components, make use of the [`CombineProps`](/api/CombineProps) utility to pass props through automatically.
+To support styling props in your own components, make use of the [`CombineProps`](/api/Util#CombineProps) utility to pass props through automatically.
