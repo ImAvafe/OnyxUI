@@ -1,7 +1,7 @@
 --[=[
 		@class Utils
 		
-		Important utilities
+		Important utilities for UI development.
 ]=]
 
 local Colors = require(script.Colors)

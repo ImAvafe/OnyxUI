@@ -1,4 +1,9 @@
-autoSectionPath = "src"
+[[classOrder]]
+classes = ["Utils"]
+
+[[classOrder]]
+section = "Components"
+classes = ["Base", "Button"]
 
 [docusaurus]
 title = "OnyxUI"
