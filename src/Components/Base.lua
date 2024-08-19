@@ -10,10 +10,9 @@
 
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local EnsureValue = require(script.Parent.Parent.Utils.EnsureValue)
-local Themer = require(script.Parent.Parent.Utils.Themer)
-local GetValue = require(OnyxUI.Utils.GetValue)
+local PubTypes = require(OnyxUI.Util.PubTypes)
+local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
 
 local New = Fusion.New
 local Computed = Fusion.Computed
@@ -145,66 +144,66 @@ export type Props = {
 	@field ... BaseProps
 ]=]
 return function(Props: Props): GuiObject
-	local Name = EnsureValue(Props.Name, "string", "Base")
-	local CornerRadius = EnsureValue(
+	local Name = Util.EnsureValue(Props.Name, "string", "Base")
+	local CornerRadius = Util.EnsureValue(
 		Props.CornerRadius,
 		"UDim",
 		Computed(function()
 			return UDim.new(0, 0)
 		end)
 	)
-	local StrokeThickness = EnsureValue(Props.StrokeThickness, "number", Themer.Theme.StrokeThickness["1"])
-	local StrokeColor = EnsureValue(Props.StrokeColor, "Color3", Themer.Theme.Colors.Neutral.Main)
-	local StrokeApplyStrokeMode = EnsureValue(Props.StrokeApplyStrokeMode, "EnumItem", Enum.ApplyStrokeMode.Border)
-	local Padding = EnsureValue(
+	local StrokeThickness = Util.EnsureValue(Props.StrokeThickness, "number", Themer.Theme.StrokeThickness["1"])
+	local StrokeColor = Util.EnsureValue(Props.StrokeColor, "Color3", Themer.Theme.Colors.Neutral.Main)
+	local StrokeApplyStrokeMode = Util.EnsureValue(Props.StrokeApplyStrokeMode, "EnumItem", Enum.ApplyStrokeMode.Border)
+	local Padding = Util.EnsureValue(
 		Props.Padding,
 		"UDim",
 		Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
 		end)
 	)
-	local PaddingBottom = EnsureValue(Props.PaddingBottom, "UDim", Props.Padding)
-	local PaddingLeft = EnsureValue(Props.PaddingLeft, "UDim", Props.Padding)
-	local PaddingRight = EnsureValue(Props.PaddingRight, "UDim", Props.Padding)
-	local PaddingTop = EnsureValue(Props.PaddingTop, "UDim", Props.Padding)
-	local ListPadding = EnsureValue(
+	local PaddingBottom = Util.EnsureValue(Props.PaddingBottom, "UDim", Props.Padding)
+	local PaddingLeft = Util.EnsureValue(Props.PaddingLeft, "UDim", Props.Padding)
+	local PaddingRight = Util.EnsureValue(Props.PaddingRight, "UDim", Props.Padding)
+	local PaddingTop = Util.EnsureValue(Props.PaddingTop, "UDim", Props.Padding)
+	local ListPadding = Util.EnsureValue(
 		Props.ListPadding,
 		"UDim",
 		Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
 		end)
 	)
-	local ListSortOrder = EnsureValue(Props.ListSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
-	local GridCellPadding = EnsureValue(
+	local ListSortOrder = Util.EnsureValue(Props.ListSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
+	local GridCellPadding = Util.EnsureValue(
 		Props.GridCellPadding,
 		"UDim2",
 		Computed(function()
 			return UDim2.fromOffset(Themer.Theme.Spacing["0.5"]:get(), Themer.Theme.Spacing["0.5"]:get())
 		end)
 	)
-	local GridSortOrder = EnsureValue(Props.GridSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
-	local PagePadding = EnsureValue(
+	local GridSortOrder = Util.EnsureValue(Props.GridSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
+	local PagePadding = Util.EnsureValue(
 		Props.PagePadding,
 		"UDim",
 		Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end)
 	)
-	local PageSortOrder = EnsureValue(Props.PageSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
-	local TablePadding = EnsureValue(
+	local PageSortOrder = Util.EnsureValue(Props.PageSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
+	local TablePadding = Util.EnsureValue(
 		Props.TablePadding,
 		"UDim",
 		Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end)
 	)
-	local TableSortOrder = EnsureValue(Props.TableSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
+	local TableSortOrder = Util.EnsureValue(Props.TableSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
 
 	local PaddingInEffect = Computed(function()
 		local Paddings = { Props.Padding, Props.PaddingTop, Props.PaddingLeft, Props.PaddingRight, Props.PaddingBottom }
 
 		for _, PaddingProp in pairs(Paddings) do
-			local PaddingValue = GetValue(PaddingProp)
+			local PaddingValue = Util.GetValue(PaddingProp)
 			if typeof(PaddingValue) == "UDim" then
 				return true
 			end
@@ -282,7 +281,7 @@ return function(Props: Props): GuiObject
 							if typeof(PaddingLeftValue) == "UDim" then
 								return PaddingLeftValue
 							elseif typeof(PaddingValue) == "UDim" then
-								return GetValue(PaddingValue)
+								return Util.GetValue(PaddingValue)
 							else
 								return UDim.new()
 							end
@@ -293,7 +292,7 @@ return function(Props: Props): GuiObject
 							if typeof(PaddingRightValue) == "UDim" then
 								return PaddingRightValue
 							elseif typeof(PaddingValue) == "UDim" then
-								return GetValue(PaddingValue)
+								return Util.GetValue(PaddingValue)
 							else
 								return UDim.new()
 							end
@@ -304,7 +303,7 @@ return function(Props: Props): GuiObject
 							if typeof(PaddingBottomValue) == "UDim" then
 								return PaddingBottomValue
 							elseif typeof(PaddingValue) == "UDim" then
-								return GetValue(PaddingValue)
+								return Util.GetValue(PaddingValue)
 							else
 								return UDim.new()
 							end
@@ -315,7 +314,7 @@ return function(Props: Props): GuiObject
 				end
 			end, Fusion.cleanup),
 			Computed(function()
-				local ScaleValue = GetValue(Props.Scale)
+				local ScaleValue = Util.GetValue(Props.Scale)
 				if (typeof(ScaleValue) == "number") and (ScaleValue ~= 1) then
 					return New "UIScale" {
 						Scale = Props.Scale,
@@ -325,7 +324,7 @@ return function(Props: Props): GuiObject
 				end
 			end, Fusion.cleanup),
 			Computed(function()
-				if GetValue(Props.StrokeEnabled) == true then
+				if Util.GetValue(Props.StrokeEnabled) == true then
 					return New "UIStroke" {
 						Enabled = Props.StrokeEnabled,
 						Thickness = StrokeThickness,
@@ -339,7 +338,7 @@ return function(Props: Props): GuiObject
 				end
 			end, Fusion.cleanup),
 			Computed(function()
-				if GetValue(Props.GradientEnabled) == true then
+				if Util.GetValue(Props.GradientEnabled) == true then
 					return New "UIGradient" {
 						Enabled = Props.GradientEnabled,
 						Color = Props.GradientColor,
@@ -352,7 +351,7 @@ return function(Props: Props): GuiObject
 				end
 			end, Fusion.cleanup),
 			Computed(function()
-				local AspectRatioValue = GetValue(Props.AspectRatio)
+				local AspectRatioValue = Util.GetValue(Props.AspectRatio)
 				if typeof(AspectRatioValue) == "number" then
 					return New "UIAspectRatioConstraint" {
 						AspectRatio = Props.AspectRatio,
@@ -375,8 +374,8 @@ return function(Props: Props): GuiObject
 			end, Fusion.cleanup),
 			Computed(function()
 				if
-					(typeof(GetValue(Props.MaxTextSize)) == "number")
-					or (typeof(GetValue(Props.MinTextSize)) == "number")
+					(typeof(Util.GetValue(Props.MaxTextSize)) == "number")
+					or (typeof(Util.GetValue(Props.MinTextSize)) == "number")
 				then
 					return New "UITextSizeConstraint" {
 						MaxTextSize = Props.MaxTextSize,
@@ -387,7 +386,7 @@ return function(Props: Props): GuiObject
 				end
 			end, Fusion.cleanup),
 			Computed(function()
-				if GetValue(Props.ListEnabled) == true then
+				if Util.GetValue(Props.ListEnabled) == true then
 					return New "UIListLayout" {
 						Padding = ListPadding,
 						FillDirection = Props.ListFillDirection,
@@ -404,7 +403,7 @@ return function(Props: Props): GuiObject
 				end
 			end, Fusion.cleanup),
 			Computed(function()
-				if GetValue(Props.GridEnabled) then
+				if Util.GetValue(Props.GridEnabled) then
 					return New "UIGridLayout" {
 						CellPadding = GridCellPadding,
 						CellSize = Props.GridCellSize,
@@ -420,7 +419,7 @@ return function(Props: Props): GuiObject
 				end
 			end, Fusion.cleanup),
 			Computed(function()
-				if GetValue(Props.TableEnabled) then
+				if Util.GetValue(Props.TableEnabled) then
 					return New "UITableLayout" {
 						Padding = TablePadding,
 						FillEmptySpaceColumns = Props.TableFillEmptySpaceColumns,
@@ -436,7 +435,7 @@ return function(Props: Props): GuiObject
 				end
 			end, Fusion.cleanup),
 			Computed(function()
-				if GetValue(Props.PageEnabled) then
+				if Util.GetValue(Props.PageEnabled) then
 					return New "UIPageLayout" {
 						Animated = Props.PageAnimated,
 						Circular = Props.PageCircular,
@@ -457,7 +456,7 @@ return function(Props: Props): GuiObject
 				end
 			end, Fusion.cleanup),
 			Computed(function()
-				local FlexMode = GetValue(Props.FlexMode)
+				local FlexMode = Util.GetValue(Props.FlexMode)
 				if (FlexMode ~= nil) and (FlexMode ~= Enum.UIFlexMode.None) then
 					return New "UIFlexItem" {
 						FlexMode = Props.FlexMode,

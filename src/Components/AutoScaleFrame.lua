@@ -1,9 +1,8 @@
 local Workspace = game:GetService("Workspace")
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local Util = require(OnyxUI.Util)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Value = Fusion.Value
 local Computed = Fusion.Computed
@@ -21,17 +20,17 @@ export type Props = Base.Props & {
 }
 
 return function(Props: Props)
-	local BaseResolution = EnsureValue(Props.BaseResolution, "Vector2", Vector2.new())
-	local MinScale = EnsureValue(Props.MinScale, "number", 0.8)
-	local MaxScale = EnsureValue(Props.MaxScale, "number", math.huge)
-	local ScaleMultiplier = EnsureValue(Props.ScaleMultiplier, "number", 1)
+	local BaseResolution = Util.EnsureValue(Props.BaseResolution, "Vector2", Vector2.new())
+	local MinScale = Util.EnsureValue(Props.MinScale, "number", 0.8)
+	local MaxScale = Util.EnsureValue(Props.MaxScale, "number", math.huge)
+	local ScaleMultiplier = Util.EnsureValue(Props.ScaleMultiplier, "number", 1)
 
 	local ViewportSize = Value(Vector2.new())
 	Hydrate(Workspace.CurrentCamera) {
 		[Out "ViewportSize"] = ViewportSize,
 	}
 
-	return Frame(CombineProps(Props, {
+	return Frame(Util.CombineProps(Props, {
 		Name = "AutoScaleFrame",
 		Scale = Computed(function()
 			local Ratio = ScaleMultiplier:get()

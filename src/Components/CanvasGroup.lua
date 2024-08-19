@@ -1,6 +1,6 @@
 local OnyxUI = script.Parent.Parent
-local CombineProps = require(OnyxUI.Utils.CombineProps)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
+local Util = require(OnyxUI.Util)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 local Fusion = require(OnyxUI.Parent.Fusion)
 
 local Hydrate = Fusion.Hydrate
@@ -13,7 +13,7 @@ export type Props = Base.Props & {
 }
 
 return function(Props: Props)
-	return Hydrate(Base(CombineProps(Props, {
+	return Hydrate(Base(Util.CombineProps(Props, {
 		ClassName = "CanvasGroup",
 		Name = "CanvasGroup",
 		BackgroundTransparency = 1,

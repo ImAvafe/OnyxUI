@@ -1,9 +1,9 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
+
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Computed = Fusion.Computed
 
@@ -20,12 +20,12 @@ export type Props = Button.Props & {
 }
 
 return function(Props: Props)
-	local Image = EnsureValue(Props.Image, "string", "")
+	local Image = Util.EnsureValue(Props.Image, "string", "")
 	local Padding = Computed(function()
 		return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
 	end)
 
-	return Button(CombineProps(Props, {
+	return Button(Util.CombineProps(Props, {
 		Name = "IconButton",
 		PaddingLeft = Padding,
 		PaddingRight = Padding,

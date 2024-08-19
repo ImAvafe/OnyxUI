@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Themer)
-local Colors = require(OnyxUI.Utils.Colors)
+local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -28,16 +28,16 @@ return {
 				},
 				IconButton {
 					Image = "rbxassetid://11560341132",
-					Color = Colors.Amber["500"],
+					Color = Util.Colors.Amber["500"],
 				},
 				IconButton {
 					Image = "rbxassetid://13405228418",
-					Color = Colors.Red["500"],
+					Color = Util.Colors.Red["500"],
 					Style = "Outlined",
 				},
 				IconButton {
 					Image = "rbxassetid://13405228418",
-					Color = Colors.Red["500"],
+					Color = Util.Colors.Red["500"],
 					Style = "Ghost",
 				},
 				IconButton {

@@ -1,10 +1,9 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local ColorUtils = require(OnyxUI.Parent.ColorUtils)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local ColorUtil = require(OnyxUI.Parent.ColorUtil)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -24,10 +23,10 @@ local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
 return function(Props: Props)
-	local Checked = EnsureValue(Props.Checked, "boolean", false)
-	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local IconId = EnsureValue(Props.Icon, "string", "rbxassetid://13858821963")
+	local Checked = Util.EnsureValue(Props.Checked, "boolean", false)
+	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local IconId = Util.EnsureValue(Props.Icon, "string", "rbxassetid://13858821963")
 
 	local IsHovering = Value(false)
 	local IsHolding = Value(false)
@@ -36,16 +35,16 @@ return function(Props: Props)
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
 			if IsHolding:get() then
-				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Regular:get())
+				return ColorUtil.Emphasize(Color:get(), Themer.Theme.Emphasis.Regular:get())
 			elseif IsHovering:get() then
-				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Light:get())
+				return ColorUtil.Emphasize(Color:get(), Themer.Theme.Emphasis.Light:get())
 			else
 				return Color:get()
 			end
 		end
 	end)
 
-	return BaseButton(CombineProps(Props, {
+	return BaseButton(Util.CombineProps(Props, {
 		Name = "Checkbox",
 		BackgroundColor3 = EffectiveColor,
 		BackgroundTransparency = Spring(
@@ -104,7 +103,7 @@ return function(Props: Props)
 					Themer.Theme.SpringDampening
 				),
 				ImageColor3 = Computed(function()
-					return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
+					return ColorUtil.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
 				end),
 				Rotation = Spring(
 					Computed(function()

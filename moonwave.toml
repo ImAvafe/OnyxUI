@@ -1,5 +1,5 @@
 [[classOrder]]
-classes = ["Utils"]
+classes = ["Util"]
 
 [[classOrder]]
 section = "Components"
@@ -32,6 +32,6 @@ style = "dark"
 copyright = "Copyright © 2024 Avafe. Built with Moonwave and Docusaurus"
 
 # [[classOrder]]
-# section = "Utils"
+# section = "Util"
 # collapsed = true
 # classes = ["Colors", "EnsureValue"]

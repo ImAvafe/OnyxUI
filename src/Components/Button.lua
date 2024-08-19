@@ -6,11 +6,10 @@
 
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local ColorUtils = require(OnyxUI.Parent.ColorUtils)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local ColorUtil = require(OnyxUI.Parent.ColorUtil)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local ForValues = Fusion.ForValues
@@ -45,18 +44,18 @@ export type Props = BaseButton.Props & {
 		This is my first class.
 ]=]
 return function(Props: Props)
-	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
-	local Contents = EnsureValue(Props.Contents, "table", {})
-	local Style = EnsureValue(Props.Style, "string", "Filled")
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local ContentColor = EnsureValue(
+	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
+	local Contents = Util.EnsureValue(Props.Contents, "table", {})
+	local Style = Util.EnsureValue(Props.Style, "string", "Filled")
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local ContentColor = Util.EnsureValue(
 		Props.ContentColor,
 		"Color3",
 		Computed(function()
-			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
+			return ColorUtil.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
 		end)
 	)
-	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
+	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
 
 	local IsHolding = Value(false)
 	local IsHovering = Value(false)
@@ -65,9 +64,9 @@ return function(Props: Props)
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		else
 			if IsHolding:get() then
-				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Regular:get())
+				return ColorUtil.Emphasize(Color:get(), Themer.Theme.Emphasis.Regular:get())
 			elseif IsHovering:get() then
-				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Light:get())
+				return ColorUtil.Emphasize(Color:get(), Themer.Theme.Emphasis.Light:get())
 			else
 				return Color:get()
 			end
@@ -96,7 +95,7 @@ return function(Props: Props)
 		end
 	end)
 
-	return BaseButton(CombineProps(Props, {
+	return BaseButton(Util.CombineProps(Props, {
 		Name = "Button",
 		BackgroundTransparency = Computed(function()
 			if Style:get() == "Filled" then

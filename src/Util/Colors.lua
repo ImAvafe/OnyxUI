@@ -1,6 +1,6 @@
 --[=[
 		@prop Colors { [string]: any }
-		@within Utils
+		@within Util
 		@readonly
 		
 		Color shorthands imported from [TailwindCSS's color palette](https://tailwindcss.com/docs/customizing-colors#default-color-palette). So you don't have to worry about color picking anymore.

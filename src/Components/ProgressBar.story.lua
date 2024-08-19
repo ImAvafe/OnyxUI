@@ -1,9 +1,8 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local OnyxUI = script.Parent.Parent
-local Colors = require(ReplicatedStorage.OnyxUI.Packages.OnyxUI.Utils.Colors)
 local Fusion = require(OnyxUI.Parent.Fusion)
-local ColorUtils = require(OnyxUI.Parent.ColorUtils)
+local ColorUtil = require(OnyxUI.Parent.ColorUtil)
 local Themer = require(OnyxUI.Themer)
+local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
 local Value = Fusion.Value
@@ -45,7 +44,7 @@ return {
 						},
 						ProgressBar {
 							Progress = Progress,
-							Color = Colors.Emerald["500"],
+							Color = Util.Colors.Emerald["500"],
 							Size = Computed(function()
 								return UDim2.fromOffset(150, Themer.Theme.TextSize["0.75"]:get())
 							end),
@@ -72,7 +71,7 @@ return {
 		task.spawn(function()
 			while task.wait(1) do
 				Progress:set(math.random(0, 1000) / 1000)
-				Color:set(ColorUtils.Rotate(Color:get(), 100))
+				Color:set(ColorUtil.Rotate(Color:get(), 100))
 			end
 		end)
 

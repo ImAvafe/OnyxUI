@@ -1,7 +1,6 @@
 local OnyxUI = script.Parent.Parent
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
 
 local BaseButton = require(script.Parent.BaseButton)
 local SwitchInput = require(script.Parent.SwitchInput)
@@ -9,11 +8,11 @@ local SwitchInput = require(script.Parent.SwitchInput)
 export type Props = SwitchInput.Props & {}
 
 return function(Props: Props)
-	local Switched = EnsureValue(Props.Switched, "boolean", false)
+	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)
 
 	Props.Switched = Switched
 
-	return BaseButton(CombineProps(Props, {
+	return BaseButton(Util.CombineProps(Props, {
 		Name = "SwitchGroup",
 		ClickSound = Themer.Theme.Sound.Switch,
 		Disabled = Props.Disabled,

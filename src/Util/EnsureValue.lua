@@ -1,12 +1,12 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Value = Fusion.Value
 
 --[=[
 	@function EnsureValue
-	@within Utils
+	@within Util
 
 	@param PreferredValue any
 	@param ValueType string

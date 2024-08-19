@@ -1,8 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(script.Parent.Parent.Utils.CombineProps)
+local Util = require(OnyxUI.Util)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Computed = Fusion.Computed
 local Hydrate = Fusion.Hydrate
@@ -23,8 +22,9 @@ export type Props = Base.Props & {
 }
 
 return function(Props: Props)
-	local FallbackImage = EnsureValue(Props.FallbackImage, "string", "rbxasset://textures/ui/GuiImagePlaceholder.png")
-	local Image = EnsureValue(Props.Image, "string", nil)
+	local FallbackImage =
+		Util.EnsureValue(Props.FallbackImage, "string", "rbxasset://textures/ui/GuiImagePlaceholder.png")
+	local Image = Util.EnsureValue(Props.Image, "string", nil)
 
 	local ImageInUse = Computed(function()
 		if Image:get() then
@@ -34,7 +34,7 @@ return function(Props: Props)
 		end
 	end)
 
-	return Hydrate(Base(CombineProps(Props, {
+	return Hydrate(Base(Util.CombineProps(Props, {
 		ClassName = "ImageLabel",
 		Name = "Image",
 		Size = UDim2.fromOffset(100, 100),

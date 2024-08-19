@@ -2,26 +2,26 @@
 sidebar_position: 4
 ---
 
-# Utils
+# Util
 
 Important utilities for UI development. These are also used by OnyxUI itself!
 
-## EnsureValue
+## [EnsureValue](/api/Util#EnsureValue)
 
 Want to ensure your component props are Fusion `Value`s? This makes it a one-line operation.
 
 ```lua
 return function(Props)
-  local MyProp = EnsureValue(Props.MyProp, "string", "Default")
+  local MyProp = Util.EnsureValue(Props.MyProp, "string", "Default")
 ```
 
-## CombineProps
+## [CombineProps](/api/Util#CombineProps)
 
 Let's say you have a "CustomButton" component, and you want it to support `Size`, `Position`, and other arbitrary properties. Manually implementing all that boilerplate in the component itself is tedious. So let's have `CombineProps` do the passthrough for us:
 
 ```lua
 return function(Props)
-  return BaseButton(CombineProps(Props, {
+  return BaseButton(Util.CombineProps(Props, {
     BackgroundTransparency = 0,
     CornerRadius = Computed(function()
       return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
@@ -32,6 +32,6 @@ return function(Props)
 end
 ```
 
-## Colors
+## [Colors](/api/Util#Colors)
 
 Color shorthands imported from [TailwindCSS's color palette](https://tailwindcss.com/docs/customizing-colors#default-color-palette). So you don't have to worry about color picking anymore.

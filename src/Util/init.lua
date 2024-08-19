@@ -1,5 +1,5 @@
 --[=[
-		@class Utils
+		@class Util
 		
 		Important utilities for UI development.
 ]=]

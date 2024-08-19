@@ -1,11 +1,11 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
-local ColorUtils = require(OnyxUI.Parent.ColorUtils)
+local PubTypes = require(OnyxUI.Util.PubTypes)
+
+local ColorUtil = require(OnyxUI.Parent.ColorUtil)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -22,17 +22,17 @@ export type Props = Frame.Props & {
 }
 
 return function(Props: Props)
-	local Switched = EnsureValue(Props.Switched, "boolean", false)
-	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local Size = EnsureValue(
+	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)
+	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local Size = Util.EnsureValue(
 		Props.Size,
 		"UDim2",
 		Computed(function()
 			return UDim2.fromOffset(Themer.Theme.TextSize["1"]:get() * 2, Themer.Theme.TextSize["1"]:get())
 		end)
 	)
-	local AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)
+	local AutomaticSize = Util.EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)
 
 	local IsHolding = Value(false)
 	local IsHovering = Value(false)
@@ -46,9 +46,9 @@ return function(Props: Props)
 
 		if not Disabled:get() then
 			if IsHolding:get() then
-				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
+				return ColorUtil.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
 			elseif IsHovering:get() then
-				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
+				return ColorUtil.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
 			end
 		end
 
@@ -65,13 +65,13 @@ return function(Props: Props)
 		if not Disabled:get() then
 			if IsHolding:get() then
 				if not Switched:get() then
-					return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
+					return ColorUtil.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
 				else
 					return ActiveColor
 				end
 			elseif IsHovering:get() then
 				if not Switched:get() then
-					return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
+					return ColorUtil.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
 				else
 					return ActiveColor
 				end
@@ -80,7 +80,7 @@ return function(Props: Props)
 
 		return ActiveColor
 	end)
-	local EffectiveCornerRadius = EnsureValue(
+	local EffectiveCornerRadius = Util.EnsureValue(
 		Props.CornerRadius,
 		"UDim",
 		Computed(function()
@@ -88,7 +88,7 @@ return function(Props: Props)
 		end)
 	)
 
-	return BaseButton(CombineProps(Props, {
+	return BaseButton(Util.CombineProps(Props, {
 		Name = "SwitchInput",
 		Size = Size,
 		AutomaticSize = AutomaticSize,

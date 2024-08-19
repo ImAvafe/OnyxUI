@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Themer)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -14,7 +14,7 @@ local SettingToggle = require(OnyxUI.Examples.SettingToggle)
 local TextInput = require(OnyxUI.Components.TextInput)
 
 return function(Props)
-	return MenuFrame(CombineProps(Props, {
+	return MenuFrame(Util.CombineProps(Props, {
 		Parent = Props.Parent,
 		Size = UDim2.fromOffset(330, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,

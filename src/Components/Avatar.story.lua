@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Themer)
-local Colors = require(OnyxUI.Utils.Colors)
+local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
 local Value = Fusion.Value
@@ -10,7 +10,8 @@ local Computed = Fusion.Computed
 local Frame = require(script.Parent.Frame)
 local Avatar = require(script.Parent.Avatar)
 
-local INDICATOR_COLORS = { Colors.Red["500"], Colors.Green["400"], Colors.Orange["500"], Colors.Stone["600"] }
+local INDICATOR_COLORS =
+	{ Util.Colors.Red["500"], Util.Colors.Green["400"], Util.Colors.Orange["500"], Util.Colors.Stone["600"] }
 
 return {
 	story = function(Parent: GuiObject, _Props: { [any]: any })
@@ -72,7 +73,7 @@ return {
 						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
 					end),
 					RingEnabled = true,
-					RingColor = Colors.Green["400"],
+					RingColor = Util.Colors.Green["400"],
 					RingThickness = RingThickness,
 				},
 				Avatar {
@@ -81,7 +82,7 @@ return {
 						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
 					end),
 					IndicatorEnabled = true,
-					IndicatorColor = Colors.Sky["500"],
+					IndicatorColor = Util.Colors.Sky["500"],
 					IndicatorIcon = "rbxassetid://13805569043",
 				},
 				Avatar {

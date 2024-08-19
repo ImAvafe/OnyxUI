@@ -1,9 +1,8 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -19,12 +18,12 @@ export type Props = Frame.Props & {
 }
 
 return function(Props: Props)
-	local Progress = EnsureValue(Props.Progress, "number", 0)
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local Direction = EnsureValue(Props.Direction, "EnumItem", Enum.FillDirection.Horizontal)
-	local Inverted = EnsureValue(Props.Inverted, "boolean", false)
+	local Progress = Util.EnsureValue(Props.Progress, "number", 0)
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local Direction = Util.EnsureValue(Props.Direction, "EnumItem", Enum.FillDirection.Horizontal)
+	local Inverted = Util.EnsureValue(Props.Inverted, "boolean", false)
 
-	local EffectiveCornerRadius = EnsureValue(
+	local EffectiveCornerRadius = Util.EnsureValue(
 		Props.CornerRadius,
 		"UDim",
 		Computed(function()
@@ -32,7 +31,7 @@ return function(Props: Props)
 		end)
 	)
 
-	return Frame(CombineProps(Props, {
+	return Frame(Util.CombineProps(Props, {
 		Name = "ProgressBar",
 		Size = Computed(function()
 			if Direction:get() == Enum.FillDirection.Horizontal then

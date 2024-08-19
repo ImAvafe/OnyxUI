@@ -1,9 +1,9 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
+
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -19,11 +19,11 @@ type Props = Frame.Props & {
 }
 
 return function(Props: Props)
-	local Length = EnsureValue(Props.Length, "UDim", UDim.new(1, 0))
-	local FillDirection = EnsureValue(Props.FillDirection, "EnumItem", Enum.FillDirection.Horizontal)
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	local Transparency = EnsureValue(Props.Transparency, "number", 0.9)
-	local Spacing = EnsureValue(
+	local Length = Util.EnsureValue(Props.Length, "UDim", UDim.new(1, 0))
+	local FillDirection = Util.EnsureValue(Props.FillDirection, "EnumItem", Enum.FillDirection.Horizontal)
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.BaseContent.Main)
+	local Transparency = Util.EnsureValue(Props.Transparency, "number", 0.9)
+	local Spacing = Util.EnsureValue(
 		Props.Spacing,
 		"number",
 		Computed(function()
@@ -46,7 +46,7 @@ return function(Props: Props)
 		end
 	end)
 
-	return Frame(CombineProps(Props, {
+	return Frame(Util.CombineProps(Props, {
 		Name = "Divider",
 		Size = Computed(function()
 			if FillDirection:get() == Enum.FillDirection.Horizontal then

@@ -1,8 +1,8 @@
-local OnyxUI = script.Parent.Parent
-local ReconcileValues = require(script.Parent.Parent.Utils.ReconcileValues)
+local OnyxUI = script.Parent
+local Util = require(script.Parent.Util)
 local OnyxNightTheme = require(script.OnyxNight)
 local ThemeTemplate = require(script.ThemeTemplate)
-local ColorUtils = require(OnyxUI.Parent.ColorUtils)
+local ColorUtil = require(OnyxUI.Parent.ColorUtil)
 
 local SPACING_MULTIPLIERS = {
 	0.25,
@@ -85,13 +85,13 @@ function Themer:_ProcessColors(Theme: { [any]: any })
 			if Color then
 				if Color.Main then
 					if Color.Contrast == nil then
-						Color.Contrast = ColorUtils.Emphasize(Color.Main, 1)
+						Color.Contrast = ColorUtil.Emphasize(Color.Main, 1)
 					end
 					if Color.Dark == nil then
-						Color.Dark = ColorUtils.Darken(Color.Main, 0.05)
+						Color.Dark = ColorUtil.Darken(Color.Main, 0.05)
 					end
 					if Color.Light == nil then
-						Color.Light = ColorUtils.Lighten(Color.Main, 0.05)
+						Color.Light = ColorUtil.Lighten(Color.Main, 0.05)
 					end
 				end
 			end
@@ -162,7 +162,7 @@ end
 	Sets the current theme to the given Theme parameter.
 ]=]
 function Themer:Set(Theme: { [any]: any })
-	ReconcileValues(self.Theme, ThemeTemplate)
+	Util.ReconcileValues(self.Theme, ThemeTemplate)
 
 	self:_ProcessColors(Theme)
 	self:_ProcessSpacings(Theme)
@@ -170,7 +170,7 @@ function Themer:Set(Theme: { [any]: any })
 	self:_ProcessCornerRadii(Theme)
 	self:_ProcessStrokeThickness(Theme)
 	self:_ProcessSpringSpeed(Theme)
-	ReconcileValues(self.Theme, Theme)
+	Util.ReconcileValues(self.Theme, Theme)
 end
 
 Themer:Set(OnyxNightTheme)

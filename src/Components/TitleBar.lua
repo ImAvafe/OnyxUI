@@ -1,9 +1,8 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -26,21 +25,21 @@ export type Props = Frame.Props & {
 }
 
 return function(Props: Props)
-	local Content = EnsureValue(Props.Content, "table", {})
-	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1.5"])
-	local ContentColor = EnsureValue(Props.ContentColor, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	local ContentFontFace = EnsureValue(
+	local Content = Util.EnsureValue(Props.Content, "table", {})
+	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1.5"])
+	local ContentColor = Util.EnsureValue(Props.ContentColor, "Color3", Themer.Theme.Colors.BaseContent.Main)
+	local ContentFontFace = Util.EnsureValue(
 		Props.ContentFontFace,
 		"Font",
 		Computed(function()
 			return Font.new(Themer.Theme.Font.Heading:get(), Themer.Theme.FontWeight.Heading:get())
 		end)
 	)
-	local CloseButtonDisabled = EnsureValue(Props.CloseButtonDisabled, "boolean", false)
-	local CloseButtonIcon = EnsureValue(Props.CloseButtonIcon, "string", "rbxassetid://13405228418")
-	local OnClose = EnsureValue(Props.OnClose, "function", function() end)
+	local CloseButtonDisabled = Util.EnsureValue(Props.CloseButtonDisabled, "boolean", false)
+	local CloseButtonIcon = Util.EnsureValue(Props.CloseButtonIcon, "string", "rbxassetid://13405228418")
+	local OnClose = Util.EnsureValue(Props.OnClose, "function", function() end)
 
-	return Frame(CombineProps(Props, {
+	return Frame(Util.CombineProps(Props, {
 		Name = "TitleBar",
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,

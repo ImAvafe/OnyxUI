@@ -1,10 +1,9 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local ColorUtils = require(OnyxUI.Parent.ColorUtils)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local ColorUtil = require(OnyxUI.Parent.ColorUtil)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -23,19 +22,19 @@ export type Props = Frame.Props & {
 }
 
 return function(Props: Props)
-	local Contents = EnsureValue(Props.Contents, "table", {})
-	local ContentWraps = EnsureValue(Props.ContentsWrapped, "boolean", true)
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
-	local ContentColor = EnsureValue(
+	local Contents = Util.EnsureValue(Props.Contents, "table", {})
+	local ContentWraps = Util.EnsureValue(Props.ContentsWrapped, "boolean", true)
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
+	local ContentColor = Util.EnsureValue(
 		Props.ContentColor,
 		"Color3",
 		Computed(function()
-			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
+			return ColorUtil.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
 		end)
 	)
-	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
+	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
 
-	return Frame(CombineProps(Props, {
+	return Frame(Util.CombineProps(Props, {
 		Name = "Badge",
 		BackgroundColor3 = Color,
 		BackgroundTransparency = 0,

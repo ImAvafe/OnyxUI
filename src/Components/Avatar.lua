@@ -1,10 +1,8 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local Colors = require(OnyxUI.Utils.Colors)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -28,24 +26,24 @@ export type Props = Image.Props & {
 
 return function(Props: Props)
 	local EnsuredProps = {
-		Image = EnsureValue(Props.Image, "string", nil),
-		RingEnabled = EnsureValue(Props.RingEnabled, "boolean", false),
-		RingColor = EnsureValue(Props.RingColor, "Color3", Themer.Theme.Colors.Primary.Main),
-		RingThickness = EnsureValue(Props.RingThickness, "number", Themer.Theme.StrokeThickness["2"]),
-		IndicatorEnabled = EnsureValue(Props.IndicatorEnabled, "boolean", false),
-		IndicatorColor = EnsureValue(Props.IndicatorColor, "Color3", Themer.Theme.Colors.Primary.Main),
-		IndicatorCornerRadius = EnsureValue(
+		Image = Util.EnsureValue(Props.Image, "string", nil),
+		RingEnabled = Util.EnsureValue(Props.RingEnabled, "boolean", false),
+		RingColor = Util.EnsureValue(Props.RingColor, "Color3", Themer.Theme.Colors.Primary.Main),
+		RingThickness = Util.EnsureValue(Props.RingThickness, "number", Themer.Theme.StrokeThickness["2"]),
+		IndicatorEnabled = Util.EnsureValue(Props.IndicatorEnabled, "boolean", false),
+		IndicatorColor = Util.EnsureValue(Props.IndicatorColor, "Color3", Themer.Theme.Colors.Primary.Main),
+		IndicatorCornerRadius = Util.EnsureValue(
 			Props.IndicatorCornerRadius,
 			"UDim",
 			Computed(function()
 				return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
 			end)
 		),
-		IndicatorIcon = EnsureValue(Props.IndicatorIcon, "string", nil),
-		IndicatorIconColor = EnsureValue(Props.IndicatorIconColor, "Color3", Colors.White),
+		IndicatorIcon = Util.EnsureValue(Props.IndicatorIcon, "string", nil),
+		IndicatorIconColor = Util.EnsureValue(Props.IndicatorIconColor, "Color3", Util.Colors.White),
 	}
 
-	return Image(CombineProps(Props, {
+	return Image(Util.CombineProps(Props, {
 		Name = "Avatar",
 		Image = EnsuredProps.Image,
 		Size = Computed(function()

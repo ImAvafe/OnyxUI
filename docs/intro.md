@@ -24,9 +24,9 @@ OnyxUI is structured as a collection of modules, separated by folders. This is u
 ```lua
 local OnyxUI = require(path.to.OnyxUI)
 
--- Utils
+-- Util
 local Themer = require(OnyxUI.Themer)
-local Colors = require(OnyxUI.Utils.Color)
+local Util = require(OnyxUI.Util)
 
 -- Components
 local Card = require(OnyxUI.Components.Card)
@@ -34,7 +34,7 @@ local Card = require(OnyxUI.Components.Card)
 -- Component construction
 return function()
   return Card {
-    BackgroundColor3 = Colors.Gray["200"],
+    BackgroundColor3 = Util.Colors.Gray["200"],
     Padding = Computed(function()
       return UDim.new(0, Themer.Theme.Spacing["2"]:get())
     end),

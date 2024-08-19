@@ -1,43 +1,43 @@
-local OnyxUI = require(script.Parent.Parent.Parent)
-local Colors = require(OnyxUI.Utils.Colors)
+local OnyxUI = require(script.Parent.Parent)
+local Util = require(OnyxUI.Util)
 
 return {
 	Colors = {
 		Primary = {
-			Main = Colors.White,
+			Main = Util.Colors.White,
 		},
 		Secondary = {
-			Main = Colors.White,
+			Main = Util.Colors.White,
 		},
 		Accent = {
-			Main = Colors.White,
+			Main = Util.Colors.White,
 		},
 
 		Neutral = {
-			Main = Colors.Stone["800"],
+			Main = Util.Colors.Stone["800"],
 		},
 		NeutralContent = {
-			Main = Colors.Stone["300"],
+			Main = Util.Colors.Stone["300"],
 		},
 
 		Base = {
-			Main = Colors.Black,
+			Main = Util.Colors.Black,
 		},
 		BaseContent = {
-			Main = Colors.White,
+			Main = Util.Colors.White,
 		},
 
 		Success = {
-			Main = Colors.Green["500"],
+			Main = Util.Colors.Green["500"],
 		},
 		Error = {
-			Main = Colors.Red["500"],
+			Main = Util.Colors.Red["500"],
 		},
 		Warning = {
-			Main = Colors.Amber["500"],
+			Main = Util.Colors.Amber["500"],
 		},
 		Info = {
-			Main = Colors.Cyan["400"],
+			Main = Util.Colors.Cyan["400"],
 		},
 	},
 	Font = {

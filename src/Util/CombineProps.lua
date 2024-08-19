@@ -1,9 +1,9 @@
 local OnyxUI = script.Parent.Parent
-local PubTypes = require(OnyxUI.Utils.PubTypes)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 --[=[
 		@function CombineProps
-		@within Utils
+		@within Util
 
 		@param Source { [any]: PubTypes.CanBeState<any> }
 		@param Target { [any]: PubTypes.CanBeState<any> }

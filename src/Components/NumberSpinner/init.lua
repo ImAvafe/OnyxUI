@@ -1,10 +1,9 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local NumberSpinner = require(script.NumberSpinner)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
+local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Cleanup = Fusion.Cleanup
 local Observer = Fusion.Observer
@@ -22,18 +21,18 @@ export type Props = Text.Props & {
 }
 
 return function(Props: Props)
-	local TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
+	local TextSize = Util.EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
 
-	local Value = EnsureValue(Props.Value, "number", 0)
-	local Prefix = EnsureValue(Props.Prefix, "string", "")
-	local Suffix = EnsureValue(Props.Suffix, "string", "")
-	local Decimals = EnsureValue(Props.Decimals, "number", 0)
-	local Duration = EnsureValue(Props.Duration, "number", 0.3)
-	local Commas = EnsureValue(Props.Commas, "boolean", false)
+	local Value = Util.EnsureValue(Props.Value, "number", 0)
+	local Prefix = Util.EnsureValue(Props.Prefix, "string", "")
+	local Suffix = Util.EnsureValue(Props.Suffix, "string", "")
+	local Decimals = Util.EnsureValue(Props.Decimals, "number", 0)
+	local Duration = Util.EnsureValue(Props.Duration, "number", 0.3)
+	local Commas = Util.EnsureValue(Props.Commas, "boolean", false)
 
 	local Observers = {}
 
-	local Spinner = NumberSpinner.fromGuiObject(Text(CombineProps(Props, {
+	local Spinner = NumberSpinner.fromGuiObject(Text(Util.CombineProps(Props, {
 		Name = "NumberSpinner",
 		AutomaticSize = Enum.AutomaticSize.None,
 		TextSize = TextSize,

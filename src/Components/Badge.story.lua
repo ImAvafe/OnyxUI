@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Themer)
-local Colors = require(OnyxUI.Utils.Colors)
+local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -39,11 +39,11 @@ return {
 				},
 				Badge {
 					Contents = { "rbxassetid://5422855103", "PREMIUM" },
-					Color = Colors.Amber["500"],
+					Color = Util.Colors.Amber["500"],
 				},
 				Badge {
 					Contents = { "🕑 50% OFF" },
-					Color = Colors.Red["500"],
+					Color = Util.Colors.Red["500"],
 				},
 				Badge {
 					Contents = Computed(function()
@@ -65,11 +65,11 @@ return {
 						},
 						Badge {
 							Contents = { "-50%" },
-							Color = Colors.Red["500"],
+							Color = Util.Colors.Red["500"],
 						},
 						Badge {
 							Contents = { "Test" },
-							Color = Colors.Black,
+							Color = Util.Colors.Black,
 							CornerRadius = Computed(function()
 								return UDim.new(0, Themer.Theme.CornerRadius["0"]:get())
 							end),

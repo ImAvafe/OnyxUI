@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Themer)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local Util = require(OnyxUI.Util)
 
 local Computed = Fusion.Computed
 local Value = Fusion.Value
@@ -14,7 +14,7 @@ type Props = CanvasGroup.Props & {}
 return function(Props: Props)
 	local AutomaticSize = Value(Enum.AutomaticSize.None)
 
-	return CanvasGroup(CombineProps(Props, {
+	return CanvasGroup(Util.CombineProps(Props, {
 		Name = "MenuFrame",
 		GroupTransparency = Props.GroupTransparency,
 		BackgroundColor3 = Themer.Theme.Colors.Base.Main,
