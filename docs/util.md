@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Util
 
-Important utilities for UI development. These are also used by OnyxUI itself!
+Important utilities for UI development.
 
 ## [EnsureValue](/api/Util#EnsureValue)
 
