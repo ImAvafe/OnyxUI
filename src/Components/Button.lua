@@ -40,8 +40,6 @@ export type Props = BaseButton.Props & {
 
 		@field ... BaseProps
 		@field ... ButtonProps
-		
-		This is my first class.
 ]=]
 return function(Props: Props)
 	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)

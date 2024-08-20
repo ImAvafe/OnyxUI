@@ -1,3 +1,9 @@
+--[=[
+		@class Checkbox
+		
+		Useful for settings, to-do lists, and anything needing a "Check!"
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)
@@ -22,6 +28,13 @@ export type Props = BaseButton.Props & {
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
+--[=[
+		@within Checkbox
+		@interface CheckboxProps
+
+		@field ... BaseButtonProps
+		@field ... CheckboxProps
+]=]
 return function(Props: Props)
 	local Checked = Util.EnsureValue(Props.Checked, "boolean", false)
 	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)

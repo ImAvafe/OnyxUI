@@ -1,3 +1,9 @@
+--[=[
+		@class Divider
+		
+		Useful for separating UI into sections.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)
@@ -18,6 +24,13 @@ type Props = Frame.Props & {
 	Spacing: PubTypes.CanBeState<UDim>?,
 }
 
+--[=[
+		@within Divider
+		@interface DividerProps
+
+		@field ... FrameProps
+		@field ... DividerProps
+]=]
 return function(Props: Props)
 	local Length = Util.EnsureValue(Props.Length, "UDim", UDim.new(1, 0))
 	local FillDirection = Util.EnsureValue(Props.FillDirection, "EnumItem", Enum.FillDirection.Horizontal)

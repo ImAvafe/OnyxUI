@@ -1,3 +1,9 @@
+--[=[
+		@class Icon
+		
+		It's an icon, what else do I say? 💀💀
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
 local Fusion = require(OnyxUI.Parent.Fusion)
@@ -9,6 +15,13 @@ local Image = require(script.Parent.Image)
 
 export type Props = Image.Props & {}
 
+--[=[
+		@within Icon
+		@interface IconProps
+
+		@field ... ImageProps
+		@field ... IconProps
+]=]
 return function(Props: Props)
 	return Image(Util.CombineProps(Props, {
 		Name = "Icon",

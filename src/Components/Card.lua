@@ -1,3 +1,9 @@
+--[=[
+		@class Card
+		
+		Useful for grouping and displaying contents in a user friendly way.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Themer)
@@ -9,6 +15,13 @@ local Frame = require(script.Parent.Frame)
 
 export type Props = Frame.Props & {}
 
+--[=[
+		@within Card
+		@interface CardProps
+
+		@field ... FrameProps
+		@field ... CardProps
+]=]
 return function(Props: Props)
 	return Frame(Util.CombineProps(Props, {
 		Name = "Card",

@@ -1,3 +1,9 @@
+--[=[
+		@class Avatar
+		
+		Useful for displaying player headshots and profile pictures. And optionally, user status.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)
@@ -24,6 +30,13 @@ export type Props = Image.Props & {
 	IndicatorCornerRadius: PubTypes.CanBeState<UDim>?,
 }
 
+--[=[
+		@within Avatar
+		@interface AvatarProps
+
+		@field ... ImageProps
+		@field ... AvatarProps
+]=]
 return function(Props: Props)
 	local EnsuredProps = {
 		Image = Util.EnsureValue(Props.Image, "string", nil),

@@ -1,3 +1,9 @@
+--[=[
+		@class IconButton
+		
+		Like [`Button`](/api/Button), but for a single [`Icon`](/api/Icon).
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)
@@ -19,6 +25,13 @@ export type Props = Button.Props & {
 	IsHolding: PubTypes.CanBeState<boolean>?,
 }
 
+--[=[
+		@within IconButton
+		@interface IconButtonProps
+
+		@field ... ButtonProps
+		@field ... IconButtonProps
+]=]
 return function(Props: Props)
 	local Image = Util.EnsureValue(Props.Image, "string", "")
 	local Padding = Computed(function()

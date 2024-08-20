@@ -1,3 +1,9 @@
+--[=[
+		@class Text
+		
+		For displaying text. *Lorem ipsum dolo..*
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)
@@ -27,6 +33,13 @@ export type Props = Base.Props & {
 	TextTransparency: PubTypes.CanBeState<number>?,
 }
 
+--[=[
+		@within Text
+		@interface TextProps
+
+		@field ... BaseProps
+		@field ... TextProps
+]=]
 return function(Props: Props)
 	local TextColor3 = Util.EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
 	local TextSize = Util.EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])

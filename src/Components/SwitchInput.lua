@@ -1,6 +1,11 @@
+--[=[
+		@class SwitchInput
+		
+		Useful for letting the user switch things on / off.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 local PubTypes = require(OnyxUI.Util.PubTypes)
@@ -21,6 +26,13 @@ export type Props = Frame.Props & {
 	Color: PubTypes.CanBeState<Color3>?,
 }
 
+--[=[
+		@within SwitchInput
+		@interface SwitchInputProps
+
+		@field ... FrameProps
+		@field ... SwitchInputProps
+]=]
 return function(Props: Props)
 	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)
 	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)

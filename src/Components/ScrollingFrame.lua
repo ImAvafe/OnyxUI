@@ -1,3 +1,9 @@
+--[=[
+		@class ScrollingFrame
+		
+		For making contents scrollable. Equivalent to Roblox's `ScrollingFrame` instance.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Themer)
@@ -28,6 +34,13 @@ export type Props = Base.Props & {
 	VerticalScrollBarPosition: PubTypes.CanBeState<Enum.VerticalScrollBarPosition>?,
 }
 
+--[=[
+		@within ScrollingFrame
+		@interface ScrollingFrameProps
+
+		@field ... BaseProps
+		@field ... ScrollingFrameProps
+]=]
 return function(Props: Props)
 	local BottomImage = Util.EnsureValue(
 		Props.BottomImage,

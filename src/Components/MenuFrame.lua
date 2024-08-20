@@ -1,3 +1,9 @@
+--[=[
+		@class MenuFrame
+		
+		For displaying top-level menus to the user.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Themer)
@@ -11,6 +17,13 @@ local CanvasGroup = require(script.Parent.CanvasGroup)
 
 type Props = CanvasGroup.Props & {}
 
+--[=[
+		@within MenuFrame
+		@interface MenuFrameProps
+
+		@field ... CanvasGroupProps
+		@field ... MenuFrameProps
+]=]
 return function(Props: Props)
 	local AutomaticSize = Value(Enum.AutomaticSize.None)
 

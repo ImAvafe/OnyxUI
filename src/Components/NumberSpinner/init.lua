@@ -1,3 +1,13 @@
+--[=[
+		@class NumberSpinner
+		
+		Useful for number counters.
+		
+		:::info
+		This currently only supports the legacy [`Font`](https://create.roblox.com/docs/reference/engine/classes/TextLabel#Font) property. Passing in a [`FontFace`](https://create.roblox.com/docs/reference/engine/classes/TextLabel#FontFace) will not do anything.
+		:::
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local NumberSpinner = require(script.NumberSpinner)
@@ -20,6 +30,13 @@ export type Props = Text.Props & {
 	Commas: PubTypes.CanBeState<boolean>?,
 }
 
+--[=[
+		@within NumberSpinner
+		@interface NumberSpinnerProps
+
+		@field ... TextProps
+		@field ... NumberSpinnerProps
+]=]
 return function(Props: Props)
 	local TextSize = Util.EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
 

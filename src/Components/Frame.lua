@@ -1,3 +1,9 @@
+--[=[
+		@class Frame
+		
+		A barebones container object. Unlike Roblox's `Frame`, it is transparent by default.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
 
@@ -5,6 +11,13 @@ local Base = require(script.Parent.Base)
 
 export type Props = Base.Props & {}
 
+--[=[
+		@within Frame
+		@interface FrameProps
+
+		@field ... BaseProps
+		@field ... FrameProps
+]=]
 return function(Props: Props)
 	return Base(Util.CombineProps(Props, {
 		ClassName = "Frame",

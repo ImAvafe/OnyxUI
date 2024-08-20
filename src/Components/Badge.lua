@@ -1,3 +1,9 @@
+--[=[
+		@class Badge
+		
+		Used to inform the user of something's status. E.g. a notification indicator or discount tag.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)
@@ -21,6 +27,13 @@ export type Props = Frame.Props & {
 	ContentSize: PubTypes.CanBeState<number>?,
 }
 
+--[=[
+		@within Badge
+		@interface BadgeProps
+
+		@field ... FrameProps
+		@field ... BadgeProps
+]=]
 return function(Props: Props)
 	local Contents = Util.EnsureValue(Props.Contents, "table", {})
 	local ContentWraps = Util.EnsureValue(Props.ContentsWrapped, "boolean", true)

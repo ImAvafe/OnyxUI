@@ -1,3 +1,9 @@
+--[=[
+		@class Image
+		
+		Equivalent to Roblox's `ImageLabel`.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)

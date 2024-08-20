@@ -1,3 +1,9 @@
+--[=[
+		@class TextInput
+		
+		For letting the user input text.
+]=]
+
 local SoundService = game:GetService("SoundService")
 
 local OnyxUI = script.Parent.Parent
@@ -17,6 +23,13 @@ local Value = Fusion.Value
 
 local Base = require(script.Parent.Base)
 
+--[=[
+		@within TextInput
+		@interface TextInputProps
+
+		@field ... BaseProps
+		@field ... TextInputProps
+]=]
 export type Props = Base.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
 	Text: PubTypes.CanBeState<string>?,

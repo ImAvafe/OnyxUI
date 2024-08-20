@@ -1,4 +1,11 @@
+--[=[
+		@class AutoScaleFrame
+		
+		Automatically scales children for the user's screen. 📱💻📺🥽
+]=]
+
 local Workspace = game:GetService("Workspace")
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)
@@ -19,6 +26,13 @@ export type Props = Base.Props & {
 	ScaleMultiplier: PubTypes.CanBeState<number>?,
 }
 
+--[=[
+		@within AutoScaleFrame
+		@interface AutoScaleFrameProps
+
+		@field ... BaseProps
+		@field ... AutoScaleFrameProps
+]=]
 return function(Props: Props)
 	local BaseResolution = Util.EnsureValue(Props.BaseResolution, "Vector2", Vector2.new())
 	local MinScale = Util.EnsureValue(Props.MinScale, "number", 0.8)

@@ -1,3 +1,9 @@
+--[=[
+		@class ProgressBar
+		
+		Useful for communicating progress towards goals.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)
@@ -17,6 +23,13 @@ export type Props = Frame.Props & {
 	Inverted: PubTypes.CanBeState<boolean>?,
 }
 
+--[=[
+		@within ProgressBar
+		@interface ProgressBarProps
+
+		@field ... FrameProps
+		@field ... ProgressBarProps
+]=]
 return function(Props: Props)
 	local Progress = Util.EnsureValue(Props.Progress, "number", 0)
 	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)

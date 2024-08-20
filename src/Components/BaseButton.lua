@@ -1,3 +1,9 @@
+--[=[
+		@class BaseButton
+		
+		A barebones button component, like if Roblox had a "`Button`" class rather than only a `TextButton`.
+]=]
+
 local SoundService = game:GetService("SoundService")
 
 local OnyxUI = script.Parent.Parent
@@ -12,6 +18,13 @@ local Hydrate = Fusion.Hydrate
 
 local Base = require(script.Parent.Base)
 
+--[=[
+		@within BaseButton
+		@interface BaseButtonProps
+
+		@field ... BaseProps
+		@field ... BaseButtonProps
+]=]
 export type Props = Base.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
 

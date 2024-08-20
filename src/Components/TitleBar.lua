@@ -1,3 +1,9 @@
+--[=[
+		@class TitleBar
+		
+		For displaying a title, and an optional close button. Pairs with [`MenuFrame`](/api/MenuFrame).
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)
@@ -24,6 +30,13 @@ export type Props = Frame.Props & {
 	AutoLocalize: PubTypes.CanBeState<boolean>?,
 }
 
+--[=[
+		@within TitleBar
+		@interface TitleBarProps
+
+		@field ... FrameProps
+		@field ... TitleBarProps
+]=]
 return function(Props: Props)
 	local Content = Util.EnsureValue(Props.Content, "table", {})
 	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1.5"])
