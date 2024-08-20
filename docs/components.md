@@ -7,7 +7,7 @@ sidebar_position: 2
 You can see the [full list of components here](/api/base).
 
 :::info What are components?
-  If you're unfamiliar with the concept of components, they're basically widgets you can use throughout your UI. This is much more efficient than, for example, rescripting a button each time you need one.
+  If you're unfamiliar with the concept of components, they're basically widgets you can reuse throughout your UI. This is much more efficient than, for example, rescripting a button each time you need one.
 :::
 
 :::info Where are the props?

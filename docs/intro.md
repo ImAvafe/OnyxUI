@@ -4,6 +4,10 @@ sidebar_position: 1
 
 # Getting Started
 
+:::info Premature
+  OnyxUI is premature software, relying on the premature software Fusion. It will, at times, *move fast and break things™️*. If that doesn't deter you, get ready to enjoy how easy UI can be. ✨
+:::
+
 ## Installation
 
 ### Wally package
@@ -23,8 +27,6 @@ OnyxUI is structured as a collection of modules. This is unconventional, but nec
 
 ```lua
 local OnyxUI = require(path.to.OnyxUI)
-
--- Util
 local Themer = require(OnyxUI.Themer)
 local Util = require(OnyxUI.Util)
 

@@ -2,9 +2,9 @@
 sidebar_position: 3
 ---
 
-# Themer
+# Theming
 
-Themer allows you to customize components throughout OnyxUI, with support for things like colors, corner radiuses, paddings, etc. You'll also probably want to incorporate it within your own UI for a more consistent design.
+OnyxUI handles theming through a module called Themer. Themer allows you to customize components throughout OnyxUI, with support for things like colors, corner radiuses, paddings, etc. You'll also probably want to incorporate it within your own UI for a more consistent design.
 
 ## Sample themes
 

@@ -9,7 +9,7 @@ local PubTypes = require(OnyxUI.Util.PubTypes)
 		@param Target { [any]: PubTypes.CanBeState<any> }
 		@param ExcludedKeys { any }?
 		
-		Combines two sets of props for easy passthrough, adding `Source`s props to `Target`.
+		Combines two sets of props for easy passthrough, adding `Source`'s props to `Target`.
 ]=]
 local function CombineProps(
 	Source: { [any]: PubTypes.CanBeState<any> },
