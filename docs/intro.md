@@ -33,8 +33,11 @@ local Util = require(OnyxUI.Util)
 -- Components
 local Card = require(OnyxUI.Components.Card)
 
+-- Types
+export type Props = Card.Props & {} -- This wouldn't work if Card wasn't required directly.
+
 -- Component construction
-return function()
+return function(Props: Props)
   return Card {
     BackgroundColor3 = Util.Colors.Gray["200"],
     Padding = Computed(function()

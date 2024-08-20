@@ -1,7 +1,7 @@
 --[=[
 		@class Button
 		
-		A robust button component.
+		A robust button component, supporting text and icons, and multiple variants.
 ]=]
 
 local OnyxUI = script.Parent.Parent

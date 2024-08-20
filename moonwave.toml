@@ -50,7 +50,7 @@ description = "Give your UI the look and feel you desire with OnyxUI's featurefu
 
 [[home.features]]
 title = "Styling, now *not* stupid 🖌️"
-description = "Screw UIPaddings and messy markup. Style any component, any way you like with OnyxUI's passthrough styling props."
+description = "Screw messy markup. Style any component, with less code, using OnyxUI's passthrough styling props."
 
 [footer]
 style = "dark"

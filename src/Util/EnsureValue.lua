@@ -5,7 +5,7 @@ local PubTypes = require(OnyxUI.Util.PubTypes)
 local Value = Fusion.Value
 
 --[=[
-	@function EnsureValue
+	@method EnsureValue
 	@within Util
 
 	@param PreferredValue any

@@ -69,7 +69,7 @@ local SPRING_SPEED_MULTIPLIERS = {
 	Themer allows you to customize components throughout OnyxUI, with support for things like colors, corner radiuses, paddings, etc. You'll also probably want to incorporate it within your own UI for a more consistent design.
 ]=]
 --[=[
-	@prop Theme { [any]: any }
+	@prop Theme Theme
 	@within Themer
 
 	The currently active theme. Use this to reference theme properties.
@@ -154,14 +154,14 @@ function Themer:_ProcessSpringSpeed(Theme: { [any]: any })
 end
 
 --[=[
-	@function Set
+	@method Set
 	@within Themer
 
-	@param Theme { [any]: any }
+	@param Theme Theme
 
 	Sets the current theme to the given Theme parameter.
 ]=]
-function Themer:Set(Theme: { [any]: any })
+function Themer:Set(Theme: ThemeTemplate.Theme)
 	Util.ReconcileValues(self.Theme, ThemeTemplate)
 
 	self:_ProcessColors(Theme)
