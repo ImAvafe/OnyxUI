@@ -1,8 +1,8 @@
 local OnyxUI = require(script.Parent.Parent)
 local Util = require(OnyxUI.Util)
-local ThemeTemplate = require(OnyxUI.Themer.ThemeTemplate)
+local Theme = require(script.Parent.Theme)
 
-local OnyxNight: ThemeTemplate.Theme = {
+local OnyxNight: Theme.Theme = {
 	Colors = {
 		Primary = {
 			Main = Util.Colors.Violet["500"],

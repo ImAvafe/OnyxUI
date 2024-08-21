@@ -1,7 +1,8 @@
 local OnyxUI = require(script.Parent.Parent)
 local Util = require(OnyxUI.Util)
+local Theme = require(script.Parent.Theme)
 
-return {
+local BitCave: Theme.Theme = {
 	Colors = {
 		Primary = {
 			Main = Util.Colors.White,
@@ -67,3 +68,5 @@ return {
 	},
 	SpringDampening = 0.75,
 }
+
+return BitCave

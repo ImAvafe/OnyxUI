@@ -23,9 +23,9 @@ Check out the [`ThemeTemplate`](https://github.com/ImAvafe/OnyxUI/blob/main/src/
 
 1. Copy the following code into a new "`MyTheme`" module
   ```lua
-  local ThemeTemplate = require(OnyxUI.Themer.ThemeTemplate)
+  local Themer = require(OnyxUI.Themer)
 
-  local Theme: ThemeTemplate.Theme = {
+  local Theme: Themer.Theme = {
 
   }
 
