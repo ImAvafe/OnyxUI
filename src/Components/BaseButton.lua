@@ -81,7 +81,6 @@ return function(Props: Props)
 		Text = "",
 		RichText = false,
 		TextSize = 0,
-		AutoLocalize = false,
 
 		[OnEvent "Activated"] = function()
 			if not Disabled:get() then

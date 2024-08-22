@@ -31,6 +31,7 @@ export type Props = BaseButton.Props & {
 	Color: PubTypes.CanBeState<Color3>?,
 	ContentColor: PubTypes.CanBeState<Color3>?,
 	ContentSize: PubTypes.CanBeState<number>?,
+	ContentAutoLocalize: PubTypes.CanBeState<boolean>?,
 	IsHolding: PubTypes.CanBeState<boolean>?,
 }
 
@@ -54,6 +55,7 @@ return function(Props: Props)
 		end)
 	)
 	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
+	local ContentAutoLocalize = Util.EnsureValue(Props.ContentAutoLocalize, "boolean", true)
 
 	local IsHolding = Value(false)
 	local IsHovering = Value(false)
@@ -161,6 +163,7 @@ return function(Props: Props)
 						TextSize = ContentSize,
 						TextTransparency = EffectiveContentTransparency,
 						TextWrapped = false,
+						AutoLocalize = ContentAutoLocalize,
 					}
 				end
 			end, Fusion.cleanup),
