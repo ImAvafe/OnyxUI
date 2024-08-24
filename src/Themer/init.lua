@@ -2,7 +2,7 @@ local OnyxUI = script.Parent
 local Util = require(script.Parent.Util)
 local OnyxNightTheme = require(script.OnyxNight)
 local ThemeTemplate = require(script.ThemeTemplate)
-local ColorUtil = require(OnyxUI.Parent.ColorUtil)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local ThemeType = require(script.Theme)
 
 local SPACING_MULTIPLIERS = {
@@ -88,13 +88,13 @@ function Themer:_ProcessColors(Theme: Theme)
 			if Color then
 				if Color.Main then
 					if Color.Contrast == nil then
-						Color.Contrast = ColorUtil.Emphasize(Color.Main, 1)
+						Color.Contrast = ColorUtils.Emphasize(Color.Main, 1)
 					end
 					if Color.Dark == nil then
-						Color.Dark = ColorUtil.Darken(Color.Main, 0.05)
+						Color.Dark = ColorUtils.Darken(Color.Main, 0.05)
 					end
 					if Color.Light == nil then
-						Color.Light = ColorUtil.Lighten(Color.Main, 0.05)
+						Color.Light = ColorUtils.Lighten(Color.Main, 0.05)
 					end
 				end
 			end

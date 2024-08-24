@@ -8,7 +8,7 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local ColorUtil = require(OnyxUI.Parent.ColorUtil)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
@@ -42,7 +42,7 @@ return function(Props: Props)
 		Props.ContentColor,
 		"Color3",
 		Computed(function()
-			return ColorUtil.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
+			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
 		end)
 	)
 	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])

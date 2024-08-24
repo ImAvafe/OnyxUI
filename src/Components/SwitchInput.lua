@@ -10,7 +10,7 @@ local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 local PubTypes = require(OnyxUI.Util.PubTypes)
 
-local ColorUtil = require(OnyxUI.Parent.ColorUtil)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -58,9 +58,9 @@ return function(Props: Props)
 
 		if not Disabled:get() then
 			if IsHolding:get() then
-				return ColorUtil.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
+				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
 			elseif IsHovering:get() then
-				return ColorUtil.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
+				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
 			end
 		end
 
@@ -77,13 +77,13 @@ return function(Props: Props)
 		if not Disabled:get() then
 			if IsHolding:get() then
 				if not Switched:get() then
-					return ColorUtil.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
+					return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
 				else
 					return ActiveColor
 				end
 			elseif IsHovering:get() then
 				if not Switched:get() then
-					return ColorUtil.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
+					return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
 				else
 					return ActiveColor
 				end

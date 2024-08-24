@@ -1,6 +1,6 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local ColorUtil = require(OnyxUI.Parent.ColorUtil)
+local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 local Themer = require(OnyxUI.Themer)
 local Util = require(OnyxUI.Util)
 
@@ -71,7 +71,7 @@ return {
 		task.spawn(function()
 			while task.wait(1) do
 				Progress:set(math.random(0, 1000) / 1000)
-				Color:set(ColorUtil.Rotate(Color:get(), 100))
+				Color:set(ColorUtils.Rotate(Color:get(), 100))
 			end
 		end)
 
