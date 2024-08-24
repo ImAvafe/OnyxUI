@@ -46,7 +46,7 @@ return function(Props: Props)
 	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
 	local Contents = Util.EnsureValue(Props.Contents, "table", {})
 	local Style = Util.EnsureValue(Props.Style, "string", "Filled")
-	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Main)
 	local ContentColor = Util.EnsureValue(
 		Props.ContentColor,
 		"Color3",

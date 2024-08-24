@@ -27,7 +27,12 @@ return {
 				},
 				Button {
 					Contents = { "Button" },
+					Color = Themer.Theme.Colors.Primary.Main,
+				},
+				Button {
+					Contents = { "Button" },
 					Style = "Outlined",
+					Color = Themer.Theme.Colors.Primary.Main,
 				},
 				Button {
 					Contents = { "rbxassetid://11560341132", "Purchase" },
