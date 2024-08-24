@@ -15,7 +15,7 @@ return {
 			Parent = Parent,
 			ListEnabled = true,
 			ListPadding = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+				return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 			end),
 			Padding = Computed(function()
 				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
