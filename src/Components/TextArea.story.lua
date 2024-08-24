@@ -12,7 +12,7 @@ return {
 	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local Instance = Frame {
 			Parent = Parent,
-			Size = UDim2.fromOffset(300, 0),
+			Size = UDim2.fromOffset(250, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			ListEnabled = true,
 			Padding = Computed(function()
@@ -21,11 +21,20 @@ return {
 
 			[Children] = {
 				TextArea {
-					Size = UDim2.fromOffset(200, 50),
+					Size = UDim2.new(
+						UDim.new(1, 0),
+						UDim.new(0, (Themer.Theme.TextSize["1"]:get() * 2) + Themer.Theme.Spacing["0.5"]:get() * 2)
+					),
 				},
 				TextArea {
-					Size = UDim2.fromOffset(200, 100),
-					CharacterLimit = 20,
+					Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 100)),
+					CharacterLimit = 60,
+					PlaceholderText = "This TextArea has a character limit.",
+				},
+				TextArea {
+					Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 0)),
+					AutomaticSize = Enum.AutomaticSize.Y,
+					PlaceholderText = "This one will expand as you type.",
 				},
 			},
 		}

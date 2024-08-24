@@ -69,7 +69,7 @@ return function(Props: Props)
 		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
-		ListWrapsVerticalAlignment = Enum.VerticalAlignment.Center,
+		ListVerticalAlignment = Enum.VerticalAlignment.Center,
 		ListWraps = ContentWraps,
 
 		[Children] = {

@@ -16,6 +16,9 @@ return {
 				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 			end),
 			ListEnabled = true,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			end),
 
 			[Children] = {
 				SwitchInput {},

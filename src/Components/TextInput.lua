@@ -145,6 +145,7 @@ return function(Props: Props)
 			return not Disabled:get()
 		end),
 		BackgroundTransparency = 1,
+		ClipsDescendants = true,
 
 		[Cleanup] = Observers,
 	}))) {

@@ -27,6 +27,10 @@ return {
 					Image = "rbxassetid://10814531047",
 				},
 				IconButton {
+					Image = "rbxassetid://10814531047",
+					Color = Themer.Theme.Colors.Primary.Main,
+				},
+				IconButton {
 					Image = "rbxassetid://11560341132",
 					Color = Util.Colors.Amber["500"],
 				},
@@ -48,11 +52,6 @@ return {
 					Image = "rbxassetid://10814531047",
 					Style = "Ghost",
 					Disabled = true,
-				},
-				IconButton {
-					Image = "rbxassetid://10814531047",
-					PaddingLeft = UDim.new(0, 30),
-					CornerRadius = UDim.new(0, 0),
 				},
 			},
 		}

@@ -49,7 +49,7 @@ return function(Props: Props)
 		end)
 	)
 	local CloseButtonDisabled = Util.EnsureValue(Props.CloseButtonDisabled, "boolean", false)
-	local CloseButtonIcon = Util.EnsureValue(Props.CloseButtonIcon, "string", "rbxassetid://13405228418")
+	local CloseButtonIcon = Util.EnsureValue(Props.CloseButtonIcon, "string", "rbxassetid://80218226919142")
 	local OnClose = Util.EnsureValue(Props.OnClose, "function", function() end)
 
 	return Frame(Util.CombineProps(Props, {
@@ -62,6 +62,11 @@ return function(Props: Props)
 				Name = "Content",
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = UDim2.fromScale(0.5, 0),
+				ListEnabled = true,
+				ListFillDirection = Enum.FillDirection.Horizontal,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+				end),
 
 				[Children] = {
 					ForValues(Content, function(ContentString: string)

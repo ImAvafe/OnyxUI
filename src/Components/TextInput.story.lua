@@ -12,19 +12,18 @@ return {
 	story = function(Parent: GuiObject, _Props: { [any]: any })
 		local Instance = Frame {
 			Parent = Parent,
-			Size = UDim2.fromOffset(300, 0),
+			Size = UDim2.fromOffset(250, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			ListEnabled = true,
 			Padding = Computed(function()
 				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 			end),
+			ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 			[Children] = {
+				TextInput {},
 				TextInput {
-					PlaceholderText = "You can type here!",
-				},
-				TextInput {
-					PlaceholderText = "You cannot type here!",
+					PlaceholderText = "Disabled TextInput.",
 					Disabled = true,
 				},
 				TextInput {

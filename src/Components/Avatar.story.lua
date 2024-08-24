@@ -36,7 +36,6 @@ return {
 				return UDim.new(0, Themer.Theme.StrokeThickness["4"]:get())
 			end),
 			ListEnabled = true,
-			ListFillDirection = Enum.FillDirection.Horizontal,
 			ListPadding = Computed(function()
 				return UDim.new(0, Themer.Theme.Spacing["1"]:get())
 			end),
@@ -84,14 +83,6 @@ return {
 					IndicatorEnabled = true,
 					IndicatorColor = Util.Colors.Sky["500"],
 					IndicatorIcon = "rbxassetid://13805569043",
-				},
-				Avatar {
-					Image = "rbxthumb://type=AvatarHeadShot&id=144146784&w=150&h=150",
-					CornerRadius = Computed(function()
-						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
-					end),
-					IndicatorEnabled = true,
-					Size = UDim2.fromOffset(150, 150),
 				},
 			},
 		}

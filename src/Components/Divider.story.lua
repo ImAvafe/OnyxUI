@@ -1,8 +1,9 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
+local Themer = require(OnyxUI.Themer)
 
-local New = Fusion.New
 local Children = Fusion.Children
+local Computed = Fusion.Computed
 
 local Frame = require(OnyxUI.Components.Frame)
 local Divider = require(OnyxUI.Components.Divider)
@@ -14,21 +15,21 @@ return {
 			Parent = Parent,
 			Size = UDim2.fromOffset(300, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
+			ListEnabled = true,
+			ListFillDirection = Enum.FillDirection.Vertical,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			end),
 
 			[Children] = {
-				New "UIListLayout" {
-					SortOrder = Enum.SortOrder.LayoutOrder,
-					FillDirection = Enum.FillDirection.Vertical,
-				},
 				Text {
-					Text = "Top text up here",
+					Text = "Some top content..",
 				},
 				Divider {
 					FillDirection = Enum.FillDirection.Horizontal,
-					-- Length = UDim.new(0, 100),
 				},
 				Text {
-					Text = "Top text up here",
+					Text = "And some bottom content too.",
 				},
 			},
 		}

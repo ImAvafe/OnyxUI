@@ -2,7 +2,6 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local Themer = require(OnyxUI.Themer)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
@@ -17,15 +16,13 @@ return {
 			Parent = Parent,
 			Size = UDim2.fromOffset(300, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
+			ListEnabled = true,
+			ListFillDirection = Enum.FillDirection.Vertical,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			end),
 
 			[Children] = {
-				New "UIListLayout" {
-					SortOrder = Enum.SortOrder.LayoutOrder,
-					FillDirection = Enum.FillDirection.Vertical,
-					Padding = Computed(function()
-						return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-					end),
-				},
 				Card {
 					Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 75)),
 					AutomaticSize = Enum.AutomaticSize.None,
@@ -33,14 +30,12 @@ return {
 				Card {
 					Size = UDim2.fromScale(1, 0),
 					AutomaticSize = Enum.AutomaticSize.Y,
+					ListEnabled = true,
+					ListPadding = Computed(function()
+						return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+					end),
 
 					[Children] = {
-						New "UIListLayout" {
-							Padding = Computed(function()
-								return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-							end),
-							SortOrder = Enum.SortOrder.LayoutOrder,
-						},
 						Text {
 							Text = "Title",
 							TextSize = Themer.Theme.TextSize["1.25"],
@@ -53,14 +48,6 @@ return {
 							Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						},
 					},
-				},
-				Card {
-					Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 75)),
-					AutomaticSize = Enum.AutomaticSize.None,
-					PaddingLeft = UDim.new(0, 50),
-					CornerRadius = Computed(function()
-						return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
-					end),
 				},
 			},
 		}

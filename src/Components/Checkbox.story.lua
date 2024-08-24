@@ -18,6 +18,9 @@ return {
 			end),
 			ListEnabled = true,
 			ListFillDirection = Enum.FillDirection.Horizontal,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			end),
 
 			[Children] = {
 				Checkbox {},

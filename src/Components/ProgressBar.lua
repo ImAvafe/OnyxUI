@@ -15,19 +15,21 @@ local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 
 local Frame = require(script.Parent.Frame)
+local CanvasGroup = require(script.Parent.CanvasGroup)
 
-export type Props = Frame.Props & {
+export type Props = CanvasGroup.Props & {
 	Progress: PubTypes.CanBeState<number>?,
 	Color: PubTypes.CanBeState<Color3>?,
 	Direction: PubTypes.CanBeState<Enum.FillDirection>?,
 	Inverted: PubTypes.CanBeState<boolean>?,
+	Length: PubTypes.CanBeState<UDim>?,
 }
 
 --[=[
 		@within ProgressBar
 		@interface ProgressBarProps
 
-		@field ... FrameProps
+		@field ... CanvasGroupProps
 		@field ... ProgressBarProps
 ]=]
 return function(Props: Props)
@@ -35,28 +37,36 @@ return function(Props: Props)
 	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
 	local Direction = Util.EnsureValue(Props.Direction, "EnumItem", Enum.FillDirection.Horizontal)
 	local Inverted = Util.EnsureValue(Props.Inverted, "boolean", false)
-
-	local EffectiveCornerRadius = Util.EnsureValue(
+	local CornerRadius = Util.EnsureValue(
 		Props.CornerRadius,
 		"UDim",
 		Computed(function()
 			return UDim.new(0, Themer.Theme.CornerRadius["Full"]:get())
 		end)
 	)
+	local Length = Util.EnsureValue(
+		Props.Length,
+		"UDim",
+		Computed(function()
+			return UDim.new(0, 200)
+		end)
+	)
 
-	return Frame(Util.CombineProps(Props, {
+	return CanvasGroup(Util.CombineProps(Props, {
 		Name = "ProgressBar",
 		Size = Computed(function()
-			if Direction:get() == Enum.FillDirection.Horizontal then
-				return UDim2.fromOffset(250, Themer.Theme.TextSize["0.75"]:get())
+			local DirectionValue = Direction:get()
+			local LengthValue = Length:get()
+			if DirectionValue == Enum.FillDirection.Horizontal then
+				return UDim2.new(LengthValue, UDim.new(0, Themer.Theme.TextSize["0.75"]:get()))
 			else
-				return UDim2.fromOffset(Themer.Theme.TextSize["0.75"]:get(), 250)
+				return UDim2.new(UDim.new(0, Themer.Theme.TextSize["0.75"]:get()), LengthValue)
 			end
 		end),
 		AutomaticSize = Enum.AutomaticSize.None,
 		BackgroundTransparency = 0,
 		BackgroundColor3 = Themer.Theme.Colors.Neutral.Dark,
-		CornerRadius = EffectiveCornerRadius,
+		CornerRadius = CornerRadius,
 
 		[Children] = {
 			Frame {
@@ -97,7 +107,6 @@ return function(Props: Props)
 				AutomaticSize = Enum.AutomaticSize.None,
 				BackgroundTransparency = 0,
 				BackgroundColor3 = Color,
-				CornerRadius = EffectiveCornerRadius,
 			},
 		},
 	}))
