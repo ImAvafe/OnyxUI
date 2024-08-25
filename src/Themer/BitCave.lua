@@ -66,7 +66,9 @@ local BitCave: Theme.Theme = {
 	SpringSpeed = {
 		Base = 60,
 	},
-	SpringDampening = 0.75,
+	SpringDampening = {
+		Base = 0.75,
+	},
 }
 
 return BitCave

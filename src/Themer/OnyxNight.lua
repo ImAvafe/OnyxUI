@@ -66,7 +66,9 @@ local OnyxNight: Theme.Theme = {
 	SpringSpeed = {
 		Base = 50,
 	},
-	SpringDampening = 1,
+	SpringDampening = {
+		Base = 1,
+	},
 	Sound = {},
 	Emphasis = {},
 }

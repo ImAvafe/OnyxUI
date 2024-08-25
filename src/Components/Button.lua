@@ -108,7 +108,7 @@ return function(Props: Props)
 				return 1
 			end
 		end),
-		BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		PaddingLeft = Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 		end),
@@ -132,7 +132,7 @@ return function(Props: Props)
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
 		StrokeEnabled = true,
-		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		StrokeTransparency = Computed(function()
 			if Style:get() == "Ghost" then
 				return 1

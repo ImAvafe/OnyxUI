@@ -118,9 +118,9 @@ return function(Props: Props)
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
+			Themer.Theme.SpringDampening["1"]
 		),
-		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		CornerRadius = EffectiveCornerRadius,
 		ClickSound = Themer.Theme.Sound.Switch,
 
@@ -135,7 +135,11 @@ return function(Props: Props)
 				Name = "Switch",
 				Size = Size,
 				AutomaticSize = AutomaticSize,
-				BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+				BackgroundColor3 = Spring(
+					EffectiveColor,
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening["1"]
+				),
 				BackgroundTransparency = Spring(
 					Computed(function()
 						if Switched:get() then
@@ -145,7 +149,7 @@ return function(Props: Props)
 						end
 					end),
 					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
+					Themer.Theme.SpringDampening["1"]
 				),
 				Padding = UDim.new(0, 2),
 				CornerRadius = EffectiveCornerRadius,
@@ -162,7 +166,7 @@ return function(Props: Props)
 								end
 							end),
 							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Themer.Theme.SpringDampening["1"]
 						),
 						Position = Spring(
 							Computed(function()
@@ -173,7 +177,7 @@ return function(Props: Props)
 								end
 							end),
 							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Themer.Theme.SpringDampening["1"]
 						),
 						Size = UDim2.fromScale(0, 1),
 						AutomaticSize = Enum.AutomaticSize.None,
@@ -189,12 +193,12 @@ return function(Props: Props)
 								end
 							end),
 							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Themer.Theme.SpringDampening["1"]
 						),
 						BackgroundColor3 = Spring(
 							EffectiveBallColor,
 							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Themer.Theme.SpringDampening["1"]
 						),
 						AspectRatio = 1,
 						AspectType = Enum.AspectType.ScaleWithParentSize,

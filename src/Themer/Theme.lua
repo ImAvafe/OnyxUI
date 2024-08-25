@@ -117,7 +117,23 @@ export type Theme = {
 
 		[string]: number?,
 	}?,
-	SpringDampening: number?,
+	SpringDampening: {
+		Base: number?,
+		["0.1"]: number?,
+		["0.175"]: number?,
+		["0.25"]: number?,
+		["0.375"]: number?,
+		["0.5"]: number?,
+		["0.75"]: number?,
+		["1"]: number?,
+		["1.5"]: number?,
+		["2"]: number?,
+		["5"]: number?,
+		["10"]: number?,
+		Full: number?,
+
+		[string]: number?,
+	}?,
 	Emphasis: {
 		Light: number?,
 		Regular: number?,

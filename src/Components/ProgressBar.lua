@@ -80,7 +80,7 @@ return function(Props: Props)
 						end
 					end),
 					Themer.Theme.SpringSpeed["0.5"],
-					Themer.Theme.SpringDampening
+					Themer.Theme.SpringDampening["1"]
 				),
 				AnchorPoint = Computed(function()
 					if Inverted:get() then

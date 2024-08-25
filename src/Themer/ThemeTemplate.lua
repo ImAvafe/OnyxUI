@@ -154,7 +154,21 @@ local ThemeTemplate = {
 		["2"] = Value(nil),
 		Immediate = Value(1000),
 	},
-	SpringDampening = Value(1),
+	SpringDampening = {
+		Base = Value(40),
+		["0.1"] = Value(nil),
+		["0.175"] = Value(nil),
+		["0.25"] = Value(nil),
+		["0.375"] = Value(nil),
+		["0.5"] = Value(nil),
+		["0.75"] = Value(nil),
+		["1"] = Value(nil),
+		["1.5"] = Value(nil),
+		["2"] = Value(nil),
+		["5"] = Value(nil),
+		["10"] = Value(nil),
+		Full = Value(1000),
+	},
 	Sound = {
 		Hover = Value(New "Sound" {
 			SoundId = "rbxassetid://10066936758",

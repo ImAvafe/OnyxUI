@@ -64,11 +64,15 @@ return function(Props: Props)
 		end),
 		BackgroundColor3 = Themer.Theme.Colors.Neutral.Dark,
 		StrokeEnabled = EnsuredProps.RingEnabled,
-		StrokeColor = Spring(EnsuredProps.RingColor, Themer.Theme.SpringSpeed["0.5"], Themer.Theme.SpringDampening),
+		StrokeColor = Spring(
+			EnsuredProps.RingColor,
+			Themer.Theme.SpringSpeed["0.5"],
+			Themer.Theme.SpringDampening["1"]
+		),
 		StrokeThickness = Spring(
 			EnsuredProps.RingThickness,
 			Themer.Theme.SpringSpeed["0.5"],
-			Themer.Theme.SpringDampening
+			Themer.Theme.SpringDampening["1"]
 		),
 		CornerRadius = Computed(function()
 			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
@@ -82,7 +86,7 @@ return function(Props: Props)
 						BackgroundColor3 = Spring(
 							EnsuredProps.IndicatorColor,
 							Themer.Theme.SpringSpeed["0.5"],
-							Themer.Theme.SpringDampening
+							Themer.Theme.SpringDampening["1"]
 						),
 						BackgroundTransparency = 0,
 						Size = UDim2.fromScale(0.25, 0.25),

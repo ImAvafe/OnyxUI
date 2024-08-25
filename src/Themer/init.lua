@@ -156,6 +156,23 @@ function Themer:_ProcessSpringSpeed(Theme: Theme)
 	end
 end
 
+function Themer:_ProcessMultipliers(Theme: Theme, Key: string)
+	local Unit = Theme[Key]
+	if Unit ~= nil then
+		local Base = Unit.Base
+		if Base ~= nil then
+			for MultiplierKey, _ in pairs(ThemeTemplate[Key]) do
+				local Multiplier = tonumber(MultiplierKey)
+				if Multiplier ~= nil then
+					if Unit[MultiplierKey] == nil then
+						Unit[MultiplierKey] = Base * Multiplier
+					end
+				end
+			end
+		end
+	end
+end
+
 --[=[
 	@method Set
 	@within Themer
@@ -173,6 +190,8 @@ function Themer:Set(Theme: Theme)
 	self:_ProcessCornerRadii(Theme)
 	self:_ProcessStrokeThickness(Theme)
 	self:_ProcessSpringSpeed(Theme)
+	self:_ProcessMultipliers(Theme, "SpringDampening")
+
 	Util.ReconcileValues(self.Theme, Theme)
 end
 

@@ -73,7 +73,7 @@ return function(Props: Props)
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
+			Themer.Theme.SpringDampening["1"]
 		),
 		Disabled = Disabled,
 		CornerRadius = Computed(function()
@@ -113,7 +113,7 @@ return function(Props: Props)
 						end
 					end),
 					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
+					Themer.Theme.SpringDampening["1"]
 				),
 				ImageColor3 = Computed(function()
 					return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
@@ -123,7 +123,7 @@ return function(Props: Props)
 						return (Checked:get() and 0) or -30
 					end),
 					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
+					Themer.Theme.SpringDampening["1"]
 				),
 			},
 		},

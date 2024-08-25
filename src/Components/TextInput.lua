@@ -123,7 +123,7 @@ return function(Props: Props)
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
+			Themer.Theme.SpringDampening["1"]
 		),
 		StrokeTransparency = Spring(
 			Computed(function()
@@ -137,7 +137,7 @@ return function(Props: Props)
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
+			Themer.Theme.SpringDampening["1"]
 		),
 		AutomaticSize = Enum.AutomaticSize.XY,
 		AutoLocalize = false,
@@ -150,7 +150,7 @@ return function(Props: Props)
 		[Cleanup] = Observers,
 	}))) {
 		Text = Text,
-		TextColor3 = Spring(TextColor3, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		TextColor3 = Spring(TextColor3, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		TextSize = TextSize,
 		FontFace = FontFace,
 		PlaceholderColor3 = PlaceholderColor3,
@@ -158,7 +158,7 @@ return function(Props: Props)
 		TextXAlignment = TextXAlignment,
 		TextYAlignment = TextYAlignment,
 		ClearTextOnFocus = ClearTextOnFocus,
-		TextTransparency = Spring(TextTransparency, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		TextTransparency = Spring(TextTransparency, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		MultiLine = Props.MultiLine,
 		TextWrapped = Props.TextWrapped,
 
