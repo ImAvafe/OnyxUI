@@ -39,6 +39,7 @@ return {
 			ListPadding = Computed(function()
 				return UDim.new(0, Themer.Theme.Spacing["1"]:get())
 			end),
+			ListFillDirection = Enum.FillDirection.Horizontal,
 
 			[Children] = {
 				Avatar {

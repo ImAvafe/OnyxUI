@@ -14,7 +14,7 @@ return {
 			Parent = Parent,
 			AutomaticSize = Enum.AutomaticSize.XY,
 			ListEnabled = true,
-			ListFillDirection = Enum.FillDirection.Vertical,
+			ListFillDirection = Enum.FillDirection.Horizontal,
 			ListPadding = Computed(function()
 				return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 			end),
