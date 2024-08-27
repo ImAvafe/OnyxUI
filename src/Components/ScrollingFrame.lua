@@ -1,7 +1,7 @@
 --[=[
 		@class ScrollingFrame
 		
-		For making contents scrollable. Equivalent to Roblox's `ScrollingFrame` instance.
+		For making Content scrollable. Equivalent to Roblox's `ScrollingFrame` instance.
 ]=]
 
 local OnyxUI = script.Parent.Parent

@@ -18,11 +18,12 @@ local Frame = require(script.Parent.Frame)
 local IconText = require(script.Parent.IconText)
 
 export type Props = Frame.Props & {
-	Contents: PubTypes.CanBeState<{ string }>?,
-	ContentsWrapped: PubTypes.CanBeState<boolean>?,
+	Content: PubTypes.CanBeState<{ string }>?,
+	ContentWrapped: PubTypes.CanBeState<boolean>?,
 	Color: PubTypes.CanBeState<Color3>?,
 	ContentColor: PubTypes.CanBeState<Color3>?,
 	ContentSize: PubTypes.CanBeState<number>?,
+	ContentWrapped: PubTypes.CanBeState<number>?,
 }
 
 --[=[
@@ -33,8 +34,8 @@ export type Props = Frame.Props & {
 		@field ... BadgeProps
 ]=]
 return function(Props: Props)
-	local Contents = Util.EnsureValue(Props.Contents, "table", {})
-	local ContentWraps = Util.EnsureValue(Props.ContentsWrapped, "boolean", true)
+	local Content = Util.EnsureValue(Props.Content, "table", {})
+	local ContentWrapped = Util.EnsureValue(Props.ContentWrapped, "boolean", true)
 	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
 	local ContentColor = Util.EnsureValue(
 		Props.ContentColor,
@@ -68,14 +69,14 @@ return function(Props: Props)
 		ListFillDirection = Enum.FillDirection.Horizontal,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
-		ListWraps = ContentWraps,
+		ListWraps = ContentWrapped,
 
 		[Children] = {
 			IconText {
-				Content = Contents,
+				Content = Content,
 				ContentColor = ContentColor,
 				ContentSize = ContentSize,
-				ContentWraps = ContentWraps,
+				ContentWrapped = ContentWrapped,
 				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 				ListVerticalAlignment = Enum.VerticalAlignment.Center,
 				ListPadding = Computed(function()

@@ -68,7 +68,7 @@ return function(Props)
 				},
 			},
 			Button {
-				Contents = { "Close" },
+				Content = { "Close" },
 				Color = Themer.Theme.Colors.Primary.Main,
 				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,

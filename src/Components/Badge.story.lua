@@ -35,22 +35,22 @@ return {
 
 			[Children] = {
 				Badge {
-					Contents = { "Badge" },
+					Content = { "Badge" },
 				},
 				Badge {
-					Contents = { " PREMIUM" },
+					Content = { " PREMIUM" },
 					Color = Util.Colors.Amber["500"],
 				},
 				Badge {
-					Contents = { "rbxassetid://103798699021677", "-50%" },
+					Content = { "rbxassetid://103798699021677", "-50%" },
 					Color = Util.Colors.Red["500"],
 				},
 				Badge {
-					Contents = { "rbxassetid://140490867216758", "LIMITED" },
+					Content = { "rbxassetid://140490867216758", "LIMITED" },
 					Color = Util.Colors.Red["500"],
 				},
 				Badge {
-					Contents = Computed(function()
+					Content = Computed(function()
 						if NotificationCount:get() >= 100 then
 							return { "99+" }
 						else
@@ -72,7 +72,7 @@ return {
 							Text = "It's also proportional alongside text.",
 						},
 						Badge {
-							Contents = { "rbxassetid://137979359742656", "TRUE" },
+							Content = { "rbxassetid://137979359742656", "TRUE" },
 							Color = Util.Colors.Green["500"],
 						},
 					},

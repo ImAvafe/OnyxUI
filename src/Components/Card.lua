@@ -1,7 +1,7 @@
 --[=[
 		@class Card
 		
-		Useful for grouping and displaying contents in a user friendly way.
+		Useful for grouping and displaying Content in a user friendly way.
 ]=]
 
 local OnyxUI = script.Parent.Parent

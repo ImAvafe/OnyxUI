@@ -44,7 +44,7 @@ return function(Props: Props)
 		PaddingRight = Padding,
 		PaddingTop = Padding,
 		PaddingBottom = Padding,
-		Contents = Computed(function()
+		Content = Computed(function()
 			return { Image:get() }
 		end),
 	}))

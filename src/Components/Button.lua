@@ -24,7 +24,7 @@ local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
 export type Props = BaseButton.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
-	Contents: PubTypes.CanBeState<{ string }>?,
+	Content: PubTypes.CanBeState<{ string }>?,
 	Style: PubTypes.CanBeState<string>?,
 	Color: PubTypes.CanBeState<Color3>?,
 	ContentColor: PubTypes.CanBeState<Color3>?,
@@ -41,7 +41,7 @@ export type Props = BaseButton.Props & {
 ]=]
 return function(Props: Props)
 	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
-	local Contents = Util.EnsureValue(Props.Contents, "table", {})
+	local Content = Util.EnsureValue(Props.Content, "table", {})
 	local Style = Util.EnsureValue(Props.Style, "string", "Filled")
 	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Main)
 	local ContentColor = Util.EnsureValue(
@@ -140,7 +140,7 @@ return function(Props: Props)
 
 		[Children] = {
 			IconText {
-				Content = Contents,
+				Content = Content,
 				ContentColor = EffectiveContentColor,
 				ContentTransparency = EffectiveContentTransparency,
 				ContentSize = ContentSize,

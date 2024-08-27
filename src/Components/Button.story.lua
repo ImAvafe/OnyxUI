@@ -23,37 +23,37 @@ return {
 
 			[Children] = {
 				Button {
-					Contents = { "Button" },
+					Content = { "Button" },
 				},
 				Button {
-					Contents = { "Button" },
+					Content = { "Button" },
 					Color = Themer.Theme.Colors.Primary.Main,
 				},
 				Button {
-					Contents = { "Button" },
+					Content = { "Button" },
 					Style = "Outlined",
 					Color = Themer.Theme.Colors.Primary.Main,
 				},
 				Button {
-					Contents = { "rbxassetid://11560341132", "Purchase" },
+					Content = { "rbxassetid://11560341132", "Purchase" },
 					Color = Color3.fromRGB(86, 255, 70),
 				},
 				Button {
-					Contents = { "rbxassetid://13405228418", "Delete" },
+					Content = { "rbxassetid://13405228418", "Delete" },
 					Style = "Outlined",
 					Color = Themer.Theme.Colors.Error.Main,
 				},
 				Button {
-					Contents = { "Ghost" },
+					Content = { "Ghost" },
 					Style = "Ghost",
 				},
 				Button {
-					Contents = { "rbxassetid://11560341132", "Bobux" },
+					Content = { "rbxassetid://11560341132", "Bobux" },
 					Color = Color3.fromRGB(86, 255, 70),
 					Disabled = true,
 				},
 				Button {
-					Contents = { "Testing" },
+					Content = { "Testing" },
 					Color = Color3.fromRGB(86, 255, 70),
 					Disabled = true,
 					Style = "Outlined",
