@@ -2,6 +2,8 @@
 		@class Image
 		
 		Equivalent to Roblox's `ImageLabel`.
+
+		![Preview](../components/image.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

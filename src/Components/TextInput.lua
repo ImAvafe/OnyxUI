@@ -2,6 +2,8 @@
 		@class TextInput
 		
 		For letting the user input text.
+
+		![Preview](../components/textInput.png)
 ]=]
 
 local SoundService = game:GetService("SoundService")

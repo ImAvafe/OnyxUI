@@ -2,6 +2,8 @@
 		@class Icon
 		
 		It's an icon, what else do I say? 💀💀
+
+		![Preview](../components/icon.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

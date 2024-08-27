@@ -2,6 +2,8 @@
 		@class IconButton
 		
 		Like [`Button`](/api/Button), but for a single [`Icon`](/api/Icon).
+
+		![Preview](../components/iconButton.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

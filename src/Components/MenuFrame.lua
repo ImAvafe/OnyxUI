@@ -2,6 +2,8 @@
 		@class MenuFrame
 		
 		For displaying top-level menus to the user.
+
+		![Preview](../components/menuFrame.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

@@ -2,6 +2,8 @@
 		@class Avatar
 		
 		Useful for displaying player headshots and profile pictures. And optionally, user status.
+
+		![Preview](../components/avatar.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

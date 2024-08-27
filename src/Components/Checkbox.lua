@@ -2,6 +2,8 @@
 		@class Checkbox
 		
 		Useful for settings, to-do lists, and anything needing a "Check!"
+
+		![Preview](../components/checkbox.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

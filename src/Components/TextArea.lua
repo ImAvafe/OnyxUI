@@ -2,6 +2,8 @@
 		@class TextArea
 		
 		Like [`TextInput`](/api/TextInput), but dedicated for multi-line use-cases.
+
+		![Preview](../components/textArea.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent
