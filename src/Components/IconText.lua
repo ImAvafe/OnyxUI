@@ -1,3 +1,9 @@
+--[=[
+		@class IconText
+		
+		For displaying both text and icons alongside each other as one seamless body.
+]=]
+
 local OnyxUI = require(script.Parent.Parent)
 local Util = require(OnyxUI.Util)
 local PubTypes = require(OnyxUI.Util.PubTypes)
@@ -22,6 +28,13 @@ export type Props = Frame.Props & {
 	ContentFontFace: PubTypes.CanBeState<Font>?,
 }
 
+--[=[
+		@within IconText
+		@interface IconTextProps
+
+		@field ... FrameProps
+		@field ... IconTextProps
+]=]
 return function(Props: Props)
 	local Content = Util.EnsureValue(Props.Content, "table", {})
 	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])

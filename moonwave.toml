@@ -28,6 +28,7 @@ classes = [
   "AutoScaleFrame",
   "Image",
   "NumberSpinner",
+  "IconText",
 ]
 
 [docusaurus]
