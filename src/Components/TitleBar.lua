@@ -2,8 +2,6 @@
 		@class TitleBar
 		
 		For displaying a title, and an optional close button. Pairs with [`MenuFrame`](/api/MenuFrame).
-
-		![Preview](../components/titleBar.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

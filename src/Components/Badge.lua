@@ -3,7 +3,6 @@
 		
 		Used to inform the user of something's status. E.g. a notification indicator or discount tag.
 
-		![Preview](../components/badge.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

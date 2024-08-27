@@ -2,8 +2,6 @@
 		@class IconText
 		
 		For displaying both text and icons alongside each other as one seamless body.
-
-		![Preview](../components/iconText.png)
 ]=]
 
 local OnyxUI = require(script.Parent.Parent)

@@ -2,8 +2,6 @@
 		@class Card
 		
 		Useful for grouping and displaying Content in a user friendly way.
-
-		![Preview](../components/card.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

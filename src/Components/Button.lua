@@ -2,8 +2,6 @@
 		@class Button
 		
 		A robust button component, supporting text and icons, and multiple variants.
-
-		![Preview](../components/button.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

@@ -2,8 +2,6 @@
 		@class Divider
 		
 		Useful for separating UI into sections.
-
-		![Preview](../components/card.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

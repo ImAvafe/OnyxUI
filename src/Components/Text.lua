@@ -2,8 +2,6 @@
 		@class Text
 		
 		For displaying text. *Lorem ipsum dolo..*
-
-		![Preview](../components/text.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

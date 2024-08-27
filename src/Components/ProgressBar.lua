@@ -2,8 +2,6 @@
 		@class ProgressBar
 		
 		Useful for communicating progress towards goals.
-
-		![Preview](../components/progressBar.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent

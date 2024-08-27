@@ -2,8 +2,6 @@
 		@class SwitchInput
 		
 		Useful for letting the user switch things on / off.
-
-		![Preview](../components/switchInput.png)
 ]=]
 
 local OnyxUI = script.Parent.Parent
