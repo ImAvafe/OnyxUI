@@ -13,11 +13,9 @@ local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
-local ForValues = Fusion.ForValues
 
 local Frame = require(script.Parent.Frame)
-local Text = require(script.Parent.Text)
-local Icon = require(script.Parent.Icon)
+local IconText = require(script.Parent.IconText)
 
 export type Props = Frame.Props & {
 	Contents: PubTypes.CanBeState<{ string }>?,
@@ -73,27 +71,17 @@ return function(Props: Props)
 		ListWraps = ContentWraps,
 
 		[Children] = {
-			ForValues(Contents, function(ContentString: string)
-				if string.find(ContentString, "rbxassetid://", 1, true) then
-					return Icon {
-						Image = ContentString,
-						ImageColor3 = ContentColor,
-						Size = Computed(function()
-							return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
-						end),
-					}
-				else
-					return Text {
-						Text = ContentString,
-						TextColor3 = ContentColor,
-						TextSize = ContentSize,
-						FontFace = Computed(function()
-							return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Bold:get())
-						end),
-						TextWrapped = ContentWraps,
-					}
-				end
-			end, Fusion.cleanup),
+			IconText {
+				Content = Contents,
+				ContentColor = ContentColor,
+				ContentSize = ContentSize,
+				ContentWraps = ContentWraps,
+				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+				ListVerticalAlignment = Enum.VerticalAlignment.Center,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+				end),
+			},
 		},
 	}))
 end

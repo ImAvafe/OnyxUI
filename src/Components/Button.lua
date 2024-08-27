@@ -12,14 +12,12 @@ local Themer = require(OnyxUI.Themer)
 local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
-local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Value = Fusion.Value
 
 local BaseButton = require(script.Parent.BaseButton)
-local Text = require(script.Parent.Text)
-local Icon = require(script.Parent.Icon)
+local IconText = require(script.Parent.IconText)
 
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
@@ -31,7 +29,6 @@ export type Props = BaseButton.Props & {
 	Color: PubTypes.CanBeState<Color3>?,
 	ContentColor: PubTypes.CanBeState<Color3>?,
 	ContentSize: PubTypes.CanBeState<number>?,
-	ContentAutoLocalize: PubTypes.CanBeState<boolean>?,
 	IsHolding: PubTypes.CanBeState<boolean>?,
 }
 
@@ -55,7 +52,6 @@ return function(Props: Props)
 		end)
 	)
 	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
-	local ContentAutoLocalize = Util.EnsureValue(Props.ContentAutoLocalize, "boolean", true)
 
 	local IsHolding = Value(false)
 	local IsHovering = Value(false)
@@ -125,9 +121,6 @@ return function(Props: Props)
 			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
 		end),
 		ListEnabled = true,
-		ListPadding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
@@ -146,27 +139,17 @@ return function(Props: Props)
 		IsHovering = IsHovering,
 
 		[Children] = {
-			ForValues(Contents, function(ContentString: string)
-				if string.find(ContentString, "rbxassetid://", 1, true) then
-					return Icon {
-						Image = ContentString,
-						ImageColor3 = EffectiveContentColor,
-						Size = Computed(function()
-							return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
-						end),
-						ImageTransparency = EffectiveContentTransparency,
-					}
-				else
-					return Text {
-						Text = ContentString,
-						TextColor3 = EffectiveContentColor,
-						TextSize = ContentSize,
-						TextTransparency = EffectiveContentTransparency,
-						TextWrapped = false,
-						AutoLocalize = ContentAutoLocalize,
-					}
-				end
-			end, Fusion.cleanup),
+			IconText {
+				Content = Contents,
+				ContentColor = EffectiveContentColor,
+				ContentTransparency = EffectiveContentTransparency,
+				ContentSize = ContentSize,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+				end),
+				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+				ListVerticalAlignment = Enum.VerticalAlignment.Center,
+			},
 		},
 	}))
 end

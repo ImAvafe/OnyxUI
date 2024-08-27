@@ -12,12 +12,10 @@ local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
-local ForValues = Fusion.ForValues
 
 local Frame = require(script.Parent.Frame)
-local Text = require(script.Parent.Text)
 local IconButton = require(script.Parent.IconButton)
-local Icon = require(script.Parent.Icon)
+local IconText = require(script.Parent.IconText)
 
 export type Props = Frame.Props & {
 	Content: PubTypes.CanBeState<{ string }>?,
@@ -58,38 +56,18 @@ return function(Props: Props)
 		AutomaticSize = Enum.AutomaticSize.Y,
 
 		[Children] = {
-			Frame {
-				Name = "Content",
+			IconText {
+				Name = "Title",
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = UDim2.fromScale(0.5, 0),
-				ListEnabled = true,
-				ListFillDirection = Enum.FillDirection.Horizontal,
+				Content = Content,
+				ContentColor = ContentColor,
+				ContentSize = ContentSize,
+				ContentFontFace = ContentFontFace,
+				ContentWrapped = false,
 				ListPadding = Computed(function()
 					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 				end),
-
-				[Children] = {
-					ForValues(Content, function(ContentString: string)
-						if string.find(ContentString, "rbxassetid://", 1, true) then
-							return Icon {
-								Image = ContentString,
-								ImageColor3 = ContentColor,
-								Size = Computed(function()
-									return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
-								end),
-							}
-						else
-							return Text {
-								Text = ContentString,
-								TextColor3 = ContentColor,
-								TextSize = ContentSize,
-								FontFace = ContentFontFace,
-								TextWrapped = false,
-								AutoLocalize = Props.AutoLocalize,
-							}
-						end
-					end, Fusion.cleanup),
-				},
 			},
 			Computed(function()
 				if CloseButtonDisabled:get() == false then
