@@ -15,10 +15,13 @@ return {
 			Size = UDim2.fromOffset(250, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			ListEnabled = true,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			end),
+			ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 			Padding = Computed(function()
 				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 			end),
-			ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 			[Children] = {
 				TextInput {},
