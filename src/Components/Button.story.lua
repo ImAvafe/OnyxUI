@@ -46,6 +46,7 @@ return {
 				Button {
 					Content = { "Ghost" },
 					Style = "Ghost",
+					Color = Themer.Theme.Colors.BaseContent.Main,
 				},
 				Button {
 					Content = { "rbxassetid://11560341132", "Bobux" },
