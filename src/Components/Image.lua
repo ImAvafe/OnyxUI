@@ -27,6 +27,22 @@ export type Props = Base.Props & {
 	TileSize: PubTypes.CanBeState<UDim2>?,
 }
 
+--[=[
+		@within Image
+		@interface ImageProps
+
+		@field ... BaseProps
+		@field Image CanBeState<string>?
+		@field FallbackImage CanBeState<string>?
+		@field ImageColor3 CanBeState<Color3>?
+		@field ImageTransparency CanBeState<number>?
+		@field ImageRectSize CanBeState<Vector2>?
+		@field ResampleMode CanBeState<Enum.ResamplerMode>?
+		@field ScaleType CanBeState<Enum.ScaleType>?
+		@field SliceCenter CanBeState<Rect>?
+		@field SliceScale CanBeState<number>?
+		@field TileSize CanBeState<UDim2>?
+]=]
 return function(Props: Props)
 	local FallbackImage =
 		Util.EnsureValue(Props.FallbackImage, "string", "rbxasset://textures/ui/GuiImagePlaceholder.png")

@@ -39,7 +39,21 @@ export type Props = Base.Props & {
 		@interface ScrollingFrameProps
 
 		@field ... BaseProps
-		@field ... ScrollingFrameProps
+		@field AutomaticCanvasSize CanBeState<Enum.AutomaticSize>?
+		@field BottomImage CanBeState<string>?
+		@field CanvasPosition CanBeState<Vector2>?
+		@field CanvasSize CanBeState<UDim2>?
+		@field ElasticBehavior CanBeState<Enum.ElasticBehavior>?
+		@field HorizontalScrollBarInset CanBeState<Enum.ScrollBarInset>?
+		@field MidImage CanBeState<string>?
+		@field ScrollBarImageColor3 CanBeState<Color3>?
+		@field ScrollBarImageTransparency CanBeState<number>?
+		@field ScrollBarThickness CanBeState<number>?
+		@field ScrollingDirection CanBeState<Enum.ScrollingDirection>?
+		@field ScrollingEnabled CanBeState<boolean>?
+		@field TopImage CanBeState<string>?
+		@field VerticalScrollBarInset CanBeState<Enum.ScrollBarInset>?
+		@field VerticalScrollBarPosition CanBeState<Enum.VerticalScrollBarPosition>?
 ]=]
 return function(Props: Props)
 	local BottomImage = Util.EnsureValue(

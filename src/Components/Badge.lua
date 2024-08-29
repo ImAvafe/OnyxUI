@@ -32,7 +32,12 @@ export type Props = Frame.Props & {
 		@interface BadgeProps
 
 		@field ... FrameProps
-		@field ... BadgeProps
+		@field Content CanBeState<{ string }>?
+		@field ContentWrapped CanBeState<boolean>?
+		@field Color CanBeState<Color3>?
+		@field ContentColor CanBeState<Color3>?
+		@field ContentSize CanBeState<number>?
+		@field ContentWrapped CanBeState<number>?
 ]=]
 return function(Props: Props)
 	local Content = Util.EnsureValue(Props.Content, "table", {})

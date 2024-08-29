@@ -16,7 +16,6 @@ export type Props = Base.Props & {}
 		@interface FrameProps
 
 		@field ... BaseProps
-		@field ... FrameProps
 ]=]
 return function(Props: Props)
 	return Base(Util.CombineProps(Props, {

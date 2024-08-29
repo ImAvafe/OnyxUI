@@ -38,7 +38,21 @@ export type Props = Base.Props & {
 		@interface TextProps
 
 		@field ... BaseProps
-		@field ... TextProps
+		@field Text CanBeState<string>?
+		@field TextColor3 CanBeState<Color3>?
+		@field TextSize CanBeState<number>?
+		@field RichText CanBeState<boolean>?
+		@field FontFace CanBeState<Font>?
+		@field TextWrapped CanBeState<boolean>?
+		@field TextXAlignment CanBeState<Enum.TextXAlignment>?
+		@field TextYAlignment CanBeState<Enum.TextYAlignment>?
+		@field Font CanBeState<Enum.Font>?
+		@field TextScaled CanBeState<boolean>?
+		@field TextTruncate CanBeState<boolean>?
+		@field LineHeight CanBeState<number>?
+		@field LocalizedText CanBeState<string>?
+		@field MaxVisibleGraphemes CanBeState<number>?
+		@field TextTransparency CanBeState<number>?
 ]=]
 return function(Props: Props)
 	local TextColor3 = Util.EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)

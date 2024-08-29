@@ -33,7 +33,9 @@ local DISABLED_CONTENT_TRANSPARENCY = 0.75
 		@interface CheckboxProps
 
 		@field ... BaseButtonProps
-		@field ... CheckboxProps
+		@field Checked CanBeState<boolean>?
+		@field Icon CanBeState<string>?
+		@field Color CanBeState<Color3>?
 ]=]
 return function(Props: Props)
 	local Checked = Util.EnsureValue(Props.Checked, "boolean", false)

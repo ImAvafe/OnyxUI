@@ -35,7 +35,15 @@ export type Props = Image.Props & {
 		@interface AvatarProps
 
 		@field ... ImageProps
-		@field ... AvatarProps
+		@field Image CanBeState<string>?
+		@field RingEnabled CanBeState<boolean>?
+		@field RingColor CanBeState<Color3>?
+		@field RingThickness CanBeState<number>?
+		@field IndicatorEnabled CanBeState<boolean>?
+		@field IndicatorColor CanBeState<Color3>?
+		@field IndicatorIcon CanBeState<string>?
+		@field IndicatorIconColor CanBeState<Color3>?
+		@field IndicatorCornerRadius CanBeState<UDim>?
 ]=]
 return function(Props: Props)
 	local EnsuredProps = {

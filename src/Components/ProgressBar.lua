@@ -30,7 +30,11 @@ export type Props = CanvasGroup.Props & {
 		@interface ProgressBarProps
 
 		@field ... CanvasGroupProps
-		@field ... ProgressBarProps
+		@field Progress CanBeState<number>?
+		@field Color CanBeState<Color3>?
+		@field Direction CanBeState<Enum.FillDirection>?
+		@field Inverted CanBeState<boolean>?
+		@field Length CanBeState<UDim>?
 ]=]
 return function(Props: Props)
 	local Progress = Util.EnsureValue(Props.Progress, "number", 0)

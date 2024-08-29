@@ -17,12 +17,6 @@ local Button = require(script.Parent.Button)
 
 export type Props = Button.Props & {
 	Image: PubTypes.CanBeState<string>?,
-	Disabled: PubTypes.CanBeState<boolean>?,
-	Style: PubTypes.CanBeState<string>?,
-	Color: PubTypes.CanBeState<Color3>?,
-	ContentColor: PubTypes.CanBeState<Color3>?,
-	ContentSize: PubTypes.CanBeState<number>?,
-	IsHolding: PubTypes.CanBeState<boolean>?,
 }
 
 --[=[
@@ -30,7 +24,7 @@ export type Props = Button.Props & {
 		@interface IconButtonProps
 
 		@field ... ButtonProps
-		@field ... IconButtonProps
+		@field Image CanBeState<string>?
 ]=]
 return function(Props: Props)
 	local Image = Util.EnsureValue(Props.Image, "string", "")

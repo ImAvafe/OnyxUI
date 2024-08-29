@@ -23,7 +23,16 @@ local Base = require(script.Parent.Base)
 		@interface BaseButtonProps
 
 		@field ... BaseProps
-		@field ... BaseButtonProps
+		@field Disabled CanBeState<boolean>?
+		@field OnActivated CanBeState<() -> ()>?
+		@field OnMouseEnter CanBeState<() -> ()>?
+		@field OnMouseLeave CanBeState<() -> ()>?
+		@field OnMouseButton1Down CanBeState<() -> ()>?
+		@field OnMouseButton1Up CanBeState<() -> ()>?
+		@field IsHovering CanBeState<boolean>?
+		@field IsHolding CanBeState<boolean>?
+		@field HoverSound CanBeState<Sound>?
+		@field ClickSound CanBeState<Sound>?
 ]=]
 export type Props = Base.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,

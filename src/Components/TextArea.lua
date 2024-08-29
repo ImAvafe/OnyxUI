@@ -16,7 +16,6 @@ export type Props = TextInput.Props & {}
 		@interface TextAreaProps
 
 		@field ... TextInputProps
-		@field ... TextAreaProps
 ]=]
 return function(Props: Props)
 	return TextInput(Util.CombineProps(Props, {

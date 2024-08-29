@@ -28,14 +28,31 @@ local Base = require(script.Parent.Base)
 		@interface TextInputProps
 
 		@field ... BaseProps
-		@field ... TextInputProps
+		@field Disabled CanBeState<boolean>?
+		@field CharacterLimit CanBeState<number>?
+		@field Color CanBeState<Color3>?
+		@field PlaceholderText CanBeState<string>?
+		@field Text CanBeState<string>?
+		@field ClearTextOnFocus CanBeState<boolean>?
+		@field TextWrapped CanBeState<boolean>?
+		@field MultiLine CanBeState<boolean>?
+		@field TextSize CanBeState<number>?
+		@field TextColor3 CanBeState<Color3>?
+		@field FontFace CanBeState<Font>?
+		@field PlaceholderColor3 CanBeState<Color3>?
+		@field TextXAlignment CanBeState<Enum.TextXAlignment>?
+		@field TextYAlignment CanBeState<Enum.TextYAlignment>?
+		@field TextTransparency CanBeState<number>?
+		@field IsFocused CanBeState<boolean>?
+		@field OnFocused CanBeState<() -> ()>?
+		@field OnFocusLost CanBeState<() -> ()>?
 ]=]
 export type Props = Base.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
-	Text: PubTypes.CanBeState<string>?,
-	PlaceholderText: PubTypes.CanBeState<string>?,
-	Color: PubTypes.CanBeState<Color3>?,
 	CharacterLimit: PubTypes.CanBeState<number>?,
+	Color: PubTypes.CanBeState<Color3>?,
+	PlaceholderText: PubTypes.CanBeState<string>?,
+	Text: PubTypes.CanBeState<string>?,
 	ClearTextOnFocus: PubTypes.CanBeState<boolean>?,
 	TextWrapped: PubTypes.CanBeState<boolean>?,
 	MultiLine: PubTypes.CanBeState<boolean>?,

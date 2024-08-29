@@ -31,7 +31,9 @@ export type Props = Frame.Props & {
 		@interface SwitchInputProps
 
 		@field ... FrameProps
-		@field ... SwitchInputProps
+		@field Switched CanBeState<boolean>?
+		@field Disabled CanBeState<boolean>?
+		@field Color CanBeState<Color3>?
 ]=]
 return function(Props: Props)
 	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)

@@ -23,7 +23,8 @@ export type Props = Base.Props & {
 		@interface CanvasGroupProps
 
 		@field ... BaseProps
-		@field ... CanvasGroupProps
+		@field GroupTransparency CanBeState<number>?
+		@field GroupColor3 CanBeState<Color3>?
 ]=]
 return function(Props: Props)
 	return Hydrate(Base(Util.CombineProps(Props, {

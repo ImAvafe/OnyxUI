@@ -37,7 +37,14 @@ export type Props = BaseButton.Props & {
 		@interface ButtonProps
 
 		@field ... BaseProps
-		@field ... ButtonProps
+
+		@field Disabled CanBeState<boolean>?
+		@field Content CanBeState<{ string }>?
+		@field Style CanBeState<string>?
+		@field Color CanBeState<Color3>?
+		@field ContentColor CanBeState<Color3>?
+		@field ContentSize CanBeState<number>?
+		@field IsHolding CanBeState<boolean>?
 ]=]
 return function(Props: Props)
 	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)

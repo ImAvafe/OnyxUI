@@ -18,7 +18,6 @@ export type Props = SwitchInput.Props & {}
 		@interface SwitchGroupProps
 
 		@field ... SwitchInputProps
-		@field ... SwitchGroupProps
 ]=]
 return function(Props: Props)
 	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)

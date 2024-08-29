@@ -20,7 +20,6 @@ export type Props = Image.Props & {}
 		@interface IconProps
 
 		@field ... ImageProps
-		@field ... IconProps
 ]=]
 return function(Props: Props)
 	return Image(Util.CombineProps(Props, {

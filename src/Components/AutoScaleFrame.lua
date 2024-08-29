@@ -31,7 +31,10 @@ export type Props = Base.Props & {
 		@interface AutoScaleFrameProps
 
 		@field ... BaseProps
-		@field ... AutoScaleFrameProps
+		@field BaseResolution CanBeState<Vector2>?
+		@field MinScale CanBeState<number>?
+		@field MaxScale CanBeState<number>?
+		@field ScaleMultiplier CanBeState<number>?
 ]=]
 return function(Props: Props)
 	local BaseResolution = Util.EnsureValue(Props.BaseResolution, "Vector2", Vector2.new())

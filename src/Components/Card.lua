@@ -20,7 +20,6 @@ export type Props = Frame.Props & {}
 		@interface CardProps
 
 		@field ... FrameProps
-		@field ... CardProps
 ]=]
 return function(Props: Props)
 	return Frame(Util.CombineProps(Props, {

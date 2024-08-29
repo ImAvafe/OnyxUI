@@ -29,7 +29,11 @@ type Props = Frame.Props & {
 		@interface DividerProps
 
 		@field ... FrameProps
-		@field ... DividerProps
+		@field Length CanBeState<UDim>?
+		@field FillDirection CanBeState<Enum.FillDirection>?
+		@field Color CanBeState<Color3>?
+		@field Transparency CanBeState<number>?
+		@field Spacing CanBeState<UDim>?
 ]=]
 return function(Props: Props)
 	local Length = Util.EnsureValue(Props.Length, "UDim", UDim.new(1, 0))

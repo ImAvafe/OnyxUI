@@ -22,7 +22,6 @@ type Props = CanvasGroup.Props & {}
 		@interface MenuFrameProps
 
 		@field ... CanvasGroupProps
-		@field ... MenuFrameProps
 ]=]
 return function(Props: Props)
 	local AutomaticSize = Value(Enum.AutomaticSize.None)

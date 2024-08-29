@@ -25,7 +25,6 @@ export type Props = Frame.Props & {
 	CloseButtonIcon: PubTypes.CanBeState<string>?,
 	CloseButtonDisabled: PubTypes.CanBeState<boolean>?,
 	OnClose: PubTypes.CanBeState<() -> ()>?,
-	AutoLocalize: PubTypes.CanBeState<boolean>?,
 }
 
 --[=[
@@ -33,7 +32,13 @@ export type Props = Frame.Props & {
 		@interface TitleBarProps
 
 		@field ... FrameProps
-		@field ... TitleBarProps
+		@field Content CanBeState<{ string }>?
+		@field ContentSize CanBeState<number>?
+		@field ContentColor CanBeState<Color3>?
+		@field ContentFontFace CanBeState<Font>?
+		@field CloseButtonIcon CanBeState<string>?
+		@field CloseButtonDisabled CanBeState<boolean>?
+		@field OnClose CanBeState<() -> ()>?
 ]=]
 return function(Props: Props)
 	local Content = Util.EnsureValue(Props.Content, "table", {})

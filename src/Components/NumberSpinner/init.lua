@@ -35,7 +35,12 @@ export type Props = Text.Props & {
 		@interface NumberSpinnerProps
 
 		@field ... TextProps
-		@field ... NumberSpinnerProps
+		@field Value CanBeState<number>?
+		@field Prefix CanBeState<string>?
+		@field Suffix CanBeState<string>?
+		@field Decimals CanBeState<boolean>?
+		@field Duration CanBeState<number>?
+		@field Commas CanBeState<boolean>?
 ]=]
 return function(Props: Props)
 	local TextSize = Util.EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])

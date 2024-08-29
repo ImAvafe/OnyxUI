@@ -33,7 +33,13 @@ export type Props = Frame.Props & {
 		@interface IconTextProps
 
 		@field ... FrameProps
-		@field ... IconTextProps
+		@field Content CanBeState<{ string }>?
+		@field ContentColor CanBeState<Color3>?
+		@field ContentSize CanBeState<number>?
+		@field ContentTransparency CanBeState<number>?
+		@field ContentWrapped CanBeState<boolean>?
+		@field ContentRichText CanBeState<boolean>?
+		@field ContentFontFace CanBeState<Font>?
 ]=]
 return function(Props: Props)
 	local Content = Util.EnsureValue(Props.Content, "table", {})
