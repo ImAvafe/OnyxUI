@@ -15,9 +15,9 @@ local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 
 local Frame = require(script.Parent.Frame)
-local CanvasGroup = require(script.Parent.CanvasGroup)
+local Group = require(script.Parent.Group)
 
-export type Props = CanvasGroup.Props & {
+export type Props = Group.Props & {
 	Progress: PubTypes.CanBeState<number>?,
 	Color: PubTypes.CanBeState<Color3>?,
 	Direction: PubTypes.CanBeState<Enum.FillDirection>?,
@@ -29,7 +29,7 @@ export type Props = CanvasGroup.Props & {
 		@within ProgressBar
 		@interface ProgressBarProps
 
-		@field ... CanvasGroupProps
+		@field ... GroupProps
 		@field Progress CanBeState<number>?
 		@field Color CanBeState<Color3>?
 		@field Direction CanBeState<Enum.FillDirection>?
@@ -56,7 +56,7 @@ return function(Props: Props)
 		end)
 	)
 
-	return CanvasGroup(Util.CombineProps(Props, {
+	return Group(Util.CombineProps(Props, {
 		Name = "ProgressBar",
 		Size = Computed(function()
 			local DirectionValue = Direction:get()

@@ -13,20 +13,20 @@ local Computed = Fusion.Computed
 local Value = Fusion.Value
 local Out = Fusion.Out
 
-local CanvasGroup = require(script.Parent.CanvasGroup)
+local Group = require(script.Parent.Group)
 
-type Props = CanvasGroup.Props & {}
+type Props = Group.Props & {}
 
 --[=[
 		@within MenuFrame
 		@interface MenuFrameProps
 
-		@field ... CanvasGroupProps
+		@field ... GroupProps
 ]=]
 return function(Props: Props)
 	local AutomaticSize = Value(Enum.AutomaticSize.None)
 
-	return CanvasGroup(Util.CombineProps(Props, {
+	return Group(Util.CombineProps(Props, {
 		Name = "MenuFrame",
 		GroupTransparency = Props.GroupTransparency,
 		BackgroundColor3 = Themer.Theme.Colors.Base.Main,

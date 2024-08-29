@@ -10,7 +10,7 @@ classes = [
   "BaseButton",
   "IconButton",
   "Card",
-  "CanvasGroup",
+  "Group",
   "MenuFrame",
   "SwitchInput",
   "SwitchGroup",

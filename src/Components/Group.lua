@@ -1,5 +1,5 @@
 --[=[
-		@class CanvasGroup
+		@class Group
 		
 		Equivalent to Roblox's `CanvasGroup` instance.
 ]=]
@@ -19,8 +19,8 @@ export type Props = Base.Props & {
 }
 
 --[=[
-		@within CanvasGroup
-		@interface CanvasGroupProps
+		@within Group
+		@interface GroupProps
 
 		@field ... BaseProps
 		@field GroupTransparency CanBeState<number>?
@@ -29,7 +29,7 @@ export type Props = Base.Props & {
 return function(Props: Props)
 	return Hydrate(Base(Util.CombineProps(Props, {
 		ClassName = "CanvasGroup",
-		Name = "CanvasGroup",
+		Name = "Group",
 		BackgroundTransparency = 1,
 		AutomaticSize = Enum.AutomaticSize.XY,
 	}))) {

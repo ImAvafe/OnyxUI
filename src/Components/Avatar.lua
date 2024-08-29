@@ -15,7 +15,7 @@ local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 
 local Image = require(script.Parent.Image)
-local CanvasGroup = require(script.Parent.CanvasGroup)
+local Group = require(script.Parent.Group)
 local Icon = require(script.Parent.Icon)
 
 export type Props = Image.Props & {
@@ -89,7 +89,7 @@ return function(Props: Props)
 		[Children] = {
 			Computed(function()
 				if EnsuredProps.IndicatorEnabled:get() then
-					return CanvasGroup {
+					return Group {
 						Name = "Indicator",
 						BackgroundColor3 = Spring(
 							EnsuredProps.IndicatorColor,
