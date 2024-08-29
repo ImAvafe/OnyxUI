@@ -18,7 +18,8 @@
 </p>
 
 <p align="center">
-  <a href="https://discord.gg/fyeYey62Dm"><img src="https://dcbadge.vercel.app/api/server/fyeYey62Dm"></img></a>
+  <a href="https://x.com/AvafeIsMe"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" /></a>
+  <a href="https://discord.gg/fyeYey62Dm"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white"></img></a>
 </p>
 
 ---
