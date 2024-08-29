@@ -3,9 +3,6 @@
 
 		The foundational component of OnyxUI, from which all other components are built off of. Props supported here typically work in all other components.
 
-		:::info Where are the props?
-		View the [source code](https://github.com/ImAvafe/OnyxUI/blob/main/src/Components/Base.lua) to see all supported props.
-		:::
 		:::info Styling props
 		A reference of common styling props can be found in [this docs page](/docs/styling-props).
 		:::

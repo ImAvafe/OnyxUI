@@ -6,10 +6,6 @@ sidebar_position: 4
 
 Styling props are globally supported props for styling UI. These aim to stay close to Roblox's way of doing things, but differ when necessary, most notably in children-based styling.
 
-:::tip
-Styling props are powered by the [`Base`](/api/Base) component. For type references, read its source code.
-:::
-
 ## Property-based styling
 
 Traditional [`GuiObject`](https://create.roblox.com/docs/reference/engine/classes/GuiObject) properties like [`BackgroundColor3`](https://create.roblox.com/docs/reference/engine/classes/GuiObject#BackgroundColor3) are supported identically to how Roblox does it. Use these as you would normally. There are exceptions however, like how `Color` is preferred over `BackgroundColor3` in [`Button`](/api/Button).
