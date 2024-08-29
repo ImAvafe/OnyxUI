@@ -29,6 +29,7 @@ classes = [
   "Image",
   "NumberSpinner",
   "IconText",
+  "Heading",
 ]
 
 [docusaurus]
