@@ -8,6 +8,10 @@ sidebar_position: 1
   OnyxUI is premature software, relying on the premature software Fusion. It will, at times, *move fast and break things™️*. If that doesn't deter you, get ready to enjoy how easy UI can be. ✨
 :::
 
+:::info Fusion 0.2.0
+OnyxUI currently only supports Fusion 0.2. 0.3 support is still in the works.
+:::
+
 ## Installation
 
 ### Wally package
