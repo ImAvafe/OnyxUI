@@ -1,20 +1,32 @@
+--[=[
+		@class MenuFrame
+		
+		For displaying top-level menus to the user.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Themer = require(OnyxUI.Utils.Themer)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local Themer = require(OnyxUI.Themer)
+local Util = require(OnyxUI.Util)
 
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 local Out = Fusion.Out
 
-local CanvasGroup = require(script.Parent.CanvasGroup)
+local Group = require(script.Parent.Group)
 
-type Props = CanvasGroup.Props & {}
+type Props = Group.Props & {}
 
+--[=[
+		@within MenuFrame
+		@interface MenuFrameProps
+
+		@field ... GroupProps
+]=]
 return function(Props: Props)
 	local AutomaticSize = Value(Enum.AutomaticSize.None)
 
-	return CanvasGroup(CombineProps(Props, {
+	return Group(Util.CombineProps(Props, {
 		Name = "MenuFrame",
 		GroupTransparency = Props.GroupTransparency,
 		BackgroundColor3 = Themer.Theme.Colors.Base.Main,

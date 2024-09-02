@@ -1,6 +1,6 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Themer = require(OnyxUI.Utils.Themer)
+local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -22,13 +22,14 @@ return {
 			[Children] = {
 				MenuFrame {
 					Parent = Parent,
-					Size = UDim2.fromOffset(300, 400),
+					Size = UDim2.fromOffset(300, 200),
 					AutomaticSize = Enum.AutomaticSize.None,
-				},
-				MenuFrame {
-					Parent = Parent,
 
-					[Children] = { Text { Text = "Hiiii" } },
+					[Children] = {
+						Text {
+							Text = "Here's a MenuFrame with some text in it.",
+						},
+					},
 				},
 			},
 		}

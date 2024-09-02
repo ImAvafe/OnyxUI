@@ -1,18 +1,21 @@
+--[=[
+		@class TitleBar
+		
+		For displaying a title, and an optional close button. Pairs with [`MenuFrame`](/api/MenuFrame).
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Themer = require(OnyxUI.Utils.Themer)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
-local ForValues = Fusion.ForValues
 
 local Frame = require(script.Parent.Frame)
-local Text = require(script.Parent.Text)
 local IconButton = require(script.Parent.IconButton)
-local Icon = require(script.Parent.Icon)
+local IconText = require(script.Parent.IconText)
 
 export type Props = Frame.Props & {
 	Content: PubTypes.CanBeState<{ string }>?,
@@ -22,57 +25,54 @@ export type Props = Frame.Props & {
 	CloseButtonIcon: PubTypes.CanBeState<string>?,
 	CloseButtonDisabled: PubTypes.CanBeState<boolean>?,
 	OnClose: PubTypes.CanBeState<() -> ()>?,
-	AutoLocalize: PubTypes.CanBeState<boolean>?,
 }
 
+--[=[
+		@within TitleBar
+		@interface TitleBarProps
+
+		@field ... FrameProps
+		@field Content CanBeState<{ string }>?
+		@field ContentSize CanBeState<number>?
+		@field ContentColor CanBeState<Color3>?
+		@field ContentFontFace CanBeState<Font>?
+		@field CloseButtonIcon CanBeState<string>?
+		@field CloseButtonDisabled CanBeState<boolean>?
+		@field OnClose CanBeState<() -> ()>?
+]=]
 return function(Props: Props)
-	local Content = EnsureValue(Props.Content, "table", {})
-	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1.5"])
-	local ContentColor = EnsureValue(Props.ContentColor, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	local ContentFontFace = EnsureValue(
+	local Content = Util.EnsureValue(Props.Content, "table", {})
+	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1.5"])
+	local ContentColor = Util.EnsureValue(Props.ContentColor, "Color3", Themer.Theme.Colors.BaseContent.Main)
+	local ContentFontFace = Util.EnsureValue(
 		Props.ContentFontFace,
 		"Font",
 		Computed(function()
 			return Font.new(Themer.Theme.Font.Heading:get(), Themer.Theme.FontWeight.Heading:get())
 		end)
 	)
-	local CloseButtonDisabled = EnsureValue(Props.CloseButtonDisabled, "boolean", false)
-	local CloseButtonIcon = EnsureValue(Props.CloseButtonIcon, "string", "rbxassetid://13405228418")
-	local OnClose = EnsureValue(Props.OnClose, "function", function() end)
+	local CloseButtonDisabled = Util.EnsureValue(Props.CloseButtonDisabled, "boolean", false)
+	local CloseButtonIcon = Util.EnsureValue(Props.CloseButtonIcon, "string", "rbxassetid://80218226919142")
+	local OnClose = Util.EnsureValue(Props.OnClose, "function", function() end)
 
-	return Frame(CombineProps(Props, {
+	return Frame(Util.CombineProps(Props, {
 		Name = "TitleBar",
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 
 		[Children] = {
-			Frame {
-				Name = "Content",
+			IconText {
+				Name = "Title",
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = UDim2.fromScale(0.5, 0),
-
-				[Children] = {
-					ForValues(Content, function(ContentString: string)
-						if string.find(ContentString, "rbxassetid://", 1, true) then
-							return Icon {
-								Image = ContentString,
-								ImageColor3 = ContentColor,
-								Size = Computed(function()
-									return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
-								end),
-							}
-						else
-							return Text {
-								Text = ContentString,
-								TextColor3 = ContentColor,
-								TextSize = ContentSize,
-								FontFace = ContentFontFace,
-								TextWrapped = false,
-								AutoLocalize = Props.AutoLocalize,
-							}
-						end
-					end, Fusion.cleanup),
-				},
+				Content = Content,
+				ContentColor = ContentColor,
+				ContentSize = ContentSize,
+				ContentFontFace = ContentFontFace,
+				ContentWrapped = false,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+				end),
 			},
 			Computed(function()
 				if CloseButtonDisabled:get() == false then

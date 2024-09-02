@@ -1,8 +1,13 @@
+--[=[
+		@class Image
+		
+		Equivalent to Roblox's `ImageLabel`.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(script.Parent.Parent.Utils.CombineProps)
+local Util = require(OnyxUI.Util)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Computed = Fusion.Computed
 local Hydrate = Fusion.Hydrate
@@ -22,9 +27,26 @@ export type Props = Base.Props & {
 	TileSize: PubTypes.CanBeState<UDim2>?,
 }
 
+--[=[
+		@within Image
+		@interface ImageProps
+
+		@field ... BaseProps
+		@field Image CanBeState<string>?
+		@field FallbackImage CanBeState<string>?
+		@field ImageColor3 CanBeState<Color3>?
+		@field ImageTransparency CanBeState<number>?
+		@field ImageRectSize CanBeState<Vector2>?
+		@field ResampleMode CanBeState<Enum.ResamplerMode>?
+		@field ScaleType CanBeState<Enum.ScaleType>?
+		@field SliceCenter CanBeState<Rect>?
+		@field SliceScale CanBeState<number>?
+		@field TileSize CanBeState<UDim2>?
+]=]
 return function(Props: Props)
-	local FallbackImage = EnsureValue(Props.FallbackImage, "string", "rbxasset://textures/ui/GuiImagePlaceholder.png")
-	local Image = EnsureValue(Props.Image, "string", nil)
+	local FallbackImage =
+		Util.EnsureValue(Props.FallbackImage, "string", "rbxasset://textures/ui/GuiImagePlaceholder.png")
+	local Image = Util.EnsureValue(Props.Image, "string", nil)
 
 	local ImageInUse = Computed(function()
 		if Image:get() then
@@ -34,7 +56,7 @@ return function(Props: Props)
 		end
 	end)
 
-	return Hydrate(Base(CombineProps(Props, {
+	return Hydrate(Base(Util.CombineProps(Props, {
 		ClassName = "ImageLabel",
 		Name = "Image",
 		Size = UDim2.fromOffset(100, 100),

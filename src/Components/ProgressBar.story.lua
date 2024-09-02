@@ -1,9 +1,8 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local OnyxUI = script.Parent.Parent
-local Colors = require(ReplicatedStorage.OnyxUI.Packages.OnyxUI.Utils.Colors)
 local Fusion = require(OnyxUI.Parent.Fusion)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
-local Themer = require(OnyxUI.Utils.Themer)
+local Themer = require(OnyxUI.Themer)
+local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
 local Value = Fusion.Value
@@ -21,50 +20,159 @@ return {
 		local Instance = Frame {
 			Parent = Parent,
 			ListEnabled = true,
+			ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["1.5"]:get())
+			end),
 
 			[Children] = {
-				ProgressBar {
-					Progress = 0.75,
-				},
-				ProgressBar {
-					Progress = Progress,
-					Color = Color,
-				},
-				ProgressBar {
-					Progress = Progress,
-					Color = Color,
-				},
 				Frame {
 					ListEnabled = true,
-					ListFillDirection = Enum.FillDirection.Horizontal,
-					ListVerticalAlignment = Enum.VerticalAlignment.Center,
+					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+					ListPadding = Computed(function()
+						return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+					end),
 
 					[Children] = {
 						Text {
-							Text = "Label",
+							Text = "Horizontal",
+						},
+						ProgressBar {
+							Progress = 0.75,
 						},
 						ProgressBar {
 							Progress = Progress,
-							Color = Colors.Emerald["500"],
-							Size = Computed(function()
-								return UDim2.fromOffset(150, Themer.Theme.TextSize["0.75"]:get())
-							end),
+							Color = Color,
 						},
 					},
 				},
-				ProgressBar {
-					Progress = Progress,
-					Inverted = true,
+				Frame {
+					ListEnabled = true,
+					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+					ListPadding = Computed(function()
+						return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+					end),
+
+					[Children] = {
+						Text {
+							Text = "With text",
+						},
+						Frame {
+							ListEnabled = true,
+							ListFillDirection = Enum.FillDirection.Horizontal,
+							ListVerticalAlignment = Enum.VerticalAlignment.Center,
+							ListPadding = Computed(function()
+								return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+							end),
+
+							[Children] = {
+								Text {
+									Text = "HP",
+								},
+								ProgressBar {
+									Progress = Progress,
+									Color = Util.Colors.Red["500"],
+									FlexMode = Enum.UIFlexMode.Fill,
+								},
+							},
+						},
+					},
 				},
-				ProgressBar {
-					Direction = Enum.FillDirection.Vertical,
-					Progress = Progress,
-					Inverted = true,
+				Frame {
+					ListEnabled = true,
+					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+					ListPadding = Computed(function()
+						return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+					end),
+
+					[Children] = {
+						Text {
+							Text = "Inverted",
+						},
+						ProgressBar {
+							Progress = Progress,
+							Inverted = true,
+						},
+					},
 				},
-				ProgressBar {
-					Progress = Progress,
-					Color = Color,
-					CornerRadius = UDim.new(0, 0),
+				Frame {
+					ListEnabled = true,
+					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+					ListPadding = Computed(function()
+						return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+					end),
+
+					[Children] = {
+						Text {
+							Text = "Vertical",
+						},
+						Frame {
+							ListEnabled = true,
+							ListFillDirection = Enum.FillDirection.Horizontal,
+							ListPadding = Computed(function()
+								return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+							end),
+
+							[Children] = {
+
+								ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Color = Color,
+								},
+								ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Inverted = true,
+									Color = Color,
+								},
+								ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Color = Color,
+								},
+								ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Inverted = true,
+									Color = Color,
+								},
+								ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Color = Color,
+								},
+								ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Inverted = true,
+									Color = Color,
+								},
+								ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Color = Color,
+								},
+								ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Inverted = true,
+									Color = Color,
+								},
+								ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Color = Color,
+								},
+								ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Inverted = true,
+									Color = Color,
+								},
+							},
+						},
+					},
 				},
 			},
 		}

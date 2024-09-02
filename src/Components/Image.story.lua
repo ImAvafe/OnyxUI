@@ -1,8 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Themer = require(OnyxUI.Utils.Themer)
+local Themer = require(OnyxUI.Themer)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
@@ -14,15 +13,13 @@ return {
 		local Instance = Frame {
 			Parent = Parent,
 			AutomaticSize = Enum.AutomaticSize.XY,
+			ListEnabled = true,
+			ListFillDirection = Enum.FillDirection.Horizontal,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			end),
 
 			[Children] = {
-				New "UIListLayout" {
-					SortOrder = Enum.SortOrder.LayoutOrder,
-					FillDirection = Enum.FillDirection.Vertical,
-					Padding = Computed(function()
-						return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
-					end),
-				},
 				Image {
 					Image = "rbxassetid://15307540148",
 				},

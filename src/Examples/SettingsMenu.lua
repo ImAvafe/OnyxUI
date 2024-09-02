@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Themer = require(OnyxUI.Utils.Themer)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local Themer = require(OnyxUI.Themer)
+local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -14,7 +14,7 @@ local SettingToggle = require(OnyxUI.Examples.SettingToggle)
 local TextInput = require(OnyxUI.Components.TextInput)
 
 return function(Props)
-	return MenuFrame(CombineProps(Props, {
+	return MenuFrame(Util.CombineProps(Props, {
 		Parent = Props.Parent,
 		Size = UDim2.fromOffset(330, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
@@ -68,11 +68,10 @@ return function(Props)
 				},
 			},
 			Button {
-				Contents = { "Close" },
+				Content = { "Close" },
+				Color = Themer.Theme.Colors.Primary.Main,
 				Size = UDim2.fromScale(1, 0),
 				AutomaticSize = Enum.AutomaticSize.Y,
-				-- Style = "Outlined",
-				-- Disabled = true,
 			},
 		},
 	}))

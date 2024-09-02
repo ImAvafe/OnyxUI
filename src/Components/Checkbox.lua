@@ -1,10 +1,15 @@
+--[=[
+		@class Checkbox
+		
+		Useful for settings, to-do lists, and anything needing a "Check!"
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Themer = require(OnyxUI.Utils.Themer)
+local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -23,11 +28,20 @@ export type Props = BaseButton.Props & {
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
+--[=[
+		@within Checkbox
+		@interface CheckboxProps
+
+		@field ... BaseButtonProps
+		@field Checked CanBeState<boolean>?
+		@field Icon CanBeState<string>?
+		@field Color CanBeState<Color3>?
+]=]
 return function(Props: Props)
-	local Checked = EnsureValue(Props.Checked, "boolean", false)
-	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local IconId = EnsureValue(Props.Icon, "string", "rbxassetid://13858821963")
+	local Checked = Util.EnsureValue(Props.Checked, "boolean", false)
+	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local IconId = Util.EnsureValue(Props.Icon, "string", "rbxassetid://13858821963")
 
 	local IsHovering = Value(false)
 	local IsHolding = Value(false)
@@ -45,7 +59,7 @@ return function(Props: Props)
 		end
 	end)
 
-	return BaseButton(CombineProps(Props, {
+	return BaseButton(Util.CombineProps(Props, {
 		Name = "Checkbox",
 		BackgroundColor3 = EffectiveColor,
 		BackgroundTransparency = Spring(
@@ -61,7 +75,7 @@ return function(Props: Props)
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
+			Themer.Theme.SpringDampening["1"]
 		),
 		Disabled = Disabled,
 		CornerRadius = Computed(function()
@@ -101,7 +115,7 @@ return function(Props: Props)
 						end
 					end),
 					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
+					Themer.Theme.SpringDampening["1"]
 				),
 				ImageColor3 = Computed(function()
 					return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
@@ -111,7 +125,7 @@ return function(Props: Props)
 						return (Checked:get() and 0) or -30
 					end),
 					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
+					Themer.Theme.SpringDampening["1"]
 				),
 			},
 		},

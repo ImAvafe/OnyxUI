@@ -1,11 +1,16 @@
+--[=[
+		@class BaseButton
+		
+		A barebones button component, like if Roblox had a "`Button`" class rather than only a `TextButton`.
+]=]
+
 local SoundService = game:GetService("SoundService")
 
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Themer = require(OnyxUI.Utils.Themer)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local OnEvent = Fusion.OnEvent
 local Computed = Fusion.Computed
@@ -13,6 +18,22 @@ local Hydrate = Fusion.Hydrate
 
 local Base = require(script.Parent.Base)
 
+--[=[
+		@within BaseButton
+		@interface BaseButtonProps
+
+		@field ... BaseProps
+		@field Disabled CanBeState<boolean>?
+		@field OnActivated CanBeState<() -> ()>?
+		@field OnMouseEnter CanBeState<() -> ()>?
+		@field OnMouseLeave CanBeState<() -> ()>?
+		@field OnMouseButton1Down CanBeState<() -> ()>?
+		@field OnMouseButton1Up CanBeState<() -> ()>?
+		@field IsHovering CanBeState<boolean>?
+		@field IsHolding CanBeState<boolean>?
+		@field HoverSound CanBeState<Sound>?
+		@field ClickSound CanBeState<Sound>?
+]=]
 export type Props = Base.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
 
@@ -30,28 +51,28 @@ export type Props = Base.Props & {
 }
 
 return function(Props: Props)
-	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
+	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
 
-	local IsHovering = EnsureValue(Props.IsHovering, "boolean", false)
-	local IsHolding = EnsureValue(Props.IsHolding, "boolean", false)
+	local IsHovering = Util.EnsureValue(Props.IsHovering, "boolean", false)
+	local IsHolding = Util.EnsureValue(Props.IsHolding, "boolean", false)
 
-	local OnActivated = EnsureValue(Props.OnActivated, "function", function() end)
-	local OnMouseEnter = EnsureValue(Props.OnMouseEnter, "function", function() end)
-	local OnMouseLeave = EnsureValue(Props.OnMouseLeave, "function", function() end)
-	local OnMouseButton1Down = EnsureValue(Props.OnMouseButton1Down, "function", function() end)
-	local OnMouseButton1Up = EnsureValue(Props.OnMouseButton1Up, "function", function() end)
+	local OnActivated = Util.EnsureValue(Props.OnActivated, "function", function() end)
+	local OnMouseEnter = Util.EnsureValue(Props.OnMouseEnter, "function", function() end)
+	local OnMouseLeave = Util.EnsureValue(Props.OnMouseLeave, "function", function() end)
+	local OnMouseButton1Down = Util.EnsureValue(Props.OnMouseButton1Down, "function", function() end)
+	local OnMouseButton1Up = Util.EnsureValue(Props.OnMouseButton1Up, "function", function() end)
 
-	local HoverSound = EnsureValue(Props.HoverSound, "Sound", Themer.Theme.Sound.Hover)
-	local ClickSound = EnsureValue(Props.ClickSound, "Sound", Themer.Theme.Sound.Click)
+	local HoverSound = Util.EnsureValue(Props.HoverSound, "Sound", Themer.Theme.Sound.Hover)
+	local ClickSound = Util.EnsureValue(Props.ClickSound, "Sound", Themer.Theme.Sound.Click)
 
-	local Active = EnsureValue(
+	local Active = Util.EnsureValue(
 		Props.Active,
 		"boolean",
 		Computed(function()
 			return not Disabled:get()
 		end)
 	)
-	local Selectable = EnsureValue(
+	local Selectable = Util.EnsureValue(
 		Props.Selectable,
 		"boolean",
 		Computed(function()
@@ -59,7 +80,7 @@ return function(Props: Props)
 		end)
 	)
 
-	return Hydrate(Base(CombineProps(Props, {
+	return Hydrate(Base(Util.CombineProps(Props, {
 		ClassName = "TextButton",
 		Name = "BaseButton",
 		AutomaticSize = Enum.AutomaticSize.XY,
@@ -69,7 +90,6 @@ return function(Props: Props)
 		Text = "",
 		RichText = false,
 		TextSize = 0,
-		AutoLocalize = false,
 
 		[OnEvent "Activated"] = function()
 			if not Disabled:get() then

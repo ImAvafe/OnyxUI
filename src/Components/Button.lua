@@ -1,47 +1,67 @@
+--[=[
+		@class Button
+		
+		A robust button component, supporting text and icons, and multiple variants.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Themer = require(OnyxUI.Utils.Themer)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
-local ForValues = Fusion.ForValues
 local Computed = Fusion.Computed
 local Spring = Fusion.Spring
 local Value = Fusion.Value
 
 local BaseButton = require(script.Parent.BaseButton)
-local Text = require(script.Parent.Text)
-local Icon = require(script.Parent.Icon)
+local IconText = require(script.Parent.IconText)
 
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
 export type Props = BaseButton.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
-	Contents: PubTypes.CanBeState<{ string }>?,
 	Style: PubTypes.CanBeState<string>?,
 	Color: PubTypes.CanBeState<Color3>?,
+	Content: PubTypes.CanBeState<{ string }>?,
 	ContentColor: PubTypes.CanBeState<Color3>?,
 	ContentSize: PubTypes.CanBeState<number>?,
+	ContentWrapped: PubTypes.CanBeState<boolean>?,
 	IsHolding: PubTypes.CanBeState<boolean>?,
 }
 
+--[=[
+		@within Button
+		@interface ButtonProps
+
+		@field ... BaseProps
+
+		@field Disabled CanBeState<boolean>?
+		@field Content CanBeState<{ string }>?
+		@field Style CanBeState<string>?
+		@field Color CanBeState<Color3>?
+		@field ContentColor CanBeState<Color3>?
+		@field ContentSize CanBeState<number>?
+		@field ContentWrapped CanBeState<boolean>?
+		@field IsHolding CanBeState<boolean>?
+]=]
 return function(Props: Props)
-	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
-	local Contents = EnsureValue(Props.Contents, "table", {})
-	local Style = EnsureValue(Props.Style, "string", "Filled")
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local ContentColor = EnsureValue(
+	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
+	local Content = Util.EnsureValue(Props.Content, "table", {})
+	local Style = Util.EnsureValue(Props.Style, "string", "Filled")
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Main)
+	local ContentColor = Util.EnsureValue(
 		Props.ContentColor,
 		"Color3",
 		Computed(function()
 			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
 		end)
 	)
-	local ContentSize = EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
+	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
+	local ContentWrapped = Util.EnsureValue(Props.ContentWrapped, "boolean", false)
 
 	local IsHolding = Value(false)
 	local IsHovering = Value(false)
@@ -81,7 +101,7 @@ return function(Props: Props)
 		end
 	end)
 
-	return BaseButton(CombineProps(Props, {
+	return BaseButton(Util.CombineProps(Props, {
 		Name = "Button",
 		BackgroundTransparency = Computed(function()
 			if Style:get() == "Filled" then
@@ -94,7 +114,7 @@ return function(Props: Props)
 				return 1
 			end
 		end),
-		BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		PaddingLeft = Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
 		end),
@@ -111,14 +131,12 @@ return function(Props: Props)
 			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
 		end),
 		ListEnabled = true,
-		ListPadding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
-		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
+		ListWraps = false,
 		StrokeEnabled = true,
-		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		StrokeTransparency = Computed(function()
 			if Style:get() == "Ghost" then
 				return 1
@@ -132,26 +150,18 @@ return function(Props: Props)
 		IsHovering = IsHovering,
 
 		[Children] = {
-			ForValues(Contents, function(ContentString: string)
-				if string.find(ContentString, "rbxassetid://", 1, true) then
-					return Icon {
-						Image = ContentString,
-						ImageColor3 = EffectiveContentColor,
-						Size = Computed(function()
-							return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
-						end),
-						ImageTransparency = EffectiveContentTransparency,
-					}
-				else
-					return Text {
-						Text = ContentString,
-						TextColor3 = EffectiveContentColor,
-						TextSize = ContentSize,
-						TextTransparency = EffectiveContentTransparency,
-						TextWrapped = false,
-					}
-				end
-			end, Fusion.cleanup),
+			IconText {
+				Content = Content,
+				ContentColor = EffectiveContentColor,
+				ContentTransparency = EffectiveContentTransparency,
+				ContentSize = ContentSize,
+				ContentWrapped = ContentWrapped,
+				ListPadding = Computed(function()
+					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+				end),
+				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+				ListVerticalAlignment = Enum.VerticalAlignment.Center,
+			},
 		},
 	}))
 end

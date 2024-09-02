@@ -1,14 +1,19 @@
+--[=[
+		@class Text
+		
+		For displaying text. *Lorem ipsum dolo..*
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Themer = require(OnyxUI.Utils.Themer)
+local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Computed = Fusion.Computed
 local Hydrate = Fusion.Hydrate
 
 local Base = require(script.Parent.Base)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(script.Parent.Parent.Utils.CombineProps)
 
 export type Props = Base.Props & {
 	Text: PubTypes.CanBeState<string>?,
@@ -28,22 +33,43 @@ export type Props = Base.Props & {
 	TextTransparency: PubTypes.CanBeState<number>?,
 }
 
+--[=[
+		@within Text
+		@interface TextProps
+
+		@field ... BaseProps
+		@field Text CanBeState<string>?
+		@field TextColor3 CanBeState<Color3>?
+		@field TextSize CanBeState<number>?
+		@field RichText CanBeState<boolean>?
+		@field FontFace CanBeState<Font>?
+		@field TextWrapped CanBeState<boolean>?
+		@field TextXAlignment CanBeState<Enum.TextXAlignment>?
+		@field TextYAlignment CanBeState<Enum.TextYAlignment>?
+		@field Font CanBeState<Enum.Font>?
+		@field TextScaled CanBeState<boolean>?
+		@field TextTruncate CanBeState<boolean>?
+		@field LineHeight CanBeState<number>?
+		@field LocalizedText CanBeState<string>?
+		@field MaxVisibleGraphemes CanBeState<number>?
+		@field TextTransparency CanBeState<number>?
+]=]
 return function(Props: Props)
-	local TextColor3 = EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	local TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
-	local RichText = EnsureValue(Props.RichText, "boolean", true)
-	local FontFace = EnsureValue(
+	local TextColor3 = Util.EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
+	local TextSize = Util.EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
+	local RichText = Util.EnsureValue(Props.RichText, "boolean", true)
+	local FontFace = Util.EnsureValue(
 		Props.FontFace,
 		"Font",
 		Computed(function()
 			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
 		end)
 	)
-	local TextWrapped = EnsureValue(Props.TextWrapped, "boolean", true)
-	local TextXAlignment = EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
-	local TextYAlignment = EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
+	local TextWrapped = Util.EnsureValue(Props.TextWrapped, "boolean", true)
+	local TextXAlignment = Util.EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
+	local TextYAlignment = Util.EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
 
-	return Hydrate(Base(CombineProps(Props, {
+	return Hydrate(Base(Util.CombineProps(Props, {
 		ClassName = "TextLabel",
 		Name = "Text",
 		AutomaticSize = Enum.AutomaticSize.XY,

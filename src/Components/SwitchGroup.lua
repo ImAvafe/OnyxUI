@@ -1,19 +1,30 @@
+--[=[
+		@class SwitchGroup
+		
+		Useful for pairing [`SwitchInput`](/api/SwitchInput)s with other components, like [`Text`](/api/Text).
+]=]
+
 local OnyxUI = script.Parent.Parent
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Themer = require(OnyxUI.Utils.Themer)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
 
 local BaseButton = require(script.Parent.BaseButton)
 local SwitchInput = require(script.Parent.SwitchInput)
 
 export type Props = SwitchInput.Props & {}
 
+--[=[
+		@within SwitchGroup
+		@interface SwitchGroupProps
+
+		@field ... SwitchInputProps
+]=]
 return function(Props: Props)
-	local Switched = EnsureValue(Props.Switched, "boolean", false)
+	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)
 
 	Props.Switched = Switched
 
-	return BaseButton(CombineProps(Props, {
+	return BaseButton(Util.CombineProps(Props, {
 		Name = "SwitchGroup",
 		ClickSound = Themer.Theme.Sound.Switch,
 		Disabled = Props.Disabled,

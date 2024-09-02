@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Themer = require(OnyxUI.Utils.Themer)
-local Colors = require(OnyxUI.Utils.Colors)
+local Themer = require(OnyxUI.Themer)
+local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -18,6 +18,9 @@ return {
 			end),
 			ListEnabled = true,
 			ListFillDirection = Enum.FillDirection.Horizontal,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			end),
 
 			[Children] = {
 				Checkbox {},
@@ -33,7 +36,7 @@ return {
 				},
 				Checkbox {
 					Icon = "rbxassetid://16743550373",
-					Color = Colors.Red["500"],
+					Color = Util.Colors.Red["500"],
 					Checked = true,
 				},
 			},

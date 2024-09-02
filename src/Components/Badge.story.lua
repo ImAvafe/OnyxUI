@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Themer = require(OnyxUI.Utils.Themer)
-local Colors = require(OnyxUI.Utils.Colors)
+local Themer = require(OnyxUI.Themer)
+local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -35,18 +35,22 @@ return {
 
 			[Children] = {
 				Badge {
-					Contents = { "BADGE" },
+					Content = { "Badge" },
 				},
 				Badge {
-					Contents = { "rbxassetid://5422855103", "PREMIUM" },
-					Color = Colors.Amber["500"],
+					Content = { " PREMIUM" },
+					Color = Util.Colors.Amber["500"],
 				},
 				Badge {
-					Contents = { "🕑 50% OFF" },
-					Color = Colors.Red["500"],
+					Content = { "rbxassetid://103798699021677", "-50%" },
+					Color = Util.Colors.Red["500"],
 				},
 				Badge {
-					Contents = Computed(function()
+					Content = { "rbxassetid://140490867216758", "LIMITED" },
+					Color = Util.Colors.Red["500"],
+				},
+				Badge {
+					Content = Computed(function()
 						if NotificationCount:get() >= 100 then
 							return { "99+" }
 						else
@@ -58,24 +62,18 @@ return {
 				Frame {
 					ListEnabled = true,
 					ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
+					ListFillDirection = Enum.FillDirection.Horizontal,
+					ListPadding = Computed(function()
+						return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+					end),
 
 					[Children] = {
 						Text {
-							Text = "$25",
+							Text = "It's also proportional alongside text.",
 						},
 						Badge {
-							Contents = { "-50%" },
-							Color = Colors.Red["500"],
-						},
-						Badge {
-							Contents = { "Test" },
-							Color = Colors.Black,
-							CornerRadius = Computed(function()
-								return UDim.new(0, Themer.Theme.CornerRadius["0"]:get())
-							end),
-							BackgroundTransparency = 0.5,
-							PaddingLeft = UDim.new(0, 0),
-							PaddingRight = UDim.new(0, 0),
+							Content = { "rbxassetid://137979359742656", "TRUE" },
+							Color = Util.Colors.Green["500"],
 						},
 					},
 				},

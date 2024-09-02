@@ -1,11 +1,16 @@
+--[=[
+		@class TextInput
+		
+		For letting the user input text.
+]=]
+
 local SoundService = game:GetService("SoundService")
 
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Themer = require(OnyxUI.Utils.Themer)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
+local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Hydrate = Fusion.Hydrate
 local Computed = Fusion.Computed
@@ -18,12 +23,36 @@ local Value = Fusion.Value
 
 local Base = require(script.Parent.Base)
 
+--[=[
+		@within TextInput
+		@interface TextInputProps
+
+		@field ... BaseProps
+		@field Disabled CanBeState<boolean>?
+		@field CharacterLimit CanBeState<number>?
+		@field Color CanBeState<Color3>?
+		@field PlaceholderText CanBeState<string>?
+		@field Text CanBeState<string>?
+		@field ClearTextOnFocus CanBeState<boolean>?
+		@field TextWrapped CanBeState<boolean>?
+		@field MultiLine CanBeState<boolean>?
+		@field TextSize CanBeState<number>?
+		@field TextColor3 CanBeState<Color3>?
+		@field FontFace CanBeState<Font>?
+		@field PlaceholderColor3 CanBeState<Color3>?
+		@field TextXAlignment CanBeState<Enum.TextXAlignment>?
+		@field TextYAlignment CanBeState<Enum.TextYAlignment>?
+		@field TextTransparency CanBeState<number>?
+		@field IsFocused CanBeState<boolean>?
+		@field OnFocused CanBeState<() -> ()>?
+		@field OnFocusLost CanBeState<() -> ()>?
+]=]
 export type Props = Base.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
-	Text: PubTypes.CanBeState<string>?,
-	PlaceholderText: PubTypes.CanBeState<string>?,
-	Color: PubTypes.CanBeState<Color3>?,
 	CharacterLimit: PubTypes.CanBeState<number>?,
+	Color: PubTypes.CanBeState<Color3>?,
+	PlaceholderText: PubTypes.CanBeState<string>?,
+	Text: PubTypes.CanBeState<string>?,
 	ClearTextOnFocus: PubTypes.CanBeState<boolean>?,
 	TextWrapped: PubTypes.CanBeState<boolean>?,
 	MultiLine: PubTypes.CanBeState<boolean>?,
@@ -41,35 +70,36 @@ export type Props = Base.Props & {
 }
 
 return function(Props: Props)
-	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
+	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
 	local RemainingCharaters = Value(-1)
-	local IsFocused = EnsureValue(Props.IsFocused, "boolean", false)
-	local OnFocused = EnsureValue(Props.OnFocused, "function", function() end)
-	local OnFocusLost = EnsureValue(Props.OnFocusLost, "function", function() end)
-	local Text = EnsureValue(Props.Text, "string", "")
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local CharacterLimit = EnsureValue(Props.CharacterLimit, "number", -1)
-	local ClearTextOnFocus = EnsureValue(Props.ClearTextOnFocus, "boolean", false)
-	local PlaceholderText = EnsureValue(Props.PlaceholderText, "string", "")
-	local TextSize = EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
-	local PlaceholderColor3 = EnsureValue(Props.PlaceholderColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark)
-	local TextColor3 = EnsureValue(
+	local IsFocused = Util.EnsureValue(Props.IsFocused, "boolean", false)
+	local OnFocused = Util.EnsureValue(Props.OnFocused, "function", function() end)
+	local OnFocusLost = Util.EnsureValue(Props.OnFocusLost, "function", function() end)
+	local Text = Util.EnsureValue(Props.Text, "string", "")
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local CharacterLimit = Util.EnsureValue(Props.CharacterLimit, "number", -1)
+	local ClearTextOnFocus = Util.EnsureValue(Props.ClearTextOnFocus, "boolean", false)
+	local PlaceholderText = Util.EnsureValue(Props.PlaceholderText, "string", "")
+	local TextSize = Util.EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
+	local PlaceholderColor3 =
+		Util.EnsureValue(Props.PlaceholderColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark)
+	local TextColor3 = Util.EnsureValue(
 		Props.TextColor3,
 		"Color3",
 		Computed(function()
 			return Themer.Theme.Colors.BaseContent.Main:get()
 		end)
 	)
-	local FontFace = EnsureValue(
+	local FontFace = Util.EnsureValue(
 		Props.FontFace,
 		"Font",
 		Computed(function()
 			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
 		end)
 	)
-	local TextXAlignment = EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
-	local TextYAlignment = EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
-	local TextTransparency = EnsureValue(
+	local TextXAlignment = Util.EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
+	local TextYAlignment = Util.EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
+	local TextTransparency = Util.EnsureValue(
 		Props.TextTransparency,
 		"number",
 		Computed(function()
@@ -91,7 +121,7 @@ return function(Props: Props)
 		end),
 	}
 
-	return Hydrate(Base(CombineProps(Props, {
+	return Hydrate(Base(Util.CombineProps(Props, {
 		ClassName = "TextBox",
 		Name = "TextInput",
 		CornerRadius = Computed(function()
@@ -110,7 +140,7 @@ return function(Props: Props)
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
+			Themer.Theme.SpringDampening["1"]
 		),
 		StrokeTransparency = Spring(
 			Computed(function()
@@ -124,7 +154,7 @@ return function(Props: Props)
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
+			Themer.Theme.SpringDampening["1"]
 		),
 		AutomaticSize = Enum.AutomaticSize.XY,
 		AutoLocalize = false,
@@ -132,11 +162,12 @@ return function(Props: Props)
 			return not Disabled:get()
 		end),
 		BackgroundTransparency = 1,
+		ClipsDescendants = true,
 
 		[Cleanup] = Observers,
 	}))) {
 		Text = Text,
-		TextColor3 = Spring(TextColor3, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		TextColor3 = Spring(TextColor3, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		TextSize = TextSize,
 		FontFace = FontFace,
 		PlaceholderColor3 = PlaceholderColor3,
@@ -144,7 +175,7 @@ return function(Props: Props)
 		TextXAlignment = TextXAlignment,
 		TextYAlignment = TextYAlignment,
 		ClearTextOnFocus = ClearTextOnFocus,
-		TextTransparency = Spring(TextTransparency, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		TextTransparency = Spring(TextTransparency, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		MultiLine = Props.MultiLine,
 		TextWrapped = Props.TextWrapped,
 

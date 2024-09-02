@@ -1,9 +1,15 @@
+--[=[
+		@class Divider
+		
+		Useful for separating UI into sections.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Themer = require(OnyxUI.Utils.Themer)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
+local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
+
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -18,16 +24,27 @@ type Props = Frame.Props & {
 	Spacing: PubTypes.CanBeState<UDim>?,
 }
 
+--[=[
+		@within Divider
+		@interface DividerProps
+
+		@field ... FrameProps
+		@field Length CanBeState<UDim>?
+		@field FillDirection CanBeState<Enum.FillDirection>?
+		@field Color CanBeState<Color3>?
+		@field Transparency CanBeState<number>?
+		@field Spacing CanBeState<UDim>?
+]=]
 return function(Props: Props)
-	local Length = EnsureValue(Props.Length, "UDim", UDim.new(1, 0))
-	local FillDirection = EnsureValue(Props.FillDirection, "EnumItem", Enum.FillDirection.Horizontal)
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	local Transparency = EnsureValue(Props.Transparency, "number", 0.9)
-	local Spacing = EnsureValue(
+	local Length = Util.EnsureValue(Props.Length, "UDim", UDim.new(1, 0))
+	local FillDirection = Util.EnsureValue(Props.FillDirection, "EnumItem", Enum.FillDirection.Horizontal)
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.BaseContent.Main)
+	local Transparency = Util.EnsureValue(Props.Transparency, "number", 0.9)
+	local Spacing = Util.EnsureValue(
 		Props.Spacing,
 		"number",
 		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end)
 	)
 
@@ -46,7 +63,7 @@ return function(Props: Props)
 		end
 	end)
 
-	return Frame(CombineProps(Props, {
+	return Frame(Util.CombineProps(Props, {
 		Name = "Divider",
 		Size = Computed(function()
 			if FillDirection:get() == Enum.FillDirection.Horizontal then

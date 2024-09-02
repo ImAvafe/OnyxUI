@@ -1,8 +1,9 @@
-local OnyxUI = script.Parent.Parent
-local ReconcileValues = require(script.Parent.Parent.Utils.ReconcileValues)
+local OnyxUI = script.Parent
+local Util = require(script.Parent.Util)
 local OnyxNightTheme = require(script.OnyxNight)
 local ThemeTemplate = require(script.ThemeTemplate)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
+local ThemeType = require(script.Theme)
 
 local SPACING_MULTIPLIERS = {
 	0.25,
@@ -63,18 +64,24 @@ local SPRING_SPEED_MULTIPLIERS = {
 	2,
 }
 
+export type Theme = ThemeType.Theme
+
+--[=[
+	@class Themer
+	
+	Themer allows you to customize components throughout OnyxUI, with support for things like colors, corner radiuses, paddings, etc. You'll also probably want to incorporate it within your own UI for a more consistent design.
+]=]
+--[=[
+	@prop Theme table
+	@within Themer
+
+	The currently active theme. Use this to reference theme properties.
+]=]
 local Themer = {
 	Theme = table.clone(ThemeTemplate),
-	Themes = {},
 }
 
-function Themer:_LoadDefaultThemes()
-	for _, ThemeModule in ipairs(script:GetChildren()) do
-		self.Themes[ThemeModule.Name] = require(ThemeModule)
-	end
-end
-
-function Themer:_ProcessColors(Theme: { [any]: any })
+function Themer:_ProcessColors(Theme: Theme)
 	if Theme.Colors then
 		for ColorName, _ in pairs(Theme.Colors) do
 			local Color = Theme.Colors[ColorName]
@@ -95,7 +102,7 @@ function Themer:_ProcessColors(Theme: { [any]: any })
 	end
 end
 
-function Themer:_ProcessSpacings(Theme: { [any]: any })
+function Themer:_ProcessSpacings(Theme: Theme)
 	if Theme.Spacing then
 		for _, Multiplier in ipairs(SPACING_MULTIPLIERS) do
 			if Theme.Spacing[tostring(Multiplier)] == nil then
@@ -105,7 +112,7 @@ function Themer:_ProcessSpacings(Theme: { [any]: any })
 	end
 end
 
-function Themer:_ProcessTextSizes(Theme: { [any]: any })
+function Themer:_ProcessTextSizes(Theme: Theme)
 	if Theme.TextSize then
 		for _, Multiplier in ipairs(TEXT_SIZE_MULTIPLIERS) do
 			if Theme.TextSize[tostring(Multiplier)] == nil then
@@ -115,7 +122,7 @@ function Themer:_ProcessTextSizes(Theme: { [any]: any })
 	end
 end
 
-function Themer:_ProcessCornerRadii(Theme: { [any]: any })
+function Themer:_ProcessCornerRadii(Theme: Theme)
 	if Theme.CornerRadius then
 		for _, Multiplier in ipairs(CORNER_RADIUS_MULTIPLIERS) do
 			if Theme.CornerRadius[tostring(Multiplier)] == nil then
@@ -124,12 +131,12 @@ function Themer:_ProcessCornerRadii(Theme: { [any]: any })
 		end
 
 		if Theme.CornerRadius.Full == nil then
-			Theme.CornerRadius.Full = Theme.CornerRadius["1"] * 9999
+			Theme.CornerRadius.Full = (Theme.CornerRadius["1"] or 0) * 9999
 		end
 	end
 end
 
-function Themer:_ProcessStrokeThickness(Theme: { [any]: any })
+function Themer:_ProcessStrokeThickness(Theme: Theme)
 	if Theme.StrokeThickness then
 		for _, Multiplier in ipairs(STROKE_THICKNESS_MULTIPLIERS) do
 			if Theme.StrokeThickness[tostring(Multiplier)] == nil then
@@ -139,7 +146,7 @@ function Themer:_ProcessStrokeThickness(Theme: { [any]: any })
 	end
 end
 
-function Themer:_ProcessSpringSpeed(Theme: { [any]: any })
+function Themer:_ProcessSpringSpeed(Theme: Theme)
 	if Theme.SpringSpeed then
 		for _, Multiplier in ipairs(SPRING_SPEED_MULTIPLIERS) do
 			if Theme.SpringSpeed[tostring(Multiplier)] == nil then
@@ -149,14 +156,33 @@ function Themer:_ProcessSpringSpeed(Theme: { [any]: any })
 	end
 end
 
-function Themer:Add(ThemeName: string, Theme: { [any]: any })
-	self.Themes[ThemeName] = {}
-	ReconcileValues(self.Themes[ThemeName], ThemeTemplate)
-	ReconcileValues(self.Themes[ThemeName], Theme)
+function Themer:_ProcessMultipliers(Theme: Theme, Key: string)
+	local Unit = Theme[Key]
+	if Unit ~= nil then
+		local Base = Unit.Base
+		if Base ~= nil then
+			for MultiplierKey, _ in pairs(ThemeTemplate[Key]) do
+				local Multiplier = tonumber(MultiplierKey)
+				if Multiplier ~= nil then
+					if Unit[MultiplierKey] == nil then
+						Unit[MultiplierKey] = Base * Multiplier
+					end
+				end
+			end
+		end
+	end
 end
 
-function Themer:Set(Theme: { [any]: any })
-	ReconcileValues(self.Theme, ThemeTemplate)
+--[=[
+	@method Set
+	@within Themer
+
+	@param Theme Theme
+
+	Sets the current theme to the given Theme parameter.
+]=]
+function Themer:Set(Theme: Theme)
+	Util.ReconcileValues(self.Theme, ThemeTemplate)
 
 	self:_ProcessColors(Theme)
 	self:_ProcessSpacings(Theme)
@@ -164,10 +190,11 @@ function Themer:Set(Theme: { [any]: any })
 	self:_ProcessCornerRadii(Theme)
 	self:_ProcessStrokeThickness(Theme)
 	self:_ProcessSpringSpeed(Theme)
-	ReconcileValues(self.Theme, Theme)
+	self:_ProcessMultipliers(Theme, "SpringDampening")
+
+	Util.ReconcileValues(self.Theme, Theme)
 end
 
-Themer:_LoadDefaultThemes()
 Themer:Set(OnyxNightTheme)
 
 return Themer

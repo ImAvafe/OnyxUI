@@ -1,6 +1,6 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Themer = require(OnyxUI.Utils.Themer)
+local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -23,32 +23,38 @@ return {
 
 			[Children] = {
 				Button {
-					Contents = { "Button" },
+					Content = { "Button" },
 				},
 				Button {
-					Contents = { "Button" },
+					Content = { "Button" },
+					Color = Themer.Theme.Colors.Primary.Main,
+				},
+				Button {
+					Content = { "Button" },
 					Style = "Outlined",
+					Color = Themer.Theme.Colors.Primary.Main,
 				},
 				Button {
-					Contents = { "rbxassetid://11560341132", "Purchase" },
+					Content = { "rbxassetid://11560341132", "Purchase" },
 					Color = Color3.fromRGB(86, 255, 70),
 				},
 				Button {
-					Contents = { "rbxassetid://13405228418", "Delete" },
+					Content = { "rbxassetid://13405228418", "Delete" },
 					Style = "Outlined",
 					Color = Themer.Theme.Colors.Error.Main,
 				},
 				Button {
-					Contents = { "Ghost" },
+					Content = { "Ghost" },
 					Style = "Ghost",
+					Color = Themer.Theme.Colors.BaseContent.Main,
 				},
 				Button {
-					Contents = { "rbxassetid://11560341132", "Bobux" },
+					Content = { "rbxassetid://11560341132", "Bobux" },
 					Color = Color3.fromRGB(86, 255, 70),
 					Disabled = true,
 				},
 				Button {
-					Contents = { "Testing" },
+					Content = { "Testing" },
 					Color = Color3.fromRGB(86, 255, 70),
 					Disabled = true,
 					Style = "Outlined",

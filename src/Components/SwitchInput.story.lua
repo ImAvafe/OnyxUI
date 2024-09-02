@@ -1,6 +1,6 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
-local Themer = require(OnyxUI.Utils.Themer)
+local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -16,6 +16,9 @@ return {
 				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
 			end),
 			ListEnabled = true,
+			ListPadding = Computed(function()
+				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			end),
 
 			[Children] = {
 				SwitchInput {},

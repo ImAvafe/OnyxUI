@@ -1,10 +1,15 @@
+--[=[
+		@class SwitchInput
+		
+		Useful for letting the user switch things on / off.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
+local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 
-local EnsureValue = require(OnyxUI.Utils.EnsureValue)
-local Themer = require(OnyxUI.Utils.Themer)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
-local CombineProps = require(OnyxUI.Utils.CombineProps)
 local ColorUtils = require(OnyxUI.Parent.ColorUtils)
 
 local Children = Fusion.Children
@@ -21,18 +26,27 @@ export type Props = Frame.Props & {
 	Color: PubTypes.CanBeState<Color3>?,
 }
 
+--[=[
+		@within SwitchInput
+		@interface SwitchInputProps
+
+		@field ... FrameProps
+		@field Switched CanBeState<boolean>?
+		@field Disabled CanBeState<boolean>?
+		@field Color CanBeState<Color3>?
+]=]
 return function(Props: Props)
-	local Switched = EnsureValue(Props.Switched, "boolean", false)
-	local Disabled = EnsureValue(Props.Disabled, "boolean", false)
-	local Color = EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local Size = EnsureValue(
+	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)
+	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
+	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
+	local Size = Util.EnsureValue(
 		Props.Size,
 		"UDim2",
 		Computed(function()
 			return UDim2.fromOffset(Themer.Theme.TextSize["1"]:get() * 2, Themer.Theme.TextSize["1"]:get())
 		end)
 	)
-	local AutomaticSize = EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)
+	local AutomaticSize = Util.EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)
 
 	local IsHolding = Value(false)
 	local IsHovering = Value(false)
@@ -80,7 +94,7 @@ return function(Props: Props)
 
 		return ActiveColor
 	end)
-	local EffectiveCornerRadius = EnsureValue(
+	local EffectiveCornerRadius = Util.EnsureValue(
 		Props.CornerRadius,
 		"UDim",
 		Computed(function()
@@ -88,7 +102,7 @@ return function(Props: Props)
 		end)
 	)
 
-	return BaseButton(CombineProps(Props, {
+	return BaseButton(Util.CombineProps(Props, {
 		Name = "SwitchInput",
 		Size = Size,
 		AutomaticSize = AutomaticSize,
@@ -106,9 +120,9 @@ return function(Props: Props)
 				end
 			end),
 			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening
+			Themer.Theme.SpringDampening["1"]
 		),
-		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		CornerRadius = EffectiveCornerRadius,
 		ClickSound = Themer.Theme.Sound.Switch,
 
@@ -123,7 +137,11 @@ return function(Props: Props)
 				Name = "Switch",
 				Size = Size,
 				AutomaticSize = AutomaticSize,
-				BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening),
+				BackgroundColor3 = Spring(
+					EffectiveColor,
+					Themer.Theme.SpringSpeed["1"],
+					Themer.Theme.SpringDampening["1"]
+				),
 				BackgroundTransparency = Spring(
 					Computed(function()
 						if Switched:get() then
@@ -133,7 +151,7 @@ return function(Props: Props)
 						end
 					end),
 					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening
+					Themer.Theme.SpringDampening["1"]
 				),
 				Padding = UDim.new(0, 2),
 				CornerRadius = EffectiveCornerRadius,
@@ -150,7 +168,7 @@ return function(Props: Props)
 								end
 							end),
 							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Themer.Theme.SpringDampening["1"]
 						),
 						Position = Spring(
 							Computed(function()
@@ -161,7 +179,7 @@ return function(Props: Props)
 								end
 							end),
 							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Themer.Theme.SpringDampening["1"]
 						),
 						Size = UDim2.fromScale(0, 1),
 						AutomaticSize = Enum.AutomaticSize.None,
@@ -177,12 +195,12 @@ return function(Props: Props)
 								end
 							end),
 							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Themer.Theme.SpringDampening["1"]
 						),
 						BackgroundColor3 = Spring(
 							EffectiveBallColor,
 							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening
+							Themer.Theme.SpringDampening["1"]
 						),
 						AspectRatio = 1,
 						AspectType = Enum.AspectType.ScaleWithParentSize,

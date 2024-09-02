@@ -1,6 +1,12 @@
+--[=[
+		@class Group
+		
+		Equivalent to Roblox's `CanvasGroup` instance.
+]=]
+
 local OnyxUI = script.Parent.Parent
-local CombineProps = require(OnyxUI.Utils.CombineProps)
-local PubTypes = require(OnyxUI.Utils.PubTypes)
+local Util = require(OnyxUI.Util)
+local PubTypes = require(OnyxUI.Util.PubTypes)
 local Fusion = require(OnyxUI.Parent.Fusion)
 
 local Hydrate = Fusion.Hydrate
@@ -12,10 +18,18 @@ export type Props = Base.Props & {
 	GroupColor3: PubTypes.CanBeState<Color3>?,
 }
 
+--[=[
+		@within Group
+		@interface GroupProps
+
+		@field ... BaseProps
+		@field GroupTransparency CanBeState<number>?
+		@field GroupColor3 CanBeState<Color3>?
+]=]
 return function(Props: Props)
-	return Hydrate(Base(CombineProps(Props, {
+	return Hydrate(Base(Util.CombineProps(Props, {
 		ClassName = "CanvasGroup",
-		Name = "CanvasGroup",
+		Name = "Group",
 		BackgroundTransparency = 1,
 		AutomaticSize = Enum.AutomaticSize.XY,
 	}))) {

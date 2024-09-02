@@ -1,7 +1,6 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Parent.Fusion)
 
-local New = Fusion.New
 local Children = Fusion.Children
 local Value = Fusion.Value
 
@@ -34,12 +33,9 @@ return {
 			Parent = Parent,
 			Size = UDim2.fromOffset(300, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
+			ListEnabled = true,
 
 			[Children] = {
-				New "UIListLayout" {
-					SortOrder = Enum.SortOrder.LayoutOrder,
-					FillDirection = Enum.FillDirection.Vertical,
-				},
 				NumberSpinner {
 					Value = CountNumber,
 				},
