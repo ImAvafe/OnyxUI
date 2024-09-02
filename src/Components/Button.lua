@@ -45,6 +45,7 @@ export type Props = BaseButton.Props & {
 		@field Color CanBeState<Color3>?
 		@field ContentColor CanBeState<Color3>?
 		@field ContentSize CanBeState<number>?
+		@field ContentWrapped CanBeState<boolean>?
 		@field IsHolding CanBeState<boolean>?
 ]=]
 return function(Props: Props)
