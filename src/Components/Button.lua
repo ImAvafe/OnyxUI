@@ -24,11 +24,12 @@ local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
 export type Props = BaseButton.Props & {
 	Disabled: PubTypes.CanBeState<boolean>?,
-	Content: PubTypes.CanBeState<{ string }>?,
 	Style: PubTypes.CanBeState<string>?,
 	Color: PubTypes.CanBeState<Color3>?,
+	Content: PubTypes.CanBeState<{ string }>?,
 	ContentColor: PubTypes.CanBeState<Color3>?,
 	ContentSize: PubTypes.CanBeState<number>?,
+	ContentWrapped: PubTypes.CanBeState<boolean>?,
 	IsHolding: PubTypes.CanBeState<boolean>?,
 }
 
@@ -59,6 +60,7 @@ return function(Props: Props)
 		end)
 	)
 	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
+	local ContentWrapped = Util.EnsureValue(Props.ContentWrapped, "boolean", false)
 
 	local IsHolding = Value(false)
 	local IsHovering = Value(false)
@@ -131,6 +133,7 @@ return function(Props: Props)
 		ListFillDirection = Enum.FillDirection.Horizontal,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
+		ListWraps = false,
 		StrokeEnabled = true,
 		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
 		StrokeTransparency = Computed(function()
@@ -151,6 +154,7 @@ return function(Props: Props)
 				ContentColor = EffectiveContentColor,
 				ContentTransparency = EffectiveContentTransparency,
 				ContentSize = ContentSize,
+				ContentWrapped = ContentWrapped,
 				ListPadding = Computed(function()
 					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
 				end),
