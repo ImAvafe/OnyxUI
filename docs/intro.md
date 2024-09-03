@@ -27,7 +27,7 @@ OnyxUI currently only supports Fusion 0.2. 0.3 support is still in the works.
 
 ## Project structure
 
-OnyxUI is structured as a collection of modules. This is unconventional, but necessary for exposing types so you can properly build off of OnyxUI. Here's a basic usage sample below:
+OnyxUI is structured as a collection of modules. Here's a basic usage sample below:
 
 ```lua
 local OnyxUI = require(path.to.OnyxUI)
