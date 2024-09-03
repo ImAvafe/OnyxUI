@@ -1,8 +1,11 @@
 local OnyxUI = require(script.Parent.Parent)
 local Util = require(OnyxUI.Util)
-local Theme = require(script.Parent.Theme)
+local NewTheme = require(script.Parent.NewTheme)
+local Fusion = require(OnyxUI.Packages.Fusion)
 
-local OnyxNight: Theme.Theme = {
+local Scope = Fusion.scoped(Fusion)
+
+local OnyxNight = NewTheme(Scope, {
 	Colors = {
 		Primary = {
 			Main = Util.Colors.Violet["500"],
@@ -71,6 +74,6 @@ local OnyxNight: Theme.Theme = {
 	},
 	Sound = {},
 	Emphasis = {},
-}
+})
 
 return OnyxNight
