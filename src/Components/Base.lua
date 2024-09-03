@@ -9,8 +9,7 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
@@ -242,63 +241,53 @@ export type Props = {
 	@field MaxTextSize Fusion.UsedAs<number>?
 	@field MinTextSize Fusion.UsedAs<number>?
 ]=]
-return function(Props: Props): GuiObject
-	local Name = Util.EnsureValue(Props.Name, "string", "Base")
-	local CornerRadius = Util.EnsureValue(
-		Props.CornerRadius,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, 0)
-		end)
-	)
-	local StrokeThickness = Util.EnsureValue(Props.StrokeThickness, "number", Themer.Theme.StrokeThickness["1"])
-	local StrokeColor = Util.EnsureValue(Props.StrokeColor, "Color3", Themer.Theme.Colors.Neutral.Main)
-	local StrokeApplyStrokeMode = Util.EnsureValue(Props.StrokeApplyStrokeMode, "EnumItem", Enum.ApplyStrokeMode.Border)
-	local Padding = Util.EnsureValue(
+return function(Scope: Fusion.Scope, Props: Props): Fusion.Child
+	Props.ClassName = Util.Fallback(Props.ClassName, "Frame")
+	Props.Name = Util.Fallback(Props.Name, "Base")
+	Props.CornerRadius = Util.Fallback(Props.CornerRadius, UDim.new(0, 0))
+	Props.StrokeThickness = Util.Fallback(Props.StrokeThickness, Themer.Theme.StrokeThickness["1"])
+	Props.StrokeColor = Util.Fallback(Props.StrokeColor, Themer.Theme.Colors.Neutral.Main)
+	Props.StrokeApplyStrokeMode = Util.Fallback(Props.StrokeApplyStrokeMode, Enum.ApplyStrokeMode.Border)
+	Props.Padding = Util.Fallback(
 		Props.Padding,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+		Scope:Computed(function(use)
+			return UDim.new(0, use(Themer.Theme.Spacing["1"]))
 		end)
 	)
-	local PaddingBottom = Util.EnsureValue(Props.PaddingBottom, "UDim", Props.Padding)
-	local PaddingLeft = Util.EnsureValue(Props.PaddingLeft, "UDim", Props.Padding)
-	local PaddingRight = Util.EnsureValue(Props.PaddingRight, "UDim", Props.Padding)
-	local PaddingTop = Util.EnsureValue(Props.PaddingTop, "UDim", Props.Padding)
-	local ListPadding = Util.EnsureValue(
+	Props.PaddingBottom = Util.Fallback(Props.PaddingBottom, Props.Padding)
+	Props.PaddingLeft = Util.Fallback(Props.PaddingLeft, Props.Padding)
+	Props.PaddingRight = Util.Fallback(Props.PaddingRight, Props.Padding)
+	Props.PaddingTop = Util.Fallback(Props.PaddingTop, Props.Padding)
+	Props.ListPadding = Util.Fallback(
 		Props.ListPadding,
-		"UDim",
-		Computed(function()
+		Scope:Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
 		end)
 	)
-	local ListSortOrder = Util.EnsureValue(Props.ListSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
-	local GridCellPadding = Util.EnsureValue(
+	Props.ListSortOrder = Util.Fallback(Props.ListSortOrder, Enum.SortOrder.LayoutOrder)
+	Props.GridCellPadding = Util.Fallback(
 		Props.GridCellPadding,
-		"UDim2",
-		Computed(function()
+		Scope:Computed(function()
 			return UDim2.fromOffset(Themer.Theme.Spacing["0.5"]:get(), Themer.Theme.Spacing["0.5"]:get())
 		end)
 	)
-	local GridSortOrder = Util.EnsureValue(Props.GridSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
-	local PagePadding = Util.EnsureValue(
+	Props.GridSortOrder = Util.Fallback(Props.GridSortOrder, Enum.SortOrder.LayoutOrder)
+	Props.PagePadding = Util.Fallback(
 		Props.PagePadding,
-		"UDim",
-		Computed(function()
+		Scope:Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end)
 	)
-	local PageSortOrder = Util.EnsureValue(Props.PageSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
-	local TablePadding = Util.EnsureValue(
+	Props.PageSortOrder = Util.Fallback(Props.PageSortOrder, Enum.SortOrder.LayoutOrder)
+	Props.TablePadding = Util.Fallback(
 		Props.TablePadding,
-		"UDim",
-		Computed(function()
+		Scope:Computed(function()
 			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
 		end)
 	)
-	local TableSortOrder = Util.EnsureValue(Props.TableSortOrder, "EnumItem", Enum.SortOrder.LayoutOrder)
+	Props.TableSortOrder = Util.Fallback(Props.TableSortOrder, Enum.SortOrder.LayoutOrder)
 
-	local PaddingInEffect = Computed(function()
+	local PaddingInEffect = Scope:Computed(function()
 		local Paddings = { Props.Padding, Props.PaddingTop, Props.PaddingLeft, Props.PaddingRight, Props.PaddingBottom }
 
 		for _, PaddingProp in pairs(Paddings) do
@@ -311,8 +300,8 @@ return function(Props: Props): GuiObject
 		return false
 	end)
 
-	return New(Props.ClassName or "Frame") {
-		Name = Name,
+	return Scope:New(Props.ClassName) {
+		Name = Props.Name,
 
 		Parent = Props.Parent,
 		Position = Props.Position,
@@ -347,7 +336,7 @@ return function(Props: Props): GuiObject
 		[Children] = {
 			Props[Children],
 
-			Computed(function()
+			Scope:Computed(function()
 				local CornerRadiusValue = CornerRadius:get()
 				if
 					(typeof(CornerRadiusValue) == "UDim")
@@ -360,10 +349,10 @@ return function(Props: Props): GuiObject
 					return
 				end
 			end, Fusion.cleanup),
-			Computed(function()
+			Scope:Computed(function()
 				if PaddingInEffect:get() == true then
-					return New "UIPadding" {
-						PaddingTop = Computed(function()
+					return Scope:New "UIPadding" {
+						PaddingTop = Scope:Computed(function()
 							local PaddingTopValue = PaddingTop:get()
 							local PaddingValue = Padding:get()
 							if typeof(PaddingTopValue) == "UDim" then
