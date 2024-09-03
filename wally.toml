@@ -10,4 +10,4 @@ realm = "shared"
 
 [dependencies]
 ColorUtils = "csqrl/colour-utils@1.4.1"
-Fusion = "elttob/fusion@0.2.0"
+Fusion = "elttob/fusion@0.3.0"
