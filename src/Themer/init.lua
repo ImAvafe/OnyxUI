@@ -2,7 +2,8 @@ local OnyxUI = script.Parent
 local Util = require(script.Parent.Util)
 local OnyxNightTheme = require(script.OnyxNight)
 local ThemeTemplate = require(script.ThemeTemplate)
-local ColorUtils = require(OnyxUI.Parent.ColorUtils)
+local Packages = require(OnyxUI.Packages)
+local ColorUtils = require(Packages.ColorUtils)
 local ThemeType = require(script.Theme)
 
 local SPACING_MULTIPLIERS = {
