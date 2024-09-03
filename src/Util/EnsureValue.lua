@@ -1,29 +1,21 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+local Fusion = require(OnyxUI.Packages.Fusion)
 
-local Value = Fusion.Value
+local peek = Fusion.peek
 
 --[=[
 	@function EnsureValue
 	@within Util
 
-	@param PreferredValue any
-	@param ValueType string
-	@param FallbackValue any
+	@param Scope Fusion.Scope<any>
+	@param Value Fusion.UsedAs<any>
 	
-	Converts the `PreferredValue` to a Fusion `Value` object, if it is not one already. Also supports an optional fallback value.
+	Converts the `PreferredValue` to a Fusion `Value` object, if it is not one already.
 ]=]
-return function(PreferredValue: any, ValueType: string, FallbackValue: any): Fusion.UsedAs<any>
-	if PreferredValue == nil then
-		if typeof(FallbackValue) == "table" and FallbackValue.get then
-			return FallbackValue
-		else
-			return Value(FallbackValue)
-		end
-	elseif (typeof(PreferredValue) == ValueType) and not (typeof(PreferredValue) == "table" and PreferredValue.get) then
-		return Value(PreferredValue)
+return function(Scope: Fusion.Scope<any>, Value: Fusion.UsedAs<any>): Fusion.Value<any>
+	if (typeof(Value) == "table") and (Value.kind == "Value") then
+		return Value
 	else
-		return PreferredValue
+		return Fusion.Value(Scope, peek(Value))
 	end
 end
