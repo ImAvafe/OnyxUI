@@ -7,9 +7,10 @@ return function(Value: Fusion.UsedAs<any>, Fallback: any)
 	if peek(Value) == nil then
 		if typeof(Value) == "table" and Value.kind == "Value" then
 			Value:set(Fallback)
+			return Value
+		else
+			return Fallback
 		end
-
-		return Fallback
 	else
 		return Value
 	end
