@@ -9,7 +9,6 @@ local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -19,11 +18,11 @@ local Frame = require(script.Parent.Frame)
 local Group = require(script.Parent.Group)
 
 export type Props = Group.Props & {
-	Progress: PubTypes.CanBeState<number>?,
-	Color: PubTypes.CanBeState<Color3>?,
-	Direction: PubTypes.CanBeState<Enum.FillDirection>?,
-	Inverted: PubTypes.CanBeState<boolean>?,
-	Length: PubTypes.CanBeState<UDim>?,
+	Progress: Fusion.UsedAs<number>?,
+	Color: Fusion.UsedAs<Color3>?,
+	Direction: Fusion.UsedAs<Enum.FillDirection>?,
+	Inverted: Fusion.UsedAs<boolean>?,
+	Length: Fusion.UsedAs<UDim>?,
 }
 
 --[=[
@@ -31,11 +30,11 @@ export type Props = Group.Props & {
 		@interface ProgressBarProps
 
 		@field ... GroupProps
-		@field Progress CanBeState<number>?
-		@field Color CanBeState<Color3>?
-		@field Direction CanBeState<Enum.FillDirection>?
-		@field Inverted CanBeState<boolean>?
-		@field Length CanBeState<UDim>?
+		@field Progress Fusion.UsedAs<number>?
+		@field Color Fusion.UsedAs<Color3>?
+		@field Direction Fusion.UsedAs<Enum.FillDirection>?
+		@field Inverted Fusion.UsedAs<boolean>?
+		@field Length Fusion.UsedAs<UDim>?
 ]=]
 return function(Props: Props)
 	local Progress = Util.EnsureValue(Props.Progress, "number", 0)

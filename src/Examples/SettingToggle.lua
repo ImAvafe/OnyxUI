@@ -3,7 +3,6 @@ local Themer = require(OnyxUI.Themer)
 local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -15,7 +14,7 @@ local Text = require(OnyxUI.Components.Text)
 local DISABLED_TRANSPARENCY = 0.5
 
 export type Props = SwitchGroup.Props & {
-	Label: PubTypes.CanBeState<string>,
+	Label: Fusion.UsedAs<string>,
 }
 
 local function SettingToggle(Props: Props)

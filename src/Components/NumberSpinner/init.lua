@@ -14,7 +14,6 @@ local Fusion = require(Packages.Fusion)
 local NumberSpinner = require(script.NumberSpinner)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Cleanup = Fusion.Cleanup
 local Observer = Fusion.Observer
@@ -23,12 +22,12 @@ local Computed = Fusion.Computed
 local Text = require(script.Parent.Text)
 
 export type Props = Text.Props & {
-	Value: PubTypes.CanBeState<number>?,
-	Prefix: PubTypes.CanBeState<string>?,
-	Suffix: PubTypes.CanBeState<string>?,
-	Decimals: PubTypes.CanBeState<boolean>?,
-	Duration: PubTypes.CanBeState<number>?,
-	Commas: PubTypes.CanBeState<boolean>?,
+	Value: Fusion.UsedAs<number>?,
+	Prefix: Fusion.UsedAs<string>?,
+	Suffix: Fusion.UsedAs<string>?,
+	Decimals: Fusion.UsedAs<boolean>?,
+	Duration: Fusion.UsedAs<number>?,
+	Commas: Fusion.UsedAs<boolean>?,
 }
 
 --[=[
@@ -36,12 +35,12 @@ export type Props = Text.Props & {
 		@interface NumberSpinnerProps
 
 		@field ... TextProps
-		@field Value CanBeState<number>?
-		@field Prefix CanBeState<string>?
-		@field Suffix CanBeState<string>?
-		@field Decimals CanBeState<boolean>?
-		@field Duration CanBeState<number>?
-		@field Commas CanBeState<boolean>?
+		@field Value Fusion.UsedAs<number>?
+		@field Prefix Fusion.UsedAs<string>?
+		@field Suffix Fusion.UsedAs<string>?
+		@field Decimals Fusion.UsedAs<boolean>?
+		@field Duration Fusion.UsedAs<number>?
+		@field Commas Fusion.UsedAs<boolean>?
 ]=]
 return function(Props: Props)
 	local TextSize = Util.EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])

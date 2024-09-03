@@ -10,19 +10,17 @@ local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
-local PubTypes = require(OnyxUI.Util.PubTypes)
-
 local Children = Fusion.Children
 local Computed = Fusion.Computed
 
 local Frame = require(script.Parent.Frame)
 
 type Props = Frame.Props & {
-	Length: PubTypes.CanBeState<UDim>?,
-	FillDirection: PubTypes.CanBeState<Enum.FillDirection>?,
-	Color: PubTypes.CanBeState<Color3>?,
-	Transparency: PubTypes.CanBeState<number>?,
-	Spacing: PubTypes.CanBeState<UDim>?,
+	Length: Fusion.UsedAs<UDim>?,
+	FillDirection: Fusion.UsedAs<Enum.FillDirection>?,
+	Color: Fusion.UsedAs<Color3>?,
+	Transparency: Fusion.UsedAs<number>?,
+	Spacing: Fusion.UsedAs<UDim>?,
 }
 
 --[=[
@@ -30,11 +28,11 @@ type Props = Frame.Props & {
 		@interface DividerProps
 
 		@field ... FrameProps
-		@field Length CanBeState<UDim>?
-		@field FillDirection CanBeState<Enum.FillDirection>?
-		@field Color CanBeState<Color3>?
-		@field Transparency CanBeState<number>?
-		@field Spacing CanBeState<UDim>?
+		@field Length Fusion.UsedAs<UDim>?
+		@field FillDirection Fusion.UsedAs<Enum.FillDirection>?
+		@field Color Fusion.UsedAs<Color3>?
+		@field Transparency Fusion.UsedAs<number>?
+		@field Spacing Fusion.UsedAs<UDim>?
 ]=]
 return function(Props: Props)
 	local Length = Util.EnsureValue(Props.Length, "UDim", UDim.new(1, 0))

@@ -11,7 +11,6 @@ local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Hydrate = Fusion.Hydrate
 local Computed = Fusion.Computed
@@ -29,45 +28,45 @@ local Base = require(script.Parent.Base)
 		@interface TextInputProps
 
 		@field ... BaseProps
-		@field Disabled CanBeState<boolean>?
-		@field CharacterLimit CanBeState<number>?
-		@field Color CanBeState<Color3>?
-		@field PlaceholderText CanBeState<string>?
-		@field Text CanBeState<string>?
-		@field ClearTextOnFocus CanBeState<boolean>?
-		@field TextWrapped CanBeState<boolean>?
-		@field MultiLine CanBeState<boolean>?
-		@field TextSize CanBeState<number>?
-		@field TextColor3 CanBeState<Color3>?
-		@field FontFace CanBeState<Font>?
-		@field PlaceholderColor3 CanBeState<Color3>?
-		@field TextXAlignment CanBeState<Enum.TextXAlignment>?
-		@field TextYAlignment CanBeState<Enum.TextYAlignment>?
-		@field TextTransparency CanBeState<number>?
-		@field IsFocused CanBeState<boolean>?
-		@field OnFocused CanBeState<() -> ()>?
-		@field OnFocusLost CanBeState<() -> ()>?
+		@field Disabled Fusion.UsedAs<boolean>?
+		@field CharacterLimit Fusion.UsedAs<number>?
+		@field Color Fusion.UsedAs<Color3>?
+		@field PlaceholderText Fusion.UsedAs<string>?
+		@field Text Fusion.UsedAs<string>?
+		@field ClearTextOnFocus Fusion.UsedAs<boolean>?
+		@field TextWrapped Fusion.UsedAs<boolean>?
+		@field MultiLine Fusion.UsedAs<boolean>?
+		@field TextSize Fusion.UsedAs<number>?
+		@field TextColor3 Fusion.UsedAs<Color3>?
+		@field FontFace Fusion.UsedAs<Font>?
+		@field PlaceholderColor3 Fusion.UsedAs<Color3>?
+		@field TextXAlignment Fusion.UsedAs<Enum.TextXAlignment>?
+		@field TextYAlignment Fusion.UsedAs<Enum.TextYAlignment>?
+		@field TextTransparency Fusion.UsedAs<number>?
+		@field IsFocused Fusion.UsedAs<boolean>?
+		@field OnFocused Fusion.UsedAs<() -> ()>?
+		@field OnFocusLost Fusion.UsedAs<() -> ()>?
 ]=]
 export type Props = Base.Props & {
-	Disabled: PubTypes.CanBeState<boolean>?,
-	CharacterLimit: PubTypes.CanBeState<number>?,
-	Color: PubTypes.CanBeState<Color3>?,
-	PlaceholderText: PubTypes.CanBeState<string>?,
-	Text: PubTypes.CanBeState<string>?,
-	ClearTextOnFocus: PubTypes.CanBeState<boolean>?,
-	TextWrapped: PubTypes.CanBeState<boolean>?,
-	MultiLine: PubTypes.CanBeState<boolean>?,
-	TextSize: PubTypes.CanBeState<number>?,
-	TextColor3: PubTypes.CanBeState<Color3>?,
-	FontFace: PubTypes.CanBeState<Font>?,
-	PlaceholderColor3: PubTypes.CanBeState<Color3>?,
-	TextXAlignment: PubTypes.CanBeState<Enum.TextXAlignment>?,
-	TextYAlignment: PubTypes.CanBeState<Enum.TextYAlignment>?,
-	TextTransparency: PubTypes.CanBeState<number>?,
+	Disabled: Fusion.UsedAs<boolean>?,
+	CharacterLimit: Fusion.UsedAs<number>?,
+	Color: Fusion.UsedAs<Color3>?,
+	PlaceholderText: Fusion.UsedAs<string>?,
+	Text: Fusion.UsedAs<string>?,
+	ClearTextOnFocus: Fusion.UsedAs<boolean>?,
+	TextWrapped: Fusion.UsedAs<boolean>?,
+	MultiLine: Fusion.UsedAs<boolean>?,
+	TextSize: Fusion.UsedAs<number>?,
+	TextColor3: Fusion.UsedAs<Color3>?,
+	FontFace: Fusion.UsedAs<Font>?,
+	PlaceholderColor3: Fusion.UsedAs<Color3>?,
+	TextXAlignment: Fusion.UsedAs<Enum.TextXAlignment>?,
+	TextYAlignment: Fusion.UsedAs<Enum.TextYAlignment>?,
+	TextTransparency: Fusion.UsedAs<number>?,
 
-	IsFocused: PubTypes.CanBeState<boolean>?,
-	OnFocused: PubTypes.CanBeState<() -> ()>?,
-	OnFocusLost: PubTypes.CanBeState<() -> ()>?,
+	IsFocused: Fusion.UsedAs<boolean>?,
+	OnFocused: Fusion.UsedAs<() -> ()>?,
+	OnFocusLost: Fusion.UsedAs<() -> ()>?,
 }
 
 return function(Props: Props)

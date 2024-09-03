@@ -72,7 +72,7 @@ export type StateObject<T> = Dependency & {
 }
 
 -- Either a constant value of type T, or a state object containing type T.
-export type CanBeState<T> = StateObject<T> | T
+export type Fusion.UsedAs<T> = StateObject<T> | T
 
 --[[
 	Specific reactive graph types

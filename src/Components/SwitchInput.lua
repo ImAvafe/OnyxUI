@@ -9,7 +9,6 @@ local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local ColorUtils = require(Packages.ColorUtils)
 
@@ -22,9 +21,9 @@ local Frame = require(script.Parent.Frame)
 local BaseButton = require(script.Parent.BaseButton)
 
 export type Props = Frame.Props & {
-	Switched: PubTypes.CanBeState<boolean>?,
-	Disabled: PubTypes.CanBeState<boolean>?,
-	Color: PubTypes.CanBeState<Color3>?,
+	Switched: Fusion.UsedAs<boolean>?,
+	Disabled: Fusion.UsedAs<boolean>?,
+	Color: Fusion.UsedAs<Color3>?,
 }
 
 --[=[
@@ -32,9 +31,9 @@ export type Props = Frame.Props & {
 		@interface SwitchInputProps
 
 		@field ... FrameProps
-		@field Switched CanBeState<boolean>?
-		@field Disabled CanBeState<boolean>?
-		@field Color CanBeState<Color3>?
+		@field Switched Fusion.UsedAs<boolean>?
+		@field Disabled Fusion.UsedAs<boolean>?
+		@field Color Fusion.UsedAs<Color3>?
 ]=]
 return function(Props: Props)
 	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)

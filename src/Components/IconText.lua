@@ -6,7 +6,7 @@
 
 local OnyxUI = require(script.Parent.Parent)
 local Util = require(OnyxUI.Util)
-local PubTypes = require(OnyxUI.Util.PubTypes)
+
 local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
@@ -20,13 +20,13 @@ local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
 
 export type Props = Frame.Props & {
-	Content: PubTypes.CanBeState<{ string }>?,
-	ContentColor: PubTypes.CanBeState<Color3>?,
-	ContentSize: PubTypes.CanBeState<number>?,
-	ContentTransparency: PubTypes.CanBeState<number>?,
-	ContentWrapped: PubTypes.CanBeState<boolean>?,
-	ContentRichText: PubTypes.CanBeState<boolean>?,
-	ContentFontFace: PubTypes.CanBeState<Font>?,
+	Content: Fusion.UsedAs<{ string }>?,
+	ContentColor: Fusion.UsedAs<Color3>?,
+	ContentSize: Fusion.UsedAs<number>?,
+	ContentTransparency: Fusion.UsedAs<number>?,
+	ContentWrapped: Fusion.UsedAs<boolean>?,
+	ContentRichText: Fusion.UsedAs<boolean>?,
+	ContentFontFace: Fusion.UsedAs<Font>?,
 }
 
 --[=[
@@ -34,13 +34,13 @@ export type Props = Frame.Props & {
 		@interface IconTextProps
 
 		@field ... FrameProps
-		@field Content CanBeState<{ string }>?
-		@field ContentColor CanBeState<Color3>?
-		@field ContentSize CanBeState<number>?
-		@field ContentTransparency CanBeState<number>?
-		@field ContentWrapped CanBeState<boolean>?
-		@field ContentRichText CanBeState<boolean>?
-		@field ContentFontFace CanBeState<Font>?
+		@field Content Fusion.UsedAs<{ string }>?
+		@field ContentColor Fusion.UsedAs<Color3>?
+		@field ContentSize Fusion.UsedAs<number>?
+		@field ContentTransparency Fusion.UsedAs<number>?
+		@field ContentWrapped Fusion.UsedAs<boolean>?
+		@field ContentRichText Fusion.UsedAs<boolean>?
+		@field ContentFontFace Fusion.UsedAs<Font>?
 ]=]
 return function(Props: Props)
 	local Content = Util.EnsureValue(Props.Content, "table", {})

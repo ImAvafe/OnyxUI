@@ -10,7 +10,6 @@ local Fusion = require(Packages.Fusion)
 local ColorUtils = require(Packages.ColorUtils)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -24,14 +23,14 @@ local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
 
 export type Props = BaseButton.Props & {
-	Disabled: PubTypes.CanBeState<boolean>?,
-	Style: PubTypes.CanBeState<string>?,
-	Color: PubTypes.CanBeState<Color3>?,
-	Content: PubTypes.CanBeState<{ string }>?,
-	ContentColor: PubTypes.CanBeState<Color3>?,
-	ContentSize: PubTypes.CanBeState<number>?,
-	ContentWrapped: PubTypes.CanBeState<boolean>?,
-	IsHolding: PubTypes.CanBeState<boolean>?,
+	Disabled: Fusion.UsedAs<boolean>?,
+	Style: Fusion.UsedAs<string>?,
+	Color: Fusion.UsedAs<Color3>?,
+	Content: Fusion.UsedAs<{ string }>?,
+	ContentColor: Fusion.UsedAs<Color3>?,
+	ContentSize: Fusion.UsedAs<number>?,
+	ContentWrapped: Fusion.UsedAs<boolean>?,
+	IsHolding: Fusion.UsedAs<boolean>?,
 }
 
 --[=[
@@ -40,14 +39,14 @@ export type Props = BaseButton.Props & {
 
 		@field ... BaseProps
 
-		@field Disabled CanBeState<boolean>?
-		@field Content CanBeState<{ string }>?
-		@field Style CanBeState<string>?
-		@field Color CanBeState<Color3>?
-		@field ContentColor CanBeState<Color3>?
-		@field ContentSize CanBeState<number>?
-		@field ContentWrapped CanBeState<boolean>?
-		@field IsHolding CanBeState<boolean>?
+		@field Disabled Fusion.UsedAs<boolean>?
+		@field Content Fusion.UsedAs<{ string }>?
+		@field Style Fusion.UsedAs<string>?
+		@field Color Fusion.UsedAs<Color3>?
+		@field ContentColor Fusion.UsedAs<Color3>?
+		@field ContentSize Fusion.UsedAs<number>?
+		@field ContentWrapped Fusion.UsedAs<boolean>?
+		@field IsHolding Fusion.UsedAs<boolean>?
 ]=]
 return function(Props: Props)
 	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)

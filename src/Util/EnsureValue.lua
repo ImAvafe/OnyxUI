@@ -1,7 +1,6 @@
 local OnyxUI = script.Parent.Parent
 local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Value = Fusion.Value
 
@@ -15,7 +14,7 @@ local Value = Fusion.Value
 	
 	Converts the `PreferredValue` to a Fusion `Value` object, if it is not one already. Also supports an optional fallback value.
 ]=]
-return function(PreferredValue: any, ValueType: string, FallbackValue: any): PubTypes.CanBeState<any>
+return function(PreferredValue: any, ValueType: string, FallbackValue: any): Fusion.UsedAs<any>
 	if PreferredValue == nil then
 		if typeof(FallbackValue) == "table" and FallbackValue.get then
 			return FallbackValue

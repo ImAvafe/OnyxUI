@@ -11,7 +11,6 @@ local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local OnEvent = Fusion.OnEvent
 local Computed = Fusion.Computed
@@ -24,31 +23,31 @@ local Base = require(script.Parent.Base)
 		@interface BaseButtonProps
 
 		@field ... BaseProps
-		@field Disabled CanBeState<boolean>?
-		@field OnActivated CanBeState<() -> ()>?
-		@field OnMouseEnter CanBeState<() -> ()>?
-		@field OnMouseLeave CanBeState<() -> ()>?
-		@field OnMouseButton1Down CanBeState<() -> ()>?
-		@field OnMouseButton1Up CanBeState<() -> ()>?
-		@field IsHovering CanBeState<boolean>?
-		@field IsHolding CanBeState<boolean>?
-		@field HoverSound CanBeState<Sound>?
-		@field ClickSound CanBeState<Sound>?
+		@field Disabled Fusion.UsedAs<boolean>?
+		@field OnActivated Fusion.UsedAs<() -> ()>?
+		@field OnMouseEnter Fusion.UsedAs<() -> ()>?
+		@field OnMouseLeave Fusion.UsedAs<() -> ()>?
+		@field OnMouseButton1Down Fusion.UsedAs<() -> ()>?
+		@field OnMouseButton1Up Fusion.UsedAs<() -> ()>?
+		@field IsHovering Fusion.UsedAs<boolean>?
+		@field IsHolding Fusion.UsedAs<boolean>?
+		@field HoverSound Fusion.UsedAs<Sound>?
+		@field ClickSound Fusion.UsedAs<Sound>?
 ]=]
 export type Props = Base.Props & {
-	Disabled: PubTypes.CanBeState<boolean>?,
+	Disabled: Fusion.UsedAs<boolean>?,
 
-	OnActivated: PubTypes.CanBeState<() -> ()>?,
-	OnMouseEnter: PubTypes.CanBeState<() -> ()>?,
-	OnMouseLeave: PubTypes.CanBeState<() -> ()>?,
-	OnMouseButton1Down: PubTypes.CanBeState<() -> ()>?,
-	OnMouseButton1Up: PubTypes.CanBeState<() -> ()>?,
+	OnActivated: Fusion.UsedAs<() -> ()>?,
+	OnMouseEnter: Fusion.UsedAs<() -> ()>?,
+	OnMouseLeave: Fusion.UsedAs<() -> ()>?,
+	OnMouseButton1Down: Fusion.UsedAs<() -> ()>?,
+	OnMouseButton1Up: Fusion.UsedAs<() -> ()>?,
 
-	IsHovering: PubTypes.CanBeState<boolean>?,
-	IsHolding: PubTypes.CanBeState<boolean>?,
+	IsHovering: Fusion.UsedAs<boolean>?,
+	IsHolding: Fusion.UsedAs<boolean>?,
 
-	HoverSound: PubTypes.CanBeState<Sound>?,
-	ClickSound: PubTypes.CanBeState<Sound>?,
+	HoverSound: Fusion.UsedAs<Sound>?,
+	ClickSound: Fusion.UsedAs<Sound>?,
 }
 
 return function(Props: Props)

@@ -9,15 +9,14 @@ local Util = require(OnyxUI.Util)
 local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Computed = Fusion.Computed
 
 local Text = require(OnyxUI.Components.Text)
 
 export type Props = Text.Props & {
-	HeadingSize: PubTypes.CanBeState<number>?,
-	TextSize: PubTypes.CanBeState<number>?,
+	HeadingSize: Fusion.UsedAs<number>?,
+	TextSize: Fusion.UsedAs<number>?,
 }
 
 --[=[
@@ -25,8 +24,8 @@ export type Props = Text.Props & {
 		@interface HeadingProps
 
 		@field ... TextProps
-		@field HeadingSize CanBeState<number>?
-		@field TextSize CanBeState<number>?
+		@field HeadingSize Fusion.UsedAs<number>?
+		@field TextSize Fusion.UsedAs<number>?
 ]=]
 return function(Props: Props)
 	local HeadingSize = Util.EnsureValue(Props.HeadingSize, "number", 1.75)

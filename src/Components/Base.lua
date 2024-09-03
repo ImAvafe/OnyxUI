@@ -11,131 +11,126 @@
 local OnyxUI = script.Parent.Parent
 local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-
-local New = Fusion.New
-local Computed = Fusion.Computed
-local Children = Fusion.Children
 
 export type Props = {
 	ClassName: string?,
 
-	Name: PubTypes.CanBeState<string>?,
-	Parent: PubTypes.CanBeState<Instance>?,
-	Position: PubTypes.CanBeState<UDim2>?,
-	Rotation: PubTypes.CanBeState<number>?,
-	AnchorPoint: PubTypes.CanBeState<Vector2>?,
-	Size: PubTypes.CanBeState<UDim2>?,
-	AutomaticSize: PubTypes.CanBeState<Enum.AutomaticSize>?,
-	Visible: PubTypes.CanBeState<boolean>?,
-	ZIndex: PubTypes.CanBeState<number>?,
-	LayoutOrder: PubTypes.CanBeState<number>?,
-	ClipsDescendants: PubTypes.CanBeState<boolean>?,
-	Active: PubTypes.CanBeState<boolean>?,
-	Selectable: PubTypes.CanBeState<boolean>?,
-	Interactable: PubTypes.CanBeState<boolean>?,
-	BackgroundColor3: PubTypes.CanBeState<Color3>?,
-	BackgroundTransparency: PubTypes.CanBeState<number>?,
-	NextSelectionDown: PubTypes.CanBeState<GuiObject>?,
-	NextSelectionUp: PubTypes.CanBeState<GuiObject>?,
-	NextSelectionRight: PubTypes.CanBeState<GuiObject>?,
-	NextSelectionLeft: PubTypes.CanBeState<GuiObject>?,
-	SelectionImageObject: PubTypes.CanBeState<GuiObject>?,
-	SelectionOrder: PubTypes.CanBeState<number>?,
-	SizeConstraint: PubTypes.CanBeState<Enum.SizeConstraint>?,
-	AutoLocalize: PubTypes.CanBeState<boolean>?,
-	RootLocalizationTable: PubTypes.CanBeState<LocalizationTable>?,
-	SelectionBehaviorDown: PubTypes.CanBeState<Enum.SelectionBehavior>?,
-	SelectionBehaviorUp: PubTypes.CanBeState<Enum.SelectionBehavior>?,
-	SelectionBehaviorRight: PubTypes.CanBeState<Enum.SelectionBehavior>?,
-	SelectionBehaviorLeft: PubTypes.CanBeState<Enum.SelectionBehavior>?,
-	SelectionGroup: PubTypes.CanBeState<boolean>?,
+	Name: Fusion.UsedAs<string>?,
+	Parent: Fusion.UsedAs<Instance>?,
+	Position: Fusion.UsedAs<UDim2>?,
+	Rotation: Fusion.UsedAs<number>?,
+	AnchorPoint: Fusion.UsedAs<Vector2>?,
+	Size: Fusion.UsedAs<UDim2>?,
+	AutomaticSize: Fusion.UsedAs<Enum.AutomaticSize>?,
+	Visible: Fusion.UsedAs<boolean>?,
+	ZIndex: Fusion.UsedAs<number>?,
+	LayoutOrder: Fusion.UsedAs<number>?,
+	ClipsDescendants: Fusion.UsedAs<boolean>?,
+	Active: Fusion.UsedAs<boolean>?,
+	Selectable: Fusion.UsedAs<boolean>?,
+	Interactable: Fusion.UsedAs<boolean>?,
+	BackgroundColor3: Fusion.UsedAs<Color3>?,
+	BackgroundTransparency: Fusion.UsedAs<number>?,
+	NextSelectionDown: Fusion.UsedAs<GuiObject>?,
+	NextSelectionUp: Fusion.UsedAs<GuiObject>?,
+	NextSelectionRight: Fusion.UsedAs<GuiObject>?,
+	NextSelectionLeft: Fusion.UsedAs<GuiObject>?,
+	SelectionImageObject: Fusion.UsedAs<GuiObject>?,
+	SelectionOrder: Fusion.UsedAs<number>?,
+	SizeConstraint: Fusion.UsedAs<Enum.SizeConstraint>?,
+	AutoLocalize: Fusion.UsedAs<boolean>?,
+	RootLocalizationTable: Fusion.UsedAs<LocalizationTable>?,
+	SelectionBehaviorDown: Fusion.UsedAs<Enum.SelectionBehavior>?,
+	SelectionBehaviorUp: Fusion.UsedAs<Enum.SelectionBehavior>?,
+	SelectionBehaviorRight: Fusion.UsedAs<Enum.SelectionBehavior>?,
+	SelectionBehaviorLeft: Fusion.UsedAs<Enum.SelectionBehavior>?,
+	SelectionGroup: Fusion.UsedAs<boolean>?,
 
-	CornerRadius: PubTypes.CanBeState<UDim>?,
+	CornerRadius: Fusion.UsedAs<UDim>?,
 
-	Padding: PubTypes.CanBeState<UDim>?,
-	PaddingTop: PubTypes.CanBeState<UDim>?,
-	PaddingLeft: PubTypes.CanBeState<UDim>?,
-	PaddingRight: PubTypes.CanBeState<UDim>?,
-	PaddingBottom: PubTypes.CanBeState<UDim>?,
+	Padding: Fusion.UsedAs<UDim>?,
+	PaddingTop: Fusion.UsedAs<UDim>?,
+	PaddingLeft: Fusion.UsedAs<UDim>?,
+	PaddingRight: Fusion.UsedAs<UDim>?,
+	PaddingBottom: Fusion.UsedAs<UDim>?,
 
-	Scale: PubTypes.CanBeState<number>?,
+	Scale: Fusion.UsedAs<number>?,
 
-	StrokeEnabled: PubTypes.CanBeState<boolean>?,
-	StrokeThickness: PubTypes.CanBeState<number>?,
-	StrokeColor: PubTypes.CanBeState<Color3>?,
-	StrokeTransparency: PubTypes.CanBeState<number>?,
-	StrokeLineJoinMode: PubTypes.CanBeState<Enum.LineJoinMode>?,
-	StrokeApplyStrokeMode: PubTypes.CanBeState<Enum.ApplyStrokeMode>?,
+	StrokeEnabled: Fusion.UsedAs<boolean>?,
+	StrokeThickness: Fusion.UsedAs<number>?,
+	StrokeColor: Fusion.UsedAs<Color3>?,
+	StrokeTransparency: Fusion.UsedAs<number>?,
+	StrokeLineJoinMode: Fusion.UsedAs<Enum.LineJoinMode>?,
+	StrokeApplyStrokeMode: Fusion.UsedAs<Enum.ApplyStrokeMode>?,
 
-	GradientEnabled: PubTypes.CanBeState<boolean>?,
-	GradientColor: PubTypes.CanBeState<ColorSequence>?,
-	GradientOffset: PubTypes.CanBeState<UDim>?,
-	GradientRotation: PubTypes.CanBeState<number>?,
-	GradientTransparency: PubTypes.CanBeState<number>?,
+	GradientEnabled: Fusion.UsedAs<boolean>?,
+	GradientColor: Fusion.UsedAs<ColorSequence>?,
+	GradientOffset: Fusion.UsedAs<UDim>?,
+	GradientRotation: Fusion.UsedAs<number>?,
+	GradientTransparency: Fusion.UsedAs<number>?,
 
-	AspectRatio: PubTypes.CanBeState<number>?,
-	AspectType: PubTypes.CanBeState<Enum.AspectType>?,
-	DominantAxis: PubTypes.CanBeState<Enum.DominantAxis>?,
+	AspectRatio: Fusion.UsedAs<number>?,
+	AspectType: Fusion.UsedAs<Enum.AspectType>?,
+	DominantAxis: Fusion.UsedAs<Enum.DominantAxis>?,
 
-	ListEnabled: PubTypes.CanBeState<boolean>?,
-	ListPadding: PubTypes.CanBeState<UDim>?,
-	ListFillDirection: PubTypes.CanBeState<Enum.FillDirection>?,
-	ListSortOrder: PubTypes.CanBeState<Enum.SortOrder>?,
-	ListWraps: PubTypes.CanBeState<boolean>?,
-	ListHorizontalAlignment: PubTypes.CanBeState<Enum.HorizontalAlignment>?,
-	ListHorizontalFlex: PubTypes.CanBeState<boolean>?,
-	ListVerticalAlignment: PubTypes.CanBeState<Enum.VerticalAlignment>?,
-	ListVerticalFlex: PubTypes.CanBeState<boolean>?,
-	ListItemLineAlignment: PubTypes.CanBeState<Enum.ItemLineAlignment>?,
+	ListEnabled: Fusion.UsedAs<boolean>?,
+	ListPadding: Fusion.UsedAs<UDim>?,
+	ListFillDirection: Fusion.UsedAs<Enum.FillDirection>?,
+	ListSortOrder: Fusion.UsedAs<Enum.SortOrder>?,
+	ListWraps: Fusion.UsedAs<boolean>?,
+	ListHorizontalAlignment: Fusion.UsedAs<Enum.HorizontalAlignment>?,
+	ListHorizontalFlex: Fusion.UsedAs<boolean>?,
+	ListVerticalAlignment: Fusion.UsedAs<Enum.VerticalAlignment>?,
+	ListVerticalFlex: Fusion.UsedAs<boolean>?,
+	ListItemLineAlignment: Fusion.UsedAs<Enum.ItemLineAlignment>?,
 
-	GridEnabled: PubTypes.CanBeState<boolean>?,
-	GridCellPadding: PubTypes.CanBeState<UDim>?,
-	GridCellSize: PubTypes.CanBeState<UDim2>?,
-	GridFillDirection: PubTypes.CanBeState<Enum.FillDirection>?,
-	GridFillDirectionMaxCells: PubTypes.CanBeState<number>?,
-	GridSortOrder: PubTypes.CanBeState<Enum.SortOrder>?,
-	GridStartCorner: PubTypes.CanBeState<Enum.StartCorner>?,
-	GridHorizontalAlignment: PubTypes.CanBeState<Enum.HorizontalAlignment>?,
-	GridVerticalAlignment: PubTypes.CanBeState<Enum.VerticalAlignment>?,
+	GridEnabled: Fusion.UsedAs<boolean>?,
+	GridCellPadding: Fusion.UsedAs<UDim>?,
+	GridCellSize: Fusion.UsedAs<UDim2>?,
+	GridFillDirection: Fusion.UsedAs<Enum.FillDirection>?,
+	GridFillDirectionMaxCells: Fusion.UsedAs<number>?,
+	GridSortOrder: Fusion.UsedAs<Enum.SortOrder>?,
+	GridStartCorner: Fusion.UsedAs<Enum.StartCorner>?,
+	GridHorizontalAlignment: Fusion.UsedAs<Enum.HorizontalAlignment>?,
+	GridVerticalAlignment: Fusion.UsedAs<Enum.VerticalAlignment>?,
 
-	TableEnabled: PubTypes.CanBeState<boolean>?,
-	TablePadding: PubTypes.CanBeState<UDim>?,
-	TableFillEmptySpaceColumns: PubTypes.CanBeState<boolean>?,
-	TableFillEmptySpaceRows: PubTypes.CanBeState<boolean>?,
-	TableFillDirection: PubTypes.CanBeState<Enum.FillDirection>?,
-	TableSortOrder: PubTypes.CanBeState<Enum.SortOrder>?,
-	TableMajorAxis: PubTypes.CanBeState<Enum.TableMajorAxis>?,
-	TableHorizontalAlignment: PubTypes.CanBeState<Enum.HorizontalAlignment>?,
-	TableVerticalAlignment: PubTypes.CanBeState<Enum.VerticalAlignment>?,
+	TableEnabled: Fusion.UsedAs<boolean>?,
+	TablePadding: Fusion.UsedAs<UDim>?,
+	TableFillEmptySpaceColumns: Fusion.UsedAs<boolean>?,
+	TableFillEmptySpaceRows: Fusion.UsedAs<boolean>?,
+	TableFillDirection: Fusion.UsedAs<Enum.FillDirection>?,
+	TableSortOrder: Fusion.UsedAs<Enum.SortOrder>?,
+	TableMajorAxis: Fusion.UsedAs<Enum.TableMajorAxis>?,
+	TableHorizontalAlignment: Fusion.UsedAs<Enum.HorizontalAlignment>?,
+	TableVerticalAlignment: Fusion.UsedAs<Enum.VerticalAlignment>?,
 
-	PageEnabled: PubTypes.CanBeState<boolean>?,
-	PageAnimated: PubTypes.CanBeState<boolean>?,
-	PageCircular: PubTypes.CanBeState<boolean>?,
-	PageEasingDirection: PubTypes.CanBeState<Enum.EasingDirection>?,
-	PageEasingStyle: PubTypes.CanBeState<Enum.EasingStyle>?,
-	PagePadding: PubTypes.CanBeState<UDim>?,
-	PageTweenTime: PubTypes.CanBeState<number>?,
-	PageFillDirection: PubTypes.CanBeState<Enum.FillDirection>?,
-	PageSortOrder: PubTypes.CanBeState<Enum.SortOrder>?,
-	PageHorizontalAlignment: PubTypes.CanBeState<Enum.HorizontalAlignment>?,
-	PageVerticalAlignment: PubTypes.CanBeState<Enum.VerticalAlignment>?,
-	PageGamepadInputEnabled: PubTypes.CanBeState<boolean>?,
-	PageScrollWheelInputEnabled: PubTypes.CanBeState<boolean>?,
-	PageTouchInputEnabled: PubTypes.CanBeState<boolean>?,
+	PageEnabled: Fusion.UsedAs<boolean>?,
+	PageAnimated: Fusion.UsedAs<boolean>?,
+	PageCircular: Fusion.UsedAs<boolean>?,
+	PageEasingDirection: Fusion.UsedAs<Enum.EasingDirection>?,
+	PageEasingStyle: Fusion.UsedAs<Enum.EasingStyle>?,
+	PagePadding: Fusion.UsedAs<UDim>?,
+	PageTweenTime: Fusion.UsedAs<number>?,
+	PageFillDirection: Fusion.UsedAs<Enum.FillDirection>?,
+	PageSortOrder: Fusion.UsedAs<Enum.SortOrder>?,
+	PageHorizontalAlignment: Fusion.UsedAs<Enum.HorizontalAlignment>?,
+	PageVerticalAlignment: Fusion.UsedAs<Enum.VerticalAlignment>?,
+	PageGamepadInputEnabled: Fusion.UsedAs<boolean>?,
+	PageScrollWheelInputEnabled: Fusion.UsedAs<boolean>?,
+	PageTouchInputEnabled: Fusion.UsedAs<boolean>?,
 
-	FlexMode: PubTypes.CanBeState<Enum.UIFlexMode>?,
-	FlexItemLineAlignment: PubTypes.CanBeState<Enum.ItemLineAlignment>?,
-	FlexGrowRatio: PubTypes.CanBeState<number>?,
-	FlexShrinkRatio: PubTypes.CanBeState<number>?,
+	FlexMode: Fusion.UsedAs<Enum.UIFlexMode>?,
+	FlexItemLineAlignment: Fusion.UsedAs<Enum.ItemLineAlignment>?,
+	FlexGrowRatio: Fusion.UsedAs<number>?,
+	FlexShrinkRatio: Fusion.UsedAs<number>?,
 
-	MaxSize: PubTypes.CanBeState<Vector2>?,
-	MinSize: PubTypes.CanBeState<Vector2>?,
+	MaxSize: Fusion.UsedAs<Vector2>?,
+	MinSize: Fusion.UsedAs<Vector2>?,
 
-	MaxTextSize: PubTypes.CanBeState<number>?,
-	MinTextSize: PubTypes.CanBeState<number>?,
+	MaxTextSize: Fusion.UsedAs<number>?,
+	MinTextSize: Fusion.UsedAs<number>?,
 }
 
 --[=[
@@ -145,107 +140,107 @@ export type Props = {
 	@field ... BaseProps
 	
 	@field ClassName string?
-	@field Name CanBeState<string>?
-	@field Parent CanBeState<Instance>?
-	@field Position CanBeState<UDim2>?
-	@field Rotation CanBeState<number>?
-	@field AnchorPoint CanBeState<Vector2>?
-	@field Size CanBeState<UDim2>?
-	@field AutomaticSize CanBeState<Enum.AutomaticSize>?
-	@field Visible CanBeState<boolean>?
-	@field ZIndex CanBeState<number>?
-	@field LayoutOrder CanBeState<number>?
-	@field ClipsDescendants CanBeState<boolean>?
-	@field Active CanBeState<boolean>?
-	@field Selectable CanBeState<boolean>?
-	@field Interactable CanBeState<boolean>?
-	@field BackgroundColor3 CanBeState<Color3>?
-	@field BackgroundTransparency CanBeState<number>?
-	@field NextSelectionDown CanBeState<GuiObject>?
-	@field NextSelectionUp CanBeState<GuiObject>?
-	@field NextSelectionRight CanBeState<GuiObject>?
-	@field NextSelectionLeft CanBeState<GuiObject>?
-	@field SelectionImageObject CanBeState<GuiObject>?
-	@field SelectionOrder CanBeState<number>?
-	@field SizeConstraint CanBeState<Enum.SizeConstraint>?
-	@field AutoLocalize CanBeState<boolean>?
-	@field RootLocalizationTable CanBeState<LocalizationTable>?
-	@field SelectionBehaviorDown CanBeState<Enum.SelectionBehavior>?
-	@field SelectionBehaviorUp CanBeState<Enum.SelectionBehavior>?
-	@field SelectionBehaviorRight CanBeState<Enum.SelectionBehavior>?
-	@field SelectionBehaviorLeft CanBeState<Enum.SelectionBehavior>?
-	@field SelectionGroup CanBeState<boolean>?
-	@field CornerRadius CanBeState<UDim>?
-	@field Padding CanBeState<UDim>?
-	@field PaddingTop CanBeState<UDim>?
-	@field PaddingLeft CanBeState<UDim>?
-	@field PaddingRight CanBeState<UDim>?
-	@field PaddingBottom CanBeState<UDim>?
-	@field Scale CanBeState<number>?
-	@field StrokeEnabled CanBeState<boolean>?
-	@field StrokeThickness CanBeState<number>?
-	@field StrokeColor CanBeState<Color3>?
-	@field StrokeTransparency CanBeState<number>?
-	@field StrokeLineJoinMode CanBeState<Enum.LineJoinMode>?
-	@field StrokeApplyStrokeMode CanBeState<Enum.ApplyStrokeMode>?
-	@field GradientEnabled CanBeState<boolean>?
-	@field GradientColor CanBeState<ColorSequence>?
-	@field GradientOffset CanBeState<UDim>?
-	@field GradientRotation CanBeState<number>?
-	@field GradientTransparency CanBeState<number>?
-	@field AspectRatio CanBeState<number>?
-	@field AspectType CanBeState<Enum.AspectType>?
-	@field DominantAxis CanBeState<Enum.DominantAxis>?
-	@field ListEnabled CanBeState<boolean>?
-	@field ListPadding CanBeState<UDim>?
-	@field ListFillDirection CanBeState<Enum.FillDirection>?
-	@field ListSortOrder CanBeState<Enum.SortOrder>?
-	@field ListWraps CanBeState<boolean>?
-	@field ListHorizontalAlignment CanBeState<Enum.HorizontalAlignment>?
-	@field ListHorizontalFlex CanBeState<boolean>?
-	@field ListVerticalAlignment CanBeState<Enum.VerticalAlignment>?
-	@field ListVerticalFlex CanBeState<boolean>?
-	@field ListItemLineAlignment CanBeState<Enum.ItemLineAlignment>?
-	@field GridEnabled CanBeState<boolean>?
-	@field GridCellPadding CanBeState<UDim>?
-	@field GridCellSize CanBeState<UDim2>?
-	@field GridFillDirection CanBeState<Enum.FillDirection>?
-	@field GridFillDirectionMaxCells CanBeState<number>?
-	@field GridSortOrder CanBeState<Enum.SortOrder>?
-	@field GridStartCorner CanBeState<Enum.StartCorner>?
-	@field GridHorizontalAlignment CanBeState<Enum.HorizontalAlignment>?
-	@field GridVerticalAlignment CanBeState<Enum.VerticalAlignment>?
-	@field TableEnabled CanBeState<boolean>?
-	@field TablePadding CanBeState<UDim>?
-	@field TableFillEmptySpaceColumns CanBeState<boolean>?
-	@field TableFillEmptySpaceRows CanBeState<boolean>?
-	@field TableFillDirection CanBeState<Enum.FillDirection>?
-	@field TableSortOrder CanBeState<Enum.SortOrder>?
-	@field TableMajorAxis CanBeState<Enum.TableMajorAxis>?
-	@field TableHorizontalAlignment CanBeState<Enum.HorizontalAlignment>?
-	@field TableVerticalAlignment CanBeState<Enum.VerticalAlignment>?
-	@field PageEnabled CanBeState<boolean>?
-	@field PageAnimated CanBeState<boolean>?
-	@field PageCircular CanBeState<boolean>?
-	@field PageEasingDirection CanBeState<Enum.EasingDirection>?
-	@field PageEasingStyle CanBeState<Enum.EasingStyle>?
-	@field PagePadding CanBeState<UDim>?
-	@field PageTweenTime CanBeState<number>?
-	@field PageFillDirection CanBeState<Enum.FillDirection>?
-	@field PageSortOrder CanBeState<Enum.SortOrder>?
-	@field PageHorizontalAlignment CanBeState<Enum.HorizontalAlignment>?
-	@field PageVerticalAlignment CanBeState<Enum.VerticalAlignment>?
-	@field PageGamepadInputEnabled CanBeState<boolean>?
-	@field PageScrollWheelInputEnabled CanBeState<boolean>?
-	@field PageTouchInputEnabled CanBeState<boolean>?
-	@field FlexMode CanBeState<Enum.UIFlexMode>?
-	@field FlexItemLineAlignment CanBeState<Enum.ItemLineAlignment>?
-	@field FlexGrowRatio CanBeState<number>?
-	@field FlexShrinkRatio CanBeState<number>?
-	@field MaxSize CanBeState<Vector2>?
-	@field MinSize CanBeState<Vector2>?
-	@field MaxTextSize CanBeState<number>?
-	@field MinTextSize CanBeState<number>?
+	@field Name Fusion.UsedAs<string>?
+	@field Parent Fusion.UsedAs<Instance>?
+	@field Position Fusion.UsedAs<UDim2>?
+	@field Rotation Fusion.UsedAs<number>?
+	@field AnchorPoint Fusion.UsedAs<Vector2>?
+	@field Size Fusion.UsedAs<UDim2>?
+	@field AutomaticSize Fusion.UsedAs<Enum.AutomaticSize>?
+	@field Visible Fusion.UsedAs<boolean>?
+	@field ZIndex Fusion.UsedAs<number>?
+	@field LayoutOrder Fusion.UsedAs<number>?
+	@field ClipsDescendants Fusion.UsedAs<boolean>?
+	@field Active Fusion.UsedAs<boolean>?
+	@field Selectable Fusion.UsedAs<boolean>?
+	@field Interactable Fusion.UsedAs<boolean>?
+	@field BackgroundColor3 Fusion.UsedAs<Color3>?
+	@field BackgroundTransparency Fusion.UsedAs<number>?
+	@field NextSelectionDown Fusion.UsedAs<GuiObject>?
+	@field NextSelectionUp Fusion.UsedAs<GuiObject>?
+	@field NextSelectionRight Fusion.UsedAs<GuiObject>?
+	@field NextSelectionLeft Fusion.UsedAs<GuiObject>?
+	@field SelectionImageObject Fusion.UsedAs<GuiObject>?
+	@field SelectionOrder Fusion.UsedAs<number>?
+	@field SizeConstraint Fusion.UsedAs<Enum.SizeConstraint>?
+	@field AutoLocalize Fusion.UsedAs<boolean>?
+	@field RootLocalizationTable Fusion.UsedAs<LocalizationTable>?
+	@field SelectionBehaviorDown Fusion.UsedAs<Enum.SelectionBehavior>?
+	@field SelectionBehaviorUp Fusion.UsedAs<Enum.SelectionBehavior>?
+	@field SelectionBehaviorRight Fusion.UsedAs<Enum.SelectionBehavior>?
+	@field SelectionBehaviorLeft Fusion.UsedAs<Enum.SelectionBehavior>?
+	@field SelectionGroup Fusion.UsedAs<boolean>?
+	@field CornerRadius Fusion.UsedAs<UDim>?
+	@field Padding Fusion.UsedAs<UDim>?
+	@field PaddingTop Fusion.UsedAs<UDim>?
+	@field PaddingLeft Fusion.UsedAs<UDim>?
+	@field PaddingRight Fusion.UsedAs<UDim>?
+	@field PaddingBottom Fusion.UsedAs<UDim>?
+	@field Scale Fusion.UsedAs<number>?
+	@field StrokeEnabled Fusion.UsedAs<boolean>?
+	@field StrokeThickness Fusion.UsedAs<number>?
+	@field StrokeColor Fusion.UsedAs<Color3>?
+	@field StrokeTransparency Fusion.UsedAs<number>?
+	@field StrokeLineJoinMode Fusion.UsedAs<Enum.LineJoinMode>?
+	@field StrokeApplyStrokeMode Fusion.UsedAs<Enum.ApplyStrokeMode>?
+	@field GradientEnabled Fusion.UsedAs<boolean>?
+	@field GradientColor Fusion.UsedAs<ColorSequence>?
+	@field GradientOffset Fusion.UsedAs<UDim>?
+	@field GradientRotation Fusion.UsedAs<number>?
+	@field GradientTransparency Fusion.UsedAs<number>?
+	@field AspectRatio Fusion.UsedAs<number>?
+	@field AspectType Fusion.UsedAs<Enum.AspectType>?
+	@field DominantAxis Fusion.UsedAs<Enum.DominantAxis>?
+	@field ListEnabled Fusion.UsedAs<boolean>?
+	@field ListPadding Fusion.UsedAs<UDim>?
+	@field ListFillDirection Fusion.UsedAs<Enum.FillDirection>?
+	@field ListSortOrder Fusion.UsedAs<Enum.SortOrder>?
+	@field ListWraps Fusion.UsedAs<boolean>?
+	@field ListHorizontalAlignment Fusion.UsedAs<Enum.HorizontalAlignment>?
+	@field ListHorizontalFlex Fusion.UsedAs<boolean>?
+	@field ListVerticalAlignment Fusion.UsedAs<Enum.VerticalAlignment>?
+	@field ListVerticalFlex Fusion.UsedAs<boolean>?
+	@field ListItemLineAlignment Fusion.UsedAs<Enum.ItemLineAlignment>?
+	@field GridEnabled Fusion.UsedAs<boolean>?
+	@field GridCellPadding Fusion.UsedAs<UDim>?
+	@field GridCellSize Fusion.UsedAs<UDim2>?
+	@field GridFillDirection Fusion.UsedAs<Enum.FillDirection>?
+	@field GridFillDirectionMaxCells Fusion.UsedAs<number>?
+	@field GridSortOrder Fusion.UsedAs<Enum.SortOrder>?
+	@field GridStartCorner Fusion.UsedAs<Enum.StartCorner>?
+	@field GridHorizontalAlignment Fusion.UsedAs<Enum.HorizontalAlignment>?
+	@field GridVerticalAlignment Fusion.UsedAs<Enum.VerticalAlignment>?
+	@field TableEnabled Fusion.UsedAs<boolean>?
+	@field TablePadding Fusion.UsedAs<UDim>?
+	@field TableFillEmptySpaceColumns Fusion.UsedAs<boolean>?
+	@field TableFillEmptySpaceRows Fusion.UsedAs<boolean>?
+	@field TableFillDirection Fusion.UsedAs<Enum.FillDirection>?
+	@field TableSortOrder Fusion.UsedAs<Enum.SortOrder>?
+	@field TableMajorAxis Fusion.UsedAs<Enum.TableMajorAxis>?
+	@field TableHorizontalAlignment Fusion.UsedAs<Enum.HorizontalAlignment>?
+	@field TableVerticalAlignment Fusion.UsedAs<Enum.VerticalAlignment>?
+	@field PageEnabled Fusion.UsedAs<boolean>?
+	@field PageAnimated Fusion.UsedAs<boolean>?
+	@field PageCircular Fusion.UsedAs<boolean>?
+	@field PageEasingDirection Fusion.UsedAs<Enum.EasingDirection>?
+	@field PageEasingStyle Fusion.UsedAs<Enum.EasingStyle>?
+	@field PagePadding Fusion.UsedAs<UDim>?
+	@field PageTweenTime Fusion.UsedAs<number>?
+	@field PageFillDirection Fusion.UsedAs<Enum.FillDirection>?
+	@field PageSortOrder Fusion.UsedAs<Enum.SortOrder>?
+	@field PageHorizontalAlignment Fusion.UsedAs<Enum.HorizontalAlignment>?
+	@field PageVerticalAlignment Fusion.UsedAs<Enum.VerticalAlignment>?
+	@field PageGamepadInputEnabled Fusion.UsedAs<boolean>?
+	@field PageScrollWheelInputEnabled Fusion.UsedAs<boolean>?
+	@field PageTouchInputEnabled Fusion.UsedAs<boolean>?
+	@field FlexMode Fusion.UsedAs<Enum.UIFlexMode>?
+	@field FlexItemLineAlignment Fusion.UsedAs<Enum.ItemLineAlignment>?
+	@field FlexGrowRatio Fusion.UsedAs<number>?
+	@field FlexShrinkRatio Fusion.UsedAs<number>?
+	@field MaxSize Fusion.UsedAs<Vector2>?
+	@field MinSize Fusion.UsedAs<Vector2>?
+	@field MaxTextSize Fusion.UsedAs<number>?
+	@field MinTextSize Fusion.UsedAs<number>?
 ]=]
 return function(Props: Props): GuiObject
 	local Name = Util.EnsureValue(Props.Name, "string", "Base")

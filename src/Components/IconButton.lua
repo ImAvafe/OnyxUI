@@ -10,14 +10,12 @@ local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
-local PubTypes = require(OnyxUI.Util.PubTypes)
-
 local Computed = Fusion.Computed
 
 local Button = require(script.Parent.Button)
 
 export type Props = Button.Props & {
-	Image: PubTypes.CanBeState<string>?,
+	Image: Fusion.UsedAs<string>?,
 }
 
 --[=[
@@ -25,7 +23,7 @@ export type Props = Button.Props & {
 		@interface IconButtonProps
 
 		@field ... ButtonProps
-		@field Image CanBeState<string>?
+		@field Image Fusion.UsedAs<string>?
 ]=]
 return function(Props: Props)
 	local Image = Util.EnsureValue(Props.Image, "string", "")

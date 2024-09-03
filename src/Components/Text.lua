@@ -9,7 +9,6 @@ local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Computed = Fusion.Computed
 local Hydrate = Fusion.Hydrate
@@ -17,21 +16,21 @@ local Hydrate = Fusion.Hydrate
 local Base = require(script.Parent.Base)
 
 export type Props = Base.Props & {
-	Text: PubTypes.CanBeState<string>?,
-	TextColor3: PubTypes.CanBeState<Color3>?,
-	TextSize: PubTypes.CanBeState<number>?,
-	RichText: PubTypes.CanBeState<boolean>?,
-	FontFace: PubTypes.CanBeState<Font>?,
-	TextWrapped: PubTypes.CanBeState<boolean>?,
-	TextXAlignment: PubTypes.CanBeState<Enum.TextXAlignment>?,
-	TextYAlignment: PubTypes.CanBeState<Enum.TextYAlignment>?,
-	Font: PubTypes.CanBeState<Enum.Font>?,
-	TextScaled: PubTypes.CanBeState<boolean>?,
-	TextTruncate: PubTypes.CanBeState<boolean>?,
-	LineHeight: PubTypes.CanBeState<number>?,
-	LocalizedText: PubTypes.CanBeState<string>?,
-	MaxVisibleGraphemes: PubTypes.CanBeState<number>?,
-	TextTransparency: PubTypes.CanBeState<number>?,
+	Text: Fusion.UsedAs<string>?,
+	TextColor3: Fusion.UsedAs<Color3>?,
+	TextSize: Fusion.UsedAs<number>?,
+	RichText: Fusion.UsedAs<boolean>?,
+	FontFace: Fusion.UsedAs<Font>?,
+	TextWrapped: Fusion.UsedAs<boolean>?,
+	TextXAlignment: Fusion.UsedAs<Enum.TextXAlignment>?,
+	TextYAlignment: Fusion.UsedAs<Enum.TextYAlignment>?,
+	Font: Fusion.UsedAs<Enum.Font>?,
+	TextScaled: Fusion.UsedAs<boolean>?,
+	TextTruncate: Fusion.UsedAs<boolean>?,
+	LineHeight: Fusion.UsedAs<number>?,
+	LocalizedText: Fusion.UsedAs<string>?,
+	MaxVisibleGraphemes: Fusion.UsedAs<number>?,
+	TextTransparency: Fusion.UsedAs<number>?,
 }
 
 --[=[
@@ -39,21 +38,21 @@ export type Props = Base.Props & {
 		@interface TextProps
 
 		@field ... BaseProps
-		@field Text CanBeState<string>?
-		@field TextColor3 CanBeState<Color3>?
-		@field TextSize CanBeState<number>?
-		@field RichText CanBeState<boolean>?
-		@field FontFace CanBeState<Font>?
-		@field TextWrapped CanBeState<boolean>?
-		@field TextXAlignment CanBeState<Enum.TextXAlignment>?
-		@field TextYAlignment CanBeState<Enum.TextYAlignment>?
-		@field Font CanBeState<Enum.Font>?
-		@field TextScaled CanBeState<boolean>?
-		@field TextTruncate CanBeState<boolean>?
-		@field LineHeight CanBeState<number>?
-		@field LocalizedText CanBeState<string>?
-		@field MaxVisibleGraphemes CanBeState<number>?
-		@field TextTransparency CanBeState<number>?
+		@field Text Fusion.UsedAs<string>?
+		@field TextColor3 Fusion.UsedAs<Color3>?
+		@field TextSize Fusion.UsedAs<number>?
+		@field RichText Fusion.UsedAs<boolean>?
+		@field FontFace Fusion.UsedAs<Font>?
+		@field TextWrapped Fusion.UsedAs<boolean>?
+		@field TextXAlignment Fusion.UsedAs<Enum.TextXAlignment>?
+		@field TextYAlignment Fusion.UsedAs<Enum.TextYAlignment>?
+		@field Font Fusion.UsedAs<Enum.Font>?
+		@field TextScaled Fusion.UsedAs<boolean>?
+		@field TextTruncate Fusion.UsedAs<boolean>?
+		@field LineHeight Fusion.UsedAs<number>?
+		@field LocalizedText Fusion.UsedAs<string>?
+		@field MaxVisibleGraphemes Fusion.UsedAs<number>?
+		@field TextTransparency Fusion.UsedAs<number>?
 ]=]
 return function(Props: Props)
 	local TextColor3 = Util.EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)

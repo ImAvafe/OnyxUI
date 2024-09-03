@@ -9,7 +9,6 @@ local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -19,13 +18,13 @@ local IconButton = require(script.Parent.IconButton)
 local IconText = require(script.Parent.IconText)
 
 export type Props = Frame.Props & {
-	Content: PubTypes.CanBeState<{ string }>?,
-	ContentSize: PubTypes.CanBeState<number>?,
-	ContentColor: PubTypes.CanBeState<Color3>?,
-	ContentFontFace: PubTypes.CanBeState<Font>?,
-	CloseButtonIcon: PubTypes.CanBeState<string>?,
-	CloseButtonDisabled: PubTypes.CanBeState<boolean>?,
-	OnClose: PubTypes.CanBeState<() -> ()>?,
+	Content: Fusion.UsedAs<{ string }>?,
+	ContentSize: Fusion.UsedAs<number>?,
+	ContentColor: Fusion.UsedAs<Color3>?,
+	ContentFontFace: Fusion.UsedAs<Font>?,
+	CloseButtonIcon: Fusion.UsedAs<string>?,
+	CloseButtonDisabled: Fusion.UsedAs<boolean>?,
+	OnClose: Fusion.UsedAs<() -> ()>?,
 }
 
 --[=[
@@ -33,13 +32,13 @@ export type Props = Frame.Props & {
 		@interface TitleBarProps
 
 		@field ... FrameProps
-		@field Content CanBeState<{ string }>?
-		@field ContentSize CanBeState<number>?
-		@field ContentColor CanBeState<Color3>?
-		@field ContentFontFace CanBeState<Font>?
-		@field CloseButtonIcon CanBeState<string>?
-		@field CloseButtonDisabled CanBeState<boolean>?
-		@field OnClose CanBeState<() -> ()>?
+		@field Content Fusion.UsedAs<{ string }>?
+		@field ContentSize Fusion.UsedAs<number>?
+		@field ContentColor Fusion.UsedAs<Color3>?
+		@field ContentFontFace Fusion.UsedAs<Font>?
+		@field CloseButtonIcon Fusion.UsedAs<string>?
+		@field CloseButtonDisabled Fusion.UsedAs<boolean>?
+		@field OnClose Fusion.UsedAs<() -> ()>?
 ]=]
 return function(Props: Props)
 	local Content = Util.EnsureValue(Props.Content, "table", {})

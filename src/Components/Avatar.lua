@@ -9,7 +9,6 @@ local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -20,15 +19,15 @@ local Group = require(script.Parent.Group)
 local Icon = require(script.Parent.Icon)
 
 export type Props = Image.Props & {
-	Image: PubTypes.CanBeState<string>?,
-	RingEnabled: PubTypes.CanBeState<boolean>?,
-	RingColor: PubTypes.CanBeState<Color3>?,
-	RingThickness: PubTypes.CanBeState<number>?,
-	IndicatorEnabled: PubTypes.CanBeState<boolean>?,
-	IndicatorColor: PubTypes.CanBeState<Color3>?,
-	IndicatorIcon: PubTypes.CanBeState<string>?,
-	IndicatorIconColor: PubTypes.CanBeState<Color3>?,
-	IndicatorCornerRadius: PubTypes.CanBeState<UDim>?,
+	Image: Fusion.UsedAs<string>?,
+	RingEnabled: Fusion.UsedAs<boolean>?,
+	RingColor: Fusion.UsedAs<Color3>?,
+	RingThickness: Fusion.UsedAs<number>?,
+	IndicatorEnabled: Fusion.UsedAs<boolean>?,
+	IndicatorColor: Fusion.UsedAs<Color3>?,
+	IndicatorIcon: Fusion.UsedAs<string>?,
+	IndicatorIconColor: Fusion.UsedAs<Color3>?,
+	IndicatorCornerRadius: Fusion.UsedAs<UDim>?,
 }
 
 --[=[
@@ -36,15 +35,15 @@ export type Props = Image.Props & {
 		@interface AvatarProps
 
 		@field ... ImageProps
-		@field Image CanBeState<string>?
-		@field RingEnabled CanBeState<boolean>?
-		@field RingColor CanBeState<Color3>?
-		@field RingThickness CanBeState<number>?
-		@field IndicatorEnabled CanBeState<boolean>?
-		@field IndicatorColor CanBeState<Color3>?
-		@field IndicatorIcon CanBeState<string>?
-		@field IndicatorIconColor CanBeState<Color3>?
-		@field IndicatorCornerRadius CanBeState<UDim>?
+		@field Image Fusion.UsedAs<string>?
+		@field RingEnabled Fusion.UsedAs<boolean>?
+		@field RingColor Fusion.UsedAs<Color3>?
+		@field RingThickness Fusion.UsedAs<number>?
+		@field IndicatorEnabled Fusion.UsedAs<boolean>?
+		@field IndicatorColor Fusion.UsedAs<Color3>?
+		@field IndicatorIcon Fusion.UsedAs<string>?
+		@field IndicatorIconColor Fusion.UsedAs<Color3>?
+		@field IndicatorCornerRadius Fusion.UsedAs<UDim>?
 ]=]
 return function(Props: Props)
 	local EnsuredProps = {

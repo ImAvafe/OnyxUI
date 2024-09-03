@@ -8,7 +8,6 @@ local OnyxUI = script.Parent.Parent
 local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Util = require(OnyxUI.Util)
 
@@ -18,21 +17,21 @@ local Computed = Fusion.Computed
 local Base = require(script.Parent.Base)
 
 export type Props = Base.Props & {
-	AutomaticCanvasSize: PubTypes.CanBeState<Enum.AutomaticSize>?,
-	BottomImage: PubTypes.CanBeState<string>?,
-	CanvasPosition: PubTypes.CanBeState<Vector2>?,
-	CanvasSize: PubTypes.CanBeState<UDim2>?,
-	ElasticBehavior: PubTypes.CanBeState<Enum.ElasticBehavior>?,
-	HorizontalScrollBarInset: PubTypes.CanBeState<Enum.ScrollBarInset>?,
-	MidImage: PubTypes.CanBeState<string>?,
-	ScrollBarImageColor3: PubTypes.CanBeState<Color3>?,
-	ScrollBarImageTransparency: PubTypes.CanBeState<number>?,
-	ScrollBarThickness: PubTypes.CanBeState<number>?,
-	ScrollingDirection: PubTypes.CanBeState<Enum.ScrollingDirection>?,
-	ScrollingEnabled: PubTypes.CanBeState<boolean>?,
-	TopImage: PubTypes.CanBeState<string>?,
-	VerticalScrollBarInset: PubTypes.CanBeState<Enum.ScrollBarInset>?,
-	VerticalScrollBarPosition: PubTypes.CanBeState<Enum.VerticalScrollBarPosition>?,
+	AutomaticCanvasSize: Fusion.UsedAs<Enum.AutomaticSize>?,
+	BottomImage: Fusion.UsedAs<string>?,
+	CanvasPosition: Fusion.UsedAs<Vector2>?,
+	CanvasSize: Fusion.UsedAs<UDim2>?,
+	ElasticBehavior: Fusion.UsedAs<Enum.ElasticBehavior>?,
+	HorizontalScrollBarInset: Fusion.UsedAs<Enum.ScrollBarInset>?,
+	MidImage: Fusion.UsedAs<string>?,
+	ScrollBarImageColor3: Fusion.UsedAs<Color3>?,
+	ScrollBarImageTransparency: Fusion.UsedAs<number>?,
+	ScrollBarThickness: Fusion.UsedAs<number>?,
+	ScrollingDirection: Fusion.UsedAs<Enum.ScrollingDirection>?,
+	ScrollingEnabled: Fusion.UsedAs<boolean>?,
+	TopImage: Fusion.UsedAs<string>?,
+	VerticalScrollBarInset: Fusion.UsedAs<Enum.ScrollBarInset>?,
+	VerticalScrollBarPosition: Fusion.UsedAs<Enum.VerticalScrollBarPosition>?,
 }
 
 --[=[
@@ -40,21 +39,21 @@ export type Props = Base.Props & {
 		@interface ScrollingFrameProps
 
 		@field ... BaseProps
-		@field AutomaticCanvasSize CanBeState<Enum.AutomaticSize>?
-		@field BottomImage CanBeState<string>?
-		@field CanvasPosition CanBeState<Vector2>?
-		@field CanvasSize CanBeState<UDim2>?
-		@field ElasticBehavior CanBeState<Enum.ElasticBehavior>?
-		@field HorizontalScrollBarInset CanBeState<Enum.ScrollBarInset>?
-		@field MidImage CanBeState<string>?
-		@field ScrollBarImageColor3 CanBeState<Color3>?
-		@field ScrollBarImageTransparency CanBeState<number>?
-		@field ScrollBarThickness CanBeState<number>?
-		@field ScrollingDirection CanBeState<Enum.ScrollingDirection>?
-		@field ScrollingEnabled CanBeState<boolean>?
-		@field TopImage CanBeState<string>?
-		@field VerticalScrollBarInset CanBeState<Enum.ScrollBarInset>?
-		@field VerticalScrollBarPosition CanBeState<Enum.VerticalScrollBarPosition>?
+		@field AutomaticCanvasSize Fusion.UsedAs<Enum.AutomaticSize>?
+		@field BottomImage Fusion.UsedAs<string>?
+		@field CanvasPosition Fusion.UsedAs<Vector2>?
+		@field CanvasSize Fusion.UsedAs<UDim2>?
+		@field ElasticBehavior Fusion.UsedAs<Enum.ElasticBehavior>?
+		@field HorizontalScrollBarInset Fusion.UsedAs<Enum.ScrollBarInset>?
+		@field MidImage Fusion.UsedAs<string>?
+		@field ScrollBarImageColor3 Fusion.UsedAs<Color3>?
+		@field ScrollBarImageTransparency Fusion.UsedAs<number>?
+		@field ScrollBarThickness Fusion.UsedAs<number>?
+		@field ScrollingDirection Fusion.UsedAs<Enum.ScrollingDirection>?
+		@field ScrollingEnabled Fusion.UsedAs<boolean>?
+		@field TopImage Fusion.UsedAs<string>?
+		@field VerticalScrollBarInset Fusion.UsedAs<Enum.ScrollBarInset>?
+		@field VerticalScrollBarPosition Fusion.UsedAs<Enum.VerticalScrollBarPosition>?
 ]=]
 return function(Props: Props)
 	local BottomImage = Util.EnsureValue(

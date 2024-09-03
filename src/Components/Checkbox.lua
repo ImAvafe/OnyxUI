@@ -10,7 +10,6 @@ local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 local ColorUtils = require(Packages.ColorUtils)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Children = Fusion.Children
 local Computed = Fusion.Computed
@@ -21,9 +20,9 @@ local BaseButton = require(script.Parent.BaseButton)
 local Icon = require(script.Parent.Icon)
 
 export type Props = BaseButton.Props & {
-	Checked: PubTypes.CanBeState<boolean>?,
-	Icon: PubTypes.CanBeState<string>?,
-	Color: PubTypes.CanBeState<Color3>?,
+	Checked: Fusion.UsedAs<boolean>?,
+	Icon: Fusion.UsedAs<string>?,
+	Color: Fusion.UsedAs<Color3>?,
 }
 
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
@@ -34,9 +33,9 @@ local DISABLED_CONTENT_TRANSPARENCY = 0.75
 		@interface CheckboxProps
 
 		@field ... BaseButtonProps
-		@field Checked CanBeState<boolean>?
-		@field Icon CanBeState<string>?
-		@field Color CanBeState<Color3>?
+		@field Checked Fusion.UsedAs<boolean>?
+		@field Icon Fusion.UsedAs<string>?
+		@field Color Fusion.UsedAs<Color3>?
 ]=]
 return function(Props: Props)
 	local Checked = Util.EnsureValue(Props.Checked, "boolean", false)

@@ -10,7 +10,6 @@ local OnyxUI = script.Parent.Parent
 local Packages = require(OnyxUI.Packages)
 local Fusion = require(Packages.Fusion)
 local Util = require(OnyxUI.Util)
-local PubTypes = require(OnyxUI.Util.PubTypes)
 
 local Value = Fusion.Value
 local Computed = Fusion.Computed
@@ -21,10 +20,10 @@ local Base = require(script.Parent.Base)
 local Frame = require(script.Parent.Frame)
 
 export type Props = Base.Props & {
-	BaseResolution: PubTypes.CanBeState<Vector2>?,
-	MinScale: PubTypes.CanBeState<number>?,
-	MaxScale: PubTypes.CanBeState<number>?,
-	ScaleMultiplier: PubTypes.CanBeState<number>?,
+	BaseResolution: Fusion.UsedAs<Vector2>?,
+	MinScale: Fusion.UsedAs<number>?,
+	MaxScale: Fusion.UsedAs<number>?,
+	ScaleMultiplier: Fusion.UsedAs<number>?,
 }
 
 --[=[
@@ -32,10 +31,10 @@ export type Props = Base.Props & {
 		@interface AutoScaleFrameProps
 
 		@field ... BaseProps
-		@field BaseResolution CanBeState<Vector2>?
-		@field MinScale CanBeState<number>?
-		@field MaxScale CanBeState<number>?
-		@field ScaleMultiplier CanBeState<number>?
+		@field BaseResolution Fusion.UsedAs<Vector2>?
+		@field MinScale Fusion.UsedAs<number>?
+		@field MaxScale Fusion.UsedAs<number>?
+		@field ScaleMultiplier Fusion.UsedAs<number>?
 ]=]
 return function(Props: Props)
 	local BaseResolution = Util.EnsureValue(Props.BaseResolution, "Vector2", Vector2.new())
