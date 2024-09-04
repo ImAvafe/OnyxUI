@@ -52,7 +52,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Props.ContentColor,
 
 		Scope:Computed(function(use)
-			return ColorUtils.Emphasize(Color, use(Theme.Emphasis.Contrast))
+			return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Contrast))
 		end)
 	)
 	local ContentSize = Util.Fallback(Props.ContentSize, Theme.TextSize["1"])

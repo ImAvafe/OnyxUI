@@ -56,9 +56,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			return use(Theme.Colors.BaseContent.Main)
 		else
 			if use(IsHolding) then
-				return ColorUtils.Emphasize(Color, use(Theme.Emphasis.Regular))
+				return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Regular))
 			elseif use(IsHovering) then
-				return ColorUtils.Emphasize(Color, use(Theme.Emphasis.Light))
+				return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Light))
 			else
 				return use(Color)
 			end
@@ -124,7 +124,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 					Theme.SpringDampening["1"]
 				),
 				ImageColor3 = Scope:Computed(function(use)
-					return ColorUtils.Emphasize(Color, use(Theme.Emphasis.Contrast))
+					return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Contrast))
 				end),
 				Rotation = Scope:Spring(
 					Scope:Computed(function(use)

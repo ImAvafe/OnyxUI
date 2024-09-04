@@ -64,9 +64,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 		if not use(Disabled) then
 			if use(IsHolding) then
-				return ColorUtils.Emphasize(ActiveColor, use(Theme.Emphasis.Regular))
+				return ColorUtils.Emphasize(use(ActiveColor), use(Theme.Emphasis.Regular))
 			elseif use(IsHovering) then
-				return ColorUtils.Emphasize(ActiveColor, use(Theme.Emphasis.Light))
+				return ColorUtils.Emphasize(use(ActiveColor), use(Theme.Emphasis.Light))
 			end
 		end
 
@@ -83,13 +83,13 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		if not use(Disabled) then
 			if use(IsHolding) then
 				if not use(Switched) then
-					return ColorUtils.Emphasize(ActiveColor, use(Theme.Emphasis.Regular))
+					return ColorUtils.Emphasize(use(ActiveColor), use(Theme.Emphasis.Regular))
 				else
 					return ActiveColor
 				end
 			elseif use(IsHovering) then
 				if not use(Switched) then
-					return ColorUtils.Emphasize(ActiveColor, use(Theme.Emphasis.Light))
+					return ColorUtils.Emphasize(use(ActiveColor), use(Theme.Emphasis.Light))
 				else
 					return ActiveColor
 				end

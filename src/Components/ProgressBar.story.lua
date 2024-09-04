@@ -7,6 +7,7 @@ local Util = require(OnyxUI.Util)
 
 local Scoped = Fusion.scoped
 local Children = Fusion.Children
+local peek = Fusion.peek
 
 local Frame = require(script.Parent.Frame)
 local ProgressBar = require(script.Parent.ProgressBar)
@@ -188,7 +189,7 @@ return {
 		task.spawn(function()
 			while task.wait(1) do
 				Progress:set(math.random(0, 1000) / 1000)
-				Color:set(ColorUtils.Rotate(Color, 100))
+				Color:set(ColorUtils.Rotate(peek(Color), 100))
 			end
 		end)
 
