@@ -68,7 +68,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		end
 	end)
 
-	return Frame(Util.CombineProps(Props, {
+	return Scope:Frame(Util.CombineProps(Props, {
 		Name = "Divider",
 		Size = Scope:Computed(function(use)
 			if use(FillDirection) == Enum.FillDirection.Horizontal then

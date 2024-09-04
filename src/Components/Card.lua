@@ -5,7 +5,6 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 local Util = require(OnyxUI.Util)
@@ -28,7 +27,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Fusion.innerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
-	return Frame(Util.CombineProps(Props, {
+	return Scope:Frame(Util.CombineProps(Props, {
 		Name = "Card",
 		BackgroundColor3 = Theme.Colors.Neutral.Dark,
 		BackgroundTransparency = 0,
