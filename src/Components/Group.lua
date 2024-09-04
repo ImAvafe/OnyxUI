@@ -30,7 +30,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
 		Fusion.innerScope(Scope, Fusion, Util, Components)
 
-	return Scope:Hydrate(Base(Util.CombineProps(Props, {
+	return Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "CanvasGroup",
 		Name = "Group",
 		BackgroundTransparency = 1,

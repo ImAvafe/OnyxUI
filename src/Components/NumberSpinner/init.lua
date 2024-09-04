@@ -55,7 +55,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Duration = Util.Fallback(Props.Duration, 0.3)
 	local Commas = Util.Fallback(Props.Commas, false)
 
-	local Spinner = NumberSpinner.fromGuiObject(Text(Util.CombineProps(Props, {
+	local Spinner = NumberSpinner.fromGuiObject(Scope:Text(Util.CombineProps(Props, {
 		Name = "NumberSpinner",
 		AutomaticSize = Enum.AutomaticSize.None,
 		TextSize = TextSize,

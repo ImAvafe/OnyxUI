@@ -105,7 +105,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		end
 	end)
 
-	return BaseButton(Util.CombineProps(Props, {
+	return Scope:BaseButton(Util.CombineProps(Props, {
 		Name = "Button",
 		BackgroundTransparency = Scope:Computed(function(use)
 			if use(Style) == "Filled" then

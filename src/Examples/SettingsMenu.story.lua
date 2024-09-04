@@ -4,10 +4,14 @@ local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
+local Scoped = Fusion.scoped
 
 local Frame = require(OnyxUI.Components.Frame)
 local SettingsMenu = require(OnyxUI.Examples.SettingsMenu)
-local Components = {}
+local Components = {
+	Frame = Frame,
+	SettingsMenu = SettingsMenu,
+}
 
 return {
 	story = function(Parent: GuiObject)

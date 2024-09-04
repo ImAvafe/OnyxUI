@@ -71,7 +71,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		end),
 
 		[Children] = {
-			ForValues(Content, function(ContentString: string)
+			Scope:ForValues(Content, function(use, Scope, ContentString: string)
 				if string.find(ContentString, "rbxassetid://", 1, true) then
 					return Scope:Icon {
 						Image = ContentString,

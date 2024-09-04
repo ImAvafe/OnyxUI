@@ -79,7 +79,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		end)
 	)
 
-	return Scope:Hydrate(Base(Util.CombineProps(Props, {
+	return Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "TextButton",
 		Name = "BaseButton",
 		AutomaticSize = Enum.AutomaticSize.XY,

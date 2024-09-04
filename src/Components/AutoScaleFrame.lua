@@ -9,7 +9,6 @@ local Workspace = game:GetService("Workspace")
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
-local Themer = require(OnyxUI.Themer)
 
 local Out = Fusion.Out
 
@@ -40,7 +39,6 @@ export type Props = Base.Props & {
 return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
 		Fusion.innerScope(Scope, Fusion, Util, Components)
-	local Theme = Themer.Theme:now()
 
 	local BaseResolution = Util.Fallback(Props.BaseResolution, Vector2.new())
 	local MinScale = Util.Fallback(Props.MinScale, 0.8)

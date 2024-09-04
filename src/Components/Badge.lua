@@ -26,7 +26,6 @@ export type Props = Frame.Props & {
 	Color: Fusion.UsedAs<Color3>?,
 	ContentColor: Fusion.UsedAs<Color3>?,
 	ContentSize: Fusion.UsedAs<number>?,
-	ContentWrapped: Fusion.UsedAs<number>?,
 }
 
 --[=[

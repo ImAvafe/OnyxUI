@@ -1,6 +1,5 @@
 local OnyxUI = script.Parent.Parent
 local Themer = require(OnyxUI.Themer)
-
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 
@@ -9,6 +8,11 @@ local Children = Fusion.Children
 local SwitchGroup = require(OnyxUI.Components.SwitchGroup)
 local SwitchInput = require(OnyxUI.Components.SwitchInput)
 local Text = require(OnyxUI.Components.Text)
+local Components = {
+	Text = Text,
+	SwitchInput = SwitchInput,
+	SwitchGroup = SwitchGroup,
+}
 
 local DISABLED_TRANSPARENCY = 0.5
 
@@ -16,7 +20,11 @@ export type Props = SwitchGroup.Props & {
 	Label: Fusion.UsedAs<string>,
 }
 
-local function SettingToggle(Props: Props)
+local function SettingToggle(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
 	local Switched = Util.Fallback(Props.Switched, false)
 	local Disabled = Util.Fallback(Props.Disabled, false)
 

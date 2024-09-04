@@ -119,7 +119,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		RemainingCharaters:set(CharacterLimit - (utf8.len(TextValue or "") or peek(CharacterLimit)))
 	end)
 
-	return Scope:Hydrate(Base(Util.CombineProps(Props, {
+	return Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "TextBox",
 		Name = "TextInput",
 		CornerRadius = Scope:Computed(function(use)

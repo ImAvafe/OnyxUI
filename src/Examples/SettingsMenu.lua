@@ -12,8 +12,24 @@ local TitleBar = require(OnyxUI.Components.TitleBar)
 local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
 local SettingToggle = require(OnyxUI.Examples.SettingToggle)
 local TextInput = require(OnyxUI.Components.TextInput)
+local Components = {
+	MenuFrame = MenuFrame,
+	Button = Button,
+	TitleBar = TitleBar,
+	ScrollingFrame = ScrollingFrame,
+	SettingToggle = SettingToggle,
+	TextInput = TextInput,
+}
 
-return function(Props)
+export type Props = {
+	Parent: Fusion.UsedAs<Instance>?,
+}
+
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
 	return Scope:MenuFrame(Util.CombineProps(Props, {
 		Parent = Props.Parent,
 		Size = UDim2.fromOffset(330, 0),
@@ -28,14 +44,14 @@ return function(Props)
 				Content = { "Settings" },
 			},
 			Scope:ScrollingFrame {
-				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, use(175)),
+				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 175)),
 				AutomaticSize = Enum.AutomaticSize.None,
 				ListEnabled = true,
 				Padding = Scope:Computed(function(use)
 					return UDim.new(0, use(Theme.StrokeThickness["1"]))
 				end),
 				PaddingRight = Scope:Computed(function(use)
-					return UDim.new(0, use(Theme.StrokeThickness["1"]) + Theme.Spacing["1"]))
+					return UDim.new(0, use(Theme.StrokeThickness["1"]) + use(Theme.Spacing["1"]))
 				end),
 
 				[Children] = {

@@ -11,7 +11,9 @@ local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 
 local Text = require(OnyxUI.Components.Text)
-local Components = {}
+local Components = {
+	Text = Text,
+}
 
 export type Props = Text.Props & {
 	HeadingSize: Fusion.UsedAs<number>?,
@@ -34,7 +36,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local HeadingSize = Util.Fallback(Props.HeadingSize, 1.75)
 	local TextSize = Util.Fallback(Props.TextSize, Theme.TextSize["1"])
 
-	return Text(Util.CombineProps(Props, {
+	return Scope:Text(Util.CombineProps(Props, {
 		Name = script.Name,
 		TextSize = Scope:Computed(function(use)
 			local HeadingSizeValue = use(HeadingSize)
