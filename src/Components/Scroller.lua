@@ -1,7 +1,7 @@
 --[=[
-		@class ScrollingFrame
+		@class Scroller
 		
-		For making Content scrollable. Equivalent to Roblox's `ScrollingFrame` instance.
+		For making Content scrollable. Equivalent to Roblox's `Scroller` instance.
 ]=]
 
 local OnyxUI = script.Parent.Parent
@@ -33,8 +33,8 @@ export type Props = Base.Props & {
 }
 
 --[=[
-		@within ScrollingFrame
-		@interface ScrollingFrameProps
+		@within Scroller
+		@interface ScrollerProps
 
 		@field ... BaseProps
 		@field AutomaticCanvasSize Fusion.UsedAs<Enum.AutomaticSize>?
@@ -87,7 +87,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 
 	return Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "ScrollingFrame",
-		Name = "ScrollingFrame",
+		Name = "Scroller",
 		Selectable = false,
 		BackgroundTransparency = 1,
 		AutomaticSize = Enum.AutomaticSize.None,

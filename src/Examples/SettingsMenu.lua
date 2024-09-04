@@ -9,14 +9,14 @@ local Children = Fusion.Children
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local Button = require(OnyxUI.Components.Button)
 local TitleBar = require(OnyxUI.Components.TitleBar)
-local ScrollingFrame = require(OnyxUI.Components.ScrollingFrame)
+local Scroller = require(OnyxUI.Components.Scroller)
 local SettingToggle = require(OnyxUI.Examples.SettingToggle)
 local TextInput = require(OnyxUI.Components.TextInput)
 local Components = {
 	MenuFrame = MenuFrame,
 	Button = Button,
 	TitleBar = TitleBar,
-	ScrollingFrame = ScrollingFrame,
+	Scroller = Scroller,
 	SettingToggle = SettingToggle,
 	TextInput = TextInput,
 }
@@ -43,7 +43,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			Scope:TitleBar {
 				Content = { "Settings" },
 			},
-			Scope:ScrollingFrame {
+			Scope:Scroller {
 				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 175)),
 				AutomaticSize = Enum.AutomaticSize.None,
 				ListEnabled = true,
