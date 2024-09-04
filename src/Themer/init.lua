@@ -35,7 +35,10 @@ end
 	The currently active theme. Use this to reference theme properties.
 ]=]
 Themer.Theme = Contextual(OnyxNightTheme)
+local Components = {
 
-export type ThemeObject = typeof(Themer.NewTheme(Fusion.scoped(), {}))
+}
+
+export type ThemeObject = typeof(Themer.NewTheme(Fusion.scoped(), use({}))
 
 return Themer

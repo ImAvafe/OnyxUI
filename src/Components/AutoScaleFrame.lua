@@ -7,17 +7,18 @@
 local Workspace = game:GetService("Workspace")
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
+local Themer = require(OnyxUI.Themer)
 
-local Value = Fusion.Value
-local Computed = Fusion.Computed
 local Out = Fusion.Out
-local Hydrate = Fusion.Hydrate
 
 local Base = require(script.Parent.Base)
 local Frame = require(script.Parent.Frame)
+local Components = {
+	Base = Base,
+	Frame = Frame,
+}
 
 export type Props = Base.Props & {
 	BaseResolution: Fusion.UsedAs<Vector2>?,
@@ -36,26 +37,27 @@ export type Props = Base.Props & {
 		@field MaxScale Fusion.UsedAs<number>?
 		@field ScaleMultiplier Fusion.UsedAs<number>?
 ]=]
-return function(Props: Props)
-	local BaseResolution = Util.EnsureValue(Props.BaseResolution, "Vector2", Vector2.new())
-	local MinScale = Util.EnsureValue(Props.MinScale, "number", 0.8)
-	local MaxScale = Util.EnsureValue(Props.MaxScale, "number", math.huge)
-	local ScaleMultiplier = Util.EnsureValue(Props.ScaleMultiplier, "number", 1)
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
 
-	local ViewportSize = Value(Vector2.new())
-	Hydrate(Workspace.CurrentCamera) {
+	local BaseResolution = Util.Fallback(Props.BaseResolution, Vector2.new())
+	local MinScale = Util.Fallback(Props.MinScale, 0.8)
+	local MaxScale = Util.Fallback(Props.MaxScale, math.huge)
+	local ScaleMultiplier = Util.Fallback(Props.ScaleMultiplier, 1)
+
+	local ViewportSize = Scope:Value(Vector2.new())
+	Scope:Hydrate(Workspace.CurrentCamera) {
 		[Out "ViewportSize"] = ViewportSize,
 	}
 
-	return Frame(Util.CombineProps(Props, {
+	return Scope:Frame(Util.CombineProps(Props, {
 		Name = "AutoScaleFrame",
-		Scale = Computed(function()
-			local Ratio = ScaleMultiplier:get()
-				/ math.max(
-					(BaseResolution:get().X / ViewportSize:get().X),
-					(BaseResolution:get().Y / ViewportSize:get().Y)
-				)
-			return math.clamp(Ratio, MinScale:get(), MaxScale:get())
+		Scale = Scope:Computed(function(use)
+			local Ratio = use(ScaleMultiplier)
+				/ math.max((use(BaseResolution).X / use(ViewportSize).X), (use(BaseResolution).Y / use(ViewportSize).Y))
+			return math.clamp(Ratio, use(MinScale), use(MaxScale))
 		end),
 	}))
 end

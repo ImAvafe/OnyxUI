@@ -7,7 +7,7 @@ local Children = Fusion.Children
 local Scoped = Fusion.scoped
 
 return {
-	story = function(Parent: GuiObject, _Props: { [any]: any })
+	story = function(Parent: GuiObject)
 		local Theme: Themer.ThemeObject = Themer.Theme:now()
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
 

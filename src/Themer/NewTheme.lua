@@ -29,15 +29,15 @@ local function ProcessColors(ThemeObject)
 		local MainValue = peek(ColorObject.Main)
 		if MainValue ~= nil then
 			if peek(ColorObject.Contrast) == nil then
-				ColorObject.Contrast:set(ColorUtils.Emphasize(MainValue, peek(ThemeObject.Emphasis.Contrast)))
+				ColorObject.Contrast:set(ColorUtils.Emphasize(MainValue, use(peek(ThemeObject.Emphasis.Contrast)))
 			end
 
 			if peek(ColorObject.Dark) == nil then
-				ColorObject.Dark:set(ColorUtils.Darken(MainValue, peek(ThemeObject.Emphasis.Strong)))
+				ColorObject.Dark:set(ColorUtils.Darken(MainValue, use(peek(ThemeObject.Emphasis.Strong)))
 			end
 
 			if peek(ColorObject.Light) == nil then
-				ColorObject.Light:set(ColorUtils.Lighten(MainValue, peek(ThemeObject.Emphasis.Strong)))
+				ColorObject.Light:set(ColorUtils.Lighten(MainValue, use(peek(ThemeObject.Emphasis.Strong)))
 			end
 		end
 	end

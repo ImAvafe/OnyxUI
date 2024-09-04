@@ -1,60 +1,67 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 
+local Scoped = Fusion.scoped
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
 local Button = require(script.Parent.Button)
 local Frame = require(script.Parent.Frame)
+local Components = {
+	Button = Button,
+	Frame = Frame,
+}
 
 return {
 	clipsDescendants = false,
-	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local Instance = Frame {
+	story = function(Parent: GuiObject)
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
+
+		local Instance = Scope:Frame {
 			Parent = Parent,
 			ListEnabled = true,
-			ListPadding = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			ListPadding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.Spacing["0.5"]))
 			end),
-			Padding = Computed(function()
-				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+			Padding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.StrokeThickness["1"]))
 			end),
 
 			[Children] = {
-				Button {
+				Scope:Button {
 					Content = { "Button" },
 				},
-				Button {
+				Scope:Button {
 					Content = { "Button" },
-					Color = Themer.Theme.Colors.Primary.Main,
+					Color = Theme.Colors.Primary.Main,
 				},
-				Button {
+				Scope:Button {
 					Content = { "Button" },
 					Style = "Outlined",
-					Color = Themer.Theme.Colors.Primary.Main,
+					Color = Theme.Colors.Primary.Main,
 				},
-				Button {
+				Scope:Button {
 					Content = { "rbxassetid://11560341132", "Purchase" },
 					Color = Color3.fromRGB(86, 255, 70),
 				},
-				Button {
+				Scope:Button {
 					Content = { "rbxassetid://13405228418", "Delete" },
 					Style = "Outlined",
-					Color = Themer.Theme.Colors.Error.Main,
+					Color = Theme.Colors.Error.Main,
 				},
-				Button {
+				Scope:Button {
 					Content = { "Ghost" },
 					Style = "Ghost",
-					Color = Themer.Theme.Colors.BaseContent.Main,
+					Color = Theme.Colors.BaseContent.Main,
 				},
-				Button {
+				Scope:Button {
 					Content = { "rbxassetid://11560341132", "Bobux" },
 					Color = Color3.fromRGB(86, 255, 70),
 					Disabled = true,
 				},
-				Button {
+				Scope:Button {
 					Content = { "Testing" },
 					Color = Color3.fromRGB(86, 255, 70),
 					Disabled = true,

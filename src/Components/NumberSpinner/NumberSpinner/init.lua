@@ -178,9 +178,9 @@ local function newSpinner()
 
 			if d then
 				d.Duration = Spinner.Duration
-				d.Value = tonumber(string.sub(whole, i, i))
+				d.Value = tonumber(string.sub(whole, i, use(i))
 			else
-				d = DigitModule.new(SpinnerProxy, (i * 2) - 900, tonumber(string.sub(whole, i, i)))
+				d = DigitModule.new(SpinnerProxy, (i * 2) - 900, tonumber(string.sub(whole, i, use(i)))
 				Spinner.Digits.Whole[i] = d
 			end
 		end
@@ -194,7 +194,7 @@ local function newSpinner()
 
 		if Spinner.Commas then
 			local endLayout = (numWhole * 2) - 900
-			local str = string.format("%d", math.floor(math.abs(Spinner.Value)))
+			local str = string.format("%d", use(math.floor(math.abs(Spinner.Value)))
 			local commaIndex = 0
 			for i = 0, #str - 1, 3 do
 				if i == 0 then
@@ -245,9 +245,9 @@ local function newSpinner()
 
 			if d then
 				d.Duration = Spinner.Duration
-				d.Value = tonumber(string.sub(decimal, i, i))
+				d.Value = tonumber(string.sub(decimal, i, use(i))
 			else
-				d = DigitModule.new(SpinnerProxy, i, tonumber(string.sub(decimal, i, i)))
+				d = DigitModule.new(SpinnerProxy, i, tonumber(string.sub(decimal, i, use(i)))
 				Spinner.Digits.Decimal[i] = d
 			end
 		end

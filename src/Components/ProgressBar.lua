@@ -5,17 +5,19 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Spring = Fusion.Spring
 
 local Frame = require(script.Parent.Frame)
 local Group = require(script.Parent.Group)
+local Components = {
+	Frame = Frame,
+	Group = Group,
+}
 
 export type Props = Group.Props & {
 	Progress: Fusion.UsedAs<number>?,
@@ -36,59 +38,61 @@ export type Props = Group.Props & {
 		@field Inverted Fusion.UsedAs<boolean>?
 		@field Length Fusion.UsedAs<UDim>?
 ]=]
-return function(Props: Props)
-	local Progress = Util.EnsureValue(Props.Progress, "number", 0)
-	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local Direction = Util.EnsureValue(Props.Direction, "EnumItem", Enum.FillDirection.Horizontal)
-	local Inverted = Util.EnsureValue(Props.Inverted, "boolean", false)
-	local CornerRadius = Util.EnsureValue(
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
+	local Progress = Util.Fallback(Props.Progress, 0)
+	local Color = Util.Fallback(Props.Color, Theme.Colors.Primary.Main)
+	local Direction = Util.Fallback(Props.Direction, Enum.FillDirection.Horizontal)
+	local Inverted = Util.Fallback(Props.Inverted, false)
+	local CornerRadius = Util.Fallback(
 		Props.CornerRadius,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["Full"]:get())
+		Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.CornerRadius["Full"]))
 		end)
 	)
-	local Length = Util.EnsureValue(
+	local Length = Util.Fallback(
 		Props.Length,
-		"UDim",
-		Computed(function()
+		Scope:Computed(function()
 			return UDim.new(0, 200)
 		end)
 	)
 
-	return Group(Util.CombineProps(Props, {
+	return Scope:Group(Util.CombineProps(Props, {
 		Name = "ProgressBar",
-		Size = Computed(function()
-			local DirectionValue = Direction:get()
-			local LengthValue = Length:get()
+		Size = Scope:Computed(function(use)
+			local DirectionValue = use(Direction)
+			local LengthValue = use(Length)
 			if DirectionValue == Enum.FillDirection.Horizontal then
-				return UDim2.new(LengthValue, UDim.new(0, Themer.Theme.TextSize["0.75"]:get()))
+				return UDim2.new(LengthValue, UDim.new(0, use(Theme.TextSize["0.75"])))
 			else
-				return UDim2.new(UDim.new(0, Themer.Theme.TextSize["0.75"]:get()), LengthValue)
+				return UDim2.new(UDim.new(0, use(Theme.TextSize["0.75"])), LengthValue)
 			end
 		end),
 		AutomaticSize = Enum.AutomaticSize.None,
 		BackgroundTransparency = 0,
-		BackgroundColor3 = Themer.Theme.Colors.Neutral.Dark,
+		BackgroundColor3 = Theme.Colors.Neutral.Dark,
 		CornerRadius = CornerRadius,
 
 		[Children] = {
-			Frame {
+			Scope:Frame {
 				Name = "ProgressFill",
-				Size = Spring(
-					Computed(function()
-						if Direction:get() == Enum.FillDirection.Horizontal then
-							return UDim2.fromScale(Progress:get(), 1)
+				Size = Scope:Spring(
+					Scope:Computed(function(use)
+						if use(Direction) == Enum.FillDirection.Horizontal then
+							return UDim2.fromScale(use(Progress), 1)
 						else
-							return UDim2.fromScale(1, Progress:get())
+							return UDim2.fromScale(1, use(Progress))
 						end
 					end),
-					Themer.Theme.SpringSpeed["0.5"],
-					Themer.Theme.SpringDampening["1"]
+					Theme.SpringSpeed["0.5"],
+					Theme.SpringDampening["1"]
 				),
-				AnchorPoint = Computed(function()
-					if Inverted:get() then
-						if Direction:get() == Enum.FillDirection.Horizontal then
+				AnchorPoint = Scope:Computed(function(use)
+					if use(Inverted) then
+						if use(Direction) == Enum.FillDirection.Horizontal then
 							return Vector2.new(1, 0)
 						else
 							return Vector2.new(0, 1)
@@ -97,9 +101,9 @@ return function(Props: Props)
 						return Vector2.new(0, 0)
 					end
 				end),
-				Position = Computed(function()
-					if Inverted:get() then
-						if Direction:get() == Enum.FillDirection.Horizontal then
+				Position = Scope:Computed(function(use)
+					if use(Inverted) then
+						if use(Direction) == Enum.FillDirection.Horizontal then
 							return UDim2.fromScale(1, 0)
 						else
 							return UDim2.fromScale(0, 1)

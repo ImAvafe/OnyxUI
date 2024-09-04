@@ -243,7 +243,7 @@ export type Props = {
 	@field MaxTextSize Fusion.UsedAs<number>?
 	@field MinTextSize Fusion.UsedAs<number>?
 ]=]
-return function(Scope: Fusion.Scope<any>, Props: Props): Fusion.Child
+return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util)> = Fusion.innerScope(Scope, Fusion, Util)
 	local Theme: Themer.ThemeObject = Themer.Theme:now()
 
@@ -357,7 +357,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Fusion.Child
 				local PaddingInEffectValue = use(PaddingInEffect)
 				if PaddingInEffectValue == true then
 					return Scope:New "UIPadding" {
-						PaddingTop = Scope:Computed(function()
+						PaddingTop = Scope:Computed(function(use)
 							local PaddingTopValue = use(PaddingTop)
 							local PaddingValue = use(Padding)
 							if typeof(PaddingTopValue) == "UDim" then
@@ -368,7 +368,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Fusion.Child
 								return UDim.new()
 							end
 						end),
-						PaddingBottom = Scope:Computed(function()
+						PaddingBottom = Scope:Computed(function(use)
 							local PaddingBottomValue = use(PaddingBottom)
 							local PaddingValue = use(Padding)
 							if typeof(PaddingBottomValue) == "UDim" then
@@ -379,7 +379,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Fusion.Child
 								return UDim.new()
 							end
 						end),
-						PaddingLeft = Scope:Computed(function()
+						PaddingLeft = Scope:Computed(function(use)
 							local PaddingLeftValue = use(PaddingLeft)
 							local PaddingValue = use(Padding)
 							if typeof(PaddingLeftValue) == "UDim" then
@@ -390,7 +390,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Fusion.Child
 								return UDim.new()
 							end
 						end),
-						PaddingRight = Scope:Computed(function()
+						PaddingRight = Scope:Computed(function(use)
 							local PaddingRightValue = use(PaddingRight)
 							local PaddingValue = use(Padding)
 							if typeof(PaddingRightValue) == "UDim" then

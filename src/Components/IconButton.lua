@@ -5,14 +5,15 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
-local Computed = Fusion.Computed
-
 local Button = require(script.Parent.Button)
+local Components = {
+	Button = Button,
+}
 
 export type Props = Button.Props & {
 	Image: Fusion.UsedAs<string>?,
@@ -25,20 +26,24 @@ export type Props = Button.Props & {
 		@field ... ButtonProps
 		@field Image Fusion.UsedAs<string>?
 ]=]
-return function(Props: Props)
-	local Image = Util.EnsureValue(Props.Image, "string", "")
-	local Padding = Computed(function()
-		return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
+	local Image = Util.Fallback(Props.Image, "")
+	local Padding = Scope:Computed(function(use)
+		return UDim.new(0, use(Theme.Spacing["0.25"]))
 	end)
 
-	return Button(Util.CombineProps(Props, {
+	return Scope:Button(Util.CombineProps(Props, {
 		Name = "IconButton",
 		PaddingLeft = Padding,
 		PaddingRight = Padding,
 		PaddingTop = Padding,
 		PaddingBottom = Padding,
-		Content = Computed(function()
-			return { Image:get() }
+		Content = Scope:Computed(function(use)
+			return { use(Image) }
 		end),
 	}))
 end

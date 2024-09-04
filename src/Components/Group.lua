@@ -6,13 +6,12 @@
 
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
-
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
-
-local Hydrate = Fusion.Hydrate
+local Fusion = require(OnyxUI.Packages.Fusion)
 
 local Base = require(script.Parent.Base)
+local Components = {
+	Base = Base,
+}
 
 export type Props = Base.Props & {
 	GroupTransparency: Fusion.UsedAs<number>?,
@@ -27,8 +26,11 @@ export type Props = Base.Props & {
 		@field GroupTransparency Fusion.UsedAs<number>?
 		@field GroupColor3 Fusion.UsedAs<Color3>?
 ]=]
-return function(Props: Props)
-	return Hydrate(Base(Util.CombineProps(Props, {
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+
+	return Scope:Hydrate(Base(Util.CombineProps(Props, {
 		ClassName = "CanvasGroup",
 		Name = "Group",
 		BackgroundTransparency = 1,

@@ -1,33 +1,41 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
+local Scoped = Fusion.scoped
 
 local MenuFrame = require(script.Parent.MenuFrame)
 local Frame = require(script.Parent.Frame)
 local Text = require(script.Parent.Text)
+local Components = {
+	MenuFrame = MenuFrame,
+	Text = Text,
+	Frame = Frame,
+}
 
 return {
 	story = function(Parent: GuiObject, _Props)
-		local Instance = Frame {
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
+
+		local Instance = Scope:Frame {
 			Parent = Parent,
-			Padding = Computed(function()
-				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+			Padding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.StrokeThickness["1"]))
 			end),
 			ListEnabled = true,
 			ListFillDirection = Enum.FillDirection.Horizontal,
 
 			[Children] = {
-				MenuFrame {
+				Scope:MenuFrame {
 					Parent = Parent,
 					Size = UDim2.fromOffset(300, 200),
 					AutomaticSize = Enum.AutomaticSize.None,
 
 					[Children] = {
-						Text {
+						Scope:Text {
 							Text = "Here's a MenuFrame with some text in it.",
 						},
 					},

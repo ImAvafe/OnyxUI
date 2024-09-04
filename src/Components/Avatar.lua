@@ -5,18 +5,21 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Spring = Fusion.Spring
 
 local Image = require(script.Parent.Image)
 local Group = require(script.Parent.Group)
 local Icon = require(script.Parent.Icon)
+local Components = {
+	Image = Image,
+	Group = Group,
+	Icon = Icon,
+}
 
 export type Props = Image.Props & {
 	Image: Fusion.UsedAs<string>?,
@@ -45,56 +48,55 @@ export type Props = Image.Props & {
 		@field IndicatorIconColor Fusion.UsedAs<Color3>?
 		@field IndicatorCornerRadius Fusion.UsedAs<UDim>?
 ]=]
-return function(Props: Props)
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
 	local EnsuredProps = {
-		Image = Util.EnsureValue(Props.Image, "string", nil),
-		RingEnabled = Util.EnsureValue(Props.RingEnabled, "boolean", false),
-		RingColor = Util.EnsureValue(Props.RingColor, "Color3", Themer.Theme.Colors.Primary.Main),
-		RingThickness = Util.EnsureValue(Props.RingThickness, "number", Themer.Theme.StrokeThickness["2"]),
-		IndicatorEnabled = Util.EnsureValue(Props.IndicatorEnabled, "boolean", false),
-		IndicatorColor = Util.EnsureValue(Props.IndicatorColor, "Color3", Themer.Theme.Colors.Primary.Main),
-		IndicatorCornerRadius = Util.EnsureValue(
+		Image = Util.Fallback(Props.Image, nil),
+		RingEnabled = Util.Fallback(Props.RingEnabled, false),
+		RingColor = Util.Fallback(Props.RingColor, Theme.Colors.Primary.Main),
+		RingThickness = Util.Fallback(Props.RingThickness, Theme.StrokeThickness["2"]),
+		IndicatorEnabled = Util.Fallback(Props.IndicatorEnabled, false),
+		IndicatorColor = Util.Fallback(Props.IndicatorColor, Theme.Colors.Primary.Main),
+		IndicatorCornerRadius = Util.Fallback(
 			Props.IndicatorCornerRadius,
-			"UDim",
-			Computed(function()
-				return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+			Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.CornerRadius.Full))
 			end)
 		),
-		IndicatorIcon = Util.EnsureValue(Props.IndicatorIcon, "string", nil),
-		IndicatorIconColor = Util.EnsureValue(Props.IndicatorIconColor, "Color3", Util.Colors.White),
+		IndicatorIcon = Util.Fallback(Props.IndicatorIcon, nil),
+		IndicatorIconColor = Util.Fallback(Props.IndicatorIconColor, Util.Colors.White),
 	}
 
-	return Image(Util.CombineProps(Props, {
+	return Scope:Image(Util.CombineProps(Props, {
 		Name = "Avatar",
 		Image = EnsuredProps.Image,
-		Size = Computed(function()
-			return UDim2.fromOffset(Themer.Theme.TextSize["4.5"]:get(), Themer.Theme.TextSize["4.5"]:get())
+		Size = Scope:Computed(function(use)
+			return UDim2.fromOffset(use(Theme.TextSize["4.5"]), use(Theme.TextSize["4.5"]))
 		end),
-		BackgroundColor3 = Themer.Theme.Colors.Neutral.Dark,
+		BackgroundColor3 = Theme.Colors.Neutral.Dark,
 		StrokeEnabled = EnsuredProps.RingEnabled,
-		StrokeColor = Spring(
-			EnsuredProps.RingColor,
-			Themer.Theme.SpringSpeed["0.5"],
-			Themer.Theme.SpringDampening["1"]
-		),
-		StrokeThickness = Spring(
+		StrokeColor = Scope:Spring(EnsuredProps.RingColor, Theme.SpringSpeed["0.5"], Theme.SpringDampening["1"]),
+		StrokeThickness = Scope:Spring(
 			EnsuredProps.RingThickness,
-			Themer.Theme.SpringSpeed["0.5"],
-			Themer.Theme.SpringDampening["1"]
+			Theme.SpringSpeed["0.5"],
+			Theme.SpringDampening["1"]
 		),
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+		CornerRadius = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.CornerRadius["1"]))
 		end),
 
 		[Children] = {
-			Computed(function()
-				if EnsuredProps.IndicatorEnabled:get() then
-					return Group {
+			Scope:Computed(function(use)
+				if use(EnsuredProps.IndicatorEnabled) then
+					return Scope:Group {
 						Name = "Indicator",
-						BackgroundColor3 = Spring(
+						BackgroundColor3 = Scope:Spring(
 							EnsuredProps.IndicatorColor,
-							Themer.Theme.SpringSpeed["0.5"],
-							Themer.Theme.SpringDampening["1"]
+							Theme.SpringSpeed["0.5"],
+							Theme.SpringDampening["1"]
 						),
 						BackgroundTransparency = 0,
 						Size = UDim2.fromScale(0.25, 0.25),
@@ -105,11 +107,11 @@ return function(Props: Props)
 						CornerRadius = EnsuredProps.IndicatorCornerRadius,
 
 						[Children] = {
-							Icon {
+							Scope:Icon {
 								Image = EnsuredProps.IndicatorIcon,
 								ImageColor3 = EnsuredProps.IndicatorIconColor,
-								ImageTransparency = Computed(function()
-									if EnsuredProps.IndicatorIcon:get() then
+								ImageTransparency = Scope:Computed(function(use)
+									if use(EnsuredProps.IndicatorIcon) then
 										return 0
 									else
 										return 1
@@ -124,7 +126,7 @@ return function(Props: Props)
 				else
 					return
 				end
-			end, Fusion.cleanup),
+			end),
 		},
 	}))
 end

@@ -12,7 +12,7 @@ local peek = Fusion.peek
 	
 	Converts the `PreferredValue` to a Fusion `Value` object, if it is not one already.
 ]=]
-return function(Scope: Fusion.Scope<any>, Value: Fusion.UsedAs<any>): Fusion.Value<any>
+return function(Scope: Fusion.Scope<any>, Value: Fusion.UsedAs<any>): Fusion.Value<Fusion.Scope<any>, any>
 	if (typeof(Value) == "table") and (Value.kind == "Value") then
 		return Value
 	else

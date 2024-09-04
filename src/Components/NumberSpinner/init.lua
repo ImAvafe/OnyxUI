@@ -9,17 +9,16 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local NumberSpinner = require(script.NumberSpinner)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
-local Cleanup = Fusion.Cleanup
-local Observer = Fusion.Observer
-local Computed = Fusion.Computed
-
 local Text = require(script.Parent.Text)
+local Components = {
+	Text = Text,
+}
 
 export type Props = Text.Props & {
 	Value: Fusion.UsedAs<number>?,
@@ -42,41 +41,38 @@ export type Props = Text.Props & {
 		@field Duration Fusion.UsedAs<number>?
 		@field Commas Fusion.UsedAs<boolean>?
 ]=]
-return function(Props: Props)
-	local TextSize = Util.EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
 
-	local Value = Util.EnsureValue(Props.Value, "number", 0)
-	local Prefix = Util.EnsureValue(Props.Prefix, "string", "")
-	local Suffix = Util.EnsureValue(Props.Suffix, "string", "")
-	local Decimals = Util.EnsureValue(Props.Decimals, "number", 0)
-	local Duration = Util.EnsureValue(Props.Duration, "number", 0.3)
-	local Commas = Util.EnsureValue(Props.Commas, "boolean", false)
+	local TextSize = Util.Fallback(Props.TextSize, Theme.TextSize["1"])
 
-	local Observers = {}
+	local Value = Util.Fallback(Props.Value, 0)
+	local Prefix = Util.Fallback(Props.Prefix, "")
+	local Suffix = Util.Fallback(Props.Suffix, "")
+	local Decimals = Util.Fallback(Props.Decimals, 0)
+	local Duration = Util.Fallback(Props.Duration, 0.3)
+	local Commas = Util.Fallback(Props.Commas, false)
 
 	local Spinner = NumberSpinner.fromGuiObject(Text(Util.CombineProps(Props, {
 		Name = "NumberSpinner",
 		AutomaticSize = Enum.AutomaticSize.None,
 		TextSize = TextSize,
 		Font = Enum.Font.GothamBold,
-		Size = Computed(function()
-			return UDim2.new(UDim.new(1, 0), UDim.new(0, TextSize:get()))
+		Size = Scope:Computed(function(use)
+			return UDim2.new(UDim.new(1, 0), UDim.new(0, use(TextSize)))
 		end),
-
-		[Cleanup] = Observers,
 	})))
 
 	local SpinnerProps =
 		{ Value = Value, Prefix = Prefix, Suffix = Suffix, Decimals = Decimals, Duration = Duration, Comas = Commas }
 	for PropName, Prop in pairs(SpinnerProps) do
-		Spinner[PropName] = Prop:get()
+		Spinner[PropName] = Prop
 
-		table.insert(
-			Observers,
-			Observer(Prop):onChange(function()
-				Spinner[PropName] = Prop:get()
-			end)
-		)
+		Scope:Observer(Prop):onChange(function()
+			Spinner[PropName] = Prop
+		end)
 	end
 
 	return Spinner.GuiObject

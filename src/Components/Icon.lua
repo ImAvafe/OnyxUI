@@ -6,13 +6,12 @@
 
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(script.Parent.Parent.Themer)
 
-local Computed = Fusion.Computed
-
 local Image = require(script.Parent.Image)
+local Components = {}
 
 export type Props = Image.Props & {}
 
@@ -22,11 +21,15 @@ export type Props = Image.Props & {}
 
 		@field ... ImageProps
 ]=]
-return function(Props: Props)
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
 	return Image(Util.CombineProps(Props, {
 		Name = "Icon",
-		Size = Computed(function()
-			return UDim2.fromOffset(Themer.Theme.TextSize["1"]:get(), Themer.Theme.TextSize["1"]:get())
+		Size = Scope:Computed(function(use)
+			return UDim2.fromOffset(use(Theme.TextSize["1"]), use(Theme.TextSize["1"]))
 		end),
 		BackgroundTransparency = 1,
 	}))

@@ -7,16 +7,17 @@
 local SoundService = game:GetService("SoundService")
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
+local peek = Fusion.peek
 local OnEvent = Fusion.OnEvent
-local Computed = Fusion.Computed
-local Hydrate = Fusion.Hydrate
 
 local Base = require(script.Parent.Base)
+local Components = {
+	Base = Base,
+}
 
 --[=[
 		@within BaseButton
@@ -50,37 +51,35 @@ export type Props = Base.Props & {
 	ClickSound: Fusion.UsedAs<Sound>?,
 }
 
-return function(Props: Props)
-	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
 
-	local IsHovering = Util.EnsureValue(Props.IsHovering, "boolean", false)
-	local IsHolding = Util.EnsureValue(Props.IsHolding, "boolean", false)
-
-	local OnActivated = Util.EnsureValue(Props.OnActivated, "function", function() end)
-	local OnMouseEnter = Util.EnsureValue(Props.OnMouseEnter, "function", function() end)
-	local OnMouseLeave = Util.EnsureValue(Props.OnMouseLeave, "function", function() end)
-	local OnMouseButton1Down = Util.EnsureValue(Props.OnMouseButton1Down, "function", function() end)
-	local OnMouseButton1Up = Util.EnsureValue(Props.OnMouseButton1Up, "function", function() end)
-
-	local HoverSound = Util.EnsureValue(Props.HoverSound, "Sound", Themer.Theme.Sound.Hover)
-	local ClickSound = Util.EnsureValue(Props.ClickSound, "Sound", Themer.Theme.Sound.Click)
-
-	local Active = Util.EnsureValue(
+	local Disabled = Util.Fallback(Props.Disabled, false)
+	local IsHovering = Util.Fallback(Props.IsHovering, false)
+	local IsHolding = Util.Fallback(Props.IsHolding, false)
+	local OnActivated = Util.Fallback(Props.OnActivated, function() end)
+	local OnMouseEnter = Util.Fallback(Props.OnMouseEnter, function() end)
+	local OnMouseLeave = Util.Fallback(Props.OnMouseLeave, function() end)
+	local OnMouseButton1Down = Util.Fallback(Props.OnMouseButton1Down, function() end)
+	local OnMouseButton1Up = Util.Fallback(Props.OnMouseButton1Up, function() end)
+	local HoverSound = Util.Fallback(Props.HoverSound, Theme.Sound.Hover)
+	local ClickSound = Util.Fallback(Props.ClickSound, Theme.Sound.Click)
+	local Active = Util.Fallback(
 		Props.Active,
-		"boolean",
-		Computed(function()
-			return not Disabled:get()
+		Scope:Computed(function(use)
+			return not use(Disabled)
 		end)
 	)
-	local Selectable = Util.EnsureValue(
+	local Selectable = Util.Fallback(
 		Props.Selectable,
-		"boolean",
-		Computed(function()
-			return not Disabled:get()
+		Scope:Computed(function(use)
+			return not use(Disabled)
 		end)
 	)
 
-	return Hydrate(Base(Util.CombineProps(Props, {
+	return Scope:Hydrate(Base(Util.CombineProps(Props, {
 		ClassName = "TextButton",
 		Name = "BaseButton",
 		AutomaticSize = Enum.AutomaticSize.XY,
@@ -92,39 +91,39 @@ return function(Props: Props)
 		TextSize = 0,
 
 		[OnEvent "Activated"] = function()
-			if not Disabled:get() then
-				SoundService:PlayLocalSound(ClickSound:get())
-				OnActivated:get()()
+			if not peek(Disabled) then
+				SoundService:PlayLocalSound(peek(ClickSound))
+				peek(OnActivated)()
 			end
 		end,
 		[OnEvent "MouseEnter"] = function()
-			if Active:get() then
-				SoundService:PlayLocalSound(HoverSound:get())
+			if peek(Active) then
+				SoundService:PlayLocalSound(peek(HoverSound))
 			end
 			IsHovering:set(true)
-			OnMouseEnter:get()()
+			peek(OnMouseEnter)()
 		end,
 		[OnEvent "SelectionGained"] = function()
-			if Active:get() then
-				SoundService:PlayLocalSound(HoverSound:get())
+			if peek(Active) then
+				SoundService:PlayLocalSound(peek(HoverSound))
 			end
 			IsHovering:set(true)
-			OnMouseEnter:get()()
+			peek(OnMouseEnter)()
 		end,
 		[OnEvent "MouseLeave"] = function()
 			IsHovering:set(false)
 			IsHolding:set(false)
-			OnMouseLeave:get()()
+			peek(OnMouseLeave)()
 		end,
 		[OnEvent "MouseButton1Down"] = function()
-			if not Disabled:get() then
+			if not peek(Disabled) then
 				IsHolding:set(true)
-				OnMouseButton1Down:get()()
+				peek(OnMouseButton1Down)()
 			end
 		end,
 		[OnEvent "MouseButton1Up"] = function()
 			IsHolding:set(false)
-			OnMouseButton1Up:get()()
+			peek(OnMouseButton1Up)()
 		end,
 	}
 end

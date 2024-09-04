@@ -2,11 +2,11 @@
 
 local Components = {
 	Base = require(script.Base),
-	-- Text = require(script.Text),
+	Text = require(script.Text),
 }
 
--- for _, Child in ipairs(script:GetChildren()) do
--- 	local LastCharacters = string.sub(Child.Name, -string.len(STORY_EXTENSION))
+-- for _, use(Child in ipairs(script:GetChildren()) do
+-- 	local LastCharacters = string.sub(Child.Name, use(-string.len(STORY_EXTENSION))
 -- 	if LastCharacters ~= STORY_EXTENSION then
 -- 		local Success, Result = pcall(function()
 -- 			return require(Child)

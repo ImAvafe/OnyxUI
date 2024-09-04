@@ -1,33 +1,40 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
+local Scoped = Fusion.scoped
 
 local TitleBar = require(OnyxUI.Components.TitleBar)
 local Frame = require(OnyxUI.Components.Frame)
+local Components = {
+	Frame = Frame,
+	TitleBar = TitleBar,
+}
 
 return {
 	story = function(Parent: GuiObject, _Props)
-		local Instance = Frame {
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
+
+		local Instance = Scope:Frame {
 			Parent = Parent,
-			Padding = Computed(function()
-				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+			Padding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.StrokeThickness["1"]))
 			end),
-			Size = Computed(function()
-				return UDim2.fromOffset(Themer.Theme.Spacing["16"]:get(), 0)
+			Size = Scope:Computed(function(use)
+				return UDim2.fromOffset(use(Theme.Spacing["16"]), 0)
 			end),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			ListEnabled = true,
 			ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 			[Children] = {
-				TitleBar {
+				Scope:TitleBar {
 					Content = { "Title" },
 				},
-				TitleBar {
+				Scope:TitleBar {
 					Content = { "rbxassetid://75029721407761", "Shop" },
 				},
 			},

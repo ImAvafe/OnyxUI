@@ -1,76 +1,83 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
-local ColorUtils = require(Packages.ColorUtils)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
+local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 local Themer = require(OnyxUI.Themer)
 local Util = require(OnyxUI.Util)
 
+local Scoped = Fusion.scoped
 local Children = Fusion.Children
-local Value = Fusion.Value
-local Computed = Fusion.Computed
 
 local Frame = require(script.Parent.Frame)
 local ProgressBar = require(script.Parent.ProgressBar)
 local Text = require(script.Parent.Text)
+local Components = {
+	Frame = Frame,
+	ProgressBar = ProgressBar,
+	Text = Text,
+}
 
 return {
-	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local Progress = Value(0)
-		local Color = Value(Color3.fromRGB(255, 0, 0))
+	story = function(Parent: GuiObject)
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
 
-		local Instance = Frame {
+		local Progress = Scope:Value(0)
+		local Color = Scope:Value(Color3.fromRGB(255, 0, 0))
+
+		local Instance = Scope:Frame {
 			Parent = Parent,
 			ListEnabled = true,
 			ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-			ListPadding = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["1.5"]:get())
+			ListPadding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.Spacing["1.5"]))
 			end),
 
 			[Children] = {
-				Frame {
+				Scope:Frame {
 					ListEnabled = true,
 					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-					ListPadding = Computed(function()
-						return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+					ListPadding = Scope:Computed(function(use)
+						return UDim.new(0, use(Theme.Spacing["0.5"]))
 					end),
 
 					[Children] = {
-						Text {
+						Scope:Text {
 							Text = "Horizontal",
 						},
-						ProgressBar {
+						Scope:ProgressBar {
 							Progress = 0.75,
 						},
-						ProgressBar {
+						Scope:ProgressBar {
 							Progress = Progress,
 							Color = Color,
 						},
 					},
 				},
-				Frame {
+				Scope:Frame {
 					ListEnabled = true,
 					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-					ListPadding = Computed(function()
-						return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+					ListPadding = Scope:Computed(function(use)
+						return UDim.new(0, use(Theme.Spacing["0.5"]))
 					end),
 
 					[Children] = {
-						Text {
+						Scope:Text {
 							Text = "With text",
 						},
-						Frame {
+						Scope:Frame {
 							ListEnabled = true,
 							ListFillDirection = Enum.FillDirection.Horizontal,
 							ListVerticalAlignment = Enum.VerticalAlignment.Center,
-							ListPadding = Computed(function()
-								return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+							ListPadding = Scope:Computed(function(use)
+								return UDim.new(0, use(Theme.Spacing["0.5"]))
 							end),
 
 							[Children] = {
-								Text {
+								Scope:Text {
 									Text = "HP",
 								},
-								ProgressBar {
+								Scope:ProgressBar {
 									Progress = Progress,
 									Color = Util.Colors.Red["500"],
 									FlexMode = Enum.UIFlexMode.Fill,
@@ -79,93 +86,93 @@ return {
 						},
 					},
 				},
-				Frame {
+				Scope:Frame {
 					ListEnabled = true,
 					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-					ListPadding = Computed(function()
-						return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+					ListPadding = Scope:Computed(function(use)
+						return UDim.new(0, use(Theme.Spacing["0.5"]))
 					end),
 
 					[Children] = {
-						Text {
+						Scope:Text {
 							Text = "Inverted",
 						},
-						ProgressBar {
+						Scope:ProgressBar {
 							Progress = Progress,
 							Inverted = true,
 						},
 					},
 				},
-				Frame {
+				Scope:Frame {
 					ListEnabled = true,
 					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-					ListPadding = Computed(function()
-						return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+					ListPadding = Scope:Computed(function(use)
+						return UDim.new(0, use(Theme.Spacing["0.5"]))
 					end),
 
 					[Children] = {
-						Text {
+						Scope:Text {
 							Text = "Vertical",
 						},
-						Frame {
+						Scope:Frame {
 							ListEnabled = true,
 							ListFillDirection = Enum.FillDirection.Horizontal,
-							ListPadding = Computed(function()
-								return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+							ListPadding = Scope:Computed(function(use)
+								return UDim.new(0, use(Theme.Spacing["0.5"]))
 							end),
 
 							[Children] = {
 
-								ProgressBar {
+								Scope:ProgressBar {
 									Direction = Enum.FillDirection.Vertical,
 									Progress = Progress,
 									Color = Color,
 								},
-								ProgressBar {
-									Direction = Enum.FillDirection.Vertical,
-									Progress = Progress,
-									Inverted = true,
-									Color = Color,
-								},
-								ProgressBar {
-									Direction = Enum.FillDirection.Vertical,
-									Progress = Progress,
-									Color = Color,
-								},
-								ProgressBar {
+								Scope:ProgressBar {
 									Direction = Enum.FillDirection.Vertical,
 									Progress = Progress,
 									Inverted = true,
 									Color = Color,
 								},
-								ProgressBar {
+								Scope:ProgressBar {
 									Direction = Enum.FillDirection.Vertical,
 									Progress = Progress,
 									Color = Color,
 								},
-								ProgressBar {
-									Direction = Enum.FillDirection.Vertical,
-									Progress = Progress,
-									Inverted = true,
-									Color = Color,
-								},
-								ProgressBar {
-									Direction = Enum.FillDirection.Vertical,
-									Progress = Progress,
-									Color = Color,
-								},
-								ProgressBar {
+								Scope:ProgressBar {
 									Direction = Enum.FillDirection.Vertical,
 									Progress = Progress,
 									Inverted = true,
 									Color = Color,
 								},
-								ProgressBar {
+								Scope:ProgressBar {
 									Direction = Enum.FillDirection.Vertical,
 									Progress = Progress,
 									Color = Color,
 								},
-								ProgressBar {
+								Scope:ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Inverted = true,
+									Color = Color,
+								},
+								Scope:ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Color = Color,
+								},
+								Scope:ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Inverted = true,
+									Color = Color,
+								},
+								Scope:ProgressBar {
+									Direction = Enum.FillDirection.Vertical,
+									Progress = Progress,
+									Color = Color,
+								},
+								Scope:ProgressBar {
 									Direction = Enum.FillDirection.Vertical,
 									Progress = Progress,
 									Inverted = true,
@@ -181,7 +188,7 @@ return {
 		task.spawn(function()
 			while task.wait(1) do
 				Progress:set(math.random(0, 1000) / 1000)
-				Color:set(ColorUtils.Rotate(Color:get(), 100))
+				Color:set(ColorUtils.Rotate(Color, 100))
 			end
 		end)
 

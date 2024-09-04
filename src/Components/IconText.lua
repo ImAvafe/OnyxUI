@@ -4,20 +4,22 @@
 		For displaying both text and icons alongside each other as one seamless body.
 ]=]
 
-local OnyxUI = require(script.Parent.Parent)
+local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
-
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 local ForValues = Fusion.ForValues
 
 local Frame = require(OnyxUI.Components.Frame)
 local Text = require(OnyxUI.Components.Text)
 local Icon = require(OnyxUI.Components.Icon)
+local Components = {
+	Text = Text,
+	Icon = Icon,
+	Frame = Frame,
+}
 
 export type Props = Frame.Props & {
 	Content: Fusion.UsedAs<{ string }>?,
@@ -42,42 +44,45 @@ export type Props = Frame.Props & {
 		@field ContentRichText Fusion.UsedAs<boolean>?
 		@field ContentFontFace Fusion.UsedAs<Font>?
 ]=]
-return function(Props: Props)
-	local Content = Util.EnsureValue(Props.Content, "table", {})
-	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
-	local ContentColor = Util.EnsureValue(Props.ContentColor, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	local ContentTransparency = Util.EnsureValue(Props.ContentTransparency, "number", 0)
-	local ContentWrapped = Util.EnsureValue(Props.ContentWrapped, "boolean", true)
-	local ContentRichText = Util.EnsureValue(Props.ContentRichText, "boolean", true)
-	local ContentFontFace = Util.EnsureValue(
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
+	local Content = Util.Fallback(Props.Content, {})
+	local ContentSize = Util.Fallback(Props.ContentSize, Theme.TextSize["1"])
+	local ContentColor = Util.Fallback(Props.ContentColor, Theme.Colors.BaseContent.Main)
+	local ContentTransparency = Util.Fallback(Props.ContentTransparency, 0)
+	local ContentWrapped = Util.Fallback(Props.ContentWrapped, true)
+	local ContentRichText = Util.Fallback(Props.ContentRichText, true)
+	local ContentFontFace = Util.Fallback(
 		Props.ContentFontFace,
-		"Font",
-		Computed(function()
-			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
+		Scope:Computed(function(use)
+			return Font.new(use(Theme.Font.Body), use(Theme.FontWeight.Body))
 		end)
 	)
 
-	return Frame(Util.CombineProps(Props, {
+	return Scope:Frame(Util.CombineProps(Props, {
 		Name = script.Name,
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Horizontal,
-		ListPadding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0"]:get())
+		ListPadding = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0"]))
 		end),
 
 		[Children] = {
 			ForValues(Content, function(ContentString: string)
 				if string.find(ContentString, "rbxassetid://", 1, true) then
-					return Icon {
+					return Scope:Icon {
 						Image = ContentString,
 						ImageColor3 = ContentColor,
-						Size = Computed(function()
-							return UDim2.fromOffset(ContentSize:get(), ContentSize:get())
+						Size = Scope:Computed(function(use)
+							return UDim2.fromOffset(use(ContentSize), use(ContentSize))
 						end),
 						ImageTransparency = ContentTransparency,
 					}
 				else
-					return Text {
+					return Scope:Text {
 						Text = ContentString,
 						TextColor3 = ContentColor,
 						TextSize = ContentSize,
@@ -87,7 +92,7 @@ return function(Props: Props)
 						FontFace = ContentFontFace,
 					}
 				end
-			end, Fusion.cleanup),
+			end),
 		},
 	}))
 end

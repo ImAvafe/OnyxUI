@@ -5,14 +5,14 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 
-local Computed = Fusion.Computed
-local Hydrate = Fusion.Hydrate
-
 local Base = require(script.Parent.Base)
+local Components = {
+	Base = Base,
+}
 
 export type Props = Base.Props & {
 	Image: Fusion.UsedAs<string>?,
@@ -43,20 +43,22 @@ export type Props = Base.Props & {
 		@field SliceScale Fusion.UsedAs<number>?
 		@field TileSize Fusion.UsedAs<UDim2>?
 ]=]
-return function(Props: Props)
-	local FallbackImage =
-		Util.EnsureValue(Props.FallbackImage, "string", "rbxasset://textures/ui/GuiImagePlaceholder.png")
-	local Image = Util.EnsureValue(Props.Image, "string", nil)
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
 
-	local ImageInUse = Computed(function()
-		if Image:get() then
-			return Image:get()
+	local FallbackImage = Util.Fallback(Props.FallbackImage, "rbxasset://textures/ui/GuiImagePlaceholder.png")
+	local Image = Util.Fallback(Props.Image, nil)
+
+	local ImageInUse = Scope:Computed(function(use)
+		if use(Image) then
+			return use(Image)
 		else
-			return FallbackImage:get()
+			return use(FallbackImage)
 		end
 	end)
 
-	return Hydrate(Base(Util.CombineProps(Props, {
+	return Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "ImageLabel",
 		Name = "Image",
 		Size = UDim2.fromOffset(100, 100),

@@ -5,15 +5,14 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
-local Computed = Fusion.Computed
-local Hydrate = Fusion.Hydrate
-
 local Base = require(script.Parent.Base)
+local Components = {
+	Base = Base,
+}
 
 export type Props = Base.Props & {
 	Text: Fusion.UsedAs<string>?,
@@ -54,22 +53,25 @@ export type Props = Base.Props & {
 		@field MaxVisibleGraphemes Fusion.UsedAs<number>?
 		@field TextTransparency Fusion.UsedAs<number>?
 ]=]
-return function(Props: Props)
-	local TextColor3 = Util.EnsureValue(Props.TextColor3, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	local TextSize = Util.EnsureValue(Props.TextSize, "number", Themer.Theme.TextSize["1"])
-	local RichText = Util.EnsureValue(Props.RichText, "boolean", true)
-	local FontFace = Util.EnsureValue(
+return function(Scope: Fusion.Scope<any>, Props: Props): Instance
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
+	local TextColor3 = Util.Fallback(Props.TextColor3, Theme.Colors.BaseContent.Main)
+	local TextSize = Util.Fallback(Props.TextSize, Theme.TextSize["1"])
+	local RichText = Util.Fallback(Props.RichText, true)
+	local FontFace = Util.Fallback(
 		Props.FontFace,
-		"Font",
-		Computed(function()
-			return Font.new(Themer.Theme.Font.Body:get(), Themer.Theme.FontWeight.Body:get())
+		Scope:Computed(function(use)
+			return Font.new(use(Theme.Font.Body), use(Theme.FontWeight.Body))
 		end)
 	)
-	local TextWrapped = Util.EnsureValue(Props.TextWrapped, "boolean", true)
-	local TextXAlignment = Util.EnsureValue(Props.TextXAlignment, "EnumItem", Enum.TextXAlignment.Left)
-	local TextYAlignment = Util.EnsureValue(Props.TextYAlignment, "EnumItem", Enum.TextYAlignment.Top)
+	local TextWrapped = Util.Fallback(Props.TextWrapped, true)
+	local TextXAlignment = Util.Fallback(Props.TextXAlignment, Enum.TextXAlignment.Left)
+	local TextYAlignment = Util.Fallback(Props.TextYAlignment, Enum.TextYAlignment.Top)
 
-	return Hydrate(Base(Util.CombineProps(Props, {
+	return Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "TextLabel",
 		Name = "Text",
 		AutomaticSize = Enum.AutomaticSize.XY,

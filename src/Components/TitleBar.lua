@@ -5,17 +5,21 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
 local Frame = require(script.Parent.Frame)
 local IconButton = require(script.Parent.IconButton)
 local IconText = require(script.Parent.IconText)
+local Components = {
+	Frame = Frame,
+	IconButton = IconButton,
+	IconText = IconText,
+}
 
 export type Props = Frame.Props & {
 	Content: Fusion.UsedAs<{ string }>?,
@@ -40,28 +44,31 @@ export type Props = Frame.Props & {
 		@field CloseButtonDisabled Fusion.UsedAs<boolean>?
 		@field OnClose Fusion.UsedAs<() -> ()>?
 ]=]
-return function(Props: Props)
-	local Content = Util.EnsureValue(Props.Content, "table", {})
-	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1.5"])
-	local ContentColor = Util.EnsureValue(Props.ContentColor, "Color3", Themer.Theme.Colors.BaseContent.Main)
-	local ContentFontFace = Util.EnsureValue(
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
+	local Content = Util.Fallback(Props.Content, {})
+	local ContentSize = Util.Fallback(Props.ContentSize, Theme.TextSize["1.5"])
+	local ContentColor = Util.Fallback(Props.ContentColor, Theme.Colors.BaseContent.Main)
+	local ContentFontFace = Util.Fallback(
 		Props.ContentFontFace,
-		"Font",
-		Computed(function()
-			return Font.new(Themer.Theme.Font.Heading:get(), Themer.Theme.FontWeight.Heading:get())
+		Scope:Computed(function(use)
+			return Font.new(use(Theme.Font.Heading), use(Theme.FontWeight.Heading))
 		end)
 	)
-	local CloseButtonDisabled = Util.EnsureValue(Props.CloseButtonDisabled, "boolean", false)
-	local CloseButtonIcon = Util.EnsureValue(Props.CloseButtonIcon, "string", "rbxassetid://80218226919142")
-	local OnClose = Util.EnsureValue(Props.OnClose, "function", function() end)
+	local CloseButtonDisabled = Util.Fallback(Props.CloseButtonDisabled, false)
+	local CloseButtonIcon = Util.Fallback(Props.CloseButtonIcon, "rbxassetid://80218226919142")
+	local OnClose = Util.Fallback(Props.OnClose, function() end)
 
-	return Frame(Util.CombineProps(Props, {
+	return Scope:Frame(Util.CombineProps(Props, {
 		Name = "TitleBar",
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 
 		[Children] = {
-			IconText {
+			Scope:IconText {
 				Name = "Title",
 				AnchorPoint = Vector2.new(0.5, 0),
 				Position = UDim2.fromScale(0.5, 0),
@@ -70,13 +77,13 @@ return function(Props: Props)
 				ContentSize = ContentSize,
 				ContentFontFace = ContentFontFace,
 				ContentWrapped = false,
-				ListPadding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+				ListPadding = Scope:Computed(function(use)
+					return UDim.new(0, use(Theme.Spacing["0.5"]))
 				end),
 			},
-			Computed(function()
-				if CloseButtonDisabled:get() == false then
-					return IconButton {
+			Scope:Computed(function(use)
+				if use(CloseButtonDisabled) == false then
+					return Scope:IconButton {
 						Name = "CloseButton",
 						Image = CloseButtonIcon,
 						ContentSize = ContentSize,
@@ -87,15 +94,15 @@ return function(Props: Props)
 						Position = UDim2.fromScale(1, 0.5),
 
 						OnActivated = function()
-							if OnClose:get() then
-								OnClose:get()()
+							if use(OnClose) then
+								use(OnClose)()
 							end
 						end,
 					}
 				else
 					return
 				end
-			end, Fusion.cleanup),
+			end),
 		},
 	}))
 end

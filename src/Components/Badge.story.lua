@@ -1,78 +1,86 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 local Util = require(OnyxUI.Util)
 
+local Scoped = Fusion.scoped
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Value = Fusion.Value
+local peek = Fusion.peek
 
 local Frame = require(OnyxUI.Components.Frame)
 local Badge = require(OnyxUI.Components.Badge)
 local Text = require(OnyxUI.Components.Text)
+local Components = {
+	Frame = Frame,
+	Badge = Badge,
+	Text = Text,
+}
 
 return {
-	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local NotificationCount = Value(0)
+	story = function(Parent: GuiObject)
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
+
+		local NotificationCount = Scope:Value(0)
 
 		local CountLoop = task.spawn(function()
 			while task.wait(0.08) do
-				if NotificationCount:get() == 100 then
+				if peek(NotificationCount) == 100 then
 					task.wait(3)
 					NotificationCount:set(1)
 				else
-					NotificationCount:set(NotificationCount:get() + 1)
+					NotificationCount:set(peek(NotificationCount) + 1)
 				end
 			end
 		end)
 
-		local Instance = Frame {
+		local Instance = Scope:Frame {
 			Parent = Parent,
 			ListEnabled = true,
-			ListPadding = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			ListPadding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.Spacing["0.5"]))
 			end),
 
 			[Children] = {
-				Badge {
+				Scope:Badge {
 					Content = { "Badge" },
 				},
-				Badge {
+				Scope:Badge {
 					Content = { " PREMIUM" },
 					Color = Util.Colors.Amber["500"],
 				},
-				Badge {
+				Scope:Badge {
 					Content = { "rbxassetid://103798699021677", "-50%" },
 					Color = Util.Colors.Red["500"],
 				},
-				Badge {
+				Scope:Badge {
 					Content = { "rbxassetid://140490867216758", "LIMITED" },
 					Color = Util.Colors.Red["500"],
 				},
-				Badge {
-					Content = Computed(function()
-						if NotificationCount:get() >= 100 then
+				Scope:Badge {
+					Content = Scope:Computed(function(use)
+						if use(NotificationCount) >= 100 then
 							return { "99+" }
 						else
-							return { NotificationCount:get() }
+							return { use(NotificationCount) }
 						end
 					end),
-					Color = Themer.Theme.Colors.Primary.Main,
+					Color = Theme.Colors.Primary.Main,
 				},
-				Frame {
+				Scope:Frame {
 					ListEnabled = true,
 					ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 					ListFillDirection = Enum.FillDirection.Horizontal,
-					ListPadding = Computed(function()
-						return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+					ListPadding = Scope:Computed(function(use)
+						return UDim.new(0, use(Theme.Spacing["0.25"]))
 					end),
 
 					[Children] = {
-						Text {
+						Scope:Text {
 							Text = "It's also proportional alongside text.",
 						},
-						Badge {
+						Scope:Badge {
 							Content = { "rbxassetid://137979359742656", "TRUE" },
 							Color = Util.Colors.Green["500"],
 						},

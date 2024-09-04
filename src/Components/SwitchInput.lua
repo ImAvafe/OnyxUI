@@ -5,20 +5,21 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
+local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 
-local ColorUtils = require(Packages.ColorUtils)
-
+local peek = Fusion.peek
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Spring = Fusion.Spring
-local Value = Fusion.Value
 
 local Frame = require(script.Parent.Frame)
 local BaseButton = require(script.Parent.BaseButton)
+local Components = {
+	Frame = Frame,
+	BaseButton = BaseButton,
+}
 
 export type Props = Frame.Props & {
 	Switched: Fusion.UsedAs<boolean>?,
@@ -35,57 +36,60 @@ export type Props = Frame.Props & {
 		@field Disabled Fusion.UsedAs<boolean>?
 		@field Color Fusion.UsedAs<Color3>?
 ]=]
-return function(Props: Props)
-	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)
-	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
-	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Primary.Main)
-	local Size = Util.EnsureValue(
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
+	local Switched = Util.Fallback(Props.Switched, false)
+	local Disabled = Util.Fallback(Props.Disabled, false)
+	local Color = Util.Fallback(Props.Color, Theme.Colors.Primary.Main)
+	local Size = Util.Fallback(
 		Props.Size,
-		"UDim2",
-		Computed(function()
-			return UDim2.fromOffset(Themer.Theme.TextSize["1"]:get() * 2, Themer.Theme.TextSize["1"]:get())
+		Scope:Computed(function(use)
+			return UDim2.fromOffset(use(Theme.TextSize["1"]) * 2, use(Theme.TextSize["1"]))
 		end)
 	)
-	local AutomaticSize = Util.EnsureValue(Props.AutomaticSize, "EnumItem", Enum.AutomaticSize.None)
+	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.None)
 
-	local IsHolding = Value(false)
-	local IsHovering = Value(false)
-	local EffectiveColor = Computed(function()
+	local IsHolding = Scope:Value(false)
+	local IsHovering = Scope:Value(false)
+	local EffectiveColor = Scope:Computed(function(use)
 		local ActiveColor
-		if Switched:get() then
-			ActiveColor = Color:get()
+		if use(Switched) then
+			ActiveColor = use(Color)
 		else
-			ActiveColor = Themer.Theme.Colors.NeutralContent.Dark:get()
+			ActiveColor = use(Theme.Colors.NeutralContent.Dark)
 		end
 
-		if not Disabled:get() then
-			if IsHolding:get() then
-				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
-			elseif IsHovering:get() then
-				return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
+		if not use(Disabled) then
+			if use(IsHolding) then
+				return ColorUtils.Emphasize(ActiveColor, use(Theme.Emphasis.Regular))
+			elseif use(IsHovering) then
+				return ColorUtils.Emphasize(ActiveColor, use(Theme.Emphasis.Light))
 			end
 		end
 
 		return ActiveColor
 	end)
-	local EffectiveBallColor = Computed(function(): any
+	local EffectiveBallColor = Scope:Computed(function(use): any
 		local ActiveColor
-		if Switched:get() then
-			ActiveColor = Themer.Theme.Colors.Base.Main:get()
+		if use(Switched) then
+			ActiveColor = use(Theme.Colors.Base.Main)
 		else
-			ActiveColor = Themer.Theme.Colors.NeutralContent.Dark:get()
+			ActiveColor = use(Theme.Colors.NeutralContent.Dark)
 		end
 
-		if not Disabled:get() then
-			if IsHolding:get() then
-				if not Switched:get() then
-					return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Regular:get())
+		if not use(Disabled) then
+			if use(IsHolding) then
+				if not use(Switched) then
+					return ColorUtils.Emphasize(ActiveColor, use(Theme.Emphasis.Regular))
 				else
 					return ActiveColor
 				end
-			elseif IsHovering:get() then
-				if not Switched:get() then
-					return ColorUtils.Emphasize(ActiveColor, Themer.Theme.Emphasis.Light:get())
+			elseif use(IsHovering) then
+				if not use(Switched) then
+					return ColorUtils.Emphasize(ActiveColor, use(Theme.Emphasis.Light))
 				else
 					return ActiveColor
 				end
@@ -94,113 +98,108 @@ return function(Props: Props)
 
 		return ActiveColor
 	end)
-	local EffectiveCornerRadius = Util.EnsureValue(
+	local EffectiveCornerRadius = Util.Fallback(
 		Props.CornerRadius,
-		"UDim",
-		Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius.Full:get())
+		Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.CornerRadius.Full))
 		end)
 	)
 
-	return BaseButton(Util.CombineProps(Props, {
+	return Scope:BaseButton(Util.CombineProps(Props, {
 		Name = "SwitchInput",
 		Size = Size,
 		AutomaticSize = AutomaticSize,
 		Disabled = Disabled,
 		StrokeEnabled = true,
-		StrokeTransparency = Spring(
-			Computed(function()
-				if Disabled:get() then
+		StrokeTransparency = Scope:Spring(
+			Scope:Computed(function(use)
+				if use(Disabled) then
 					return 0.8
 				end
-				if Switched:get() then
+				if use(Switched) then
 					return 0
 				else
 					return 0.6
 				end
 			end),
-			Themer.Theme.SpringSpeed["1"],
-			Themer.Theme.SpringDampening["1"]
+			Theme.SpringSpeed["1"],
+			Theme.SpringDampening["1"]
 		),
-		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
+		StrokeColor = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
 		CornerRadius = EffectiveCornerRadius,
-		ClickSound = Themer.Theme.Sound.Switch,
+		ClickSound = Theme.Sound.Switch,
 
 		IsHovering = IsHovering,
 		IsHolding = IsHolding,
 		OnActivated = function()
-			Switched:set(not Switched:get())
+			Switched:set(not peek(Switched))
 		end,
 
 		[Children] = {
-			Frame {
+			Scope:Frame {
 				Name = "Switch",
 				Size = Size,
 				AutomaticSize = AutomaticSize,
-				BackgroundColor3 = Spring(
-					EffectiveColor,
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening["1"]
-				),
-				BackgroundTransparency = Spring(
-					Computed(function()
-						if Switched:get() then
+				BackgroundColor3 = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
+				BackgroundTransparency = Scope:Spring(
+					Scope:Computed(function(use)
+						if use(Switched) then
 							return 0
 						else
 							return 1
 						end
 					end),
-					Themer.Theme.SpringSpeed["1"],
-					Themer.Theme.SpringDampening["1"]
+					Theme.SpringSpeed["1"],
+					Theme.SpringDampening["1"]
 				),
 				Padding = UDim.new(0, 2),
 				CornerRadius = EffectiveCornerRadius,
 
 				[Children] = {
-					Frame {
+					Scope:Frame {
 						Name = "Ball",
-						AnchorPoint = Spring(
-							Computed(function()
-								if Switched:get() then
+						AnchorPoint = Scope:Spring(
+							Scope:Computed(function(use)
+								if use(Switched) then
 									return Vector2.new(1, 0.5)
 								else
 									return Vector2.new(0, 0.5)
 								end
 							end),
-							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening["1"]
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening["1"]
 						),
-						Position = Spring(
-							Computed(function()
-								if Switched:get() then
+						Position = Scope:Spring(
+							Scope:Computed(function(use)
+								if use(Switched) then
 									return UDim2.fromScale(1, 0.5)
 								else
 									return UDim2.fromScale(0, 0.5)
 								end
 							end),
-							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening["1"]
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening["1"]
 						),
 						Size = UDim2.fromScale(0, 1),
 						AutomaticSize = Enum.AutomaticSize.None,
-						BackgroundTransparency = Spring(
-							Computed(function()
-								if Disabled:get() then
+						BackgroundTransparency = Scope:Spring(
+							Scope:Computed(function(use)
+								if use(Disabled) then
 									return 0.7
 								end
-								if Switched:get() then
+								if use(Switched) then
 									return 0
 								else
 									return 0
 								end
 							end),
-							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening["1"]
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening["1"]
 						),
-						BackgroundColor3 = Spring(
+						BackgroundColor3 = Scope:Spring(
 							EffectiveBallColor,
-							Themer.Theme.SpringSpeed["1"],
-							Themer.Theme.SpringDampening["1"]
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening["1"]
 						),
 						AspectRatio = 1,
 						AspectType = Enum.AspectType.ScaleWithParentSize,

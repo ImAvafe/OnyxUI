@@ -1,55 +1,62 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 local Util = require(OnyxUI.Util)
 
+local Scoped = Fusion.scoped
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
 local IconButton = require(script.Parent.IconButton)
 local Frame = require(script.Parent.Frame)
+local Components = {
+	IconButton = IconButton,
+	Frame = Frame,
+}
 
 return {
-	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local Instance = Frame {
+	story = function(Parent: GuiObject)
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
+
+		local Instance = Scope:Frame {
 			Parent = Parent,
-			Padding = Computed(function()
-				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+			Padding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.StrokeThickness["1"]))
 			end),
 			ListEnabled = true,
 			ListFillDirection = Enum.FillDirection.Horizontal,
-			ListPadding = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			ListPadding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.Spacing["0.5"]))
 			end),
 
 			[Children] = {
-				IconButton {
+				Scope:IconButton {
 					Image = "rbxassetid://10814531047",
 				},
-				IconButton {
+				Scope:IconButton {
 					Image = "rbxassetid://10814531047",
-					Color = Themer.Theme.Colors.Primary.Main,
+					Color = Theme.Colors.Primary.Main,
 				},
-				IconButton {
+				Scope:IconButton {
 					Image = "rbxassetid://11560341132",
 					Color = Util.Colors.Amber["500"],
 				},
-				IconButton {
+				Scope:IconButton {
 					Image = "rbxassetid://13405228418",
 					Color = Util.Colors.Red["500"],
 					Style = "Outlined",
 				},
-				IconButton {
+				Scope:IconButton {
 					Image = "rbxassetid://13405228418",
 					Color = Util.Colors.Red["500"],
 					Style = "Ghost",
 				},
-				IconButton {
+				Scope:IconButton {
 					Image = "rbxassetid://10814531047",
 					Disabled = true,
 				},
-				IconButton {
+				Scope:IconButton {
 					Image = "rbxassetid://10814531047",
 					Style = "Ghost",
 					Disabled = true,

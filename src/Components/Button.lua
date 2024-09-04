@@ -5,19 +5,20 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
-local ColorUtils = require(Packages.ColorUtils)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
+local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-local Spring = Fusion.Spring
-local Value = Fusion.Value
 
 local BaseButton = require(script.Parent.BaseButton)
 local IconText = require(script.Parent.IconText)
+local Components = {
+	BaseButton = BaseButton,
+	IconText = IconText,
+}
 
 local DISABLED_BACKGROUND_TRANSPARENCY = 0.925
 local DISABLED_CONTENT_TRANSPARENCY = 0.75
@@ -48,53 +49,56 @@ export type Props = BaseButton.Props & {
 		@field ContentWrapped Fusion.UsedAs<boolean>?
 		@field IsHolding Fusion.UsedAs<boolean>?
 ]=]
-return function(Props: Props)
-	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
-	local Content = Util.EnsureValue(Props.Content, "table", {})
-	local Style = Util.EnsureValue(Props.Style, "string", "Filled")
-	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Neutral.Main)
-	local ContentColor = Util.EnsureValue(
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
+	local Disabled = Util.Fallback(Props.Disabled, false)
+	local Content = Util.Fallback(Props.Content, {})
+	local Style = Util.Fallback(Props.Style, "Filled")
+	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
+	local ContentColor = Util.Fallback(
 		Props.ContentColor,
-		"Color3",
-		Computed(function()
-			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
+		Scope:Computed(function(use)
+			return ColorUtils.Emphasize(Color, use(Theme.Emphasis.Contrast))
 		end)
 	)
-	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
-	local ContentWrapped = Util.EnsureValue(Props.ContentWrapped, "boolean", false)
+	local ContentSize = Util.Fallback(Props.ContentSize, Theme.TextSize["1"])
+	local ContentWrapped = Util.Fallback(Props.ContentWrapped, false)
 
-	local IsHolding = Value(false)
-	local IsHovering = Value(false)
-	local EffectiveColor = Computed(function()
-		if Disabled:get() then
-			return Themer.Theme.Colors.BaseContent.Main:get()
+	local IsHolding = Scope:Value(false)
+	local IsHovering = Scope:Value(false)
+	local EffectiveColor = Scope:Computed(function(use)
+		if use(Disabled) then
+			return use(Theme.Colors.BaseContent.Main)
 		else
-			if IsHolding:get() then
-				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Regular:get())
-			elseif IsHovering:get() then
-				return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Light:get())
+			if use(IsHolding) then
+				return ColorUtils.Emphasize(Color, use(Theme.Emphasis.Regular))
+			elseif use(IsHovering) then
+				return ColorUtils.Emphasize(Color, use(Theme.Emphasis.Light))
 			else
-				return Color:get()
+				return use(Color)
 			end
 		end
 	end)
-	local EffectiveContentColor = Computed(function()
-		if Disabled:get() then
-			return Themer.Theme.Colors.BaseContent.Main:get()
+	local EffectiveContentColor = Scope:Computed(function(use)
+		if use(Disabled) then
+			return use(Theme.Colors.BaseContent.Main)
 		else
-			if Style:get() == "Filled" then
-				return ContentColor:get()
-			elseif Style:get() == "Outlined" then
-				return EffectiveColor:get()
-			elseif Style:get() == "Ghost" then
-				return EffectiveColor:get()
+			if use(Style) == "Filled" then
+				return use(ContentColor)
+			elseif use(Style) == "Outlined" then
+				return use(EffectiveColor)
+			elseif use(Style) == "Ghost" then
+				return use(EffectiveColor)
 			else
-				return ContentColor:get()
+				return use(ContentColor)
 			end
 		end
 	end)
-	local EffectiveContentTransparency = Computed(function()
-		if Disabled:get() then
+	local EffectiveContentTransparency = Scope:Computed(function(use)
+		if use(Disabled) then
 			return DISABLED_CONTENT_TRANSPARENCY
 		else
 			return 0
@@ -103,9 +107,9 @@ return function(Props: Props)
 
 	return BaseButton(Util.CombineProps(Props, {
 		Name = "Button",
-		BackgroundTransparency = Computed(function()
-			if Style:get() == "Filled" then
-				if Disabled:get() then
+		BackgroundTransparency = Scope:Computed(function(use)
+			if use(Style) == "Filled" then
+				if use(Disabled) then
 					return DISABLED_BACKGROUND_TRANSPARENCY
 				else
 					return 0
@@ -114,21 +118,21 @@ return function(Props: Props)
 				return 1
 			end
 		end),
-		BackgroundColor3 = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
-		PaddingLeft = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		BackgroundColor3 = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
+		PaddingLeft = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0.75"]))
 		end),
-		PaddingRight = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+		PaddingRight = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0.75"]))
 		end),
-		PaddingTop = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+		PaddingTop = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0.25"]))
 		end),
-		PaddingBottom = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+		PaddingBottom = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0.25"]))
 		end),
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+		CornerRadius = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.CornerRadius["1"]))
 		end),
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Horizontal,
@@ -136,11 +140,11 @@ return function(Props: Props)
 		ListVerticalAlignment = Enum.VerticalAlignment.Center,
 		ListWraps = false,
 		StrokeEnabled = true,
-		StrokeColor = Spring(EffectiveColor, Themer.Theme.SpringSpeed["1"], Themer.Theme.SpringDampening["1"]),
-		StrokeTransparency = Computed(function()
-			if Style:get() == "Ghost" then
+		StrokeColor = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
+		StrokeTransparency = Scope:Computed(function(use)
+			if use(Style) == "Ghost" then
 				return 1
-			elseif Disabled:get() then
+			elseif use(Disabled) then
 				return DISABLED_BACKGROUND_TRANSPARENCY
 			else
 				return 0
@@ -150,14 +154,14 @@ return function(Props: Props)
 		IsHovering = IsHovering,
 
 		[Children] = {
-			IconText {
+			Scope:IconText {
 				Content = Content,
 				ContentColor = EffectiveContentColor,
 				ContentTransparency = EffectiveContentTransparency,
 				ContentSize = ContentSize,
 				ContentWrapped = ContentWrapped,
-				ListPadding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+				ListPadding = Scope:Computed(function(use)
+					return UDim.new(0, use(Theme.Spacing["0.25"]))
 				end),
 				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 				ListVerticalAlignment = Enum.VerticalAlignment.Center,

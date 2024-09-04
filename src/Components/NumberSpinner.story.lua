@@ -1,18 +1,25 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 
 local Children = Fusion.Children
-local Value = Fusion.Value
+local Scoped = Fusion.scoped
+local peek = Fusion.peek
 
 local Frame = require(OnyxUI.Components.Frame)
 local NumberSpinner = require(OnyxUI.Components.NumberSpinner)
+local Components = {
+	Frame = Frame,
+	NumberSpinner = NumberSpinner,
+}
 
 return {
-	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local RandomNumber = Value(0)
-		local RandomDecimalNumber = Value(0)
-		local CountNumber = Value(0)
+	story = function(Parent: GuiObject)
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+
+		local RandomNumber = Scope:Value(0)
+		local RandomDecimalNumber = Scope:Value(0)
+		local CountNumber = Scope:Value(0)
 
 		local RandomizerThread = task.spawn(function()
 			while task.wait(1) do
@@ -26,25 +33,25 @@ return {
 		end)
 		local CountThread = task.spawn(function()
 			while task.wait(1) do
-				CountNumber:set(CountNumber:get() + 1)
+				CountNumber:set(peek(CountNumber) + 1)
 			end
 		end)
 
-		local Instance = Frame {
+		local Instance = Scope:Frame {
 			Parent = Parent,
 			Size = UDim2.fromOffset(300, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			ListEnabled = true,
 
 			[Children] = {
-				NumberSpinner {
+				Scope:NumberSpinner {
 					Value = CountNumber,
 				},
-				NumberSpinner {
+				Scope:NumberSpinner {
 					Value = RandomNumber,
 					Commas = true,
 				},
-				NumberSpinner {
+				Scope:NumberSpinner {
 					Value = RandomDecimalNumber,
 					Decimals = 2,
 					Commas = true,

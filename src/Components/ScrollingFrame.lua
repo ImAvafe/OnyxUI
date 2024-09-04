@@ -5,16 +5,14 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
-
 local Util = require(OnyxUI.Util)
 
-local Hydrate = Fusion.Hydrate
-local Computed = Fusion.Computed
-
 local Base = require(script.Parent.Base)
+local Components = {
+	Base = Base,
+}
 
 export type Props = Base.Props & {
 	AutomaticCanvasSize: Fusion.UsedAs<Enum.AutomaticSize>?,
@@ -55,38 +53,39 @@ export type Props = Base.Props & {
 		@field VerticalScrollBarInset Fusion.UsedAs<Enum.ScrollBarInset>?
 		@field VerticalScrollBarPosition Fusion.UsedAs<Enum.VerticalScrollBarPosition>?
 ]=]
-return function(Props: Props)
-	local BottomImage = Util.EnsureValue(
+return function(Scope: Fusion.Scope<any>, Props: Props): Instance
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
+	local BottomImage = Util.Fallback(
 		Props.BottomImage,
-		"string",
-		Computed(function()
-			if Themer.Theme.CornerRadius["1"]:get() >= 3 then
+		Scope:Computed(function(use)
+			if use(Theme.CornerRadius["1"]) >= 3 then
 				return "rbxassetid://16547643439"
 			else
 				return "rbxassetid://16547330984"
 			end
 		end)
 	)
-	local TopImage = Util.EnsureValue(
+	local TopImage = Util.Fallback(
 		Props.TopImage,
-		"string",
-		Computed(function()
-			if Themer.Theme.CornerRadius["1"]:get() >= 3 then
+		Scope:Computed(function(use)
+			if use(Theme.CornerRadius["1"]) >= 3 then
 				return "rbxassetid://16547667444"
 			else
 				return "rbxassetid://16547330984"
 			end
 		end)
 	)
-	local MidImage = Util.EnsureValue(Props.MidImage, "string", "rbxassetid://16547330984")
-	local ScrollBarImageColor3 =
-		Util.EnsureValue(Props.ScrollBarImageColor3, "Color3", Themer.Theme.Colors.NeutralContent.Dark)
-	local ScrollBarImageTransparency = Util.EnsureValue(Props.ScrollBarImageTransparency, "number", 0)
-	local ScrollBarThickness = Util.EnsureValue(Props.ScrollBarThickness, "number", 8)
-	local AutomaticCanvasSize = Util.EnsureValue(Props.AutomaticCanvasSize, "EnumItem", Enum.AutomaticSize.Y)
-	local ScrollingDirection = Util.EnsureValue(Props.ScrollingDirection, "EnumItem", Enum.ScrollingDirection.Y)
+	local MidImage = Util.Fallback(Props.MidImage, "rbxassetid://16547330984")
+	local ScrollBarImageColor3 = Util.Fallback(Props.ScrollBarImageColor3, Theme.Colors.NeutralContent.Dark)
+	local ScrollBarImageTransparency = Util.Fallback(Props.ScrollBarImageTransparency, 0)
+	local ScrollBarThickness = Util.Fallback(Props.ScrollBarThickness, 8)
+	local AutomaticCanvasSize = Util.Fallback(Props.AutomaticCanvasSize, Enum.AutomaticSize.Y)
+	local ScrollingDirection = Util.Fallback(Props.ScrollingDirection, Enum.ScrollingDirection.Y)
 
-	return Hydrate(Base(Util.CombineProps(Props, {
+	return Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "ScrollingFrame",
 		Name = "ScrollingFrame",
 		Selectable = false,

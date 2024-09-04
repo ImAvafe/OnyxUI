@@ -5,9 +5,9 @@ local Fusion = require(OnyxUI.Packages.Fusion)
 		@function CombineProps
 		@within Util
 
-		@param Source { [any]: Fusion.UsedAs<any> }
-		@param Target { [any]: Fusion.UsedAs<any> }
-		@param ExcludedKeys { any }?
+		@param	Scope:Source { [any]: Fusion.UsedAs<any> }
+		@param	Scope:Target { [any]: Fusion.UsedAs<any> }
+		@param	Scope:ExcludedKeys { any }?
 		
 		Combines two sets of props for easy passthrough, adding `Source`'s props to `Target`.
 ]=]

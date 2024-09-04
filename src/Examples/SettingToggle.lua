@@ -1,11 +1,10 @@
 local OnyxUI = script.Parent.Parent
 local Themer = require(OnyxUI.Themer)
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
 local SwitchGroup = require(OnyxUI.Components.SwitchGroup)
 local SwitchInput = require(OnyxUI.Components.SwitchInput)
@@ -18,25 +17,25 @@ export type Props = SwitchGroup.Props & {
 }
 
 local function SettingToggle(Props: Props)
-	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)
-	local Disabled = Util.EnsureValue(Props.Disabled, "boolean", false)
+	local Switched = Util.Fallback(Props.Switched, false)
+	local Disabled = Util.Fallback(Props.Disabled, false)
 
 	Props.Switched = Switched
 
-	return SwitchGroup(Util.CombineProps(Props, {
+	return Scope:SwitchGroup(Util.CombineProps(Props, {
 		Size = UDim2.fromScale(1, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		Switched = Switched,
 		Disabled = Disabled,
 
 		[Children] = {
-			Text {
+			Scope:Text {
 				AnchorPoint = Vector2.new(0, 0.5),
 				Position = UDim2.fromScale(0, 0.5),
 				Text = Props.Label,
-				TextColor3 = Themer.Theme.Colors.BaseContent.Main,
-				TextTransparency = Computed(function()
-					if Disabled:get() then
+				TextColor3 = Theme.Colors.BaseContent.Main,
+				TextTransparency = Scope:Computed(function(use)
+					if use(Disabled) then
 						return DISABLED_TRANSPARENCY
 					else
 						return 0
@@ -44,7 +43,7 @@ local function SettingToggle(Props: Props)
 				end),
 				TextWrapped = false,
 			},
-			SwitchInput {
+			Scope:SwitchInput {
 				AnchorPoint = Vector2.new(1, 0),
 				Position = UDim2.fromScale(1, 0),
 				Switched = Switched,

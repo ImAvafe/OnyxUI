@@ -1,31 +1,38 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 
+local Scoped = Fusion.scoped
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
 local Frame = require(OnyxUI.Components.Frame)
 local Image = require(OnyxUI.Components.Image)
+local Components = {
+	Frame = Frame,
+	Image = Image,
+}
 
 return {
-	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local Instance = Frame {
+	story = function(Parent: GuiObject)
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
+
+		local Instance = Scope:Frame {
 			Parent = Parent,
 			AutomaticSize = Enum.AutomaticSize.XY,
 			ListEnabled = true,
 			ListFillDirection = Enum.FillDirection.Horizontal,
-			ListPadding = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.75"]:get())
+			ListPadding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.Spacing["0.75"]))
 			end),
 
 			[Children] = {
-				Image {
+				Scope:Image {
 					Image = "rbxassetid://15307540148",
 				},
-				Image {},
-				Image {
+				Scope:Image {},
+				Scope:Image {
 					FallbackImage = "rbxassetid://13193902400",
 				},
 			},

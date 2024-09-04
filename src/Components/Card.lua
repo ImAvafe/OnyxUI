@@ -5,14 +5,15 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 local Util = require(OnyxUI.Util)
 
-local Computed = Fusion.Computed
-
 local Frame = require(script.Parent.Frame)
+local Components = {
+	Frame = Frame,
+}
 
 export type Props = Frame.Props & {}
 
@@ -22,16 +23,20 @@ export type Props = Frame.Props & {}
 
 		@field ... FrameProps
 ]=]
-return function(Props: Props)
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
 	return Frame(Util.CombineProps(Props, {
 		Name = "Card",
-		BackgroundColor3 = Themer.Theme.Colors.Neutral.Dark,
+		BackgroundColor3 = Theme.Colors.Neutral.Dark,
 		BackgroundTransparency = 0,
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["1"]:get())
+		CornerRadius = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.CornerRadius["1"]))
 		end),
-		Padding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["1"]:get())
+		Padding = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["1"]))
 		end),
 	}))
 end

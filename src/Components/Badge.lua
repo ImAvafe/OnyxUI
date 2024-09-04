@@ -6,17 +6,19 @@
 ]=]
 
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local ColorUtils = require(Packages.ColorUtils)
+local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
 local Frame = require(script.Parent.Frame)
 local IconText = require(script.Parent.IconText)
+local Components = {
+	Frame = Frame,
+	IconText = IconText,
+}
 
 export type Props = Frame.Props & {
 	Content: Fusion.UsedAs<{ string }>?,
@@ -39,38 +41,42 @@ export type Props = Frame.Props & {
 		@field ContentSize Fusion.UsedAs<number>?
 		@field ContentWrapped Fusion.UsedAs<number>?
 ]=]
-return function(Props: Props)
-	local Content = Util.EnsureValue(Props.Content, "table", {})
-	local ContentWrapped = Util.EnsureValue(Props.ContentWrapped, "boolean", true)
-	local Color = Util.EnsureValue(Props.Color, "Color3", Themer.Theme.Colors.Base.Main)
-	local ContentColor = Util.EnsureValue(
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
+	local Content = Util.Fallback(Props.Content, {})
+	local ContentWrapped = Util.Fallback(Props.ContentWrapped, true)
+	local Color = Util.Fallback(Props.Color, Theme.Colors.Base.Main)
+	local ContentColor = Util.Fallback(
 		Props.ContentColor,
-		"Color3",
-		Computed(function()
-			return ColorUtils.Emphasize(Color:get(), Themer.Theme.Emphasis.Contrast:get())
+
+		Scope:Computed(function(use)
+			return ColorUtils.Emphasize(Color, use(Theme.Emphasis.Contrast))
 		end)
 	)
-	local ContentSize = Util.EnsureValue(Props.ContentSize, "number", Themer.Theme.TextSize["1"])
+	local ContentSize = Util.Fallback(Props.ContentSize, Theme.TextSize["1"])
 
-	return Frame(Util.CombineProps(Props, {
+	return Scope:Frame(Util.CombineProps(Props, {
 		Name = "Badge",
 		BackgroundColor3 = Color,
 		BackgroundTransparency = 0,
-		Padding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0"]:get())
+		Padding = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0"]))
 		end),
-		PaddingLeft = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+		PaddingLeft = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0.5"]))
 		end),
-		PaddingRight = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+		PaddingRight = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0.5"]))
 		end),
-		CornerRadius = Computed(function()
-			return UDim.new(0, Themer.Theme.CornerRadius["2"]:get())
+		CornerRadius = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.CornerRadius["2"]))
 		end),
 		ListEnabled = true,
-		ListPadding = Computed(function()
-			return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+		ListPadding = Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0.25"]))
 		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
@@ -78,15 +84,15 @@ return function(Props: Props)
 		ListWraps = ContentWrapped,
 
 		[Children] = {
-			IconText {
+			Scope:IconText {
 				Content = Content,
 				ContentColor = ContentColor,
 				ContentSize = ContentSize,
 				ContentWrapped = ContentWrapped,
 				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 				ListVerticalAlignment = Enum.VerticalAlignment.Center,
-				ListPadding = Computed(function()
-					return UDim.new(0, Themer.Theme.Spacing["0.25"]:get())
+				ListPadding = Scope:Computed(function(use)
+					return UDim.new(0, use(Theme.Spacing["0.25"]))
 				end),
 			},
 		},

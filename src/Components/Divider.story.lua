@@ -1,35 +1,43 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 
+local Scoped = Fusion.scoped
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
 local Frame = require(OnyxUI.Components.Frame)
 local Divider = require(OnyxUI.Components.Divider)
 local Text = require(OnyxUI.Components.Text)
+local Components = {
+	Frame = Frame,
+	Text = Text,
+	Divider = Divider,
+}
 
 return {
-	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local Instance = Frame {
+	story = function(Parent: GuiObject)
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
+
+		local Instance = Scope:Frame {
 			Parent = Parent,
 			Size = UDim2.fromOffset(300, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			ListEnabled = true,
 			ListFillDirection = Enum.FillDirection.Vertical,
-			ListPadding = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			ListPadding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.Spacing["0.5"]))
 			end),
 
 			[Children] = {
-				Text {
+				Scope:Text {
 					Text = "Some top content..",
 				},
-				Divider {
+				Scope:Divider {
 					FillDirection = Enum.FillDirection.Horizontal,
 				},
-				Text {
+				Scope:Text {
 					Text = "And some bottom content too.",
 				},
 			},

@@ -41,11 +41,11 @@ local Card = require(OnyxUI.Components.Card)
 export type Props = Card.Props & {} -- This wouldn't work if Card wasn't required directly.
 
 -- Component construction
-return function(Props: Props)
-  return Card {
+return function(Scope: Fusion.Scope<any>, Props: Props)
+  return	Scope:Card {
     BackgroundColor3 = Util.Colors.Gray["200"],
-    Padding = Computed(function()
-      return UDim.new(0, Themer.Theme.Spacing["2"]:get())
+    Padding = Scope:Computed(function(use)
+      return UDim.new(0, use(Theme.Spacing["2"]))
     end),
   }
 end

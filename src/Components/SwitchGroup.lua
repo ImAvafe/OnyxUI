@@ -7,9 +7,16 @@
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
+local Fusion = require(OnyxUI.Packages.Fusion)
+
+local peek = Fusion.peek
 
 local BaseButton = require(script.Parent.BaseButton)
 local SwitchInput = require(script.Parent.SwitchInput)
+local Components = {
+	BaseButton = BaseButton,
+	SwitchInput = SwitchInput,
+}
 
 export type Props = SwitchInput.Props & {}
 
@@ -19,18 +26,22 @@ export type Props = SwitchInput.Props & {}
 
 		@field ... SwitchInputProps
 ]=]
-return function(Props: Props)
-	local Switched = Util.EnsureValue(Props.Switched, "boolean", false)
+return function(Scope: Fusion.Scope<any>, Props: Props)
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Theme = Themer.Theme:now()
+
+	local Switched = Util.Fallback(Props.Switched, false)
 
 	Props.Switched = Switched
 
-	return BaseButton(Util.CombineProps(Props, {
+	return Scope:BaseButton(Util.CombineProps(Props, {
 		Name = "SwitchGroup",
-		ClickSound = Themer.Theme.Sound.Switch,
+		ClickSound = Theme.Sound.Switch,
 		Disabled = Props.Disabled,
 
 		OnActivated = function()
-			Switched:set(not Switched:get())
+			Switched:set(not peek(Switched))
 		end,
 	}))
 end

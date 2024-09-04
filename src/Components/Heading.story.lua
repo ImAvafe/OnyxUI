@@ -1,30 +1,38 @@
-local OnyxUI = require(script.Parent.Parent)
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+local OnyxUI = script.Parent.Parent
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 
+local Scoped = Fusion.scoped
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
 local Heading = require(script.Parent.Heading)
 local Frame = require(script.Parent.Frame)
 local Text = require(script.Parent.Text)
+local Components = {
+	Heading = Heading,
+	Text = Text,
+	Frame = Frame,
+}
 
 return {
-	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local Instance = Frame {
+	story = function(Parent: GuiObject)
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
+
+		local Instance = Scope:Frame {
 			Parent = Parent,
 			ListEnabled = true,
-			ListPadding = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			ListPadding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.Spacing["0.5"]))
 			end),
 
 			[Children] = {
-				Heading {
+				Scope:Heading {
 					Parent = Parent,
 					Text = "Heading",
 				},
-				Text {
+				Scope:Text {
 					Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 				},
 			},

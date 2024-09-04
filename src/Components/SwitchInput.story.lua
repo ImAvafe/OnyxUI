@@ -1,29 +1,36 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 
+local Scoped = Fusion.scoped
 local Children = Fusion.Children
-local Computed = Fusion.Computed
 
 local SwitchInput = require(script.Parent.SwitchInput)
 local Frame = require(script.Parent.Frame)
+local Components = {
+	SwitchInput = SwitchInput,
+	Frame = Frame,
+}
 
 return {
-	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local Instance = Frame {
+	story = function(Parent: GuiObject)
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
+
+		local Instance = Scope:Frame {
 			Parent = Parent,
-			Padding = Computed(function()
-				return UDim.new(0, Themer.Theme.StrokeThickness["1"]:get())
+			Padding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.StrokeThickness["1"]))
 			end),
 			ListEnabled = true,
-			ListPadding = Computed(function()
-				return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
+			ListPadding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.Spacing["0.5"]))
 			end),
 
 			[Children] = {
-				SwitchInput {},
-				SwitchInput {
+				Scope:SwitchInput {},
+				Scope:SwitchInput {
 					Disabled = true,
 				},
 			},

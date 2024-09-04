@@ -1,5 +1,5 @@
 --[=[
-		@prop Colors { [string]: any }
+		@prop	Scope:Colors { [string]: any }
 		@within Util
 		@readonly
 		
