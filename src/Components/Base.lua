@@ -254,6 +254,17 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 	local StrokeThickness = Util.Fallback(Props.StrokeThickness, Theme.StrokeThickness["1"])
 	local StrokeColor = Util.Fallback(Props.StrokeColor, Theme.Colors.Neutral.Main)
 	local StrokeApplyStrokeMode = Util.Fallback(Props.StrokeApplyStrokeMode, Enum.ApplyStrokeMode.Border)
+	local StrokeLineJoinMode = Util.Fallback(
+		Props.StrokeLineJoinMode,
+		Scope:Computed(function(use)
+			local CornerRadiusValue = use(CornerRadius)
+			if (CornerRadiusValue ~= nil) and ((CornerRadiusValue.Offset > 1) or (CornerRadiusValue.Scale > 1)) then
+				return Enum.LineJoinMode.Round
+			else
+				return Enum.LineJoinMode.Miter
+			end
+		end)
+	)
 	local Padding = Util.Fallback(
 		Props.Padding,
 		Scope:Computed(function(use)
@@ -424,7 +435,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 						Color = StrokeColor,
 						Transparency = Props.StrokeTransparency,
 						ApplyStrokeMode = StrokeApplyStrokeMode,
-						LineJoinMode = Props.StrokeLineJoinMode,
+						LineJoinMode = StrokeLineJoinMode,
 					}
 				else
 					return
