@@ -13,6 +13,8 @@ local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
+local Children = Fusion.Children
+
 export type Props = {
 	ClassName: string?,
 
@@ -244,74 +246,74 @@ export type Props = {
 return function(Scope: Fusion.Scope, Props: Props): Fusion.Child
 	local Theme: Themer.ThemeObject = Themer.Theme:now()
 
-	Props.BackgroundColor3 = Theme.Colors.Base.Main
-	Props.ClassName = Util.Fallback(Props.ClassName, "Frame")
-	Props.Name = Util.Fallback(Props.Name, "Base")
-	Props.CornerRadius = Util.Fallback(Props.CornerRadius, UDim.new(0, 0))
-	Props.StrokeThickness = Util.Fallback(Props.StrokeThickness, Theme.StrokeThickness["1"])
-	-- Props.StrokeColor = Util.Fallback(Props.StrokeColor, Themer.Theme.Colors.Neutral.Main)
-	-- Props.StrokeApplyStrokeMode = Util.Fallback(Props.StrokeApplyStrokeMode, Enum.ApplyStrokeMode.Border)
-	-- Props.Padding = Util.Fallback(
-	-- 	Props.Padding,
-	-- 	Scope:Computed(function(use)
-	-- 		return UDim.new(0, use(Themer.Theme.Spacing["1"]))
-	-- 	end)
-	-- )
-	-- Props.PaddingBottom = Util.Fallback(Props.PaddingBottom, Props.Padding)
-	-- Props.PaddingLeft = Util.Fallback(Props.PaddingLeft, Props.Padding)
-	-- Props.PaddingRight = Util.Fallback(Props.PaddingRight, Props.Padding)
-	-- Props.PaddingTop = Util.Fallback(Props.PaddingTop, Props.Padding)
-	-- Props.ListPadding = Util.Fallback(
-	-- 	Props.ListPadding,
-	-- 	Scope:Computed(function()
-	-- 		return UDim.new(0, Themer.Theme.Spacing["1"]:get())
-	-- 	end)
-	-- )
-	-- Props.ListSortOrder = Util.Fallback(Props.ListSortOrder, Enum.SortOrder.LayoutOrder)
-	-- Props.GridCellPadding = Util.Fallback(
-	-- 	Props.GridCellPadding,
-	-- 	Scope:Computed(function()
-	-- 		return UDim2.fromOffset(Themer.Theme.Spacing["0.5"]:get(), Themer.Theme.Spacing["0.5"]:get())
-	-- 	end)
-	-- )
-	-- Props.GridSortOrder = Util.Fallback(Props.GridSortOrder, Enum.SortOrder.LayoutOrder)
-	-- Props.PagePadding = Util.Fallback(
-	-- 	Props.PagePadding,
-	-- 	Scope:Computed(function()
-	-- 		return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-	-- 	end)
-	-- )
-	-- Props.PageSortOrder = Util.Fallback(Props.PageSortOrder, Enum.SortOrder.LayoutOrder)
-	-- Props.TablePadding = Util.Fallback(
-	-- 	Props.TablePadding,
-	-- 	Scope:Computed(function()
-	-- 		return UDim.new(0, Themer.Theme.Spacing["0.5"]:get())
-	-- 	end)
-	-- )
-	-- Props.TableSortOrder = Util.Fallback(Props.TableSortOrder, Enum.SortOrder.LayoutOrder)
+	local ClassName = Util.Fallback(Props.ClassName, "Frame")
+	local Name = Util.Fallback(Props.Name, "Base")
+	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.XY)
+	local CornerRadius = Util.Fallback(Props.CornerRadius, UDim.new(0, 0))
+	local StrokeThickness = Util.Fallback(Props.StrokeThickness, Theme.StrokeThickness["1"])
+	local StrokeColor = Util.Fallback(Props.StrokeColor, Theme.Colors.Neutral.Main)
+	local StrokeApplyStrokeMode = Util.Fallback(Props.StrokeApplyStrokeMode, Enum.ApplyStrokeMode.Border)
+	local Padding = Util.Fallback(
+		Props.Padding,
+		Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["1"]))
+		end)
+	)
+	local PaddingBottom = Util.Fallback(Props.PaddingBottom, Props.Padding)
+	local PaddingLeft = Util.Fallback(Props.PaddingLeft, Props.Padding)
+	local PaddingRight = Util.Fallback(Props.PaddingRight, Props.Padding)
+	local PaddingTop = Util.Fallback(Props.PaddingTop, Props.Padding)
+	local ListPadding = Util.Fallback(
+		Props.ListPadding,
+		Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["1"]))
+		end)
+	)
+	local ListSortOrder = Util.Fallback(Props.ListSortOrder, Enum.SortOrder.LayoutOrder)
+	local GridCellPadding = Util.Fallback(
+		Props.GridCellPadding,
+		Scope:Computed(function(use)
+			return UDim2.fromOffset(use(Theme.Spacing["0.5"]), use(Theme.Spacing["0.5"]))
+		end)
+	)
+	local GridSortOrder = Util.Fallback(Props.GridSortOrder, Enum.SortOrder.LayoutOrder)
+	local PagePadding = Util.Fallback(
+		Props.PagePadding,
+		Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0.5"]))
+		end)
+	)
+	local PageSortOrder = Util.Fallback(Props.PageSortOrder, Enum.SortOrder.LayoutOrder)
+	local TablePadding = Util.Fallback(
+		Props.TablePadding,
+		Scope:Computed(function(use)
+			return UDim.new(0, use(Theme.Spacing["0.5"]))
+		end)
+	)
+	local TableSortOrder = Util.Fallback(Props.TableSortOrder, Enum.SortOrder.LayoutOrder)
 
-	-- local PaddingInEffect = Scope:Computed(function()
-	-- 	local Paddings = { Props.Padding, Props.PaddingTop, Props.PaddingLeft, Props.PaddingRight, Props.PaddingBottom }
+	local PaddingInEffect = Scope:Computed(function(use)
+		local Paddings = { Props.Padding, Props.PaddingTop, Props.PaddingLeft, Props.PaddingRight, Props.PaddingBottom }
 
-	-- 	for _, PaddingProp in pairs(Paddings) do
-	-- 		local PaddingValue = Util.GetValue(PaddingProp)
-	-- 		if typeof(PaddingValue) == "UDim" then
-	-- 			return true
-	-- 		end
-	-- 	end
+		for _, PaddingProp in pairs(Paddings) do
+			local PaddingValue = use(PaddingProp)
+			if typeof(PaddingValue) == "UDim" then
+				return true
+			end
+		end
 
-	-- 	return false
-	-- end)
+		return false
+	end)
 
-	return Scope:New(Props.ClassName) {
-		Name = Props.Name,
+	return Scope:New(ClassName) {
+		Name = Name,
+		AutomaticSize = AutomaticSize,
 
 		Parent = Props.Parent,
 		Position = Props.Position,
 		Rotation = Props.Rotation,
 		AnchorPoint = Props.AnchorPoint,
 		Size = Props.Size,
-		AutomaticSize = Props.AutomaticSize,
 		Visible = Props.Visible,
 		ZIndex = Props.ZIndex,
 		LayoutOrder = Props.LayoutOrder,
@@ -336,229 +338,226 @@ return function(Scope: Fusion.Scope, Props: Props): Fusion.Child
 		SelectionBehaviorLeft = Props.SelectionBehaviorLeft,
 		SelectionGroup = Props.SelectionGroup,
 
-		-- [Children] = {
-		-- 	Props[Children],
+		[Children] = {
+			Scope:Computed(function(use)
+				local CornerRadiusValue = use(CornerRadius)
+				if
+					(CornerRadiusValue ~= nil)
+					and ((CornerRadiusValue.Offset ~= 0) or (CornerRadiusValue.Scale ~= 0))
+				then
+					return Scope:New "UICorner" {
+						CornerRadius = CornerRadius,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				local PaddingInEffectValue = use(PaddingInEffect)
+				if PaddingInEffectValue == true then
+					return Scope:New "UIPadding" {
+						PaddingTop = Scope:Computed(function()
+							local PaddingTopValue = use(PaddingTop)
+							local PaddingValue = use(Padding)
+							if typeof(PaddingTopValue) == "UDim" then
+								return PaddingTopValue
+							elseif typeof(PaddingValue) == "UDim" then
+								return PaddingValue
+							else
+								return UDim.new()
+							end
+						end),
+						PaddingBottom = Scope:Computed(function()
+							local PaddingBottomValue = use(PaddingBottom)
+							local PaddingValue = use(Padding)
+							if typeof(PaddingBottomValue) == "UDim" then
+								return PaddingBottomValue
+							elseif typeof(PaddingValue) == "UDim" then
+								return PaddingValue
+							else
+								return UDim.new()
+							end
+						end),
+						PaddingLeft = Scope:Computed(function()
+							local PaddingLeftValue = use(PaddingLeft)
+							local PaddingValue = use(Padding)
+							if typeof(PaddingLeftValue) == "UDim" then
+								return PaddingLeftValue
+							elseif typeof(PaddingValue) == "UDim" then
+								return PaddingValue
+							else
+								return UDim.new()
+							end
+						end),
+						PaddingRight = Scope:Computed(function()
+							local PaddingRightValue = use(PaddingRight)
+							local PaddingValue = use(Padding)
+							if typeof(PaddingRightValue) == "UDim" then
+								return PaddingRightValue
+							elseif typeof(PaddingValue) == "UDim" then
+								return PaddingValue
+							else
+								return UDim.new()
+							end
+						end),
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				local ScaleValue = use(Props.Scale)
+				if (ScaleValue ~= nil) and (ScaleValue ~= 1) then
+					return Scope:New "UIScale" {
+						Scale = ScaleValue,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				if use(Props.StrokeEnabled) == true then
+					return Scope:New "UIStroke" {
+						Enabled = Props.StrokeEnabled,
+						Thickness = StrokeThickness,
+						Color = StrokeColor,
+						Transparency = Props.StrokeTransparency,
+						ApplyStrokeMode = StrokeApplyStrokeMode,
+						LineJoinMode = Props.StrokeLineJoinMode,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				if use(Props.GradientEnabled) == true then
+					return Scope:New "UIGradient" {
+						Enabled = Props.GradientEnabled,
+						Color = Props.GradientColor,
+						Offset = Props.GradientOffset,
+						Rotation = Props.GradientRotation,
+						Transparency = Props.GradientTransparency,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				if use(Props.AspectRatio) ~= nil then
+					return Scope:New "UIAspectRatioConstraint" {
+						AspectRatio = Props.AspectRatio,
+						DominantAxis = Props.DominantAxis,
+						AspectType = Props.AspectType,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				if (use(Props.MaxSize) ~= nil) or (use(Props.MinSize) ~= nil) then
+					return Scope:New "UISizeConstraint" {
+						MaxSize = Props.MaxSize,
+						MinSize = Props.MinSize,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				if (use(Props.MaxTextSize) ~= nil) or (use(Props.MinTextSize) ~= nil) then
+					return Scope:New "UITextSizeConstraint" {
+						MaxTextSize = Props.MaxTextSize,
+						MinTextSize = Props.MinTextSize,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				if use(Props.ListEnabled) == true then
+					return Scope:New "UIListLayout" {
+						Padding = ListPadding,
+						FillDirection = Props.ListFillDirection,
+						SortOrder = ListSortOrder,
+						Wraps = Props.ListWraps,
+						HorizontalAlignment = Props.ListHorizontalAlignment,
+						HorizontalFlex = Props.ListHorizontalFlex,
+						ItemLineAlignment = Props.ListItemLineAlignment,
+						VerticalAlignment = Props.ListVerticalAlignment,
+						VerticalFlex = Props.ListVerticalFlex,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				if use(Props.GridEnabled) == true then
+					return Scope:New "UIGridLayout" {
+						CellPadding = GridCellPadding,
+						CellSize = Props.GridCellSize,
+						FillDirection = Props.GridFillDirection,
+						FillDirectionMaxCells = Props.GridFillDirectionMaxCells,
+						SortOrder = GridSortOrder,
+						StartCorner = Props.GridStartCorner,
+						HorizontalAlignment = Props.GridHorizontalAlignment,
+						VerticalAlignment = Props.GridVerticalAlignment,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				if use(Props.TableEnabled) == true then
+					return Scope:New "UITableLayout" {
+						Padding = TablePadding,
+						FillEmptySpaceColumns = Props.TableFillEmptySpaceColumns,
+						FillEmptySpaceRows = Props.TableFillEmptySpaceRows,
+						FillDirection = Props.TableFillDirection,
+						SortOrder = TableSortOrder,
+						MajorAxis = Props.TableMajorAxis,
+						HorizontalAlignment = Props.TableHorizontalAlignment,
+						VerticalAlignment = Props.TableVerticalAlignment,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				if use(Props.PageEnabled) == true then
+					return Scope:New "UIPageLayout" {
+						Animated = Props.PageAnimated,
+						Circular = Props.PageCircular,
+						EasingDirection = Props.PageEasingDirection,
+						EasingStyle = Props.PageEasingStyle,
+						Padding = PagePadding,
+						TweenTime = Props.PageTweenTime,
+						FillDirection = Props.PageFillDirection,
+						SortOrder = PageSortOrder,
+						HorizontalAlignment = Props.PageHorizontalAlignment,
+						VerticalAlignment = Props.PageVerticalAlignment,
+						GamepadInputEnabled = Props.PageGamepadInputEnabled,
+						ScrollWheelInputEnabled = Props.PageScrollWheelInputEnabled,
+						TouchInputEnabled = Props.PageTouchInputEnabled,
+					}
+				else
+					return
+				end
+			end),
+			Scope:Computed(function(use)
+				local FlexMode = use(Props.FlexMode)
+				if (FlexMode ~= nil) and (FlexMode ~= Enum.UIFlexMode.None) then
+					return Scope:New "UIFlexItem" {
+						FlexMode = Props.FlexMode,
+						FlexItemLineAlignment = Props.FlexItemLineAlignment,
+						FlexGrowRatio = Props.FlexGrowRatio,
+						FlexShrinkRatio = Props.FlexShrinkRatio,
+					}
+				else
+					return
+				end
+			end),
 
-		-- 	Scope:Computed(function()
-		-- 		local CornerRadiusValue = CornerRadius:get()
-		-- 		if
-		-- 			(typeof(CornerRadiusValue) == "UDim")
-		-- 			and ((CornerRadiusValue.Offset ~= 0) or (CornerRadiusValue.Scale ~= 0))
-		-- 		then
-		-- 			return New "UICorner" {
-		-- 				CornerRadius = CornerRadius,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Scope:Computed(function()
-		-- 		if PaddingInEffect:get() == true then
-		-- 			return Scope:New "UIPadding" {
-		-- 				PaddingTop = Scope:Computed(function()
-		-- 					local PaddingTopValue = PaddingTop:get()
-		-- 					local PaddingValue = Padding:get()
-		-- 					if typeof(PaddingTopValue) == "UDim" then
-		-- 						return PaddingTopValue
-		-- 					elseif typeof(PaddingValue) == "UDim" then
-		-- 						return PaddingValue
-		-- 					else
-		-- 						return UDim.new()
-		-- 					end
-		-- 				end),
-		-- 				PaddingLeft = Computed(function()
-		-- 					local PaddingLeftValue = PaddingLeft:get()
-		-- 					local PaddingValue = Padding:get()
-		-- 					if typeof(PaddingLeftValue) == "UDim" then
-		-- 						return PaddingLeftValue
-		-- 					elseif typeof(PaddingValue) == "UDim" then
-		-- 						return Util.GetValue(PaddingValue)
-		-- 					else
-		-- 						return UDim.new()
-		-- 					end
-		-- 				end),
-		-- 				PaddingRight = Computed(function()
-		-- 					local PaddingRightValue = PaddingRight:get()
-		-- 					local PaddingValue = Padding:get()
-		-- 					if typeof(PaddingRightValue) == "UDim" then
-		-- 						return PaddingRightValue
-		-- 					elseif typeof(PaddingValue) == "UDim" then
-		-- 						return Util.GetValue(PaddingValue)
-		-- 					else
-		-- 						return UDim.new()
-		-- 					end
-		-- 				end),
-		-- 				PaddingBottom = Computed(function()
-		-- 					local PaddingBottomValue = PaddingBottom:get()
-		-- 					local PaddingValue = Padding:get()
-		-- 					if typeof(PaddingBottomValue) == "UDim" then
-		-- 						return PaddingBottomValue
-		-- 					elseif typeof(PaddingValue) == "UDim" then
-		-- 						return Util.GetValue(PaddingValue)
-		-- 					else
-		-- 						return UDim.new()
-		-- 					end
-		-- 				end),
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		local ScaleValue = Util.GetValue(Props.Scale)
-		-- 		if (typeof(ScaleValue) == "number") and (ScaleValue ~= 1) then
-		-- 			return New "UIScale" {
-		-- 				Scale = Props.Scale,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		if Util.GetValue(Props.StrokeEnabled) == true then
-		-- 			return New "UIStroke" {
-		-- 				Enabled = Props.StrokeEnabled,
-		-- 				Thickness = StrokeThickness,
-		-- 				Color = StrokeColor,
-		-- 				Transparency = Props.StrokeTransparency,
-		-- 				ApplyStrokeMode = StrokeApplyStrokeMode,
-		-- 				LineJoinMode = Props.StrokeLineJoinMode,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		if Util.GetValue(Props.GradientEnabled) == true then
-		-- 			return New "UIGradient" {
-		-- 				Enabled = Props.GradientEnabled,
-		-- 				Color = Props.GradientColor,
-		-- 				Offset = Props.GradientOffset,
-		-- 				Rotation = Props.GradientRotation,
-		-- 				Transparency = Props.GradientTransparency,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		local AspectRatioValue = Util.GetValue(Props.AspectRatio)
-		-- 		if typeof(AspectRatioValue) == "number" then
-		-- 			return New "UIAspectRatioConstraint" {
-		-- 				AspectRatio = Props.AspectRatio,
-		-- 				DominantAxis = Props.DominantAxis,
-		-- 				AspectType = Props.AspectType,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		if (Props.MaxSize ~= nil) or (Props.MinSize ~= nil) then
-		-- 			return New "UISizeConstraint" {
-		-- 				MaxSize = Props.MaxSize,
-		-- 				MinSize = Props.MinSize,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		if
-		-- 			(typeof(Util.GetValue(Props.MaxTextSize)) == "number")
-		-- 			or (typeof(Util.GetValue(Props.MinTextSize)) == "number")
-		-- 		then
-		-- 			return New "UITextSizeConstraint" {
-		-- 				MaxTextSize = Props.MaxTextSize,
-		-- 				MinTextSize = Props.MinTextSize,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		if Util.GetValue(Props.ListEnabled) == true then
-		-- 			return New "UIListLayout" {
-		-- 				Padding = ListPadding,
-		-- 				FillDirection = Props.ListFillDirection,
-		-- 				SortOrder = ListSortOrder,
-		-- 				Wraps = Props.ListWraps,
-		-- 				HorizontalAlignment = Props.ListHorizontalAlignment,
-		-- 				HorizontalFlex = Props.ListHorizontalFlex,
-		-- 				ItemLineAlignment = Props.ListItemLineAlignment,
-		-- 				VerticalAlignment = Props.ListVerticalAlignment,
-		-- 				VerticalFlex = Props.ListVerticalFlex,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		if Util.GetValue(Props.GridEnabled) then
-		-- 			return New "UIGridLayout" {
-		-- 				CellPadding = GridCellPadding,
-		-- 				CellSize = Props.GridCellSize,
-		-- 				FillDirection = Props.GridFillDirection,
-		-- 				FillDirectionMaxCells = Props.GridFillDirectionMaxCells,
-		-- 				SortOrder = GridSortOrder,
-		-- 				StartCorner = Props.GridStartCorner,
-		-- 				HorizontalAlignment = Props.GridHorizontalAlignment,
-		-- 				VerticalAlignment = Props.GridVerticalAlignment,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		if Util.GetValue(Props.TableEnabled) then
-		-- 			return New "UITableLayout" {
-		-- 				Padding = TablePadding,
-		-- 				FillEmptySpaceColumns = Props.TableFillEmptySpaceColumns,
-		-- 				FillEmptySpaceRows = Props.TableFillEmptySpaceRows,
-		-- 				FillDirection = Props.TableFillDirection,
-		-- 				SortOrder = TableSortOrder,
-		-- 				MajorAxis = Props.TableMajorAxis,
-		-- 				HorizontalAlignment = Props.TableHorizontalAlignment,
-		-- 				VerticalAlignment = Props.TableVerticalAlignment,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		if Util.GetValue(Props.PageEnabled) then
-		-- 			return New "UIPageLayout" {
-		-- 				Animated = Props.PageAnimated,
-		-- 				Circular = Props.PageCircular,
-		-- 				EasingDirection = Props.PageEasingDirection,
-		-- 				EasingStyle = Props.PageEasingStyle,
-		-- 				Padding = PagePadding,
-		-- 				TweenTime = Props.PageTweenTime,
-		-- 				FillDirection = Props.PageFillDirection,
-		-- 				SortOrder = PageSortOrder,
-		-- 				HorizontalAlignment = Props.PageHorizontalAlignment,
-		-- 				VerticalAlignment = Props.PageVerticalAlignment,
-		-- 				GamepadInputEnabled = Props.PageGamepadInputEnabled,
-		-- 				ScrollWheelInputEnabled = Props.PageScrollWheelInputEnabled,
-		-- 				TouchInputEnabled = Props.PageTouchInputEnabled,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- 	Computed(function()
-		-- 		local FlexMode = Util.GetValue(Props.FlexMode)
-		-- 		if (FlexMode ~= nil) and (FlexMode ~= Enum.UIFlexMode.None) then
-		-- 			return New "UIFlexItem" {
-		-- 				FlexMode = Props.FlexMode,
-		-- 				FlexItemLineAlignment = Props.FlexItemLineAlignment,
-		-- 				FlexGrowRatio = Props.FlexGrowRatio,
-		-- 				FlexShrinkRatio = Props.FlexShrinkRatio,
-		-- 			}
-		-- 		else
-		-- 			return
-		-- 		end
-		-- 	end, Fusion.cleanup),
-		-- },
+			Props[Children],
+		},
 	}
 end

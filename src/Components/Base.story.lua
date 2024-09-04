@@ -1,25 +1,25 @@
 local OnyxUI = script.Parent.Parent
-local Packages = require(OnyxUI.Packages)
-local Fusion = require(Packages.Fusion)
+local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
+local Components = require(OnyxUI.Components)
 
 local Children = Fusion.Children
-local Computed = Fusion.Computed
-
-local Frame = require(script.Parent.Frame)
-local Base = require(script.Parent.Base)
+local Scoped = Fusion.scoped
 
 return {
 	story = function(Parent: GuiObject, _Props: { [any]: any })
-		local Instance = Frame {
+		local Theme: Themer.ThemeObject = Themer.Theme:now()
+		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+
+		local Instance = Scope:Base {
 			Parent = Parent,
 			ListEnabled = true,
-			Padding = Computed(function()
-				return UDim.new(0, Themer.Theme.StrokeThickness["4"]:get())
+			Padding = Scope:Computed(function(use)
+				return UDim.new(0, use(Theme.StrokeThickness["4"]))
 			end),
 
 			[Children] = {
-				Base {
+				Scope:Base {
 					ClassName = "Frame",
 					Size = UDim2.fromOffset(100, 100),
 					CornerRadius = UDim.new(0, 0),
@@ -27,7 +27,7 @@ return {
 					StrokeThickness = 5,
 					StrokeColor = Color3.fromRGB(255, 0, 0),
 				},
-				Base {
+				Scope:Base {
 					ClassName = "Frame",
 					ListEnabled = true,
 					ListPadding = UDim.new(0, 15),
@@ -37,7 +37,7 @@ return {
 					Padding = UDim.new(0, 30),
 
 					[Children] = {
-						Base {
+						Scope:Base {
 							ClassName = "TextButton",
 							BackgroundColor3 = Color3.fromRGB(255, 0, 0),
 							StrokeEnabled = true,
@@ -47,7 +47,7 @@ return {
 							StrokeLineJoinMode = Enum.LineJoinMode.Miter,
 							Size = UDim2.fromOffset(200, 50),
 						},
-						Base {
+						Scope:Base {
 							ClassName = "TextButton",
 							BackgroundColor3 = Color3.fromRGB(255, 0, 0),
 							StrokeEnabled = true,
@@ -60,7 +60,7 @@ return {
 							GradientEnabled = true,
 							GradientColor = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(0, 0, 0)),
 						},
-						Base {
+						Scope:Base {
 							ClassName = "TextButton",
 							BackgroundColor3 = Color3.fromRGB(255, 0, 0),
 							StrokeEnabled = true,
@@ -74,7 +74,7 @@ return {
 						},
 					},
 				},
-				Base {
+				Scope:Base {
 					ClassName = "Frame",
 					Size = UDim2.fromOffset(200, 200),
 					GridEnabled = true,
@@ -84,22 +84,22 @@ return {
 					CornerRadius = UDim.new(0, 10),
 
 					[Children] = {
-						Base {
+						Scope:Base {
 							ClassName = "Frame",
 						},
-						Base {
+						Scope:Base {
 							ClassName = "Frame",
 							StrokeEnabled = true,
 							StrokeColor = Color3.fromRGB(0, 0, 255),
 							StrokeThickness = 2,
 						},
-						Base {
+						Scope:Base {
 							ClassName = "Frame",
 						},
-						Base {
+						Scope:Base {
 							ClassName = "Frame",
 						},
-						Base {
+						Scope:Base {
 							ClassName = "Frame",
 						},
 					},
@@ -107,20 +107,8 @@ return {
 			},
 		}
 
-		local WorkspaceObject = Base {
-			Size = UDim2.fromOffset(100, 100),
-			CornerRadius = UDim.new(),
-			-- Padding = UDim.new(0, 50),
-			PaddingLeft = UDim.new(0, 10),
-			-- Scale = 1,
-			-- StrokeThickness = 5,
-			StrokeColor = Color3.fromRGB(255, 0, 0),
-			Parent = workspace,
-		}
-
 		return function()
 			Instance:Destroy()
-			WorkspaceObject:Destroy()
 		end
 	end,
 }
