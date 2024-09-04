@@ -2,3 +2,4 @@ std = "roblox"
 
 [config]
 empty_if = { comments_count = true }
+shadowing = { ignore_pattern = "^_|use|Theme|Scope" }
