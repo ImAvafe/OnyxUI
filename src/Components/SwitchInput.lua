@@ -180,7 +180,18 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 							Theme.SpringSpeed["1"],
 							Theme.SpringDampening["1"]
 						),
-						Size = UDim2.fromScale(0, 1),
+						Size = Scope:Spring(
+							Scope:Computed(function(use)
+								local Scale = 0.85
+								if use(IsHovering) then
+									Scale *= 1.1
+								end
+
+								return UDim2.fromScale(0, Scale)
+							end),
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening["1"]
+						),
 						AutomaticSize = Enum.AutomaticSize.None,
 						BackgroundTransparency = Scope:Spring(
 							Scope:Computed(function(use)
@@ -201,7 +212,17 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 							Theme.SpringSpeed["1"],
 							Theme.SpringDampening["1"]
 						),
-						AspectRatio = 1,
+						AspectRatio = Scope:Spring(
+							Scope:Computed(function(use)
+								if use(IsHolding) then
+									return 1.2
+								else
+									return 1
+								end
+							end),
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening["1"]
+						),
 						AspectType = Enum.AspectType.ScaleWithParentSize,
 						DominantAxis = Enum.DominantAxis.Height,
 						CornerRadius = EffectiveCornerRadius,
