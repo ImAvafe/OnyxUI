@@ -29,7 +29,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	return Scope:Frame(Util.CombineProps(Props, {
 		Name = "Card",
-		BackgroundColor3 = Theme.Colors.Neutral.Dark,
+		BackgroundColor3 = Theme.Colors.Neutral.Main,
 		BackgroundTransparency = 0,
 		CornerRadius = Scope:Computed(function(use)
 			return UDim.new(0, use(Theme.CornerRadius["1"]))
