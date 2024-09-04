@@ -26,7 +26,20 @@ return {
 		local Progress = Scope:Value(0)
 		local Color = Scope:Value(Color3.fromRGB(255, 0, 0))
 
-		local Instance = Scope:Frame {
+		local ColorThread = task.spawn(function()
+			while task.wait(1) do
+				Progress:set(math.random(0, 1000) / 1000)
+				Color:set(ColorUtils.Rotate(peek(Color), 100))
+			end
+		end)
+
+		Scope:innerScope({
+			function()
+				task.cancel(ColorThread)
+			end,
+		})
+
+		Scope:Frame {
 			Parent = Parent,
 			ListEnabled = true,
 			ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
@@ -186,15 +199,8 @@ return {
 			},
 		}
 
-		task.spawn(function()
-			while task.wait(1) do
-				Progress:set(math.random(0, 1000) / 1000)
-				Color:set(ColorUtils.Rotate(peek(Color), 100))
-			end
-		end)
-
 		return function()
-			Instance:Destroy()
+			Scope:doCleanup()
 		end
 	end,
 }

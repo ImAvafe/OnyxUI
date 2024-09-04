@@ -18,7 +18,7 @@ return {
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
 		local Theme: Themer.ThemeObject = Themer.Theme:now()
 
-		local Instance = Scope:Frame {
+		Scope:Frame {
 			Parent = Parent,
 			Size = UDim2.fromOffset(250, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
@@ -53,7 +53,7 @@ return {
 		}
 
 		return function()
-			Instance:Destroy()
+			Scope:doCleanup()
 		end
 	end,
 }

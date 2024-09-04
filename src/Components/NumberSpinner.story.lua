@@ -37,7 +37,15 @@ return {
 			end
 		end)
 
-		local Instance = Scope:Frame {
+		Scope:innerScope({
+			function()
+				task.cancel(RandomizerThread)
+				task.cancel(RandomizerDecimalThread)
+				task.cancel(CountThread)
+			end,
+		})
+
+		Scope:Frame {
 			Parent = Parent,
 			Size = UDim2.fromOffset(300, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
@@ -62,10 +70,7 @@ return {
 		}
 
 		return function()
-			task.cancel(RandomizerThread)
-			task.cancel(RandomizerDecimalThread)
-			task.cancel(CountThread)
-			Instance:Destroy()
+			Scope:doCleanup()
 		end
 	end,
 }

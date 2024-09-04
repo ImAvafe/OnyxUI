@@ -24,7 +24,7 @@ return {
 
 		local NotificationCount = Scope:Value(0)
 
-		local CountLoop = task.spawn(function()
+		local CountThread = task.spawn(function()
 			while task.wait(0.08) do
 				if peek(NotificationCount) == 100 then
 					task.wait(3)
@@ -35,7 +35,13 @@ return {
 			end
 		end)
 
-		local Instance = Scope:Frame {
+		Scope:innerScope({
+			function()
+				task.cancel(CountThread)
+			end,
+		})
+
+		Scope:Frame {
 			Parent = Parent,
 			ListEnabled = true,
 			ListPadding = Scope:Computed(function(use)
@@ -90,8 +96,7 @@ return {
 		}
 
 		return function()
-			Instance:Destroy()
-			coroutine.close(CountLoop)
+			Scope:doCleanup()
 		end
 	end,
 }

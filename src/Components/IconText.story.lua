@@ -12,7 +12,7 @@ return {
 	story = function(Parent: GuiObject)
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
 
-		local Instance = Scope:IconText {
+		Scope:IconText {
 			Parent = Parent,
 			Content = {
 				"Here's a shop icon: ",
@@ -25,7 +25,7 @@ return {
 		}
 
 		return function()
-			Instance:Destroy()
+			Scope:doCleanup()
 		end
 	end,
 }

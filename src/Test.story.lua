@@ -69,7 +69,6 @@ return function(Parent: GuiObject)
 	}
 
 	return function()
-		Object:Destroy()
 		Scope:doCleanup()
 	end
 end

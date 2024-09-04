@@ -65,7 +65,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		end
 	end)
 
-	return BaseButton(Util.CombineProps(Props, {
+	return Scope:BaseButton(Util.CombineProps(Props, {
 		Name = "Checkbox",
 		BackgroundColor3 = EffectiveColor,
 		BackgroundTransparency = Scope:Spring(

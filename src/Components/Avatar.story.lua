@@ -38,7 +38,13 @@ return {
 			end
 		end)
 
-		local Instance = Scope:Frame {
+		Scope:innerScope({
+			function()
+				task.cancel(RandomizerThread)
+			end,
+		})
+
+		Scope:Frame {
 			Parent = Parent,
 			Padding = Scope:Computed(function(use)
 				return UDim.new(0, use(Theme.StrokeThickness["4"]))
@@ -97,8 +103,7 @@ return {
 		}
 
 		return function()
-			Instance:Destroy()
-			task.cancel(RandomizerThread)
+			Scope:doCleanup()
 		end
 	end,
 }

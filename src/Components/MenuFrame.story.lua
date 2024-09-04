@@ -20,7 +20,7 @@ return {
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
 		local Theme: Themer.ThemeObject = Themer.Theme:now()
 
-		local Instance = Scope:Frame {
+		Scope:Frame {
 			Parent = Parent,
 			Padding = Scope:Computed(function(use)
 				return UDim.new(0, use(Theme.StrokeThickness["1"]))
@@ -44,7 +44,7 @@ return {
 		}
 
 		return function()
-			Instance:Destroy()
+			Scope:doCleanup()
 		end
 	end,
 }

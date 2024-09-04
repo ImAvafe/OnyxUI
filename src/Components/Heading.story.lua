@@ -20,7 +20,7 @@ return {
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
 		local Theme: Themer.ThemeObject = Themer.Theme:now()
 
-		local Instance = Scope:Frame {
+		Scope:Frame {
 			Parent = Parent,
 			ListEnabled = true,
 			ListPadding = Scope:Computed(function(use)
@@ -39,7 +39,7 @@ return {
 		}
 
 		return function()
-			Instance:Destroy()
+			Scope:doCleanup()
 		end
 	end,
 }

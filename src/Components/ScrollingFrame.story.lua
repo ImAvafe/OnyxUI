@@ -12,7 +12,7 @@ return {
 	story = function(Parent: GuiObject)
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
 
-		local Instance = Scope:ScrollingFrame {
+		Scope:ScrollingFrame {
 			Parent = Parent,
 			Size = UDim2.fromOffset(200, 200),
 			CanvasSize = UDim2.new(UDim.new(1, 0), UDim.new(0, 1000)),
@@ -20,7 +20,7 @@ return {
 		}
 
 		return function()
-			Instance:Destroy()
+			Scope:doCleanup()
 		end
 	end,
 }

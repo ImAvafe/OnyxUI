@@ -11,7 +11,7 @@ return {
 		local Theme: Themer.ThemeObject = Themer.Theme:now()
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
 
-		local Instance = Scope:Base {
+		Scope:Base {
 			Parent = Parent,
 			ListEnabled = true,
 			Padding = Scope:Computed(function(use)
@@ -108,7 +108,7 @@ return {
 		}
 
 		return function()
-			Instance:Destroy()
+			Scope:doCleanup()
 		end
 	end,
 }

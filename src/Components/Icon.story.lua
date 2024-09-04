@@ -12,13 +12,13 @@ return {
 	story = function(Parent: GuiObject)
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
 
-		local Instance = Scope:Icon {
+		Scope:Icon {
 			Parent = Parent,
 			Image = "rbxassetid://11560341132",
 		}
 
 		return function()
-			Instance:Destroy()
+			Scope:doCleanup()
 		end
 	end,
 }
