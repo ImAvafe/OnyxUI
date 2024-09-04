@@ -35,7 +35,7 @@ return {
 					Size = Scope:Computed(function(use)
 						return UDim2.new(
 							UDim.new(1, 0),
-							UDim.new(0, use(Theme.TextSize["1"]) * 2) + use(Theme.Spacing["0.5"]) * 2
+							UDim.new(0, (use(Theme.TextSize["1"]) * 2) + (use(Theme.Spacing["0.5"]) * 2))
 						)
 					end),
 				},

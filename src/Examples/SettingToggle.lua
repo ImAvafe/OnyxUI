@@ -25,7 +25,7 @@ local function SettingToggle(Scope: Fusion.Scope<any>, Props: Props)
 		Fusion.innerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
-	local Switched = Util.Fallback(Props.Switched, false)
+	local Switched = Scope:EnsureValue(Util.Fallback(Props.Switched, false))
 	local Disabled = Util.Fallback(Props.Disabled, false)
 
 	Props.Switched = Switched

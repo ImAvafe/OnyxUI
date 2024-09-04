@@ -7,7 +7,6 @@
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
 local Fusion = require(OnyxUI.Packages.Fusion)
-local Themer = require(OnyxUI.Themer)
 
 local TextInput = require(OnyxUI.Components.TextInput)
 local Components = {
@@ -25,7 +24,6 @@ export type Props = TextInput.Props & {}
 return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
 		Fusion.innerScope(Scope, Fusion, Util, Components)
-	local Theme = Themer.Theme:now()
 
 	return Scope:TextInput(Util.CombineProps(Props, {
 		AutomaticSize = Enum.AutomaticSize.None,

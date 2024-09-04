@@ -44,7 +44,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Fusion.innerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
-	local Checked = Util.Fallback(Props.Checked, false)
+	local Checked = Scope:EnsureValue(Util.Fallback(Props.Checked, false))
 	local Disabled = Util.Fallback(Props.Disabled, false)
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Primary.Main)
 	local IconId = Util.Fallback(Props.Icon, "rbxassetid://13858821963")

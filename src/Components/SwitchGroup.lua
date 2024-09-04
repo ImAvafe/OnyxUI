@@ -31,7 +31,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Fusion.innerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
-	local Switched = Util.Fallback(Props.Switched, false)
+	local Switched = Scope:EnsureValue(Util.Fallback(Props.Switched, false))
 
 	Props.Switched = Switched
 
