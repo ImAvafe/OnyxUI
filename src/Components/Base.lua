@@ -243,7 +243,8 @@ export type Props = {
 	@field MaxTextSize Fusion.UsedAs<number>?
 	@field MinTextSize Fusion.UsedAs<number>?
 ]=]
-return function(Scope: Fusion.Scope, Props: Props): Fusion.Child
+return function(Scope: Fusion.Scope<any>, Props: Props): Fusion.Child
+	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util)> = Fusion.innerScope(Scope, Fusion, Util)
 	local Theme: Themer.ThemeObject = Themer.Theme:now()
 
 	local ClassName = Util.Fallback(Props.ClassName, "Frame")
