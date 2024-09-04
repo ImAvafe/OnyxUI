@@ -58,8 +58,6 @@ local function ProcessMultipliers(Theme: Theme, Template, Key: string)
 end
 
 local function NewTheme(Scope: Fusion.Scope, Theme: Theme)
-	Scope = Fusion.innerScope(Scope, Fusion)
-
 	local ThemeObject = {
 		Colors = {
 			Primary = {
