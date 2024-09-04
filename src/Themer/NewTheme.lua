@@ -2,129 +2,130 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Packages.Fusion)
 local ThemeType = require(script.Parent.Theme)
 local ColorUtils = require(OnyxUI.Packages.ColorUtils)
+local Util = require(OnyxUI.Util)
 
 local peek = Fusion.peek
 
 export type Theme = ThemeType.Theme
 
-local function ReconcileTheme(Target, Source)
+local function ReconcileValues(Target: { [string]: Fusion.UsedAs<any> }, Source: { [string]: any })
 	for Key, Value in pairs(Target) do
-		if (typeof(Value) == "table") and (Value.kind == "Value") then
-			Value:set(peek(Source[Key]))
+		if typeof(Value) == "table" and Value.set then
+			if typeof(Source[Key]) == "table" and Source[Key].get then
+				Value:set(peek(Source[Key]))
+			elseif Source[Key] ~= nil then
+				Value:set(Source[Key])
+			end
 		elseif typeof(Value) == "table" then
 			if typeof(Source[Key]) == "table" then
-				ReconcileTheme(Value, Source[Key])
+				ReconcileValues(Value, Source[Key])
 			end
 		end
 	end
 end
 
-local function ProcessColors(Theme: Theme)
-	if Theme.Colors then
-		for ColorName, _ in pairs(Theme.Colors) do
-			local Color = Theme.Colors[ColorName]
-			if Color then
-				if Color.Main then
-					if Color.Contrast == nil then
-						Color.Contrast = ColorUtils.Emphasize(Color.Main, 1)
-					end
-					if Color.Dark == nil then
-						Color.Dark = ColorUtils.Darken(Color.Main, 0.05)
-					end
-					if Color.Light == nil then
-						Color.Light = ColorUtils.Lighten(Color.Main, 0.05)
-					end
-				end
+local function ProcessColors(ThemeObject)
+	for _, ColorObject in pairs(ThemeObject.Colors) do
+		local MainValue = peek(ColorObject.Main)
+		if MainValue ~= nil then
+			if peek(ColorObject.Contrast) == nil then
+				ColorObject.Contrast:set(ColorUtils.Emphasize(MainValue, peek(ThemeObject.Emphasis.Contrast)))
+			end
+
+			if peek(ColorObject.Dark) == nil then
+				ColorObject.Dark:set(ColorUtils.Darken(MainValue, peek(ThemeObject.Emphasis.Strong)))
+			end
+
+			if peek(ColorObject.Light) == nil then
+				ColorObject.Light:set(ColorUtils.Lighten(MainValue, peek(ThemeObject.Emphasis.Strong)))
 			end
 		end
 	end
 end
 
-local function ProcessMultipliers(Theme: Theme, Template, Key: string)
-	local Unit = Theme[Key]
-	if Unit ~= nil then
-		local Base = Unit.Base
-		if Base ~= nil then
-			for MultiplierKey, _ in pairs(Template[Key]) do
-				local Multiplier = tonumber(MultiplierKey)
-				if Multiplier ~= nil then
-					if Unit[MultiplierKey] == nil then
-						Unit[MultiplierKey] = Base * Multiplier
-					end
-				end
+local function ProcessMultipliers(Objects: {
+	Base: Fusion.Value<Fusion.Scope<any>, number>,
+	[string]: Fusion.Value<Fusion.Scope<any>, number>,
+})
+	local Base = peek(Objects.Base)
+	for Key, Value in pairs(Objects) do
+		if peek(Value) == nil then
+			local Multiplier = tonumber(Key)
+			if Multiplier ~= nil then
+				Value:set(Base * Multiplier)
 			end
 		end
 	end
 end
 
-local function NewTheme(Scope: Fusion.Scope, Theme: Theme)
+local function NewTheme(Scope: Fusion.Scope<any>, Theme: Theme)
 	local ThemeObject = {
 		Colors = {
 			Primary = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.Black),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
 			},
 			Secondary = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.Black),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
 			},
 			Accent = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.Black),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
 			},
 
 			Neutral = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.Gray["300"]),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
 			},
 			NeutralContent = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.Gray["800"]),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
 			},
 
 			Base = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.White),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
 			},
 			BaseContent = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.Black),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
 			},
 
 			Success = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.Green["400"]),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
 			},
 			Error = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.Red["400"]),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
 			},
 			Warning = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.Orange["400"]),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
 			},
 			Info = {
-				Main = Scope:Value(nil),
+				Main = Scope:Value(Util.Colors.Blue["400"]),
 				Dark = Scope:Value(nil),
 				Light = Scope:Value(nil),
 				Contrast = Scope:Value(nil),
@@ -249,15 +250,15 @@ local function NewTheme(Scope: Fusion.Scope, Theme: Theme)
 		},
 	}
 
-	ReconcileTheme(ThemeObject, Theme)
+	ReconcileValues(ThemeObject, Theme)
 
-	ProcessColors(Theme)
-	ProcessMultipliers(Theme, ThemeObject, "Spacing")
-	ProcessMultipliers(Theme, ThemeObject, "TextSize")
-	ProcessMultipliers(Theme, ThemeObject, "CornerRadius")
-	ProcessMultipliers(Theme, ThemeObject, "StrokeThickness")
-	ProcessMultipliers(Theme, ThemeObject, "SpringSpeed")
-	ProcessMultipliers(Theme, ThemeObject, "SpringDampening")
+	ProcessColors(ThemeObject)
+	ProcessMultipliers(ThemeObject.Spacing)
+	ProcessMultipliers(ThemeObject.TextSize)
+	ProcessMultipliers(ThemeObject.CornerRadius)
+	ProcessMultipliers(ThemeObject.StrokeThickness)
+	ProcessMultipliers(ThemeObject.SpringSpeed)
+	ProcessMultipliers(ThemeObject.SpringDampening)
 
 	return ThemeObject
 end
