@@ -56,6 +56,10 @@ local function ProcessMultipliers(Objects: {
 			end
 		end
 	end
+
+	if Objects.Full ~= nil then
+		Objects.Full:set(Base * 10000)
+	end
 end
 
 local function NewTheme(Scope: Fusion.Scope<any>, Theme: Theme)
