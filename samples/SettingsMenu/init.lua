@@ -1,5 +1,4 @@
-local OnyxUI = script.Parent.Parent
-
+local OnyxUI = script.Parent.Parent.OnyxUI.Packages.OnyxUI
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 local Util = require(OnyxUI.Util)
@@ -10,7 +9,7 @@ local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local Button = require(OnyxUI.Components.Button)
 local TitleBar = require(OnyxUI.Components.TitleBar)
 local Scroller = require(OnyxUI.Components.Scroller)
-local SettingToggle = require(OnyxUI.Examples.SettingToggle)
+local SettingToggle = require(script.SettingToggle)
 local TextInput = require(OnyxUI.Components.TextInput)
 local Components = {
 	MenuFrame = MenuFrame,

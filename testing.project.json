@@ -12,6 +12,9 @@
             "$path": "src"
           }
         }
+      },
+      "Samples": {
+        "$path": "samples"
       }
     }
   }

@@ -1,4 +1,4 @@
-local OnyxUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent.Parent.OnyxUI.Packages.OnyxUI
 local Themer = require(OnyxUI.Themer)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)

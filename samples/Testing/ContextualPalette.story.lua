@@ -1,4 +1,4 @@
-local OnyxUI = script.Parent.Parent
+local OnyxUI = script.Parent.Parent.Parent.OnyxUI.Packages.OnyxUI
 local Util = require(OnyxUI.Util)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
@@ -56,7 +56,7 @@ return function(Parent: GuiObject)
 		},
 	})
 
-	local Object = Scope:Base {
+	Scope:Base {
 		Parent = Parent,
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Horizontal,

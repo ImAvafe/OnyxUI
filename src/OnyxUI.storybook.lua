@@ -1,6 +1,6 @@
 return {
 	name = "OnyxUI",
 	storyRoots = {
-		script.Parent,
+		script.Parent.Components,
 	},
 }
