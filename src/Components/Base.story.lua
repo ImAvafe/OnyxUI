@@ -8,7 +8,7 @@ local Scoped = Fusion.scoped
 
 return {
 	story = function(Parent: GuiObject)
-		local Theme: Themer.ThemeObject = Themer.Theme:now()
+		local Theme = Themer.Theme:now()
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
 
 		Scope:Base {

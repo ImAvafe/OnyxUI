@@ -21,7 +21,7 @@ local Components = {
 return {
 	story = function(Parent: GuiObject)
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
-		local Theme: Themer.ThemeObject = Themer.Theme:now()
+		local Theme = Themer.Theme:now()
 
 		local Progress = Scope:Value(0)
 		local Color = Scope:Value(Color3.fromRGB(255, 0, 0))

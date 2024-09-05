@@ -19,13 +19,13 @@
 local OnyxUI = script.Parent
 local OnyxNightTheme = require(script.OnyxNight)
 local NewTheme = require(script.NewTheme)
-local ThemeType = require(script.ThemeType)
+local ThemeSpec = require(script.ThemeSpec)
 local Fusion = require(OnyxUI.Packages.Fusion)
 
 local Scoped = Fusion.scoped
 local Contextual = Fusion.Contextual
 
-export type ThemeSpec = ThemeType.Theme
+export type ThemeSpec = ThemeSpec.ThemeSpec
 
 local Themer = {}
 
@@ -33,14 +33,14 @@ local Themer = {}
 	@function NewTheme
 	@within Themer
 
-	@param Scope Fusion.Scope
+	@param Scope Fusion.Scope<any>
 	@param ThemeSpec ThemeSpec
 	@return Theme
 
 	Creates the specified theme.
 ]=]
-function Themer.NewTheme(Scope: Fusion.Scope<any>, Theme: ThemeSpec)
-	return NewTheme(Scope, Theme)
+function Themer.NewTheme(Scope: Fusion.Scope<any>, ThemeSpec: ThemeSpec)
+	return NewTheme(Scope, ThemeSpec)
 end
 
 --[=[
