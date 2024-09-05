@@ -3,3 +3,4 @@ std = "roblox"
 [config]
 empty_if = { comments_count = true }
 shadowing = { ignore_pattern = "^_|Use|Theme|Scope" }
+unused_variable = { ignore_pattern = "^_|Use|Scope" }
