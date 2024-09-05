@@ -1,5 +1,5 @@
-local OnyxUI = script.Parent
-local Util = require(script.Parent.Util)
+local OnyxUI = script.Parent.Parent
+local Util = require(OnyxUI.Util)
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 local Components = require(OnyxUI.Components)
@@ -11,6 +11,7 @@ local function Palette(Scope: Fusion.Scope<any>, _: any)
 
 	return Scope:Base {
 		Name = "Palette",
+		BackgroundTransparency = 1,
 		ListEnabled = true,
 		ListPadding = Scope:Computed(function(use)
 			return UDim.new(0, use(Theme.Spacing["0.75"]))
@@ -59,6 +60,7 @@ return function(Parent: GuiObject)
 		Parent = Parent,
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Horizontal,
+		BackgroundTransparency = 1,
 
 		[Children] = {
 			Scope:Palette {},
