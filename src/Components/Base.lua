@@ -245,7 +245,7 @@ export type Props = {
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util)> = Fusion.innerScope(Scope, Fusion, Util)
-	local Theme: Themer.ThemeObject = Themer.Theme:now()
+	local Theme = Themer.Theme:now()
 
 	local ClassName = Util.Fallback(Props.ClassName, "Frame")
 	local Name = Util.Fallback(Props.Name, "Base")

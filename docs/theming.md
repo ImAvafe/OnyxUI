@@ -4,10 +4,10 @@ sidebar_position: 3
 
 # Theming
 
-OnyxUI handles theming through a module called [`Themer`](/api/Themer). Themer allows you to customize components throughout OnyxUI, with support for things like colors, corner radiuses, paddings, etc. You'll also probably want to incorporate it within your own UI for a more consistent design.
+OnyxUI handles theming through a module called [`Themer`](/api/Themer). Themer allows you to customize components throughout OnyxUI, with support for things like colors, corner radiuses, paddings, etc. You'll also probably want to reference it within your own UI for a more consistent design.
 
 :::info Contextual theming
-Themer cannot currently handle having two separate themes active at once. This is due to Fusion's lack of a contexts feature. If you need this functionality, you'll need to have separate installs of OnyxUI.
+Themer can now handle multiple active themes, thanks to Fusion's new [`Contextual`](https://elttob.uk/Fusion/0.3/tutorials/best-practices/sharing-values/?h=contextual#contextuals)s! 
 :::
 
 ## Sample themes
@@ -18,18 +18,28 @@ Themer cannot currently handle having two separate themes active at once. This i
 ## Making your own theme
 
 :::tip
-Check out the [`ThemeTemplate`](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/ThemeTemplate.lua) file for a reference of properties you can specify in your theme. Make sure to not include any Fusion `Value`s in yours.
+Check out [ThemeType.lua](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/ThemeType.lua) for a full reference of available theme properties.
 :::
 
 1. Copy the following code into a new "`MyTheme`" module
   ```lua
-  local Themer = require(OnyxUI.Themer)
+  local Themer = OnyxUI.Themer
+  local Scoped = Fusion.scoped
 
-  local Theme: Themer.Theme = {
+  local Scope = Scoped()
 
-  }
+  local MyTheme = Themer.NewTheme(Scope, {
+    -- Specify theme properties here
+  })
 
-  return Theme
+  return MyTheme
   ```
-1. Specify properties you want within your `Theme` table
-2. Load it into OnyxUI with [`Themer:Set(Theme)`](/api/Themer#Set)
+2. Specify the properties you want
+3. Use it when constructing your UI
+  ```lua
+  local Themer = OnyxUI.Themer
+
+  Themer.Theme:is(MyTheme):during(function()
+    local Theme = Themer.Theme:now() -- This now returns MyTheme! Any UI constructed from this callback will also use MyTheme.
+  end)
+  ```

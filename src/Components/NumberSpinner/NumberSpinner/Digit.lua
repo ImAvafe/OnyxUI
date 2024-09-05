@@ -48,7 +48,7 @@ function Digit.new(Spinner, LayoutOrder, Value)
 	Frame.Parent = Spinner.Frame
 
 	local Size =
-		TextService:GetTextSize("8", Spinner.TextSize, Spinner.Font, Vector2.new(Spinner.TextSize, use(Spinner.TextSize))
+		TextService:GetTextSize("8", Spinner.TextSize, Spinner.Font, Vector2.new(Spinner.TextSize, Spinner.TextSize))
 	TweenService:Create(Frame, sizeTweenInfo, { Size = UDim2.new(0, Size.X + 1, 0, Size.Y + 10) }):Play()
 
 	local dProxy = setmetatable({}, {

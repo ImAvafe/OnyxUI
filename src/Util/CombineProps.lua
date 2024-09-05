@@ -1,21 +1,19 @@
-local OnyxUI = script.Parent.Parent
-local Fusion = require(OnyxUI.Packages.Fusion)
-
 --[=[
 		@function CombineProps
 		@within Util
 
-		@param	Scope:Source { [any]: Fusion.UsedAs<any> }
-		@param	Scope:Target { [any]: Fusion.UsedAs<any> }
-		@param	Scope:ExcludedKeys { any }?
+		@param Source Fusion.PropertyTable
+		@param Target Fusion.PropertyTable
+		@param ExcludedKeys { any }?
+		@return Fusion.PropertyTable
 		
-		Combines two sets of props for easy passthrough, adding `Source`'s props to `Target`.
+		Combines two sets of props for easy passthrough, adding `Source`'s props to `Target`. If a prop is already in `Target`, it will be overridden.
 ]=]
-local function CombineProps(
-	Source: { [any]: Fusion.UsedAs<any> },
-	Target: { [any]: Fusion.UsedAs<any> },
-	ExcludedKeys: { any }?
-)
+
+local OnyxUI = script.Parent.Parent
+local Fusion = require(OnyxUI.Packages.Fusion)
+
+local function CombineProps(Source: Fusion.PropertyTable, Target: Fusion.PropertyTable, ExcludedKeys: { any }?)
 	for Key, Value in pairs(Source) do
 		if (ExcludedKeys ~= nil) and (table.find(ExcludedKeys, Key) ~= nil) then
 			continue

@@ -17,7 +17,7 @@ return {
 	clipsDescendants = false,
 	story = function(Parent: GuiObject)
 		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
-		local Theme: Themer.ThemeObject = Themer.Theme:now()
+		local Theme = Themer.Theme:now()
 
 		Scope:Frame {
 			Parent = Parent,

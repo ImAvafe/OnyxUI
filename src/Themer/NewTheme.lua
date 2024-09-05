@@ -1,18 +1,19 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Packages.Fusion)
-local ThemeType = require(script.Parent.Theme)
+local ThemeSpec = require(script.Parent.ThemeSpec)
 local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 local Util = require(OnyxUI.Util)
 
-local peek = Fusion.peek
+local Peek = Fusion.peek
+local InnerScope = Fusion.innerScope
 
-export type Theme = ThemeType.Theme
+export type ThemeSpec = ThemeSpec.ThemeSpec
 
 local function ReconcileValues(Target: { [string]: Fusion.UsedAs<any> }, Source: { [string]: any })
 	for Key, Value in pairs(Target) do
 		if typeof(Value) == "table" and Value.set then
 			if typeof(Source[Key]) == "table" and Source[Key].get then
-				Value:set(peek(Source[Key]))
+				Value:set(Peek(Source[Key]))
 			elseif Source[Key] ~= nil then
 				Value:set(Source[Key])
 			end
@@ -26,18 +27,18 @@ end
 
 local function ProcessColors(ThemeObject)
 	for _, ColorObject in pairs(ThemeObject.Colors) do
-		local MainValue = peek(ColorObject.Main)
+		local MainValue = Peek(ColorObject.Main)
 		if MainValue ~= nil then
-			if peek(ColorObject.Contrast) == nil then
-				ColorObject.Contrast:set(ColorUtils.Emphasize(MainValue, peek(ThemeObject.Emphasis.Contrast)))
+			if Peek(ColorObject.Contrast) == nil then
+				ColorObject.Contrast:set(ColorUtils.Emphasize(MainValue, Peek(ThemeObject.Emphasis.Contrast)))
 			end
 
-			if peek(ColorObject.Dark) == nil then
-				ColorObject.Dark:set(ColorUtils.Darken(MainValue, peek(ThemeObject.Emphasis.Strong)))
+			if Peek(ColorObject.Dark) == nil then
+				ColorObject.Dark:set(ColorUtils.Darken(MainValue, Peek(ThemeObject.Emphasis.Strong)))
 			end
 
-			if peek(ColorObject.Light) == nil then
-				ColorObject.Light:set(ColorUtils.Lighten(MainValue, peek(ThemeObject.Emphasis.Strong)))
+			if Peek(ColorObject.Light) == nil then
+				ColorObject.Light:set(ColorUtils.Lighten(MainValue, Peek(ThemeObject.Emphasis.Strong)))
 			end
 		end
 	end
@@ -47,9 +48,9 @@ local function ProcessMultipliers(Objects: {
 	Base: Fusion.Value<Fusion.Scope<any>, number>,
 	[string]: Fusion.Value<Fusion.Scope<any>, number>,
 })
-	local Base = peek(Objects.Base)
+	local Base = Peek(Objects.Base)
 	for Key, Value in pairs(Objects) do
-		if peek(Value) == nil then
+		if Peek(Value) == nil then
 			local Multiplier = tonumber(Key)
 			if Multiplier ~= nil then
 				Value:set(Base * Multiplier)
@@ -62,7 +63,9 @@ local function ProcessMultipliers(Objects: {
 	end
 end
 
-local function NewTheme(Scope: Fusion.Scope<any>, Theme: Theme)
+local function NewTheme(Scope: Fusion.Scope<any>, ThemeSpec: ThemeSpec)
+	local Scope: Fusion.Scope<typeof(Fusion)> = InnerScope(Scope, Fusion)
+
 	local ThemeObject = {
 		Colors = {
 			Primary = {
@@ -254,7 +257,7 @@ local function NewTheme(Scope: Fusion.Scope<any>, Theme: Theme)
 		},
 	}
 
-	ReconcileValues(ThemeObject, Theme)
+	ReconcileValues(ThemeObject, ThemeSpec)
 
 	ProcessColors(ThemeObject)
 	ProcessMultipliers(ThemeObject.Spacing)

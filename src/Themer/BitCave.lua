@@ -1,8 +1,11 @@
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
-local Theme = require(script.Parent.Theme)
+local NewTheme = require(script.Parent.NewTheme)
+local Fusion = require(OnyxUI.Packages.Fusion)
 
-local BitCave: Theme.Theme = {
+local Scope = Fusion.scoped()
+
+local BitCave = NewTheme(Scope, {
 	Colors = {
 		Primary = {
 			Main = Util.Colors.White,
@@ -69,6 +72,6 @@ local BitCave: Theme.Theme = {
 	SpringDampening = {
 		Base = 0.75,
 	},
-}
+})
 
 return BitCave

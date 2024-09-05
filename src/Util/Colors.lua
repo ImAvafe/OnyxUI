@@ -1,5 +1,5 @@
 --[=[
-		@prop	Scope:Colors { [string]: any }
+		@prop Colors table
 		@within Util
 		@readonly
 		

@@ -11,10 +11,14 @@ Important utilities for UI development.
 Want to ensure your component props are Fusion `Value`s? This makes it a one-line operation.
 
 ```lua
-local Util = require(OnyxUI.Util)
+local Util = OnyxUI.Util
+local InnerScope = Fusion.innerScope
 
 return function(Props)
-  local MyProp = Util.Fallback(Props.MyProp, "Default")
+  local Scope: Fusion.Scope<typeof(Util)> =
+      InnerScope(Scope, Util)
+
+  local MyProp = Scope:Fallback(Props.MyProp, "Default")
 end
 ```
 
@@ -23,13 +27,19 @@ end
 Let's say you have a "CustomButton" component, and you want it to support `Size`, `Position`, and other arbitrary properties. Manually implementing all that boilerplate in the component itself is tedious. So let's have `CombineProps` do the passthrough for us:
 
 ```lua
-local Util = require(OnyxUI.Util)
+local Util = OnyxUI.Util
+local Components = OnyxUI.Components
+local InnerScope = Fusion.innerScope
 
 return function(Props)
-  Util.CombineProps(Props, {
+  local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
+      InnerScope(Scope, Fusion, Util, Components)
+  local Theme = Themer.Theme:now()
+
+  return Scope:BaseButton(Util.CombineProps(Props, {
     BackgroundTransparency = 0,
-    CornerRadius = Scope:Computed(function(use)
-      return UDim.new(0, use(Theme.CornerRadius["1"]))
+    CornerRadius = Computed(function(Use)
+      return UDim.new(0, Use(Theme.CornerRadius["1"]))
     end),
 
     -- All properties from OnyxUI's `BaseButton` component will now work.
@@ -42,7 +52,7 @@ end
 Color shorthands imported from [TailwindCSS's color palette](https://tailwindcss.com/docs/customizing-colors#default-color-palette). So you don't have to worry about color picking anymore.
 
 ```lua
-local Util = require(OnyxUI.Util)
+local Util = OnyxUI.Util
 
 return function(Props)
   return	Scope:Button {

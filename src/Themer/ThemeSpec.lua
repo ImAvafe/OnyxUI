@@ -6,7 +6,7 @@ type ThemeColor = {
 
 	[string]: Color3?,
 }
-export type Theme = {
+export type ThemeSpec = {
 	Colors: {
 		Primary: ThemeColor?,
 		Secondary: ThemeColor?,
