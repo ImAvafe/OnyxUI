@@ -23,19 +23,19 @@ return {
 			Size = UDim2.fromOffset(250, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			ListEnabled = true,
-			ListPadding = Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.Spacing["0.5"]))
+			ListPadding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.Spacing["0.5"]))
 			end),
-			Padding = Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.StrokeThickness["1"]))
+			Padding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 			end),
 
 			[Children] = {
 				Scope:TextArea {
-					Size = Scope:Computed(function(use)
+					Size = Scope:Computed(function(Use)
 						return UDim2.new(
 							UDim.new(1, 0),
-							UDim.new(0, (use(Theme.TextSize["1"]) * 2) + (use(Theme.Spacing["0.5"]) * 2))
+							UDim.new(0, (Use(Theme.TextSize["1"]) * 2) + (Use(Theme.Spacing["0.5"]) * 2))
 						)
 					end),
 				},

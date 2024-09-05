@@ -63,8 +63,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 	local RichText = Util.Fallback(Props.RichText, true)
 	local FontFace = Util.Fallback(
 		Props.FontFace,
-		Scope:Computed(function(use)
-			return Font.new(use(Theme.Font.Body), use(Theme.FontWeight.Body))
+		Scope:Computed(function(Use)
+			return Font.new(Use(Theme.Font.Body), Use(Theme.FontWeight.Body))
 		end)
 	)
 	local TextWrapped = Util.Fallback(Props.TextWrapped, true)

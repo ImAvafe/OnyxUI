@@ -9,7 +9,7 @@ local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 local Fusion = require(OnyxUI.Packages.Fusion)
 
-local peek = Fusion.peek
+local Peek = Fusion.peek
 
 local BaseButton = require(script.Parent.BaseButton)
 local SwitchInput = require(script.Parent.SwitchInput)
@@ -41,7 +41,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Disabled = Props.Disabled,
 
 		OnActivated = function()
-			Switched:set(not peek(Switched))
+			Switched:set(not Peek(Switched))
 		end,
 	}))
 end

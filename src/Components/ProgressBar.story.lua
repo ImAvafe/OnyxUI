@@ -7,7 +7,7 @@ local Util = require(OnyxUI.Util)
 
 local Scoped = Fusion.scoped
 local Children = Fusion.Children
-local peek = Fusion.peek
+local Peek = Fusion.peek
 
 local Frame = require(script.Parent.Frame)
 local ProgressBar = require(script.Parent.ProgressBar)
@@ -29,7 +29,7 @@ return {
 		local ColorThread = task.spawn(function()
 			while task.wait(1) do
 				Progress:set(math.random(0, 1000) / 1000)
-				Color:set(ColorUtils.Rotate(peek(Color), 100))
+				Color:set(ColorUtils.Rotate(Peek(Color), 100))
 			end
 		end)
 
@@ -43,16 +43,16 @@ return {
 			Parent = Parent,
 			ListEnabled = true,
 			ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-			ListPadding = Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.Spacing["1.5"]))
+			ListPadding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.Spacing["1.5"]))
 			end),
 
 			[Children] = {
 				Scope:Frame {
 					ListEnabled = true,
 					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-					ListPadding = Scope:Computed(function(use)
-						return UDim.new(0, use(Theme.Spacing["0.5"]))
+					ListPadding = Scope:Computed(function(Use)
+						return UDim.new(0, Use(Theme.Spacing["0.5"]))
 					end),
 
 					[Children] = {
@@ -71,8 +71,8 @@ return {
 				Scope:Frame {
 					ListEnabled = true,
 					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-					ListPadding = Scope:Computed(function(use)
-						return UDim.new(0, use(Theme.Spacing["0.5"]))
+					ListPadding = Scope:Computed(function(Use)
+						return UDim.new(0, Use(Theme.Spacing["0.5"]))
 					end),
 
 					[Children] = {
@@ -83,8 +83,8 @@ return {
 							ListEnabled = true,
 							ListFillDirection = Enum.FillDirection.Horizontal,
 							ListVerticalAlignment = Enum.VerticalAlignment.Center,
-							ListPadding = Scope:Computed(function(use)
-								return UDim.new(0, use(Theme.Spacing["0.5"]))
+							ListPadding = Scope:Computed(function(Use)
+								return UDim.new(0, Use(Theme.Spacing["0.5"]))
 							end),
 
 							[Children] = {
@@ -103,8 +103,8 @@ return {
 				Scope:Frame {
 					ListEnabled = true,
 					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-					ListPadding = Scope:Computed(function(use)
-						return UDim.new(0, use(Theme.Spacing["0.5"]))
+					ListPadding = Scope:Computed(function(Use)
+						return UDim.new(0, Use(Theme.Spacing["0.5"]))
 					end),
 
 					[Children] = {
@@ -120,8 +120,8 @@ return {
 				Scope:Frame {
 					ListEnabled = true,
 					ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
-					ListPadding = Scope:Computed(function(use)
-						return UDim.new(0, use(Theme.Spacing["0.5"]))
+					ListPadding = Scope:Computed(function(Use)
+						return UDim.new(0, Use(Theme.Spacing["0.5"]))
 					end),
 
 					[Children] = {
@@ -131,8 +131,8 @@ return {
 						Scope:Frame {
 							ListEnabled = true,
 							ListFillDirection = Enum.FillDirection.Horizontal,
-							ListPadding = Scope:Computed(function(use)
-								return UDim.new(0, use(Theme.Spacing["0.5"]))
+							ListPadding = Scope:Computed(function(Use)
+								return UDim.new(0, Use(Theme.Spacing["0.5"]))
 							end),
 
 							[Children] = {

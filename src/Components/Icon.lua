@@ -30,8 +30,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	return Scope:Image(Util.CombineProps(Props, {
 		Name = "Icon",
-		Size = Scope:Computed(function(use)
-			return UDim2.fromOffset(use(Theme.TextSize["1"]), use(Theme.TextSize["1"]))
+		Size = Scope:Computed(function(Use)
+			return UDim2.fromOffset(Use(Theme.TextSize["1"]), Use(Theme.TextSize["1"]))
 		end),
 		BackgroundTransparency = 1,
 	}))

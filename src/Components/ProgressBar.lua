@@ -49,8 +49,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Inverted = Util.Fallback(Props.Inverted, false)
 	local CornerRadius = Util.Fallback(
 		Props.CornerRadius,
-		Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.CornerRadius["Full"]))
+		Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.CornerRadius["Full"]))
 		end)
 	)
 	local Length = Util.Fallback(
@@ -62,13 +62,13 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	return Scope:Group(Util.CombineProps(Props, {
 		Name = "ProgressBar",
-		Size = Scope:Computed(function(use)
-			local DirectionValue = use(Direction)
-			local LengthValue = use(Length)
+		Size = Scope:Computed(function(Use)
+			local DirectionValue = Use(Direction)
+			local LengthValue = Use(Length)
 			if DirectionValue == Enum.FillDirection.Horizontal then
-				return UDim2.new(LengthValue, UDim.new(0, use(Theme.TextSize["0.75"])))
+				return UDim2.new(LengthValue, UDim.new(0, Use(Theme.TextSize["0.75"])))
 			else
-				return UDim2.new(UDim.new(0, use(Theme.TextSize["0.75"])), LengthValue)
+				return UDim2.new(UDim.new(0, Use(Theme.TextSize["0.75"])), LengthValue)
 			end
 		end),
 		AutomaticSize = Enum.AutomaticSize.None,
@@ -80,19 +80,19 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			Scope:Frame {
 				Name = "ProgressFill",
 				Size = Scope:Spring(
-					Scope:Computed(function(use)
-						if use(Direction) == Enum.FillDirection.Horizontal then
-							return UDim2.fromScale(use(Progress), 1)
+					Scope:Computed(function(Use)
+						if Use(Direction) == Enum.FillDirection.Horizontal then
+							return UDim2.fromScale(Use(Progress), 1)
 						else
-							return UDim2.fromScale(1, use(Progress))
+							return UDim2.fromScale(1, Use(Progress))
 						end
 					end),
 					Theme.SpringSpeed["0.5"],
 					Theme.SpringDampening["1"]
 				),
-				AnchorPoint = Scope:Computed(function(use)
-					if use(Inverted) then
-						if use(Direction) == Enum.FillDirection.Horizontal then
+				AnchorPoint = Scope:Computed(function(Use)
+					if Use(Inverted) then
+						if Use(Direction) == Enum.FillDirection.Horizontal then
 							return Vector2.new(1, 0)
 						else
 							return Vector2.new(0, 1)
@@ -101,9 +101,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						return Vector2.new(0, 0)
 					end
 				end),
-				Position = Scope:Computed(function(use)
-					if use(Inverted) then
-						if use(Direction) == Enum.FillDirection.Horizontal then
+				Position = Scope:Computed(function(Use)
+					if Use(Inverted) then
+						if Use(Direction) == Enum.FillDirection.Horizontal then
 							return UDim2.fromScale(1, 0)
 						else
 							return UDim2.fromScale(0, 1)

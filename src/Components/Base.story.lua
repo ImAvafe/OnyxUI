@@ -14,8 +14,8 @@ return {
 		Scope:Base {
 			Parent = Parent,
 			ListEnabled = true,
-			Padding = Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.StrokeThickness["4"]))
+			Padding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.StrokeThickness["4"]))
 			end),
 
 			[Children] = {

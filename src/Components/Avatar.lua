@@ -62,8 +62,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		IndicatorColor = Util.Fallback(Props.IndicatorColor, Theme.Colors.Primary.Main),
 		IndicatorCornerRadius = Util.Fallback(
 			Props.IndicatorCornerRadius,
-			Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.CornerRadius.Full))
+			Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.CornerRadius.Full))
 			end)
 		),
 		IndicatorIcon = Util.Fallback(Props.IndicatorIcon, nil),
@@ -73,8 +73,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	return Scope:Image(Util.CombineProps(Props, {
 		Name = "Avatar",
 		Image = EnsuredProps.Image,
-		Size = Scope:Computed(function(use)
-			return UDim2.fromOffset(use(Theme.TextSize["4.5"]), use(Theme.TextSize["4.5"]))
+		Size = Scope:Computed(function(Use)
+			return UDim2.fromOffset(Use(Theme.TextSize["4.5"]), Use(Theme.TextSize["4.5"]))
 		end),
 		BackgroundColor3 = Theme.Colors.Neutral.Dark,
 		StrokeEnabled = EnsuredProps.RingEnabled,
@@ -84,13 +84,13 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			Theme.SpringSpeed["0.5"],
 			Theme.SpringDampening["1"]
 		),
-		CornerRadius = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.CornerRadius["1"]))
+		CornerRadius = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.CornerRadius["1"]))
 		end),
 
 		[Children] = {
-			Scope:Computed(function(use)
-				if use(EnsuredProps.IndicatorEnabled) then
+			Scope:Computed(function(Use)
+				if Use(EnsuredProps.IndicatorEnabled) then
 					return Scope:Group {
 						Name = "Indicator",
 						BackgroundColor3 = Scope:Spring(
@@ -110,8 +110,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 							Scope:Icon {
 								Image = EnsuredProps.IndicatorIcon,
 								ImageColor3 = EnsuredProps.IndicatorIconColor,
-								ImageTransparency = Scope:Computed(function(use)
-									if use(EnsuredProps.IndicatorIcon) then
+								ImageTransparency = Scope:Computed(function(Use)
+									if Use(EnsuredProps.IndicatorIcon) then
 										return 0
 									else
 										return 1

@@ -11,8 +11,7 @@ local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
-local peek = Fusion.peek
-
+local Peek = Fusion.peek
 local OnEvent = Fusion.OnEvent
 local Out = Fusion.Out
 
@@ -86,15 +85,15 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local PlaceholderColor3 = Util.Fallback(Props.PlaceholderColor3, Theme.Colors.NeutralContent.Dark)
 	local TextColor3 = Util.Fallback(
 		Props.TextColor3,
-		Scope:Computed(function(use)
-			return use(Theme.Colors.BaseContent.Main)
+		Scope:Computed(function(Use)
+			return Use(Theme.Colors.BaseContent.Main)
 		end)
 	)
 	local FontFace = Util.Fallback(
 		Props.FontFace,
 
-		Scope:Computed(function(use)
-			return Font.new(use(Theme.Font.Body), use(Theme.FontWeight.Body))
+		Scope:Computed(function(Use)
+			return Font.new(Use(Theme.Font.Body), Use(Theme.FontWeight.Body))
 		end)
 	)
 	local TextXAlignment = Util.Fallback(Props.TextXAlignment, Enum.TextXAlignment.Left)
@@ -102,10 +101,10 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local TextTransparency = Util.Fallback(
 		Props.TextTransparency,
 
-		Scope:Computed(function(use)
-			if use(Disabled) then
+		Scope:Computed(function(Use)
+			if Use(Disabled) then
 				return 0.75
-			elseif use(IsFocused) then
+			elseif Use(IsFocused) then
 				return 0
 			else
 				return 0.5
@@ -114,38 +113,38 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	)
 
 	Scope:Observer(Text):onChange(function()
-		local TextValue = peek(Text) or ""
-		Text:set(TextValue:sub(1, utf8.offset(TextValue, peek(CharacterLimit))))
-		RemainingCharaters:set(CharacterLimit - (utf8.len(TextValue or "") or peek(CharacterLimit)))
+		local TextValue = Peek(Text) or ""
+		Text:set(TextValue:sub(1, utf8.offset(TextValue, Peek(CharacterLimit))))
+		RemainingCharaters:set(CharacterLimit - (utf8.len(TextValue or "") or Peek(CharacterLimit)))
 	end)
 
 	return Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "TextBox",
 		Name = "TextInput",
-		CornerRadius = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.CornerRadius["1"]))
+		CornerRadius = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.CornerRadius["1"]))
 		end),
-		Padding = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.5"]))
+		Padding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
 		StrokeEnabled = true,
 		StrokeColor = Scope:Spring(
-			Scope:Computed(function(use)
-				if use(IsFocused) then
-					return use(Color)
+			Scope:Computed(function(Use)
+				if Use(IsFocused) then
+					return Use(Color)
 				else
-					return use(Theme.Colors.NeutralContent.Dark)
+					return Use(Theme.Colors.NeutralContent.Dark)
 				end
 			end),
 			Theme.SpringSpeed["1"],
 			Theme.SpringDampening["1"]
 		),
 		StrokeTransparency = Scope:Spring(
-			Scope:Computed(function(use)
-				if use(Disabled) then
+			Scope:Computed(function(Use)
+				if Use(Disabled) then
 					return 0.9
 				end
-				if use(IsFocused) then
+				if Use(IsFocused) then
 					return 0
 				else
 					return 0.8
@@ -156,8 +155,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		),
 		AutomaticSize = Enum.AutomaticSize.XY,
 		AutoLocalize = false,
-		Active = Scope:Computed(function(use)
-			return not use(Disabled)
+		Active = Scope:Computed(function(Use)
+			return not Use(Disabled)
 		end),
 		BackgroundTransparency = 1,
 		ClipsDescendants = true,
@@ -175,27 +174,27 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		MultiLine = Props.MultiLine,
 		TextWrapped = Props.TextWrapped,
 
-		TextEditable = Scope:Computed(function(use)
-			return not use(Disabled)
+		TextEditable = Scope:Computed(function(Use)
+			return not Use(Disabled)
 		end),
 
 		[OnEvent "Focused"] = function()
-			if not peek(Disabled) then
+			if not Peek(Disabled) then
 				IsFocused:set(true)
-				SoundService:PlayLocalSound(peek(Theme.Sound.Focus))
-				peek(OnFocused)()
+				SoundService:PlayLocalSound(Peek(Theme.Sound.Focus))
+				Peek(OnFocused)()
 			end
 		end,
 		[OnEvent "FocusLost"] = function()
 			IsFocused:set(false)
-			peek(OnFocusLost)()
+			Peek(OnFocusLost)()
 		end,
 		[OnEvent "MouseEnter"] = function()
-			SoundService:PlayLocalSound(peek(Theme.Sound.Hover))
+			SoundService:PlayLocalSound(Peek(Theme.Sound.Hover))
 		end,
 		[OnEvent "SelectionGained"] = function()
-			if not peek(Disabled) then
-				SoundService:PlayLocalSound(peek(Theme.Sound.Hover))
+			if not Peek(Disabled) then
+				SoundService:PlayLocalSound(Peek(Theme.Sound.Hover))
 			end
 		end,
 

@@ -31,11 +31,11 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Name = "Card",
 		BackgroundColor3 = Theme.Colors.Neutral.Main,
 		BackgroundTransparency = 0,
-		CornerRadius = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.CornerRadius["1"]))
+		CornerRadius = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.CornerRadius["1"]))
 		end),
-		Padding = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["1"]))
+		Padding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["1"]))
 		end),
 	}))
 end

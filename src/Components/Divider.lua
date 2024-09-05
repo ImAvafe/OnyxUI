@@ -48,21 +48,21 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Spacing = Util.Fallback(
 		Props.Spacing,
 
-		Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.5"]))
+		Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end)
 	)
 
-	local VerticalPadding = Scope:Computed(function(use)
-		if use(FillDirection) == Enum.FillDirection.Horizontal then
-			return use(Spacing)
+	local VerticalPadding = Scope:Computed(function(Use)
+		if Use(FillDirection) == Enum.FillDirection.Horizontal then
+			return Use(Spacing)
 		else
 			return UDim.new()
 		end
 	end)
-	local HorizontalPadding = Scope:Computed(function(use)
-		if use(FillDirection) == Enum.FillDirection.Vertical then
-			return use(Spacing)
+	local HorizontalPadding = Scope:Computed(function(Use)
+		if Use(FillDirection) == Enum.FillDirection.Vertical then
+			return Use(Spacing)
 		else
 			return UDim.new()
 		end
@@ -70,15 +70,15 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	return Scope:Frame(Util.CombineProps(Props, {
 		Name = "Divider",
-		Size = Scope:Computed(function(use)
-			if use(FillDirection) == Enum.FillDirection.Horizontal then
+		Size = Scope:Computed(function(Use)
+			if Use(FillDirection) == Enum.FillDirection.Horizontal then
 				return UDim2.new(Length, UDim.new(0, 0))
 			else
-				return UDim2.new(UDim.new(0, 0), use(Length))
+				return UDim2.new(UDim.new(0, 0), Use(Length))
 			end
 		end),
-		AutomaticSize = Scope:Computed(function(use)
-			if use(FillDirection) == Enum.FillDirection.Horizontal then
+		AutomaticSize = Scope:Computed(function(Use)
+			if Use(FillDirection) == Enum.FillDirection.Horizontal then
 				return Enum.AutomaticSize.Y
 			else
 				return Enum.AutomaticSize.X
@@ -92,11 +92,11 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		[Children] = {
 			Scope:Frame {
 				Name = "DividingLine",
-				Size = Scope:Computed(function(use)
-					if use(FillDirection) == Enum.FillDirection.Horizontal then
-						return UDim2.new(UDim.new(1, 0), UDim.new(0, use(Theme.StrokeThickness["1"])))
+				Size = Scope:Computed(function(Use)
+					if Use(FillDirection) == Enum.FillDirection.Horizontal then
+						return UDim2.new(UDim.new(1, 0), UDim.new(0, Use(Theme.StrokeThickness["1"])))
 					else
-						return UDim2.new(UDim.new(0, use(Theme.StrokeThickness["1"])), UDim.new(1, 0))
+						return UDim2.new(UDim.new(0, Use(Theme.StrokeThickness["1"])), UDim.new(1, 0))
 					end
 				end),
 				AutomaticSize = Enum.AutomaticSize.None,

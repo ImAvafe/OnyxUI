@@ -11,7 +11,7 @@ local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 
-local peek = Fusion.peek
+local Peek = Fusion.peek
 local Children = Fusion.Children
 
 local Frame = require(script.Parent.Frame)
@@ -46,50 +46,50 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Primary.Main)
 	local Size = Util.Fallback(
 		Props.Size,
-		Scope:Computed(function(use)
-			return UDim2.fromOffset(use(Theme.TextSize["1"]) * 2, use(Theme.TextSize["1"]))
+		Scope:Computed(function(Use)
+			return UDim2.fromOffset(Use(Theme.TextSize["1"]) * 2, Use(Theme.TextSize["1"]))
 		end)
 	)
 	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.None)
 
 	local IsHolding = Scope:Value(false)
 	local IsHovering = Scope:Value(false)
-	local EffectiveColor = Scope:Computed(function(use)
+	local EffectiveColor = Scope:Computed(function(Use)
 		local ActiveColor
-		if use(Switched) then
-			ActiveColor = use(Color)
+		if Use(Switched) then
+			ActiveColor = Use(Color)
 		else
-			ActiveColor = use(Theme.Colors.NeutralContent.Dark)
+			ActiveColor = Use(Theme.Colors.NeutralContent.Dark)
 		end
 
-		if not use(Disabled) then
-			if use(IsHolding) then
-				return ColorUtils.Emphasize(use(ActiveColor), use(Theme.Emphasis.Regular))
-			elseif use(IsHovering) then
-				return ColorUtils.Emphasize(use(ActiveColor), use(Theme.Emphasis.Light))
+		if not Use(Disabled) then
+			if Use(IsHolding) then
+				return ColorUtils.Emphasize(Use(ActiveColor), Use(Theme.Emphasis.Regular))
+			elseif Use(IsHovering) then
+				return ColorUtils.Emphasize(Use(ActiveColor), Use(Theme.Emphasis.Light))
 			end
 		end
 
 		return ActiveColor
 	end)
-	local EffectiveBallColor = Scope:Computed(function(use): any
+	local EffectiveBallColor = Scope:Computed(function(Use): any
 		local ActiveColor
-		if use(Switched) then
-			ActiveColor = use(Theme.Colors.Base.Main)
+		if Use(Switched) then
+			ActiveColor = Use(Theme.Colors.Base.Main)
 		else
-			ActiveColor = use(Theme.Colors.NeutralContent.Dark)
+			ActiveColor = Use(Theme.Colors.NeutralContent.Dark)
 		end
 
-		if not use(Disabled) then
-			if use(IsHolding) then
-				if not use(Switched) then
-					return ColorUtils.Emphasize(use(ActiveColor), use(Theme.Emphasis.Regular))
+		if not Use(Disabled) then
+			if Use(IsHolding) then
+				if not Use(Switched) then
+					return ColorUtils.Emphasize(Use(ActiveColor), Use(Theme.Emphasis.Regular))
 				else
 					return ActiveColor
 				end
-			elseif use(IsHovering) then
-				if not use(Switched) then
-					return ColorUtils.Emphasize(use(ActiveColor), use(Theme.Emphasis.Light))
+			elseif Use(IsHovering) then
+				if not Use(Switched) then
+					return ColorUtils.Emphasize(Use(ActiveColor), Use(Theme.Emphasis.Light))
 				else
 					return ActiveColor
 				end
@@ -100,8 +100,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	end)
 	local EffectiveCornerRadius = Util.Fallback(
 		Props.CornerRadius,
-		Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.CornerRadius.Full))
+		Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.CornerRadius.Full))
 		end)
 	)
 
@@ -112,11 +112,11 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Disabled = Disabled,
 		StrokeEnabled = true,
 		StrokeTransparency = Scope:Spring(
-			Scope:Computed(function(use)
-				if use(Disabled) then
+			Scope:Computed(function(Use)
+				if Use(Disabled) then
 					return 0.8
 				end
-				if use(Switched) then
+				if Use(Switched) then
 					return 0
 				else
 					return 0.6
@@ -132,7 +132,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		IsHovering = IsHovering,
 		IsHolding = IsHolding,
 		OnActivated = function()
-			Switched:set(not peek(Switched))
+			Switched:set(not Peek(Switched))
 		end,
 
 		[Children] = {
@@ -142,8 +142,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 				AutomaticSize = AutomaticSize,
 				BackgroundColor3 = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
 				BackgroundTransparency = Scope:Spring(
-					Scope:Computed(function(use)
-						if use(Switched) then
+					Scope:Computed(function(Use)
+						if Use(Switched) then
 							return 0
 						else
 							return 1
@@ -159,8 +159,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 					Scope:Frame {
 						Name = "Ball",
 						AnchorPoint = Scope:Spring(
-							Scope:Computed(function(use)
-								if use(Switched) then
+							Scope:Computed(function(Use)
+								if Use(Switched) then
 									return Vector2.new(1, 0.5)
 								else
 									return Vector2.new(0, 0.5)
@@ -170,8 +170,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 							Theme.SpringDampening["1"]
 						),
 						Position = Scope:Spring(
-							Scope:Computed(function(use)
-								if use(Switched) then
+							Scope:Computed(function(Use)
+								if Use(Switched) then
 									return UDim2.fromScale(1, 0.5)
 								else
 									return UDim2.fromScale(0, 0.5)
@@ -181,9 +181,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 							Theme.SpringDampening["1"]
 						),
 						Size = Scope:Spring(
-							Scope:Computed(function(use)
+							Scope:Computed(function(Use)
 								local Scale = 0.85
-								if use(IsHovering) then
+								if Use(IsHovering) then
 									Scale *= 1.1
 								end
 
@@ -194,11 +194,11 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						),
 						AutomaticSize = Enum.AutomaticSize.None,
 						BackgroundTransparency = Scope:Spring(
-							Scope:Computed(function(use)
-								if use(Disabled) then
+							Scope:Computed(function(Use)
+								if Use(Disabled) then
 									return 0.7
 								end
-								if use(Switched) then
+								if Use(Switched) then
 									return 0
 								else
 									return 0
@@ -213,8 +213,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 							Theme.SpringDampening["1"]
 						),
 						AspectRatio = Scope:Spring(
-							Scope:Computed(function(use)
-								if use(IsHolding) then
+							Scope:Computed(function(Use)
+								if Use(IsHolding) then
 									return 1.2
 								else
 									return 1

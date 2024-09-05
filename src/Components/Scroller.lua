@@ -60,8 +60,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 
 	local BottomImage = Util.Fallback(
 		Props.BottomImage,
-		Scope:Computed(function(use)
-			if use(Theme.CornerRadius["1"]) >= 3 then
+		Scope:Computed(function(Use)
+			if Use(Theme.CornerRadius["1"]) >= 3 then
 				return "rbxassetid://16547643439"
 			else
 				return "rbxassetid://16547330984"
@@ -70,8 +70,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 	)
 	local TopImage = Util.Fallback(
 		Props.TopImage,
-		Scope:Computed(function(use)
-			if use(Theme.CornerRadius["1"]) >= 3 then
+		Scope:Computed(function(Use)
+			if Use(Theme.CornerRadius["1"]) >= 3 then
 				return "rbxassetid://16547667444"
 			else
 				return "rbxassetid://16547330984"

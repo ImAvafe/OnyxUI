@@ -32,8 +32,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Theme = Themer.Theme:now()
 
 	local Image = Util.Fallback(Props.Image, "")
-	local Padding = Scope:Computed(function(use)
-		return UDim.new(0, use(Theme.Spacing["0.25"]))
+	local Padding = Scope:Computed(function(Use)
+		return UDim.new(0, Use(Theme.Spacing["0.25"]))
 	end)
 
 	return Scope:Button(Util.CombineProps(Props, {
@@ -42,8 +42,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		PaddingRight = Padding,
 		PaddingTop = Padding,
 		PaddingBottom = Padding,
-		Content = Scope:Computed(function(use)
-			return { use(Image) }
+		Content = Scope:Computed(function(Use)
+			return { Use(Image) }
 		end),
 	}))
 end

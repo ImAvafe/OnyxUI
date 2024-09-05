@@ -37,11 +37,11 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		GroupTransparency = Props.GroupTransparency,
 		BackgroundColor3 = Theme.Colors.Base.Main,
 		BackgroundTransparency = 0,
-		Padding = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["1"]))
+		Padding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["1"]))
 		end),
-		CornerRadius = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.CornerRadius["3"]))
+		CornerRadius = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.CornerRadius["3"]))
 		end),
 		StrokeEnabled = true,
 		StrokeColor = Theme.Colors.Neutral.Main,

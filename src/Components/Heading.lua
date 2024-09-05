@@ -38,14 +38,14 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	return Scope:Text(Util.CombineProps(Props, {
 		Name = script.Name,
-		TextSize = Scope:Computed(function(use)
-			local HeadingSizeValue = use(HeadingSize)
-			local TextSizeValue = use(TextSize)
+		TextSize = Scope:Computed(function(Use)
+			local HeadingSizeValue = Use(HeadingSize)
+			local TextSizeValue = Use(TextSize)
 
 			return TextSizeValue * HeadingSizeValue
 		end),
-		FontFace = Scope:Computed(function(use)
-			return Font.new(use(Theme.Font.Heading), use(Theme.FontWeight.Heading))
+		FontFace = Scope:Computed(function(Use)
+			return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
 		end),
 	}))
 end

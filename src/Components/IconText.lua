@@ -57,8 +57,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local ContentRichText = Util.Fallback(Props.ContentRichText, true)
 	local ContentFontFace = Util.Fallback(
 		Props.ContentFontFace,
-		Scope:Computed(function(use)
-			return Font.new(use(Theme.Font.Body), use(Theme.FontWeight.Body))
+		Scope:Computed(function(Use)
+			return Font.new(Use(Theme.Font.Body), Use(Theme.FontWeight.Body))
 		end)
 	)
 
@@ -66,18 +66,18 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Name = script.Name,
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Horizontal,
-		ListPadding = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0"]))
+		ListPadding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0"]))
 		end),
 
 		[Children] = {
-			Scope:ForValues(Content, function(use, Scope, ContentString: string)
+			Scope:ForValues(Content, function(Use, Scope, ContentString: string)
 				if string.find(ContentString, "rbxassetid://", 1, true) then
 					return Scope:Icon {
 						Image = ContentString,
 						ImageColor3 = ContentColor,
-						Size = Scope:Computed(function(use)
-							return UDim2.fromOffset(use(ContentSize), use(ContentSize))
+						Size = Scope:Computed(function(Use)
+							return UDim2.fromOffset(Use(ContentSize), Use(ContentSize))
 						end),
 						ImageTransparency = ContentTransparency,
 					}

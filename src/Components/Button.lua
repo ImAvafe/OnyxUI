@@ -59,8 +59,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Neutral.Main)
 	local ContentColor = Util.Fallback(
 		Props.ContentColor,
-		Scope:Computed(function(use)
-			return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Contrast))
+		Scope:Computed(function(Use)
+			return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Contrast))
 		end)
 	)
 	local ContentSize = Util.Fallback(Props.ContentSize, Theme.TextSize["1"])
@@ -68,36 +68,36 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	local IsHolding = Scope:Value(false)
 	local IsHovering = Scope:Value(false)
-	local EffectiveColor = Scope:Computed(function(use)
-		if use(Disabled) then
-			return use(Theme.Colors.BaseContent.Main)
+	local EffectiveColor = Scope:Computed(function(Use)
+		if Use(Disabled) then
+			return Use(Theme.Colors.BaseContent.Main)
 		else
-			if use(IsHolding) then
-				return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Regular))
-			elseif use(IsHovering) then
-				return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Light))
+			if Use(IsHolding) then
+				return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Regular))
+			elseif Use(IsHovering) then
+				return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Light))
 			else
-				return use(Color)
+				return Use(Color)
 			end
 		end
 	end)
-	local EffectiveContentColor = Scope:Computed(function(use)
-		if use(Disabled) then
-			return use(Theme.Colors.BaseContent.Main)
+	local EffectiveContentColor = Scope:Computed(function(Use)
+		if Use(Disabled) then
+			return Use(Theme.Colors.BaseContent.Main)
 		else
-			if use(Style) == "Filled" then
-				return use(ContentColor)
-			elseif use(Style) == "Outlined" then
-				return use(EffectiveColor)
-			elseif use(Style) == "Ghost" then
-				return use(EffectiveColor)
+			if Use(Style) == "Filled" then
+				return Use(ContentColor)
+			elseif Use(Style) == "Outlined" then
+				return Use(EffectiveColor)
+			elseif Use(Style) == "Ghost" then
+				return Use(EffectiveColor)
 			else
-				return use(ContentColor)
+				return Use(ContentColor)
 			end
 		end
 	end)
-	local EffectiveContentTransparency = Scope:Computed(function(use)
-		if use(Disabled) then
+	local EffectiveContentTransparency = Scope:Computed(function(Use)
+		if Use(Disabled) then
 			return DISABLED_CONTENT_TRANSPARENCY
 		else
 			return 0
@@ -106,9 +106,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	return Scope:BaseButton(Util.CombineProps(Props, {
 		Name = "Button",
-		BackgroundTransparency = Scope:Computed(function(use)
-			if use(Style) == "Filled" then
-				if use(Disabled) then
+		BackgroundTransparency = Scope:Computed(function(Use)
+			if Use(Style) == "Filled" then
+				if Use(Disabled) then
 					return DISABLED_BACKGROUND_TRANSPARENCY
 				else
 					return 0
@@ -118,20 +118,20 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			end
 		end),
 		BackgroundColor3 = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
-		PaddingLeft = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.75"]))
+		PaddingLeft = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.75"]))
 		end),
-		PaddingRight = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.75"]))
+		PaddingRight = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.75"]))
 		end),
-		PaddingTop = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.25"]))
+		PaddingTop = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.25"]))
 		end),
-		PaddingBottom = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.25"]))
+		PaddingBottom = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.25"]))
 		end),
-		CornerRadius = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.CornerRadius["1"]))
+		CornerRadius = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.CornerRadius["1"]))
 		end),
 		ListEnabled = true,
 		ListFillDirection = Enum.FillDirection.Horizontal,
@@ -140,10 +140,10 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		ListWraps = false,
 		StrokeEnabled = true,
 		StrokeColor = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
-		StrokeTransparency = Scope:Computed(function(use)
-			if use(Style) == "Ghost" then
+		StrokeTransparency = Scope:Computed(function(Use)
+			if Use(Style) == "Ghost" then
 				return 1
-			elseif use(Disabled) then
+			elseif Use(Disabled) then
 				return DISABLED_BACKGROUND_TRANSPARENCY
 			else
 				return 0
@@ -159,8 +159,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 				ContentTransparency = EffectiveContentTransparency,
 				ContentSize = ContentSize,
 				ContentWrapped = ContentWrapped,
-				ListPadding = Scope:Computed(function(use)
-					return UDim.new(0, use(Theme.Spacing["0.25"]))
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.25"]))
 				end),
 				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 				ListVerticalAlignment = Enum.VerticalAlignment.Center,

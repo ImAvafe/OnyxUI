@@ -22,11 +22,11 @@ return {
 		Scope:Frame {
 			Parent = Parent,
 			ListEnabled = true,
-			ListPadding = Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.Spacing["0.5"]))
+			ListPadding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.Spacing["0.5"]))
 			end),
-			Padding = Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.StrokeThickness["1"]))
+			Padding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 			end),
 
 			[Children] = {

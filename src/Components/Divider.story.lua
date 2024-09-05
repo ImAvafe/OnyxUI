@@ -26,8 +26,8 @@ return {
 			AutomaticSize = Enum.AutomaticSize.Y,
 			ListEnabled = true,
 			ListFillDirection = Enum.FillDirection.Vertical,
-			ListPadding = Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.Spacing["0.5"]))
+			ListPadding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.Spacing["0.5"]))
 			end),
 
 			[Children] = {

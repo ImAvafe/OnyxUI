@@ -28,8 +28,8 @@ return {
 			AutomaticSize = Enum.AutomaticSize.Y,
 			ListEnabled = true,
 			ListFillDirection = Enum.FillDirection.Vertical,
-			ListPadding = Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.Spacing["0.75"]))
+			ListPadding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.Spacing["0.75"]))
 			end),
 
 			[Children] = {
@@ -41,16 +41,16 @@ return {
 					Size = UDim2.fromScale(1, 0),
 					AutomaticSize = Enum.AutomaticSize.Y,
 					ListEnabled = true,
-					ListPadding = Scope:Computed(function(use)
-						return UDim.new(0, use(Theme.Spacing["0.25"]))
+					ListPadding = Scope:Computed(function(Use)
+						return UDim.new(0, Use(Theme.Spacing["0.25"]))
 					end),
 
 					[Children] = {
 						Scope:Text {
 							Text = "Title",
 							TextSize = Theme.TextSize["1.25"],
-							FontFace = Scope:Computed(function(use)
-								return Font.new(use(Theme.Font.Heading), use(Theme.FontWeight.Heading))
+							FontFace = Scope:Computed(function(Use)
+								return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
 							end),
 						},
 						Scope:Divider {},

@@ -5,8 +5,8 @@ local Components = {
 	Text = require(script.Text),
 }
 
--- for _, use(Child in ipairs(script:GetChildren()) do
--- 	local LastCharacters = string.sub(Child.Name, use(-string.len(STORY_EXTENSION))
+-- for _, Use(Child in ipairs(script:GetChildren()) do
+-- 	local LastCharacters = string.sub(Child.Name, Use(-string.len(STORY_EXTENSION))
 -- 	if LastCharacters ~= STORY_EXTENSION then
 -- 		local Success, Result = pcall(function()
 -- 			return require(Child)

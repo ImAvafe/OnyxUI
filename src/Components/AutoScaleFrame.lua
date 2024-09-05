@@ -52,10 +52,10 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	return Scope:Frame(Util.CombineProps(Props, {
 		Name = "AutoScaleFrame",
-		Scale = Scope:Computed(function(use)
-			local Ratio = use(ScaleMultiplier)
-				/ math.max((use(BaseResolution).X / use(ViewportSize).X), (use(BaseResolution).Y / use(ViewportSize).Y))
-			return math.clamp(Ratio, use(MinScale), use(MaxScale))
+		Scale = Scope:Computed(function(Use)
+			local Ratio = Use(ScaleMultiplier)
+				/ math.max((Use(BaseResolution).X / Use(ViewportSize).X), (Use(BaseResolution).Y / Use(ViewportSize).Y))
+			return math.clamp(Ratio, Use(MinScale), Use(MaxScale))
 		end),
 	}))
 end

@@ -20,11 +20,11 @@ return {
 
 		Scope:Frame {
 			Parent = Parent,
-			Padding = Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.StrokeThickness["1"]))
+			Padding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 			end),
-			Size = Scope:Computed(function(use)
-				return UDim2.fromOffset(use(Theme.Spacing["16"]), 0)
+			Size = Scope:Computed(function(Use)
+				return UDim2.fromOffset(Use(Theme.Spacing["16"]), 0)
 			end),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			ListEnabled = true,

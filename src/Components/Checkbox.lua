@@ -11,7 +11,7 @@ local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 
-local peek = Fusion.peek
+local Peek = Fusion.peek
 local Children = Fusion.Children
 
 local BaseButton = require(script.Parent.BaseButton)
@@ -51,16 +51,16 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	local IsHovering = Scope:Value(false)
 	local IsHolding = Scope:Value(false)
-	local EffectiveColor = Scope:Computed(function(use)
-		if use(Disabled) then
-			return use(Theme.Colors.BaseContent.Main)
+	local EffectiveColor = Scope:Computed(function(Use)
+		if Use(Disabled) then
+			return Use(Theme.Colors.BaseContent.Main)
 		else
-			if use(IsHolding) then
-				return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Regular))
-			elseif use(IsHovering) then
-				return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Light))
+			if Use(IsHolding) then
+				return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Regular))
+			elseif Use(IsHovering) then
+				return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Light))
 			else
-				return use(Color)
+				return Use(Color)
 			end
 		end
 	end)
@@ -69,11 +69,11 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Name = "Checkbox",
 		BackgroundColor3 = EffectiveColor,
 		BackgroundTransparency = Scope:Spring(
-			Scope:Computed(function(use)
-				if use(Disabled) then
+			Scope:Computed(function(Use)
+				if Use(Disabled) then
 					return DISABLED_BACKGROUND_TRANSPARENCY
 				else
-					if use(Checked) then
+					if Use(Checked) then
 						return 0
 					else
 						return 1
@@ -84,13 +84,13 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			Theme.SpringDampening["1"]
 		),
 		Disabled = Disabled,
-		CornerRadius = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.CornerRadius["0.5"]))
+		CornerRadius = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.CornerRadius["0.5"]))
 		end),
 		StrokeEnabled = true,
 		StrokeColor = EffectiveColor,
-		StrokeTransparency = Scope:Computed(function(use)
-			if use(Disabled) then
+		StrokeTransparency = Scope:Computed(function(Use)
+			if Use(Disabled) then
 				return DISABLED_BACKGROUND_TRANSPARENCY
 			else
 				return 0
@@ -101,7 +101,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		IsHolding = IsHolding,
 
 		OnActivated = function()
-			Checked:set(not peek(Checked))
+			Checked:set(not Peek(Checked))
 		end,
 
 		[Children] = {
@@ -109,9 +109,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 				Name = "CheckIcon",
 				Image = IconId,
 				ImageTransparency = Scope:Spring(
-					Scope:Computed(function(use)
-						if use(Checked) then
-							if use(Disabled) then
+					Scope:Computed(function(Use)
+						if Use(Checked) then
+							if Use(Disabled) then
 								return DISABLED_CONTENT_TRANSPARENCY
 							else
 								return 0
@@ -123,12 +123,12 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 					Theme.SpringSpeed["1"],
 					Theme.SpringDampening["1"]
 				),
-				ImageColor3 = Scope:Computed(function(use)
-					return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Contrast))
+				ImageColor3 = Scope:Computed(function(Use)
+					return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Contrast))
 				end),
 				Rotation = Scope:Spring(
-					Scope:Computed(function(use)
-						return (use(Checked) and 0) or -30
+					Scope:Computed(function(Use)
+						return (Use(Checked) and 0) or -30
 					end),
 					Theme.SpringSpeed["1"],
 					Theme.SpringDampening["1"]

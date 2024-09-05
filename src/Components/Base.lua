@@ -256,8 +256,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 	local StrokeApplyStrokeMode = Util.Fallback(Props.StrokeApplyStrokeMode, Enum.ApplyStrokeMode.Border)
 	local StrokeLineJoinMode = Util.Fallback(
 		Props.StrokeLineJoinMode,
-		Scope:Computed(function(use)
-			local CornerRadiusValue = use(CornerRadius)
+		Scope:Computed(function(Use)
+			local CornerRadiusValue = Use(CornerRadius)
 			if (CornerRadiusValue ~= nil) and ((CornerRadiusValue.Offset > 1) or (CornerRadiusValue.Scale > 1)) then
 				return Enum.LineJoinMode.Round
 			else
@@ -267,8 +267,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 	)
 	local Padding = Util.Fallback(
 		Props.Padding,
-		Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["1"]))
+		Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["1"]))
 		end)
 	)
 	local PaddingBottom = Util.Fallback(Props.PaddingBottom, Props.Padding)
@@ -277,38 +277,38 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 	local PaddingTop = Util.Fallback(Props.PaddingTop, Props.Padding)
 	local ListPadding = Util.Fallback(
 		Props.ListPadding,
-		Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["1"]))
+		Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["1"]))
 		end)
 	)
 	local ListSortOrder = Util.Fallback(Props.ListSortOrder, Enum.SortOrder.LayoutOrder)
 	local GridCellPadding = Util.Fallback(
 		Props.GridCellPadding,
-		Scope:Computed(function(use)
-			return UDim2.fromOffset(use(Theme.Spacing["0.5"]), use(Theme.Spacing["0.5"]))
+		Scope:Computed(function(Use)
+			return UDim2.fromOffset(Use(Theme.Spacing["0.5"]), Use(Theme.Spacing["0.5"]))
 		end)
 	)
 	local GridSortOrder = Util.Fallback(Props.GridSortOrder, Enum.SortOrder.LayoutOrder)
 	local PagePadding = Util.Fallback(
 		Props.PagePadding,
-		Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.5"]))
+		Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end)
 	)
 	local PageSortOrder = Util.Fallback(Props.PageSortOrder, Enum.SortOrder.LayoutOrder)
 	local TablePadding = Util.Fallback(
 		Props.TablePadding,
-		Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.5"]))
+		Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end)
 	)
 	local TableSortOrder = Util.Fallback(Props.TableSortOrder, Enum.SortOrder.LayoutOrder)
 
-	local PaddingInEffect = Scope:Computed(function(use)
+	local PaddingInEffect = Scope:Computed(function(Use)
 		local Paddings = { Props.Padding, Props.PaddingTop, Props.PaddingLeft, Props.PaddingRight, Props.PaddingBottom }
 
 		for _, PaddingProp in pairs(Paddings) do
-			local PaddingValue = use(PaddingProp)
+			local PaddingValue = Use(PaddingProp)
 			if typeof(PaddingValue) == "UDim" then
 				return true
 			end
@@ -351,8 +351,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 		SelectionGroup = Props.SelectionGroup,
 
 		[Children] = {
-			Scope:Computed(function(use)
-				local CornerRadiusValue = use(CornerRadius)
+			Scope:Computed(function(Use)
+				local CornerRadiusValue = Use(CornerRadius)
 				if
 					(CornerRadiusValue ~= nil)
 					and ((CornerRadiusValue.Offset ~= 0) or (CornerRadiusValue.Scale ~= 0))
@@ -364,13 +364,13 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				local PaddingInEffectValue = use(PaddingInEffect)
+			Scope:Computed(function(Use)
+				local PaddingInEffectValue = Use(PaddingInEffect)
 				if PaddingInEffectValue == true then
 					return Scope:New "UIPadding" {
-						PaddingTop = Scope:Computed(function(use)
-							local PaddingTopValue = use(PaddingTop)
-							local PaddingValue = use(Padding)
+						PaddingTop = Scope:Computed(function(Use)
+							local PaddingTopValue = Use(PaddingTop)
+							local PaddingValue = Use(Padding)
 							if typeof(PaddingTopValue) == "UDim" then
 								return PaddingTopValue
 							elseif typeof(PaddingValue) == "UDim" then
@@ -379,9 +379,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 								return UDim.new()
 							end
 						end),
-						PaddingBottom = Scope:Computed(function(use)
-							local PaddingBottomValue = use(PaddingBottom)
-							local PaddingValue = use(Padding)
+						PaddingBottom = Scope:Computed(function(Use)
+							local PaddingBottomValue = Use(PaddingBottom)
+							local PaddingValue = Use(Padding)
 							if typeof(PaddingBottomValue) == "UDim" then
 								return PaddingBottomValue
 							elseif typeof(PaddingValue) == "UDim" then
@@ -390,9 +390,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 								return UDim.new()
 							end
 						end),
-						PaddingLeft = Scope:Computed(function(use)
-							local PaddingLeftValue = use(PaddingLeft)
-							local PaddingValue = use(Padding)
+						PaddingLeft = Scope:Computed(function(Use)
+							local PaddingLeftValue = Use(PaddingLeft)
+							local PaddingValue = Use(Padding)
 							if typeof(PaddingLeftValue) == "UDim" then
 								return PaddingLeftValue
 							elseif typeof(PaddingValue) == "UDim" then
@@ -401,9 +401,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 								return UDim.new()
 							end
 						end),
-						PaddingRight = Scope:Computed(function(use)
-							local PaddingRightValue = use(PaddingRight)
-							local PaddingValue = use(Padding)
+						PaddingRight = Scope:Computed(function(Use)
+							local PaddingRightValue = Use(PaddingRight)
+							local PaddingValue = Use(Padding)
 							if typeof(PaddingRightValue) == "UDim" then
 								return PaddingRightValue
 							elseif typeof(PaddingValue) == "UDim" then
@@ -417,8 +417,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				local ScaleValue = use(Props.Scale)
+			Scope:Computed(function(Use)
+				local ScaleValue = Use(Props.Scale)
 				if (ScaleValue ~= nil) and (ScaleValue ~= 1) then
 					return Scope:New "UIScale" {
 						Scale = ScaleValue,
@@ -427,8 +427,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				if use(Props.StrokeEnabled) == true then
+			Scope:Computed(function(Use)
+				if Use(Props.StrokeEnabled) == true then
 					return Scope:New "UIStroke" {
 						Enabled = Props.StrokeEnabled,
 						Thickness = StrokeThickness,
@@ -441,8 +441,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				if use(Props.GradientEnabled) == true then
+			Scope:Computed(function(Use)
+				if Use(Props.GradientEnabled) == true then
 					return Scope:New "UIGradient" {
 						Enabled = Props.GradientEnabled,
 						Color = Props.GradientColor,
@@ -454,8 +454,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				if use(Props.AspectRatio) ~= nil then
+			Scope:Computed(function(Use)
+				if Use(Props.AspectRatio) ~= nil then
 					return Scope:New "UIAspectRatioConstraint" {
 						AspectRatio = Props.AspectRatio,
 						DominantAxis = Props.DominantAxis,
@@ -465,8 +465,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				if (use(Props.MaxSize) ~= nil) or (use(Props.MinSize) ~= nil) then
+			Scope:Computed(function(Use)
+				if (Use(Props.MaxSize) ~= nil) or (Use(Props.MinSize) ~= nil) then
 					return Scope:New "UISizeConstraint" {
 						MaxSize = Props.MaxSize,
 						MinSize = Props.MinSize,
@@ -475,8 +475,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				if (use(Props.MaxTextSize) ~= nil) or (use(Props.MinTextSize) ~= nil) then
+			Scope:Computed(function(Use)
+				if (Use(Props.MaxTextSize) ~= nil) or (Use(Props.MinTextSize) ~= nil) then
 					return Scope:New "UITextSizeConstraint" {
 						MaxTextSize = Props.MaxTextSize,
 						MinTextSize = Props.MinTextSize,
@@ -485,8 +485,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				if use(Props.ListEnabled) == true then
+			Scope:Computed(function(Use)
+				if Use(Props.ListEnabled) == true then
 					return Scope:New "UIListLayout" {
 						Padding = ListPadding,
 						FillDirection = Props.ListFillDirection,
@@ -502,8 +502,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				if use(Props.GridEnabled) == true then
+			Scope:Computed(function(Use)
+				if Use(Props.GridEnabled) == true then
 					return Scope:New "UIGridLayout" {
 						CellPadding = GridCellPadding,
 						CellSize = Props.GridCellSize,
@@ -518,8 +518,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				if use(Props.TableEnabled) == true then
+			Scope:Computed(function(Use)
+				if Use(Props.TableEnabled) == true then
 					return Scope:New "UITableLayout" {
 						Padding = TablePadding,
 						FillEmptySpaceColumns = Props.TableFillEmptySpaceColumns,
@@ -534,8 +534,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				if use(Props.PageEnabled) == true then
+			Scope:Computed(function(Use)
+				if Use(Props.PageEnabled) == true then
 					return Scope:New "UIPageLayout" {
 						Animated = Props.PageAnimated,
 						Circular = Props.PageCircular,
@@ -555,8 +555,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props): Instance
 					return
 				end
 			end),
-			Scope:Computed(function(use)
-				local FlexMode = use(Props.FlexMode)
+			Scope:Computed(function(Use)
+				local FlexMode = Use(Props.FlexMode)
 				if (FlexMode ~= nil) and (FlexMode ~= Enum.UIFlexMode.None) then
 					return Scope:New "UIFlexItem" {
 						FlexMode = Props.FlexMode,

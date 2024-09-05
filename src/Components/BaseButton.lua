@@ -11,7 +11,7 @@ local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
-local peek = Fusion.peek
+local Peek = Fusion.peek
 local OnEvent = Fusion.OnEvent
 
 local Base = require(script.Parent.Base)
@@ -68,14 +68,14 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local ClickSound = Util.Fallback(Props.ClickSound, Theme.Sound.Click)
 	local Active = Util.Fallback(
 		Props.Active,
-		Scope:Computed(function(use)
-			return not use(Disabled)
+		Scope:Computed(function(Use)
+			return not Use(Disabled)
 		end)
 	)
 	local Selectable = Util.Fallback(
 		Props.Selectable,
-		Scope:Computed(function(use)
-			return not use(Disabled)
+		Scope:Computed(function(Use)
+			return not Use(Disabled)
 		end)
 	)
 
@@ -91,39 +91,39 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		TextSize = 0,
 
 		[OnEvent "Activated"] = function()
-			if not peek(Disabled) then
-				SoundService:PlayLocalSound(peek(ClickSound))
-				peek(OnActivated)()
+			if not Peek(Disabled) then
+				SoundService:PlayLocalSound(Peek(ClickSound))
+				Peek(OnActivated)()
 			end
 		end,
 		[OnEvent "MouseEnter"] = function()
-			if peek(Active) then
-				SoundService:PlayLocalSound(peek(HoverSound))
+			if Peek(Active) then
+				SoundService:PlayLocalSound(Peek(HoverSound))
 			end
 			IsHovering:set(true)
-			peek(OnMouseEnter)()
+			Peek(OnMouseEnter)()
 		end,
 		[OnEvent "SelectionGained"] = function()
-			if peek(Active) then
-				SoundService:PlayLocalSound(peek(HoverSound))
+			if Peek(Active) then
+				SoundService:PlayLocalSound(Peek(HoverSound))
 			end
 			IsHovering:set(true)
-			peek(OnMouseEnter)()
+			Peek(OnMouseEnter)()
 		end,
 		[OnEvent "MouseLeave"] = function()
 			IsHovering:set(false)
 			IsHolding:set(false)
-			peek(OnMouseLeave)()
+			Peek(OnMouseLeave)()
 		end,
 		[OnEvent "MouseButton1Down"] = function()
-			if not peek(Disabled) then
+			if not Peek(Disabled) then
 				IsHolding:set(true)
-				peek(OnMouseButton1Down)()
+				Peek(OnMouseButton1Down)()
 			end
 		end,
 		[OnEvent "MouseButton1Up"] = function()
 			IsHolding:set(false)
-			peek(OnMouseButton1Up)()
+			Peek(OnMouseButton1Up)()
 		end,
 	}
 end

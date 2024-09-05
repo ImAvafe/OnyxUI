@@ -51,8 +51,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local ContentColor = Util.Fallback(
 		Props.ContentColor,
 
-		Scope:Computed(function(use)
-			return ColorUtils.Emphasize(use(Color), use(Theme.Emphasis.Contrast))
+		Scope:Computed(function(Use)
+			return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Contrast))
 		end)
 	)
 	local ContentSize = Util.Fallback(Props.ContentSize, Theme.TextSize["1"])
@@ -61,21 +61,21 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Name = "Badge",
 		BackgroundColor3 = Color,
 		BackgroundTransparency = 0,
-		Padding = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0"]))
+		Padding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0"]))
 		end),
-		PaddingLeft = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.5"]))
+		PaddingLeft = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
-		PaddingRight = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.5"]))
+		PaddingRight = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
-		CornerRadius = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.CornerRadius["2"]))
+		CornerRadius = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.CornerRadius["2"]))
 		end),
 		ListEnabled = true,
-		ListPadding = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.25"]))
+		ListPadding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.25"]))
 		end),
 		ListFillDirection = Enum.FillDirection.Horizontal,
 		ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
@@ -90,8 +90,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 				ContentWrapped = ContentWrapped,
 				ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 				ListVerticalAlignment = Enum.VerticalAlignment.Center,
-				ListPadding = Scope:Computed(function(use)
-					return UDim.new(0, use(Theme.Spacing["0.25"]))
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.25"]))
 				end),
 			},
 		},

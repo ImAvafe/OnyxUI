@@ -6,7 +6,7 @@ local Util = require(OnyxUI.Util)
 
 local Scoped = Fusion.scoped
 local Children = Fusion.Children
-local peek = Fusion.peek
+local Peek = Fusion.peek
 
 local Frame = require(OnyxUI.Components.Frame)
 local Badge = require(OnyxUI.Components.Badge)
@@ -26,11 +26,11 @@ return {
 
 		local CountThread = task.spawn(function()
 			while task.wait(0.08) do
-				if peek(NotificationCount) == 100 then
+				if Peek(NotificationCount) == 100 then
 					task.wait(3)
 					NotificationCount:set(1)
 				else
-					NotificationCount:set(peek(NotificationCount) + 1)
+					NotificationCount:set(Peek(NotificationCount) + 1)
 				end
 			end
 		end)
@@ -44,8 +44,8 @@ return {
 		Scope:Frame {
 			Parent = Parent,
 			ListEnabled = true,
-			ListPadding = Scope:Computed(function(use)
-				return UDim.new(0, use(Theme.Spacing["0.5"]))
+			ListPadding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.Spacing["0.5"]))
 			end),
 
 			[Children] = {
@@ -65,11 +65,11 @@ return {
 					Color = Util.Colors.Red["500"],
 				},
 				Scope:Badge {
-					Content = Scope:Computed(function(use)
-						if use(NotificationCount) >= 100 then
+					Content = Scope:Computed(function(Use)
+						if Use(NotificationCount) >= 100 then
 							return { "99+" }
 						else
-							return { use(NotificationCount) }
+							return { Use(NotificationCount) }
 						end
 					end),
 					Color = Theme.Colors.Primary.Main,
@@ -78,8 +78,8 @@ return {
 					ListEnabled = true,
 					ListHorizontalAlignment = Enum.HorizontalAlignment.Center,
 					ListFillDirection = Enum.FillDirection.Horizontal,
-					ListPadding = Scope:Computed(function(use)
-						return UDim.new(0, use(Theme.Spacing["0.25"]))
+					ListPadding = Scope:Computed(function(Use)
+						return UDim.new(0, Use(Theme.Spacing["0.25"]))
 					end),
 
 					[Children] = {

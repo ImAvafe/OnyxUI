@@ -54,8 +54,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local ContentColor = Util.Fallback(Props.ContentColor, Theme.Colors.BaseContent.Main)
 	local ContentFontFace = Util.Fallback(
 		Props.ContentFontFace,
-		Scope:Computed(function(use)
-			return Font.new(use(Theme.Font.Heading), use(Theme.FontWeight.Heading))
+		Scope:Computed(function(Use)
+			return Font.new(Use(Theme.Font.Heading), Use(Theme.FontWeight.Heading))
 		end)
 	)
 	local CloseButtonDisabled = Util.Fallback(Props.CloseButtonDisabled, false)
@@ -77,12 +77,12 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 				ContentSize = ContentSize,
 				ContentFontFace = ContentFontFace,
 				ContentWrapped = false,
-				ListPadding = Scope:Computed(function(use)
-					return UDim.new(0, use(Theme.Spacing["0.5"]))
+				ListPadding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.Spacing["0.5"]))
 				end),
 			},
-			Scope:Computed(function(use)
-				if use(CloseButtonDisabled) == false then
+			Scope:Computed(function(Use)
+				if Use(CloseButtonDisabled) == false then
 					return Scope:IconButton {
 						Name = "CloseButton",
 						Image = CloseButtonIcon,
@@ -94,8 +94,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						Position = UDim2.fromScale(1, 0.5),
 
 						OnActivated = function()
-							if use(OnClose) then
-								use(OnClose)()
+							if Use(OnClose) then
+								Use(OnClose)()
 							end
 						end,
 					}

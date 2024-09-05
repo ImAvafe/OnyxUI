@@ -50,11 +50,11 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local FallbackImage = Util.Fallback(Props.FallbackImage, "rbxasset://textures/ui/GuiImagePlaceholder.png")
 	local Image = Util.Fallback(Props.Image, nil)
 
-	local ImageInUse = Scope:Computed(function(use)
-		if use(Image) then
-			return use(Image)
+	local ImageInUse = Scope:Computed(function(Use)
+		if Use(Image) then
+			return Use(Image)
 		else
-			return use(FallbackImage)
+			return Use(FallbackImage)
 		end
 	end)
 
