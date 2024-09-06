@@ -34,8 +34,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Size = UDim2.fromOffset(330, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		ListEnabled = true,
-		ListPadding = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.75"]))
+		ListPadding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.75"]))
 		end),
 
 		[Children] = {
@@ -46,11 +46,12 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 				Size = UDim2.new(UDim.new(1, 0), UDim.new(0, 175)),
 				AutomaticSize = Enum.AutomaticSize.None,
 				ListEnabled = true,
-				Padding = Scope:Computed(function(use)
-					return UDim.new(0, use(Theme.StrokeThickness["1"]))
+				ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
+				Padding = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 				end),
-				PaddingRight = Scope:Computed(function(use)
-					return UDim.new(0, use(Theme.StrokeThickness["1"]) + use(Theme.Spacing["1"]))
+				PaddingRight = Scope:Computed(function(Use)
+					return UDim.new(0, Use(Theme.StrokeThickness["1"]) + Use(Theme.Spacing["1"]))
 				end),
 
 				[Children] = {
@@ -76,7 +77,6 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						Label = "Nothing same",
 					},
 					Scope:TextInput {
-						Size = UDim2.fromScale(1, 0),
 						AutomaticSize = Enum.AutomaticSize.Y,
 						PlaceholderText = "Nickname",
 					},

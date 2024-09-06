@@ -13,7 +13,7 @@ Themer can now handle multiple active themes, thanks to Fusion's new [`Contextua
 ## Sample themes
 
 - [OnyxNight](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/OnyxNight.lua) - *The default theme*
-- [BitCave](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/BitCave.lua)
+- [BitCave](https://github.com/ImAvafe/OnyxUI/blob/main/samples/Themes/BitCave.lua)
 
 ## Making your own theme
 
