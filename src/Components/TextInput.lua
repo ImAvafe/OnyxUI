@@ -32,6 +32,7 @@ local Components = {
 		@field Text Fusion.UsedAs<string>?
 		@field ClearTextOnFocus Fusion.UsedAs<boolean>?
 		@field TextWrapped Fusion.UsedAs<boolean>?
+		@field TextEditable Fusion.UsedAs<boolean>?
 		@field MultiLine Fusion.UsedAs<boolean>?
 		@field TextSize Fusion.UsedAs<number>?
 		@field TextColor3 Fusion.UsedAs<Color3>?
@@ -40,6 +41,7 @@ local Components = {
 		@field TextXAlignment Fusion.UsedAs<Enum.TextXAlignment>?
 		@field TextYAlignment Fusion.UsedAs<Enum.TextYAlignment>?
 		@field TextTransparency Fusion.UsedAs<number>?
+		@field TextProcessor Fusion.UsedAs<(string) -> string>?
 		@field IsFocused Fusion.UsedAs<boolean>?
 		@field OnFocused Fusion.UsedAs<() -> ()>?
 		@field OnFocusLost Fusion.UsedAs<() -> ()>?
@@ -52,6 +54,7 @@ export type Props = Base.Props & {
 	Text: Fusion.UsedAs<string>?,
 	ClearTextOnFocus: Fusion.UsedAs<boolean>?,
 	TextWrapped: Fusion.UsedAs<boolean>?,
+	TextEditable: Fusion.UsedAs<boolean>?,
 	MultiLine: Fusion.UsedAs<boolean>?,
 	TextSize: Fusion.UsedAs<number>?,
 	TextColor3: Fusion.UsedAs<Color3>?,
@@ -60,6 +63,7 @@ export type Props = Base.Props & {
 	TextXAlignment: Fusion.UsedAs<Enum.TextXAlignment>?,
 	TextYAlignment: Fusion.UsedAs<Enum.TextYAlignment>?,
 	TextTransparency: Fusion.UsedAs<number>?,
+	TextProcessor: Fusion.UsedAs<(string) -> string>?,
 
 	IsFocused: Fusion.UsedAs<boolean>?,
 	OnFocused: Fusion.UsedAs<() -> ()>?,
@@ -73,7 +77,6 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 	local Text = Scope:EnsureValue(Util.Fallback(Props.Text, ""))
 	local Disabled = Util.Fallback(Props.Disabled, false)
-	local RemainingCharaters = Scope:Value(-1)
 	local IsFocused = Scope:EnsureValue(Util.Fallback(Props.IsFocused, false))
 	local OnFocused = Util.Fallback(Props.OnFocused, function() end)
 	local OnFocusLost = Util.Fallback(Props.OnFocusLost, function() end)
@@ -111,14 +114,28 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			end
 		end)
 	)
-
-	Scope:Observer(Text):onChange(function()
-		local TextValue = Peek(Text) or ""
-		Text:set(TextValue:sub(1, utf8.offset(TextValue, Peek(CharacterLimit))))
-		RemainingCharaters:set(CharacterLimit - (utf8.len(TextValue or "") or Peek(CharacterLimit)))
+	local TextProcessor = Util.Fallback(Props.TextProcessor, function(NewText)
+		return NewText
 	end)
+	local TextEditable = Util.Fallback(
+		Props.TextEditable,
+		Scope:Computed(function(Use)
+			return not Use(Disabled)
+		end)
+	)
 
-	return Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
+	local OutText = Scope:Value("")
+	local ProcessedText = Scope:Computed(function(Use)
+		local OutTextValue = Use(OutText) or ""
+		local CharacterLimitValue = Use(CharacterLimit)
+		local LimitedText = OutTextValue:sub(1, utf8.offset(OutTextValue, CharacterLimitValue))
+		local FullyProcessedText = Use(TextProcessor)(LimitedText)
+
+		return FullyProcessedText
+	end)
+	local InvalidInputActive = Scope:Value(false)
+
+	local Object = Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "TextBox",
 		Name = "TextInput",
 		CornerRadius = Scope:Computed(function(Use)
@@ -127,6 +144,28 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Padding = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
+		PaddingLeft = Scope:Spring(
+			Scope:Computed(function(Use)
+				if Use(InvalidInputActive) then
+					return UDim.new(0, Use(Theme.Spacing["0.75"]))
+				else
+					return UDim.new(0, Use(Theme.Spacing["0.5"]))
+				end
+			end),
+			Theme.SpringSpeed["1"],
+			Theme.SpringDampening["1"]
+		),
+		PaddingRight = Scope:Spring(
+			Scope:Computed(function(Use)
+				if Use(InvalidInputActive) then
+					return UDim.new(0, Use(Theme.Spacing["0.75"]))
+				else
+					return UDim.new(0, Use(Theme.Spacing["0.5"]))
+				end
+			end),
+			Theme.SpringSpeed["1"],
+			Theme.SpringDampening["1"]
+		),
 		StrokeEnabled = true,
 		StrokeColor = Scope:Spring(
 			Scope:Computed(function(Use)
@@ -162,7 +201,17 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		ClipsDescendants = true,
 	}))) {
 		Text = Text,
-		TextColor3 = Scope:Spring(TextColor3, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
+		TextColor3 = Scope:Spring(
+			Scope:Computed(function(Use)
+				if Use(InvalidInputActive) then
+					return Use(Theme.Colors.Error.Main)
+				else
+					return Use(TextColor3)
+				end
+			end),
+			Theme.SpringSpeed["1"],
+			Theme.SpringDampening["1"]
+		),
 		TextSize = TextSize,
 		FontFace = FontFace,
 		PlaceholderColor3 = PlaceholderColor3,
@@ -171,15 +220,13 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		TextYAlignment = TextYAlignment,
 		ClearTextOnFocus = ClearTextOnFocus,
 		TextTransparency = Scope:Spring(TextTransparency, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
+		TextEditable = TextEditable,
+
 		MultiLine = Props.MultiLine,
 		TextWrapped = Props.TextWrapped,
 
-		TextEditable = Scope:Computed(function(Use)
-			return not Use(Disabled)
-		end),
-
 		[OnEvent "Focused"] = function()
-			if not Peek(Disabled) then
+			if (not Peek(Disabled)) and Peek(TextEditable) then
 				IsFocused:set(true)
 				SoundService:PlayLocalSound(Peek(Theme.Sound.Focus))
 				Peek(OnFocused)()
@@ -190,14 +237,31 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			Peek(OnFocusLost)()
 		end,
 		[OnEvent "MouseEnter"] = function()
-			SoundService:PlayLocalSound(Peek(Theme.Sound.Hover))
-		end,
-		[OnEvent "SelectionGained"] = function()
 			if not Peek(Disabled) then
 				SoundService:PlayLocalSound(Peek(Theme.Sound.Hover))
 			end
 		end,
-
-		[Out "Text"] = Text,
+		[OnEvent "SelectionGained"] = function()
+			if (not Peek(Disabled)) and Peek(TextEditable) then
+				SoundService:PlayLocalSound(Peek(Theme.Sound.Hover))
+			end
+		end,
+		[Out "Text"] = OutText,
 	}
+
+	Scope:Observer(OutText):onChange(function()
+		local ProcessedTextValue = Peek(ProcessedText)
+		local OutTextValue = Peek(OutText)
+
+		Text:set(ProcessedTextValue)
+		Object.Text = ProcessedTextValue
+
+		if utf8.len(OutTextValue) ~= utf8.len(ProcessedTextValue) then
+			InvalidInputActive:set(true)
+			task.wait(0.075)
+			InvalidInputActive:set(false)
+		end
+	end)
+
+	return Object
 end
