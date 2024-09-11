@@ -8,13 +8,13 @@ OnyxUI handles theming through a module called [`Themer`](/api/Themer). Themer a
 
 ## Sample themes
 
-- [OnyxNight](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/OnyxNight.lua) - *The default theme*
-- [BitCave](https://github.com/ImAvafe/OnyxUI/blob/main/samples/Themes/BitCave.lua)
+- [OnyxNight](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/OnyxNight.luau) - *The default theme*
+- [BitCave](https://github.com/ImAvafe/OnyxUI/blob/main/samples/Themes/BitCave.luau)
 
 ## Making your own theme
 
 :::tip
-Check out [ThemeSpec.lua](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/ThemeSpec.lua) for a full reference of available theme properties.
+Check out [ThemeSpec.luau](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/ThemeSpec.luau) for a full reference of available theme properties.
 :::
 
 1. Copy the following code into a new "`MyTheme`" module
