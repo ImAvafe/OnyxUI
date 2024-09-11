@@ -37,8 +37,7 @@ export type Props = Base.Props & {
 		@field ScaleMultiplier Fusion.UsedAs<number>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
-		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
 
 	local BaseResolution = Util.Fallback(Props.BaseResolution, Vector2.new())
 	local MinScale = Util.Fallback(Props.MinScale, 0.8)

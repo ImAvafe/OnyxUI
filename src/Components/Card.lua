@@ -23,8 +23,7 @@ export type Props = Frame.Props & {}
 		@field ... FrameProps
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
-		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	return Scope:Frame(Util.CombineProps(Props, {

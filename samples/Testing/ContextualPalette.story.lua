@@ -13,8 +13,8 @@ local function Palette(Scope: Fusion.Scope<any>, _: any)
 		Name = "Palette",
 		BackgroundTransparency = 1,
 		ListEnabled = true,
-		ListPadding = Scope:Computed(function(use)
-			return UDim.new(0, use(Theme.Spacing["0.75"]))
+		ListPadding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["0.75"]))
 		end),
 
 		[Children] = {
@@ -45,10 +45,9 @@ local function Palette(Scope: Fusion.Scope<any>, _: any)
 end
 
 return function(Parent: GuiObject)
-	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components) & { ["Palette"]: typeof(Palette) }> =
-		Fusion.scoped(Fusion, Components, {
-			Palette = Palette,
-		})
+	local Scope = Fusion.scoped(Fusion, Components, {
+		Palette = Palette,
+	})
 
 	local AnotherTheme = Themer.NewTheme(Scope, {
 		Colors = {

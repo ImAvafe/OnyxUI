@@ -15,7 +15,7 @@ local Components = {
 
 return {
 	story = function(Parent: GuiObject)
-		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Scope = Scoped(Fusion, Components)
 
 		local RandomNumber = Scope:Value(0)
 		local RandomDecimalNumber = Scope:Value(0)

@@ -37,8 +37,7 @@ type Props = Frame.Props & {
 		@field Spacing Fusion.UsedAs<UDim>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
-		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	local Length = Util.Fallback(Props.Length, UDim.new(1, 0))

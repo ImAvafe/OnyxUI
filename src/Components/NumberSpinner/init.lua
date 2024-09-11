@@ -44,8 +44,7 @@ export type Props = Text.Props & {
 		@field Commas Fusion.UsedAs<boolean>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
-		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	local TextSize = Util.Fallback(Props.TextSize, Theme.TextSize["1"])
@@ -62,8 +61,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		AutomaticSize = Enum.AutomaticSize.None,
 		TextSize = TextSize,
 		Font = Enum.Font.GothamBold,
-		Size = Scope:Computed(function(use)
-			return UDim2.new(UDim.new(1, 0), UDim.new(0, use(TextSize)))
+		Size = Scope:Computed(function(Use)
+			return UDim2.new(UDim.new(1, 0), UDim.new(0, Use(TextSize)))
 		end),
 	})))
 

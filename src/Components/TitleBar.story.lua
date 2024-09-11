@@ -15,7 +15,7 @@ local Components = {
 
 return {
 	story = function(Parent: GuiObject, _Props)
-		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Components)> = Scoped(Fusion, Components)
+		local Scope = Scoped(Fusion, Components)
 		local Theme = Themer.Theme:now()
 
 		Scope:Frame {

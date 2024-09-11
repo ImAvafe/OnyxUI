@@ -44,8 +44,7 @@ export type Props = Base.Props & {
 		@field TileSize Fusion.UsedAs<UDim2>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
-		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
 
 	local FallbackImage = Util.Fallback(Props.FallbackImage, "rbxasset://textures/ui/GuiImagePlaceholder.png")
 	local Image = Util.Fallback(Props.Image, nil)

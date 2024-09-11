@@ -244,7 +244,7 @@ export type Props = {
 	@field MinTextSize Fusion.UsedAs<number>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props): Instance
-	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util)> = Fusion.innerScope(Scope, Fusion, Util)
+	local Scope = Fusion.innerScope(Scope, Fusion, Util)
 	local Theme = Themer.Theme:now()
 
 	local ClassName = Util.Fallback(Props.ClassName, "Frame")

@@ -10,7 +10,7 @@ local Components = {
 
 return {
 	story = function(Parent: GuiObject)
-		local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> = Scoped(Fusion, Util, Components)
+		local Scope = Scoped(Fusion, Util, Components)
 
 		Scope:Text {
 			Parent = Parent,

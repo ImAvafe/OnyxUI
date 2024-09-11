@@ -21,8 +21,7 @@ export type Props = SwitchGroup.Props & {
 }
 
 local function SettingToggle(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
-		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	local Switched = Scope:EnsureValue(Util.Fallback(Props.Switched, false))
@@ -42,8 +41,8 @@ local function SettingToggle(Scope: Fusion.Scope<any>, Props: Props)
 				Position = UDim2.fromScale(0, 0.5),
 				Text = Props.Label,
 				TextColor3 = Theme.Colors.BaseContent.Main,
-				TextTransparency = Scope:Computed(function(use)
-					if use(Disabled) then
+				TextTransparency = Scope:Computed(function(Use)
+					if Use(Disabled) then
 						return DISABLED_TRANSPARENCY
 					else
 						return 0

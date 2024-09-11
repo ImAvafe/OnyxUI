@@ -46,8 +46,7 @@ export type Props = Card.Props & {}
 
 -- Component construction
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
-		InnerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	return Scope:Card {

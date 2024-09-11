@@ -15,8 +15,7 @@ local Util = OnyxUI.Util
 local InnerScope = Fusion.innerScope
 
 return function(Props)
-  local Scope: Fusion.Scope<typeof(Util)> =
-      InnerScope(Scope, Util)
+  local Scope = InnerScope(Scope, Util)
 
   local MyProp = Scope:Fallback(Props.MyProp, "Default")
 end
@@ -32,8 +31,7 @@ local Components = OnyxUI.Components
 local InnerScope = Fusion.innerScope
 
 return function(Props)
-  local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
-      InnerScope(Scope, Fusion, Util, Components)
+  local Scope = InnerScope(Scope, Fusion, Util, Components)
   local Theme = Themer.Theme:now()
 
   return Scope:BaseButton(Util.CombineProps(Props, {

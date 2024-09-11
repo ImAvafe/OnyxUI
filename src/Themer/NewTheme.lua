@@ -64,7 +64,7 @@ local function ProcessMultipliers(Objects: {
 end
 
 local function NewTheme(Scope: Fusion.Scope<any>, ThemeSpec: ThemeSpec)
-	local Scope: Fusion.Scope<typeof(Fusion)> = InnerScope(Scope, Fusion)
+	local Scope = InnerScope(Scope, Fusion)
 
 	local ThemeObject = {
 		Colors = {

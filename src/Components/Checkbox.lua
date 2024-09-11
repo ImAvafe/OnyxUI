@@ -40,8 +40,7 @@ local DISABLED_CONTENT_TRANSPARENCY = 0.75
 		@field Color Fusion.UsedAs<Color3>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope: Fusion.Scope<typeof(Fusion) & typeof(Util) & typeof(Components)> =
-		Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	local Checked = Scope:EnsureValue(Util.Fallback(Props.Checked, false))
