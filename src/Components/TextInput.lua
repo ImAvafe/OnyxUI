@@ -14,6 +14,7 @@ local Themer = require(OnyxUI.Themer)
 local Peek = Fusion.peek
 local OnEvent = Fusion.OnEvent
 local Out = Fusion.Out
+local InnerScope = Fusion.innerScope
 
 local Base = require(script.Parent.Base)
 local Components = {
@@ -71,7 +72,7 @@ export type Props = Base.Props & {
 }
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	local Text = Scope:EnsureValue(Util.Fallback(Props.Text, ""))

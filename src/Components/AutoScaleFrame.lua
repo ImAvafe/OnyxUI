@@ -11,6 +11,7 @@ local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 
 local Out = Fusion.Out
+local InnerScope = Fusion.innerScope
 
 local Base = require(script.Parent.Base)
 local Frame = require(script.Parent.Frame)
@@ -37,7 +38,7 @@ export type Props = Base.Props & {
 		@field ScaleMultiplier Fusion.UsedAs<number>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 
 	local BaseResolution = Util.Fallback(Props.BaseResolution, Vector2.new())
 	local MinScale = Util.Fallback(Props.MinScale, 0.8)

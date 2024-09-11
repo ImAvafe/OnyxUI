@@ -14,6 +14,7 @@ local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
+local InnerScope = Fusion.innerScope
 
 export type Props = {
 	ClassName: string?,
@@ -244,7 +245,7 @@ export type Props = {
 	@field MinTextSize Fusion.UsedAs<number>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props): Instance
-	local Scope = Fusion.innerScope(Scope, Fusion, Util)
+	local Scope = InnerScope(Scope, Fusion, Util)
 	local Theme = Themer.Theme:now()
 
 	local ClassName = Util.Fallback(Props.ClassName, "Frame")

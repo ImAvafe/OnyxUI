@@ -9,6 +9,8 @@ local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
 local Util = require(OnyxUI.Util)
 
+local InnerScope = Fusion.innerScope
+
 local Frame = require(script.Parent.Frame)
 local Components = {
 	Frame = Frame,
@@ -23,7 +25,7 @@ export type Props = Frame.Props & {}
 		@field ... FrameProps
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	return Scope:Frame(Util.CombineProps(Props, {

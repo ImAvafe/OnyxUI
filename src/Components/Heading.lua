@@ -6,9 +6,10 @@
 
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
-
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Themer = require(OnyxUI.Themer)
+
+local InnerScope = Fusion.innerScope
 
 local Text = require(OnyxUI.Components.Text)
 local Components = {
@@ -29,7 +30,7 @@ export type Props = Text.Props & {
 		@field TextSize Fusion.UsedAs<number>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	local HeadingSize = Util.Fallback(Props.HeadingSize, 1.75)

@@ -8,6 +8,8 @@ local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Packages.Fusion)
 local Util = require(OnyxUI.Util)
 
+local InnerScope = Fusion.innerScope
+
 local Base = require(script.Parent.Base)
 local Components = {
 	Base = Base,
@@ -22,7 +24,7 @@ export type Props = Base.Props & {}
 		@field ... BaseProps
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 
 	return Scope:Base(Util.CombineProps(Props, {
 		ClassName = "Frame",

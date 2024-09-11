@@ -16,6 +16,7 @@ local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
 local Peek = Fusion.peek
+local InnerScope = Fusion.innerScope
 
 local Text = require(script.Parent.Text)
 local Components = {
@@ -44,7 +45,7 @@ export type Props = Text.Props & {
 		@field Commas Fusion.UsedAs<boolean>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	local TextSize = Util.Fallback(Props.TextSize, Theme.TextSize["1"])

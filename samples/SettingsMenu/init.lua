@@ -4,6 +4,7 @@ local Themer = require(OnyxUI.Themer)
 local Util = require(OnyxUI.Util)
 
 local Children = Fusion.Children
+local InnerScope = Fusion.innerScope
 
 local MenuFrame = require(OnyxUI.Components.MenuFrame)
 local Button = require(OnyxUI.Components.Button)
@@ -25,7 +26,7 @@ export type Props = {
 }
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	return Scope:MenuFrame(Util.CombineProps(Props, {

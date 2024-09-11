@@ -12,6 +12,7 @@ local Themer = require(OnyxUI.Themer)
 local ColorUtils = require(OnyxUI.Packages.ColorUtils)
 
 local Children = Fusion.Children
+local InnerScope = Fusion.innerScope
 
 local Frame = require(script.Parent.Frame)
 local IconText = require(script.Parent.IconText)
@@ -41,7 +42,7 @@ export type Props = Frame.Props & {
 		@field ContentWrapped Fusion.UsedAs<number>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	local Content = Util.Fallback(Props.Content, {})

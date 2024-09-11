@@ -8,6 +8,8 @@ local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
 local Fusion = require(OnyxUI.Packages.Fusion)
 
+local InnerScope = Fusion.innerScope
+
 local Base = require(script.Parent.Base)
 local Components = {
 	Base = Base,
@@ -27,7 +29,7 @@ export type Props = Base.Props & {
 		@field GroupColor3 Fusion.UsedAs<Color3>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 
 	return Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "CanvasGroup",

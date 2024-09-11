@@ -11,6 +11,7 @@ local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
 local Children = Fusion.Children
+local InnerScope = Fusion.innerScope
 
 local Frame = require(script.Parent.Frame)
 local Group = require(script.Parent.Group)
@@ -39,7 +40,7 @@ export type Props = Group.Props & {
 		@field Length Fusion.UsedAs<UDim>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = Fusion.innerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	local Progress = Util.Fallback(Props.Progress, 0)
