@@ -1,32 +1,22 @@
-local OnyxUI = script.Parent.Parent.OnyxUI.Packages.OnyxUI
-local Fusion = require(OnyxUI.Packages.Fusion)
-local Themer = require(OnyxUI.Themer)
-local Util = require(OnyxUI.Util)
+local OnyxUI = require(script.Parent.Parent.OnyxUI)
+local Fusion = require(script.Parent.Parent.OnyxUI.Packages.OnyxUI.Packages.Fusion)
 
+local Themer = OnyxUI.Themer
+local Util = OnyxUI.Util
 local Children = Fusion.Children
 local InnerScope = Fusion.innerScope
+local Components = OnyxUI.Components
 
-local MenuFrame = require(OnyxUI.Components.MenuFrame)
-local Button = require(OnyxUI.Components.Button)
-local TitleBar = require(OnyxUI.Components.TitleBar)
-local Scroller = require(OnyxUI.Components.Scroller)
 local SettingToggle = require(script.SettingToggle)
-local TextInput = require(OnyxUI.Components.TextInput)
-local Components = {
-	MenuFrame = MenuFrame,
-	Button = Button,
-	TitleBar = TitleBar,
-	Scroller = Scroller,
-	SettingToggle = SettingToggle,
-	TextInput = TextInput,
-}
 
 export type Props = {
 	Parent: Fusion.UsedAs<Instance>?,
 }
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = InnerScope(Scope, Fusion, Util, Components)
+	local Scope = InnerScope(Scope, Fusion, Util, Components, {
+		SettingToggle = SettingToggle,
+	})
 	local Theme = Themer.Theme:now()
 
 	return Scope:MenuFrame(Util.CombineProps(Props, {

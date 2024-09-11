@@ -1,9 +1,9 @@
-local OnyxUI = script.Parent.Parent.Parent.OnyxUI.Packages.OnyxUI
-local Util = require(OnyxUI.Util)
-local Fusion = require(OnyxUI.Packages.Fusion)
-local Themer = require(OnyxUI.Themer)
-local Components = require(OnyxUI.Components)
+local OnyxUI = require(script.Parent.Parent.Parent.OnyxUI)
+local Fusion = require(script.Parent.Parent.Parent.OnyxUI.Packages.OnyxUI.Packages.Fusion)
 
+local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
+local Components = OnyxUI.Components
 local Children = Fusion.Children
 local InnerScope = Fusion.innerScope
 
