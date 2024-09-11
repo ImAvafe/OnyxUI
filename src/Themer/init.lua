@@ -49,7 +49,8 @@ end
 
 	The currently active theme. Use `Themer.Theme:now()` to get the active theme, and `Themer.Theme:is(MyTheme):during()` to make code use another theme. See [Fusion Contextuals](https://elttob.uk/Fusion/0.3/tutorials/best-practices/sharing-values/?h=contextuals#contextuals) for more information.
 ]=]
-Themer.Theme = Contextual(OnyxNightTheme)
+local Theme: Fusion.Contextual<Theme> = Contextual(OnyxNightTheme)
+Themer.Theme = Theme
 
 export type Theme = typeof(Themer.NewTheme(Scoped(), {}))
 
