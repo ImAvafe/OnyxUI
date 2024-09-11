@@ -15,6 +15,8 @@ local NumberSpinner = require(script.NumberSpinner)
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
+local Peek = Fusion.peek
+
 local Text = require(script.Parent.Text)
 local Components = {
 	Text = Text,
@@ -68,10 +70,10 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local SpinnerProps =
 		{ Value = Value, Prefix = Prefix, Suffix = Suffix, Decimals = Decimals, Duration = Duration, Comas = Commas }
 	for PropName, Prop in pairs(SpinnerProps) do
-		Spinner[PropName] = Prop
+		Spinner[PropName] = Peek(Prop)
 
 		Scope:Observer(Prop):onChange(function()
-			Spinner[PropName] = Prop
+			Spinner[PropName] = Peek(Prop)
 		end)
 	end
 
