@@ -5,8 +5,10 @@ local Themer = require(OnyxUI.Themer)
 local Components = require(OnyxUI.Components)
 
 local Children = Fusion.Children
+local InnerScope = Fusion.innerScope
 
 local function Palette(Scope: Fusion.Scope<any>, _: any)
+	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
 	return Scope:Base {
