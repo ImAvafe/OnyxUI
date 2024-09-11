@@ -14,7 +14,7 @@ OnyxUI handles theming through a module called [`Themer`](/api/Themer). Themer a
 ## Making your own theme
 
 :::tip
-Check out [ThemeType.lua](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/ThemeType.lua) for a full reference of available theme properties.
+Check out [ThemeSpec.lua](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/ThemeSpec.lua) for a full reference of available theme properties.
 :::
 
 1. Copy the following code into a new "`MyTheme`" module

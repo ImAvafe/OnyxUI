@@ -7,7 +7,7 @@
 		@within Themer
 		@type ThemeSpec table
 
-		A specification table for theme properties. Check out [ThemeType.lua](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/ThemeType.lua) for a full reference of available theme properties.
+		A specification table for theme properties. Check out [ThemeSpec.lua](https://github.com/ImAvafe/OnyxUI/blob/main/src/Themer/ThemeSpec.lua) for a full reference of available theme properties.
 ]=]
 --[=[
 		@within Themer
