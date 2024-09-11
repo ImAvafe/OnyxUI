@@ -7,7 +7,7 @@
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
-local Fusion = require(OnyxUI.Packages.Fusion)
+local Fusion = require(OnyxUI.TypedPackages.Fusion)
 
 local Peek = Fusion.peek
 local InnerScope = Fusion.innerScope

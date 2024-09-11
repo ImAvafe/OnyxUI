@@ -1,5 +1,5 @@
 local OnyxUI = script.Parent.Parent
-local Fusion = require(OnyxUI.Packages.Fusion)
+local Fusion = require(OnyxUI.TypedPackages.Fusion)
 local Util = require(OnyxUI.Util)
 
 local Scoped = Fusion.scoped

@@ -1,5 +1,5 @@
 local OnyxUI = script.Parent.Parent.Parent.OnyxUI.Packages.OnyxUI
-local Fusion = require(OnyxUI.Packages.Fusion)
+local Fusion = require(OnyxUI.TypedPackages.Fusion)
 local Themer = require(OnyxUI.Themer)
 local BitCave = require(script.Parent.Parent.Themes.BitCave)
 

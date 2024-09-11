@@ -6,5 +6,4 @@ return {
 	Util = Util,
 	Components = Components,
 	Themer = Themer,
-	_Packages = script.Packages,
 }
