@@ -16,7 +16,7 @@ classes = [
   "SwitchGroup",
   "Text",
   "Badge",
-  "ScrollingFrame",
+  "Scroller",
   "Checkbox",
   "TextInput",
   "TextArea",

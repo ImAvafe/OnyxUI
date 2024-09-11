@@ -8,8 +8,8 @@ sidebar_position: 1
   OnyxUI is premature software, relying on the premature software Fusion. It will, at times, *move fast and break things™️*. If that doesn't deter you, get ready to enjoy how easy UI can be. ✨
 :::
 
-:::info Fusion 0.2.0
-OnyxUI currently only supports Fusion 0.2. 0.3 support is still in the works.
+:::info Fusion 0.2 users:
+While it's recommended to use Fusion 0.3, OnyxUI offers [an old version](https://github.com/ImAvafe/OnyxUI/releases/tag/0.3.0) for Fusion 0.2. It will not receive any updates, and lacks the major improvements of newer OnyxUI versions.
 :::
 
 ## Installation
@@ -25,29 +25,28 @@ OnyxUI currently only supports Fusion 0.2. 0.3 support is still in the works.
 1. Download the `OnyxUI.rbxm` file [listed here](https://github.com/ImAvafe/OnyxUI/releases/latest)
 2. Insert `OnyxUI.rbxm` into Roblox Studio
 
-## Project structure
+## Usage Example
 
-OnyxUI is structured as a collection of modules. Here's a basic usage sample below:
+Here's a basic component example, making use of some of OnyxUI's features.
 
 ```lua
 local OnyxUI = require(path.to.OnyxUI)
-local Themer = require(OnyxUI.Themer)
-local Util = require(OnyxUI.Util)
+local Fusion = require(path.to.Fusion)
 
--- Components
-local Card = require(OnyxUI.Components.Card)
+local Themer = OnyxUI.Themer
+local InnerScope = Fusion.innerScope
+local Util = OnyxUI.Util
 
--- Types
-export type Props = Card.Props & {} -- This wouldn't work if Card wasn't required directly.
+return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = InnerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
+	local Theme = Themer.Theme:now()
 
--- Component construction
-return function(Props: Props)
-  return Card {
-    BackgroundColor3 = Util.Colors.Gray["200"],
-    Padding = Computed(function()
-      return UDim.new(0, Themer.Theme.Spacing["2"]:get())
-    end),
-  }
+	return Scope:Card {
+		BackgroundColor3 = Util.Colors.Gray["200"],
+		Padding = Scope:Computed(function(Use)
+			return UDim.new(0, Use(Theme.Spacing["2"]))
+		end),
+	}
 end
 ```
 
