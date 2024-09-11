@@ -29,20 +29,22 @@ local Components = {
 	TitleBar = require(script.TitleBar),
 }
 
-for _, Child in ipairs(script:GetChildren()) do
-	local LastCharacters = string.sub(Child.Name, -string.len(STORY_EXTENSION))
-	if LastCharacters ~= STORY_EXTENSION then
-		local Success, Result = pcall(function()
-			return require(Child)
-		end)
-		if Success then
-			if Components[Child.Name] ~= Result then
-				warn(`Component`, Child, `is not listed.`)
+task.spawn(function()
+	for _, Child in ipairs(script:GetChildren()) do
+		local LastCharacters = string.sub(Child.Name, -string.len(STORY_EXTENSION))
+		if LastCharacters ~= STORY_EXTENSION then
+			local Success, Result = pcall(function()
+				return require(Child)
+			end)
+			if Success then
+				if Components[Child.Name] ~= Result then
+					assert(false, `Component {Child} is not listed.`)
+				end
+			else
+				assert(false, `{Child} errored during require.`)
 			end
-		else
-			warn(Child, "errored during require.")
 		end
 	end
-end
+end)
 
 return Components
