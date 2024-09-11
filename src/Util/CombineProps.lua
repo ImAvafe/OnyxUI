@@ -13,7 +13,11 @@
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Packages.Fusion)
 
-local function CombineProps(Source: Fusion.PropertyTable, Target: Fusion.PropertyTable, ExcludedKeys: { any }?)
+local function CombineProps(
+	Source: Fusion.PropertyTable,
+	Target: Fusion.PropertyTable,
+	ExcludedKeys: { any }?
+): Fusion.PropertyTable
 	for Key, Value in pairs(Source) do
 		if (ExcludedKeys ~= nil) and (table.find(ExcludedKeys, Key) ~= nil) then
 			continue

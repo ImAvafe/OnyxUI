@@ -27,6 +27,7 @@ Let's say you have a "CustomButton" component, and you want it to support `Size`
 
 ```lua
 local Util = OnyxUI.Util
+local Themer = OnyxUI.Themer
 local Components = OnyxUI.Components
 local InnerScope = Fusion.innerScope
 
@@ -53,7 +54,7 @@ Color shorthands imported from [TailwindCSS's color palette](https://tailwindcss
 local Util = OnyxUI.Util
 
 return function(Props)
-  return	Scope:Button {
+  return Scope:Button {
     Color = Util.Colors.Red["500"], -- Shade "500" of Colors.Red
   }
 end

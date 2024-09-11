@@ -1,3 +1,14 @@
+--[=[
+	@function Fallback
+	@within Util
+
+	@param Value Fusion.UsedAs<any>
+	@param Fallback any
+	@return any
+	
+	Defaults the given `Value` to `Fallback` if nil.
+]=]
+
 local OnyxUI = script.Parent.Parent
 local Fusion = require(OnyxUI.Packages.Fusion)
 

@@ -34,19 +34,11 @@ local OnyxUI = require(path.to.OnyxUI)
 local Fusion = require(path.to.Fusion)
 
 local Themer = OnyxUI.Themer
-local Util = OnyxUI.Util
-local Components = OnyxUI.Components
 local InnerScope = Fusion.innerScope
+local Util = OnyxUI.Util
 
--- Components
-local Card = require(OnyxUI.Components.Card)
-
--- Types
-export type Props = Card.Props & {}
-
--- Component construction
-return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = InnerScope(Scope, Fusion, Util, Components)
+return function(Scope: Fusion.Scope<any>, Props)
+	local Scope = InnerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components)
 	local Theme = Themer.Theme:now()
 
 	return Scope:Card {
