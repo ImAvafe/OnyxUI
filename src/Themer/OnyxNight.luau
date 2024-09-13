@@ -1,7 +1,7 @@
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
 local NewTheme = require(script.Parent.NewTheme)
-local Fusion = require(OnyxUI.TypedPackages.Fusion)
+local Fusion = require(OnyxUI.Parent.Fusion)
 
 local Scope = Fusion.scoped(Fusion)
 

@@ -6,7 +6,7 @@
 
 local OnyxUI = script.Parent.Parent
 local Util = require(OnyxUI.Util)
-local Fusion = require(OnyxUI.TypedPackages.Fusion)
+local Fusion = require(OnyxUI.Parent.Fusion)
 
 local InnerScope = Fusion.innerScope
 
