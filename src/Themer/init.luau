@@ -20,7 +20,7 @@ local OnyxUI = script.Parent
 local OnyxNightTheme = require(script.OnyxNight)
 local NewTheme = require(script.NewTheme)
 local ThemeSpec = require(script.ThemeSpec)
-local Fusion = require(OnyxUI.TypedPackages.Fusion)
+local Fusion = require(OnyxUI.Parent.Fusion)
 
 local Scoped = Fusion.scoped
 local Contextual = Fusion.Contextual
