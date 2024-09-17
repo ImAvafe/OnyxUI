@@ -13,7 +13,6 @@ local Themer = require(OnyxUI.Themer)
 
 local Peek = Fusion.peek
 local OnEvent = Fusion.OnEvent
-local Out = Fusion.Out
 local InnerScope = Fusion.innerScope
 
 local Base = require(script.Parent.Base)
@@ -124,16 +123,16 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		end)
 	)
 
-	local OutText = Scope:Value("")
-	local ProcessedText = Scope:Computed(function(Use)
-		local OutTextValue = Use(OutText) or ""
-		local CharacterLimitValue = Use(CharacterLimit)
-		local LimitedText = OutTextValue:sub(1, utf8.offset(OutTextValue, CharacterLimitValue))
-		local FullyProcessedText = Use(TextProcessor)(LimitedText)
+	local InvalidInputActive = Scope:Value(false)
+
+	local function ProcessText(NewText: string)
+		local CharacterLimitValue = Peek(CharacterLimit)
+		local TextProcessorValue = Peek(TextProcessor)
+		local LimitedText = NewText:sub(1, utf8.offset(NewText, CharacterLimitValue))
+		local FullyProcessedText = TextProcessorValue(LimitedText)
 
 		return FullyProcessedText
-	end)
-	local InvalidInputActive = Scope:Value(false)
+	end
 
 	local Object = Scope:Hydrate(Scope:Base(Util.CombineProps(Props, {
 		ClassName = "TextBox",
@@ -246,22 +245,26 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 				SoundService:PlayLocalSound(Peek(Theme.Sound.Hover))
 			end
 		end,
-		[Out "Text"] = OutText,
 	}
 
-	Scope:Observer(OutText):onChange(function()
-		local ProcessedTextValue = Peek(ProcessedText)
-		local OutTextValue = Peek(OutText)
+	table.insert(
+		Scope,
+		Object:GetPropertyChangedSignal("Text"):Connect(function()
+			local NewText = Object.Text
+			local ProcessedText = ProcessText(NewText)
 
-		Text:set(ProcessedTextValue)
-		Object.Text = ProcessedTextValue
+			if Object.Text ~= ProcessedText then
+				Text:set(ProcessedText)
+				Object.Text = ProcessedText
+			end
 
-		if utf8.len(OutTextValue) ~= utf8.len(ProcessedTextValue) then
-			InvalidInputActive:set(true)
-			task.wait(0.075)
-			InvalidInputActive:set(false)
-		end
-	end)
+			if utf8.len(NewText) ~= utf8.len(ProcessedText) then
+				InvalidInputActive:set(true)
+				task.wait(0.075)
+				InvalidInputActive:set(false)
+			end
+		end)
+	)
 
 	return Object
 end
