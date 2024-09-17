@@ -143,38 +143,18 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Padding = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.Spacing["0.5"]))
 		end),
-		PaddingLeft = Scope:Spring(
-			Scope:Computed(function(Use)
-				if Use(InvalidInputActive) then
-					return UDim.new(0, Use(Theme.Spacing["0.75"]))
-				else
-					return UDim.new(0, Use(Theme.Spacing["0.5"]))
-				end
-			end),
-			Theme.SpringSpeed["1"],
-			Theme.SpringDampening["1"]
-		),
-		PaddingRight = Scope:Spring(
-			Scope:Computed(function(Use)
-				if Use(InvalidInputActive) then
-					return UDim.new(0, Use(Theme.Spacing["0.75"]))
-				else
-					return UDim.new(0, Use(Theme.Spacing["0.5"]))
-				end
-			end),
-			Theme.SpringSpeed["1"],
-			Theme.SpringDampening["1"]
-		),
 		StrokeEnabled = true,
 		StrokeColor = Scope:Spring(
 			Scope:Computed(function(Use)
-				if Use(IsFocused) then
+				if Use(InvalidInputActive) then
+					return Use(Theme.Colors.Error.Main)
+				elseif Use(IsFocused) then
 					return Use(Color)
 				else
 					return Use(Theme.Colors.NeutralContent.Dark)
 				end
 			end),
-			Theme.SpringSpeed["1"],
+			Theme.SpringSpeed.Immediate,
 			Theme.SpringDampening["1"]
 		),
 		StrokeTransparency = Scope:Spring(
@@ -208,7 +188,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 					return Use(TextColor3)
 				end
 			end),
-			Theme.SpringSpeed["1"],
+			Theme.SpringSpeed.Immediate,
 			Theme.SpringDampening["1"]
 		),
 		TextSize = TextSize,
@@ -253,8 +233,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			local NewText = Object.Text
 			local ProcessedText = ProcessText(NewText)
 
+			Text:set(ProcessedText)
 			if Object.Text ~= ProcessedText then
-				Text:set(ProcessedText)
 				Object.Text = ProcessedText
 			end
 
