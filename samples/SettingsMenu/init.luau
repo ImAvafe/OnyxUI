@@ -5,7 +5,6 @@ local Themer = OnyxUI.Themer
 local Util = OnyxUI.Util
 local Children = Fusion.Children
 local InnerScope = Fusion.innerScope
-local Components = OnyxUI.Components
 
 local SettingToggle = require(script.SettingToggle)
 
@@ -14,7 +13,7 @@ export type Props = {
 }
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
-	local Scope = InnerScope(Scope, Fusion, Util, Components, {
+	local Scope = InnerScope(Scope, Fusion, OnyxUI.Util, OnyxUI.Components, {
 		SettingToggle = SettingToggle,
 	})
 	local Theme = Themer.Theme:now()
@@ -69,6 +68,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 					Scope:TextInput {
 						AutomaticSize = Enum.AutomaticSize.Y,
 						PlaceholderText = "Nickname",
+						CharacterLimit = 20,
 					},
 				},
 			},

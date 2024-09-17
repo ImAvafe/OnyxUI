@@ -217,7 +217,7 @@ local function NewTheme(Scope: Fusion.Scope<any>, ThemeSpec: ThemeSpec)
 			Immediate = Scope:Value(1000),
 		},
 		SpringDampening = {
-			Base = Scope:Value(40),
+			Base = Scope:Value(1),
 			["0.1"] = Scope:Value(nil),
 			["0.175"] = Scope:Value(nil),
 			["0.25"] = Scope:Value(nil),
