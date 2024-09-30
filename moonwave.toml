@@ -34,7 +34,7 @@ classes = [
 
 [docusaurus]
 title = "OnyxUI"
-tagline = "Quick, quality UI components for Fusion"
+tagline = "Quick, customizable components for Fusion"
 url = "https://avafe.me/"
 favicon = "/favicon.svg"
 

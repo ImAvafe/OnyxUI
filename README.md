@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  Quick, quality UI components for Fusion
+  Quick, customizable components for Fusion
 </p>
 
 <p align="center">
