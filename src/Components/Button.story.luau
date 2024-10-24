@@ -8,9 +8,11 @@ local Children = Fusion.Children
 
 local Button = require(script.Parent.Button)
 local Frame = require(script.Parent.Frame)
+local Divider = require(script.Parent.Divider)
 local Components = {
 	Button = Button,
 	Frame = Frame,
+	Divider = Divider,
 }
 
 return {
@@ -66,6 +68,43 @@ return {
 					Color = Color3.fromRGB(86, 255, 70),
 					Disabled = true,
 					Style = "Outlined",
+				},
+				Scope:Divider {},
+				Scope:Frame {
+					ListEnabled = true,
+					ListFillDirection = Enum.FillDirection.Horizontal,
+					ListVerticalAlignment = Enum.VerticalAlignment.Center,
+					Padding = Scope:Computed(function(Use)
+						return UDim.new(0, Use(Theme.Spacing["1"]))
+					end),
+
+					[Children] = {
+						Scope:Button {
+							Content = { "Button (xs)" },
+							SizeVariant = "ExtraSmall",
+							Color = Theme.Colors.Primary.Main,
+						},
+						Scope:Button {
+							Content = { "Button (sm)" },
+							SizeVariant = "Small",
+							Color = Theme.Colors.Primary.Main,
+						},
+						Scope:Button {
+							Content = { "Button (md)" },
+							SizeVariant = "Medium",
+							Color = Theme.Colors.Primary.Main,
+						},
+						Scope:Button {
+							Content = { "Button (lg)" },
+							SizeVariant = "Large",
+							Color = Theme.Colors.Primary.Main,
+						},
+						Scope:Button {
+							Content = { "Button (xl)" },
+							SizeVariant = "ExtraLarge",
+							Color = Theme.Colors.Primary.Main,
+						},
+					},
 				},
 			},
 		}

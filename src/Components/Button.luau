@@ -31,6 +31,7 @@ export type Props = BaseButton.Props & {
 	ContentColor: Fusion.UsedAs<Color3>?,
 	ContentSize: Fusion.UsedAs<number>?,
 	ContentWrapped: Fusion.UsedAs<boolean>?,
+	SizeVariant: Fusion.UsedAs<"ExtraSmall" | "Small" | "Medium" | "Large" | "ExtraLarge">?,
 	IsHolding: Fusion.UsedAs<boolean>?,
 }
 
@@ -47,12 +48,14 @@ export type Props = BaseButton.Props & {
 		@field ContentColor Fusion.UsedAs<Color3>?
 		@field ContentSize Fusion.UsedAs<number>?
 		@field ContentWrapped Fusion.UsedAs<boolean>?
+		@field SizeVariant Fusion.UsedAs<"ExtraSmall" | "Small" | "Medium" | "Large" | "ExtraLarge">?
 		@field IsHolding Fusion.UsedAs<boolean>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
+	local SizeVariant = Util.Fallback(Props.SizeVariant, "Medium")
 	local Disabled = Util.Fallback(Props.Disabled, false)
 	local Content = Util.Fallback(Props.Content, {})
 	local Style = Util.Fallback(Props.Style, "Filled")
@@ -63,11 +66,25 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			return ColorUtils.Emphasize(Use(Color), Use(Theme.Emphasis.Contrast))
 		end)
 	)
-	local ContentSize = Util.Fallback(Props.ContentSize, Theme.TextSize["1"])
+	local ContentSize = Util.Fallback(
+		Props.ContentSize,
+		Scope:Computed(function(Use)
+			local VariantSizes = {
+				ExtraSmall = Use(Theme.TextSize["0.875"]),
+				Small = Use(Theme.TextSize["1"]),
+				Medium = Use(Theme.TextSize["1"]),
+				Large = Use(Theme.TextSize["1.25"]),
+				ExtraLarge = Use(Theme.TextSize["1.25"]),
+			}
+
+			return VariantSizes[Use(SizeVariant)]
+		end)
+	)
 	local ContentWrapped = Util.Fallback(Props.ContentWrapped, false)
 
 	local IsHovering = Scope:EnsureValue(Util.Fallback(Props.IsHovering, false))
 	local IsHolding = Scope:EnsureValue(Util.Fallback(Props.IsHolding, false))
+
 	local EffectiveColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
 			return Use(Theme.Colors.BaseContent.Main)
@@ -103,6 +120,20 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			return 0
 		end
 	end)
+	local PaddingX = Scope:Computed(function(Use)
+		local VariantSizes = {
+			ExtraSmall = Use(Theme.Spacing["0.25"]),
+			Small = Use(Theme.Spacing["0.5"]),
+			Medium = Use(Theme.Spacing["0.75"]),
+			Large = Use(Theme.Spacing["1"]),
+			ExtraLarge = Use(Theme.Spacing["1.5"]),
+		}
+
+		return UDim.new(0, VariantSizes[Use(SizeVariant)])
+	end)
+	local PaddingY = Scope:Computed(function(Use)
+		return UDim.new(0, Use(Theme.Spacing["0.25"]))
+	end)
 
 	return Scope:BaseButton(Util.CombineProps(Props, {
 		Name = "Button",
@@ -118,18 +149,10 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 			end
 		end),
 		BackgroundColor3 = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
-		PaddingLeft = Scope:Computed(function(Use)
-			return UDim.new(0, Use(Theme.Spacing["0.75"]))
-		end),
-		PaddingRight = Scope:Computed(function(Use)
-			return UDim.new(0, Use(Theme.Spacing["0.75"]))
-		end),
-		PaddingTop = Scope:Computed(function(Use)
-			return UDim.new(0, Use(Theme.Spacing["0.25"]))
-		end),
-		PaddingBottom = Scope:Computed(function(Use)
-			return UDim.new(0, Use(Theme.Spacing["0.25"]))
-		end),
+		PaddingLeft = PaddingX,
+		PaddingRight = PaddingX,
+		PaddingTop = PaddingY,
+		PaddingBottom = PaddingY,
 		CornerRadius = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.CornerRadius["1"]))
 		end),
