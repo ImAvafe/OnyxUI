@@ -132,7 +132,15 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		return UDim.new(0, VariantSizes[Use(SizeVariant)])
 	end)
 	local PaddingY = Scope:Computed(function(Use)
-		return UDim.new(0, Use(Theme.Spacing["0.25"]))
+		local VariantSizes = {
+			ExtraSmall = 0.5,
+			Small = 0.75,
+			Medium = 1.25,
+			Large = 1.5,
+			ExtraLarge = 2,
+		}
+
+		return UDim.new(0, Use(Theme.Spacing["0.25"]) * VariantSizes[Use(SizeVariant)])
 	end)
 
 	return Scope:BaseButton(Util.CombineProps(Props, {
