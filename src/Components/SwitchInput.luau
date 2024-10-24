@@ -22,9 +22,8 @@ local Components = {
 	BaseButton = BaseButton,
 }
 
-export type Props = Frame.Props & {
+export type Props = BaseButton.Props & {
 	Switched: Fusion.UsedAs<boolean>?,
-	Disabled: Fusion.UsedAs<boolean>?,
 	Color: Fusion.UsedAs<Color3>?,
 }
 
@@ -32,7 +31,7 @@ export type Props = Frame.Props & {
 		@within SwitchInput
 		@interface SwitchInputProps
 
-		@field ... FrameProps
+		@field ... BaseButtonProps
 		@field Switched Fusion.UsedAs<boolean>?
 		@field Disabled Fusion.UsedAs<boolean>?
 		@field Color Fusion.UsedAs<Color3>?
@@ -42,7 +41,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Theme = Themer.Theme:now()
 
 	local Switched = Scope:EnsureValue(Util.Fallback(Props.Switched, false))
-	local Disabled = Util.Fallback(Props.Disabled, false)
+	local Disabled = Scope:EnsureValue(Util.Fallback(Props.Disabled, false))
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Primary.Main)
 	local Size = Util.Fallback(
 		Props.Size,
@@ -52,8 +51,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	)
 	local AutomaticSize = Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.None)
 
-	local IsHolding = Scope:Value(false)
-	local IsHovering = Scope:Value(false)
+	local IsHovering = Scope:EnsureValue(Util.Fallback(Props.IsHovering, false))
+	local IsHolding = Scope:EnsureValue(Util.Fallback(Props.IsHolding, false))
 	local EffectiveColor = Scope:Computed(function(Use)
 		local ActiveColor
 		if Use(Switched) then

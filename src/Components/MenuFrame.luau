@@ -30,7 +30,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
-	local AutomaticSize = Scope:Value(Enum.AutomaticSize.None)
+	local AutomaticSize = Scope:EnsureValue(Util.Fallback(Props.AutomaticSize, Enum.AutomaticSize.None))
 
 	return Scope:Group(Util.CombineProps(Props, {
 		Name = "MenuFrame",

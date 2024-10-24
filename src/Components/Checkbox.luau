@@ -48,8 +48,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Primary.Main)
 	local IconId = Util.Fallback(Props.Icon, "rbxassetid://13858821963")
 
-	local IsHovering = Scope:Value(false)
-	local IsHolding = Scope:Value(false)
+	local IsHovering = Scope:EnsureValue(Util.Fallback(Props.IsHovering, false))
+	local IsHolding = Scope:EnsureValue(Util.Fallback(Props.IsHolding, false))
 	local EffectiveColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
 			return Use(Theme.Colors.BaseContent.Main)

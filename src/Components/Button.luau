@@ -66,8 +66,8 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local ContentSize = Util.Fallback(Props.ContentSize, Theme.TextSize["1"])
 	local ContentWrapped = Util.Fallback(Props.ContentWrapped, false)
 
-	local IsHolding = Scope:Value(false)
-	local IsHovering = Scope:Value(false)
+	local IsHovering = Scope:EnsureValue(Util.Fallback(Props.IsHovering, false))
+	local IsHolding = Scope:EnsureValue(Util.Fallback(Props.IsHolding, false))
 	local EffectiveColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
 			return Use(Theme.Colors.BaseContent.Main)

@@ -4,7 +4,6 @@ local Util = require(OnyxUI.Util)
 local Themer = require(OnyxUI.Themer)
 
 local OnEvent = Fusion.OnEvent
-local Peek = Fusion.peek
 local Children = Fusion.Children
 
 local Base = require(OnyxUI.Components.Base)
@@ -13,13 +12,15 @@ local Components = {
 	Frame = require(OnyxUI.Components.Frame),
 }
 
-export type Props = Base.Props & {}
+export type Props = Base.Props & {
+	Open: Fusion.UsedAs<boolean>?,
+}
 
 return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope = Fusion.innerScope(Scope, Fusion, Components, Util)
 	local Theme = Themer.Theme:now()
 
-	local Open = Scope:Value(false)
+	local Open = Scope:EnsureValue(Util.Fallback(Props.Open, false))
 
 	return Scope:Hydrate(Scope:TextInput(Util.CombineProps(Props, {
 		Name = script.Name,
