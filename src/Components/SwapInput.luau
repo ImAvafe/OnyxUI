@@ -22,9 +22,9 @@ local Components = {
 }
 
 export type Props = BaseButton.Props & {
-	Disabled: Fusion.UsedAs<boolean>?,
 	Options: Fusion.UsedAs<{ string }>?,
 	Selection: Fusion.UsedAs<number>?,
+	Disabled: Fusion.UsedAs<boolean>?,
 	Color: Fusion.UsedAs<Color3>?,
 	ContentSize: Fusion.UsedAs<number>?,
 }
@@ -33,8 +33,12 @@ export type Props = BaseButton.Props & {
 		@within SwapInput
 		@interface SwapInputProps
 
-		@field ... BaseProps
-		
+		@field ... BaseButtonProps
+		@field Options Fusion.UsedAs<{ string }>?
+		@field Selection Fusion.UsedAs<number>?
+		@field Disabled Fusion.UsedAs<boolean>?
+		@field Color Fusion.UsedAs<Color3>?
+		@field ContentSize Fusion.UsedAs<number>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope = InnerScope(Scope, Fusion, Util, Components)
