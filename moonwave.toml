@@ -30,6 +30,7 @@ classes = [
   "NumberSpinner",
   "IconText",
   "Heading",
+  "SwapInput",
 ]
 
 [docusaurus]
