@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[5232],{14351:e=>{e.exports=JSON.parse('[{"value":"Types","id":"types","level":2},{"value":"AutoScaleFrameProps","id":"AutoScaleFrameProps","level":3}]')}}]);
