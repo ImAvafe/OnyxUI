@@ -16,12 +16,12 @@ local Components = {
 }
 
 return {
-	story = function(Parent: GuiObject)
-		local Scope = Scoped(Fusion, Components)
+	story = function(Props)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
 		local Theme = Themer.Theme:now()
 
 		Scope:Frame {
-			Parent = Parent,
+			Parent = Props.target,
 			ListEnabled = true,
 			ListPadding = Scope:Computed(function(Use)
 				return UDim.new(0, Use(Theme.Spacing["0.5"]))
@@ -29,7 +29,7 @@ return {
 
 			[Children] = {
 				Scope:Heading {
-					Parent = Parent,
+					Parent = Props.target,
 					Text = "Heading",
 				},
 				Scope:Text {
@@ -37,9 +37,6 @@ return {
 				},
 			},
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }

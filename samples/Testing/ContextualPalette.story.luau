@@ -46,32 +46,35 @@ local function Palette(Scope: Fusion.Scope<any>, _: any)
 	}
 end
 
-return function(Parent: GuiObject)
-	local Scope = Fusion.scoped(Fusion, Components, {
-		Palette = Palette,
-	})
+return {
+	story = function(Props)
+		local Scope = Fusion.scoped(Fusion, Components, {
+			Palette = Palette,
+		})
 
-	local AnotherTheme = Themer.NewTheme(Scope, {
-		Colors = {
-			Info = { Main = Util.Colors.Blue["600"] },
-		},
-	})
+		local AnotherTheme = Themer.NewTheme(Scope, {
+			Colors = {
+				Info = { Main = Util.Colors.Blue["600"] },
+			},
+		})
 
-	Scope:Base {
-		Parent = Parent,
-		ListEnabled = true,
-		ListFillDirection = Enum.FillDirection.Horizontal,
-		BackgroundTransparency = 1,
+		Scope:Base {
+			Parent = Props.target,
+			ListEnabled = true,
+			ListFillDirection = Enum.FillDirection.Horizontal,
+			BackgroundTransparency = 1,
 
-		[Children] = {
-			Scope:Palette {},
-			Themer.Theme:is(AnotherTheme):during(function()
-				return Scope:Palette {}
-			end),
-		},
-	}
+			[Children] = {
+				Scope:Palette {},
+				Themer.Theme:is(AnotherTheme):during(function()
+					return Scope:Palette {}
+				end),
+			},
+		}
 
-	return function()
-		Scope:doCleanup()
-	end
-end
+		return function()
+			Scope:doCleanup()
+		end
+	end,
+	fusion = Fusion,
+}

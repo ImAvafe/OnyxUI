@@ -9,16 +9,13 @@ local Components = {
 }
 
 return {
-	story = function(Parent: GuiObject)
-		local Scope = Scoped(Fusion, Components)
+	story = function(Props)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
 
 		Scope:Icon {
-			Parent = Parent,
+			Parent = Props.target,
 			Image = "rbxassetid://11560341132",
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }

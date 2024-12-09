@@ -16,12 +16,12 @@ local Components = {
 }
 
 return {
-	story = function(Parent: GuiObject, _Props)
-		local Scope = Scoped(Fusion, Components)
+	story = function(Props)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
 		local Theme = Themer.Theme:now()
 
 		Scope:Frame {
-			Parent = Parent,
+			Parent = Props.target,
 			Padding = Scope:Computed(function(Use)
 				return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 			end),
@@ -30,7 +30,7 @@ return {
 
 			[Children] = {
 				Scope:MenuFrame {
-					Parent = Parent,
+					Parent = Props.target,
 					Size = UDim2.fromOffset(300, 200),
 					AutomaticSize = Enum.AutomaticSize.None,
 
@@ -42,9 +42,6 @@ return {
 				},
 			},
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }

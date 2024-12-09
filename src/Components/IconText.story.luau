@@ -9,11 +9,11 @@ local Components = {
 }
 
 return {
-	story = function(Parent: GuiObject)
-		local Scope = Scoped(Fusion, Components)
+	story = function(Props)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
 
 		Scope:IconText {
-			Parent = Parent,
+			Parent = Props.target,
 			Content = {
 				"Here's a shop icon: ",
 				"rbxassetid://75029721407761",
@@ -23,9 +23,6 @@ return {
 				". Now you can easily have both text and icons!",
 			},
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }

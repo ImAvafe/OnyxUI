@@ -16,13 +16,12 @@ local Components = {
 }
 
 return {
-	clipsDescendants = false,
-	story = function(Parent: GuiObject)
-		local Scope = Scoped(Fusion, Components)
+	story = function(Props)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
 		local Theme = Themer.Theme:now()
 
 		Scope:Frame {
-			Parent = Parent,
+			Parent = Props.target,
 			ListEnabled = true,
 			ListPadding = Scope:Computed(function(Use)
 				return UDim.new(0, Use(Theme.Spacing["0.5"]))
@@ -108,9 +107,6 @@ return {
 				},
 			},
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }

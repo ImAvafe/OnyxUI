@@ -19,8 +19,8 @@ local INDICATOR_COLORS =
 	{ Util.Colors.Red["500"], Util.Colors.Green["400"], Util.Colors.Orange["500"], Util.Colors.Stone["600"] }
 
 return {
-	story = function(Parent: GuiObject)
-		local Scope = Scoped(Fusion, Components)
+	story = function(Props)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
 		local Theme = Themer.Theme:now()
 
 		local IndicatorColor = Scope:Value(INDICATOR_COLORS[2])
@@ -45,7 +45,7 @@ return {
 		})
 
 		Scope:Frame {
-			Parent = Parent,
+			Parent = Props.target,
 			Padding = Scope:Computed(function(Use)
 				return UDim.new(0, Use(Theme.StrokeThickness["4"]))
 			end),
@@ -101,9 +101,6 @@ return {
 				},
 			},
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }

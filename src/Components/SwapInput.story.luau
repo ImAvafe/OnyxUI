@@ -12,12 +12,12 @@ local Components = {
 }
 
 return {
-	story = function(Parent: GuiObject)
+	story = function(Props)
 		local Scope = Scoped(Fusion, Util, Components)
 		local Theme = Themer.Theme:now()
 
 		Scope:Frame {
-			Parent = Parent,
+			Parent = Props.target,
 			Size = Scope:Computed(function(Use)
 				return UDim2.fromOffset(Use(Theme.Spacing["16"]), 0)
 			end),
@@ -45,9 +45,6 @@ return {
 				},
 			},
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }
