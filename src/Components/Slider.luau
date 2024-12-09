@@ -27,6 +27,7 @@ end
 export type Props = Frame.Props & {
 	Value: Fusion.UsedAs<number>?,
 	Unit: Fusion.UsedAs<number>?,
+	Color: Fusion.UsedAs<Color3>?,
 }
 
 --[=[
@@ -39,8 +40,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope = InnerScope(Scope, Fusion, Util, Components)
 	local Theme = Themer.Theme:now()
 
-	local Value = Scope:EnsureValue(Util.Fallback(Props.Value, 1))
 	local Unit = Util.Fallback(Props.Unit, 1 / 100)
+	local Value = Scope:EnsureValue(RoundByUnit(Util.Fallback(Props.Value, 1), Fusion.peek(Unit)))
+	local Color = Util.Fallback(Props.Color, Theme.Colors.Primary.Main)
 
 	local DragDetector = Scope:Value(nil)
 	local AbsoluteSize = Scope:Value(Vector2.new())
@@ -76,7 +78,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 					return UDim2.fromScale(ValueValue, 1)
 				end),
 				BackgroundTransparency = 0,
-				BackgroundColor3 = Theme.Colors.Primary.Main,
+				BackgroundColor3 = Color,
 				CornerRadius = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.CornerRadius.Full))
 				end),

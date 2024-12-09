@@ -27,12 +27,22 @@ return {
 			end),
 			ListEnabled = true,
 			ListPadding = Scope:Computed(function(Use)
-				return UDim.new(0, Use(Theme.Spacing["0.5"]))
+				return UDim.new(0, Use(Theme.Spacing["1"]))
 			end),
 			ListHorizontalFlex = Enum.UIFlexAlignment.Fill,
 
 			[Children] = {
 				Scope:Slider {},
+				Scope:Slider {
+					Value = 1 / 10,
+					Unit = 1 / 10,
+					Color = Util.Colors.Cyan["500"],
+				},
+				Scope:Slider {
+					Value = 1 / 4,
+					Unit = 1 / 4,
+					Color = Util.Colors.Fuchsia["500"],
+				},
 			},
 		}
 	end,
