@@ -43,6 +43,9 @@ return {
 					Unit = 1 / 4,
 					Color = Util.Colors.Fuchsia["500"],
 				},
+				Scope:Slider {
+					Disabled = true,
+				},
 			},
 		}
 	end,
