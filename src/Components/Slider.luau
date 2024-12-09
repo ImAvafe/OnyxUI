@@ -35,6 +35,9 @@ export type Props = Frame.Props & {
 		@interface SliderProps
 
 		@field ... FrameProps
+		@field Value Fusion.UsedAs<number>?
+		@field Unit Fusion.UsedAs<number>?
+		@field Color Fusion.UsedAs<Color3>?
 ]=]
 return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Scope = InnerScope(Scope, Fusion, Util, Components)
