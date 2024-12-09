@@ -20,6 +20,10 @@ local Components = {
 	Frame = Frame,
 }
 
+function RoundByUnit(Number, Factor)
+	return math.floor(Number / Factor + 0.5) * Factor
+end
+
 export type Props = Frame.Props & {
 	Value: Fusion.UsedAs<number>?,
 	Unit: Fusion.UsedAs<number>?,
@@ -36,18 +40,20 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Theme = Themer.Theme:now()
 
 	local Value = Scope:EnsureValue(Util.Fallback(Props.Value, 1))
+	local Unit = Util.Fallback(Props.Unit, 1 / 100)
 
 	local DragDetector = Scope:Value(nil)
 	local AbsoluteSize = Scope:Value(Vector2.new())
 	local AbsolutePosition = Scope:Value(Vector2.new())
 
-	local function UpdateDrag(Position: Vector2)
+	local function ProcessDrag(Position: Vector2)
 		local AbsoluteSizeValue = Fusion.peek(AbsoluteSize)
 		local AbsolutePositionValue = Fusion.peek(AbsolutePosition)
+		local UnitValue = Fusion.peek(Unit)
 
 		local RelativePosition = Position.X - AbsolutePositionValue.X
 
-		Value:set(math.clamp(RelativePosition / AbsoluteSizeValue.X, 0, 1))
+		Value:set(RoundByUnit(math.clamp(RelativePosition / AbsoluteSizeValue.X, 0, 1), UnitValue))
 	end
 
 	local Slider = Scope:Hydrate(Scope:Frame(Util.CombineProps(Props, {
@@ -118,10 +124,10 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		BoundingUI = Slider,
 
 		[OnEvent "DragContinue"] = function(Position: Vector2)
-			UpdateDrag(Position)
+			ProcessDrag(Position)
 		end,
 		[OnEvent "DragStart"] = function(Position: Vector2)
-			UpdateDrag(Position)
+			ProcessDrag(Position)
 		end,
 	})
 
