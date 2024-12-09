@@ -28,6 +28,7 @@ local Components = {
 	TextArea = require(script.TextArea),
 	TitleBar = require(script.TitleBar),
 	SwapInput = require(script.SwapInput),
+	Slider = require(script.Slider),
 }
 
 task.spawn(function()
