@@ -52,12 +52,12 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Value = Scope:EnsureValue(RoundByUnit(Util.Fallback(Props.Value, 1), Fusion.peek(Unit)))
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Primary.Main)
 	local Disabled = Util.Fallback(Props.Disabled, false)
+	local IsHovering = Scope:EnsureValue(Util.Fallback(Props.IsHovering, false))
+	local IsHolding = Scope:EnsureValue(Util.Fallback(Props.IsHolding, false))
 
 	local DragDetector = Scope:Value(nil)
 	local AbsoluteSize = Scope:Value(Vector2.new())
 	local AbsolutePosition = Scope:Value(Vector2.new())
-	local IsHovering = Scope:EnsureValue(Util.Fallback(Props.IsHovering, false))
-	local IsHolding = Scope:EnsureValue(Util.Fallback(Props.IsHolding, false))
 
 	local EffectiveColor = Scope:Computed(function(Use)
 		if Use(Disabled) then
