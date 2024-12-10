@@ -4,15 +4,14 @@ local Themer = require(OnyxUI.Themer)
 local Components = require(OnyxUI.Components)
 
 local Children = Fusion.Children
-local Scoped = Fusion.scoped
 
 return {
-	story = function(Parent: GuiObject)
+	story = function(Props)
 		local Theme = Themer.Theme:now()
-		local Scope = Scoped(Fusion, Components)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
 
 		Scope:Base {
-			Parent = Parent,
+			Parent = Props.target,
 			ListEnabled = true,
 			Padding = Scope:Computed(function(Use)
 				return UDim.new(0, Use(Theme.StrokeThickness["4"]))
@@ -106,9 +105,6 @@ return {
 				},
 			},
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }

@@ -9,18 +9,15 @@ local Components = {
 }
 
 return {
-	story = function(Parent: GuiObject)
-		local Scope = Scoped(Fusion, Components)
+	story = function(Props)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
 
 		Scope:Scroller {
-			Parent = Parent,
+			Parent = Props.target,
 			Size = UDim2.fromOffset(200, 200),
 			CanvasSize = UDim2.new(UDim.new(1, 0), UDim.new(0, 1000)),
 			AutomaticCanvasSize = Enum.AutomaticSize.None,
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }

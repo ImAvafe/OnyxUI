@@ -14,12 +14,12 @@ local Components = {
 }
 
 return {
-	story = function(Parent: GuiObject)
-		local Scope = Scoped(Fusion, Components)
+	story = function(Props)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
 		local Theme = Themer.Theme:now()
 
 		Scope:Frame {
-			Parent = Parent,
+			Parent = Props.target,
 			Padding = Scope:Computed(function(Use)
 				return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 			end),
@@ -35,9 +35,6 @@ return {
 				},
 			},
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }

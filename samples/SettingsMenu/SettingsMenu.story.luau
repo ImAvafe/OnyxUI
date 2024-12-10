@@ -13,29 +13,28 @@ local Components = {
 	SettingsMenu = SettingsMenu,
 }
 
-return function(Parent: GuiObject)
-	local Scope = Scoped(Fusion, Components)
-	local Theme = Themer.Theme:now()
+return {
+	story = function(Props)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
+		local Theme = Themer.Theme:now()
 
-	Scope:Frame {
-		Parent = Parent,
-		Padding = Scope:Computed(function(Use)
-			return UDim.new(0, Use(Theme.StrokeThickness["1"]))
-		end),
-		ListEnabled = true,
-		ListFillDirection = Enum.FillDirection.Horizontal,
-
-		[Children] = {
-			Scope:SettingsMenu {},
-			Themer.Theme:is(BitCave):during(function()
-				return Scope:SettingsMenu {
-					Size = UDim2.fromOffset(380, 0),
-				}
+		Scope:Frame {
+			Parent = Props.target,
+			Padding = Scope:Computed(function(Use)
+				return UDim.new(0, Use(Theme.StrokeThickness["1"]))
 			end),
-		},
-	}
+			ListEnabled = true,
+			ListFillDirection = Enum.FillDirection.Horizontal,
 
-	return function()
-		Scope:doCleanup()
-	end
-end
+			[Children] = {
+				Scope:SettingsMenu {},
+				Themer.Theme:is(BitCave):during(function()
+					return Scope:SettingsMenu {
+						Size = UDim2.fromOffset(380, 0),
+					}
+				end),
+			},
+		}
+	end,
+	fusion = Fusion,
+}

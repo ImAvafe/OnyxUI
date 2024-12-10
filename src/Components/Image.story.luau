@@ -14,12 +14,12 @@ local Components = {
 }
 
 return {
-	story = function(Parent: GuiObject)
-		local Scope = Scoped(Fusion, Components)
+	story = function(Props)
+		local Scope = Fusion.innerScope(Props.scope, Fusion, Components)
 		local Theme = Themer.Theme:now()
 
 		Scope:Frame {
-			Parent = Parent,
+			Parent = Props.target,
 			AutomaticSize = Enum.AutomaticSize.XY,
 			ListEnabled = true,
 			ListFillDirection = Enum.FillDirection.Horizontal,
@@ -37,9 +37,6 @@ return {
 				},
 			},
 		}
-
-		return function()
-			Scope:doCleanup()
-		end
 	end,
+	fusion = Fusion,
 }
