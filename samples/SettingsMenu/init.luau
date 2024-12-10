@@ -70,6 +70,9 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						PlaceholderText = "Nickname",
 						CharacterLimit = 20,
 					},
+					Scope:Slider {
+						Unit = 1 / 8,
+					},
 				},
 			},
 			Scope:Button {

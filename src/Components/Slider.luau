@@ -83,73 +83,122 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Value:set(RoundByUnit(math.clamp(RelativePosition / AbsoluteSizeValue.X, 0, 1), UnitValue))
 	end
 
-	local Slider = Scope:Hydrate(Scope:BaseButton(Util.CombineProps(Props, {
+	local Slider = Scope:BaseButton {
 		Name = script.Name,
 		CornerRadius = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.CornerRadius.Full))
 		end),
-		BackgroundTransparency = 0,
-		BackgroundColor3 = Theme.Colors.Neutral.Main,
 		Size = Scope:Computed(function(Use)
-			return UDim2.fromOffset(0, Use(Theme.TextSize["0.75"]))
+			return UDim2.fromOffset(0, Use(Theme.TextSize["1"]))
 		end),
-		AutomaticSize = Enum.AutomaticSize.None,
+		AutomaticSize = Enum.AutomaticSize.Y,
 		Disabled = Disabled,
 		IsHovering = IsHovering,
 
 		[Children] = {
-			Scope:Frame {
+			DragDetector,
+			Scope:Hydrate(Scope:Frame(Util.CombineProps(Props, {
 				Name = "Progress",
-				Size = Scope:Computed(function(Use)
-					local ValueValue = Use(Value)
-					return UDim2.fromScale(ValueValue, 1)
-				end),
-				BackgroundTransparency = Scope:Computed(function(Use)
-					if Use(Disabled) then
-						return DISABLED_BACKGROUND_TRANSPARENCY
-					else
-						return 0
-					end
-				end),
-				BackgroundColor3 = Scope:Spring(EffectiveColor, Theme.SpringSpeed["1"], Theme.SpringDampening["1"]),
 				CornerRadius = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.CornerRadius.Full))
 				end),
-				AutomaticSize = Enum.AutomaticSize.None,
+				BackgroundTransparency = 0,
+				BackgroundColor3 = Theme.Colors.Neutral.Main,
+				Size = Scope:Computed(function(Use)
+					return UDim2.new(UDim.new(1, 0), UDim.new(0, Use(Theme.TextSize["0.75"])))
+				end),
+				FlexMode = Enum.UIFlexMode.Fill,
 
 				[Children] = {
 					Scope:Frame {
-						Name = "Ball",
-						AspectRatio = 1,
-						AnchorPoint = Vector2.new(0.5, 0.5),
-						Position = UDim2.fromScale(1, 0.5),
+						Name = "Progress",
 						Size = Scope:Computed(function(Use)
-							local Offset = Use(Theme.TextSize["1"])
-							return UDim2.fromOffset(Offset, Offset)
+							local ValueValue = Use(Value)
+							return UDim2.fromScale(ValueValue, 1)
 						end),
-						BackgroundTransparency = 0,
-						BackgroundColor3 = Scope:Computed(function(Use)
+						BackgroundTransparency = Scope:Computed(function(Use)
 							if Use(Disabled) then
-								return Use(Theme.Colors.Neutral.Light)
+								return DISABLED_BACKGROUND_TRANSPARENCY
 							else
-								return Use(Theme.Colors.BaseContent.Main)
+								return 0
 							end
 						end),
+						BackgroundColor3 = Scope:Spring(
+							EffectiveColor,
+							Theme.SpringSpeed["1"],
+							Theme.SpringDampening["1"]
+						),
 						CornerRadius = Scope:Computed(function(Use)
 							return UDim.new(0, Use(Theme.CornerRadius.Full))
 						end),
-						StrokeEnabled = true,
-						StrokeColor = Theme.Colors.Base.Main,
-						StrokeThickness = Theme.StrokeThickness["2"],
 						AutomaticSize = Enum.AutomaticSize.None,
+
+						[Children] = {
+							Scope:Frame {
+								Name = "Ball",
+								AspectRatio = 1,
+								AnchorPoint = Scope:Computed(function(Use)
+									local ValueValue = Use(Value)
+									return Vector2.new(ValueValue, 0.5)
+								end),
+								Position = UDim2.fromScale(1, 0.5),
+								Size = Scope:Computed(function(Use)
+									local Offset = Use(Theme.TextSize["1"])
+									return UDim2.fromOffset(Offset, Offset)
+								end),
+								BackgroundTransparency = 0,
+								BackgroundColor3 = Scope:Computed(function(Use)
+									if Use(Disabled) then
+										return Use(Theme.Colors.Neutral.Main)
+									else
+										return Use(Theme.Colors.BaseContent.Main)
+									end
+								end),
+								CornerRadius = Scope:Computed(function(Use)
+									return UDim.new(0, Use(Theme.CornerRadius.Full))
+								end),
+								StrokeEnabled = true,
+								StrokeColor = Theme.Colors.Neutral.Main,
+								StrokeThickness = Theme.StrokeThickness["1"],
+								AutomaticSize = Enum.AutomaticSize.None,
+
+								[Children] = {
+									Scope:Frame {
+										Name = "SmallBall",
+										AspectRatio = 1,
+										AnchorPoint = Vector2.new(0.5, 0.5),
+										Position = UDim2.fromScale(0.5, 0.5),
+										Size = Scope:Computed(function(Use)
+											local Offset = Use(Theme.TextSize["0.75"])
+											return UDim2.fromOffset(Offset, Offset)
+										end),
+										BackgroundTransparency = 0,
+										BackgroundColor3 = Scope:Spring(
+											Scope:Computed(function(Use)
+												if Use(Disabled) then
+													return Use(Theme.Colors.Neutral.Dark)
+												else
+													return Use(EffectiveColor)
+												end
+											end),
+											Theme.SpringSpeed["1"],
+											Theme.SpringDampening["1"]
+										),
+										CornerRadius = Scope:Computed(function(Use)
+											return UDim.new(0, Use(Theme.CornerRadius.Full))
+										end),
+										AutomaticSize = Enum.AutomaticSize.None,
+									},
+								},
+							},
+						},
 					},
 				},
+			}))) {
+				[Out "AbsoluteSize"] = AbsoluteSize,
+				[Out "AbsolutePosition"] = AbsolutePosition,
 			},
-			DragDetector,
 		},
-	}))) {
-		[Out "AbsoluteSize"] = AbsoluteSize,
-		[Out "AbsolutePosition"] = AbsolutePosition,
 	}
 
 	DragDetector:set(Scope:New "UIDragDetector" {
