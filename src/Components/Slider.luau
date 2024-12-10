@@ -83,7 +83,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 		Value:set(RoundByUnit(math.clamp(RelativePosition / AbsoluteSizeValue.X, 0, 1), UnitValue))
 	end
 
-	local Slider = Scope:BaseButton {
+	local Slider = Scope:BaseButton(Util.CombineProps(Props, {
 		Name = script.Name,
 		CornerRadius = Scope:Computed(function(Use)
 			return UDim.new(0, Use(Theme.CornerRadius.Full))
@@ -97,7 +97,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 
 		[Children] = {
 			DragDetector,
-			Scope:Hydrate(Scope:Frame(Util.CombineProps(Props, {
+			Scope:Hydrate(Scope:Frame {
 				Name = "Progress",
 				CornerRadius = Scope:Computed(function(Use)
 					return UDim.new(0, Use(Theme.CornerRadius.Full))
@@ -194,12 +194,12 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 						},
 					},
 				},
-			}))) {
+			}) {
 				[Out "AbsoluteSize"] = AbsoluteSize,
 				[Out "AbsolutePosition"] = AbsolutePosition,
 			},
 		},
-	}
+	}))
 
 	DragDetector:set(Scope:New "UIDragDetector" {
 		DragStyle = Enum.UIDragDetectorDragStyle.Scriptable,
