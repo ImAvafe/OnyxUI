@@ -49,7 +49,7 @@ return function(Scope: Fusion.Scope<any>, Props: Props)
 	local Theme = Themer.Theme:now()
 
 	local Unit = Util.Fallback(Props.Unit, 1 / 100)
-	local Value = Scope:EnsureValue(RoundByUnit(Util.Fallback(Props.Value, 1), Fusion.peek(Unit)))
+	local Value = Scope:EnsureValue(RoundByUnit(Fusion.peek(Util.Fallback(Props.Value, 1)), Fusion.peek(Unit)))
 	local Color = Util.Fallback(Props.Color, Theme.Colors.Primary.Main)
 	local Disabled = Util.Fallback(Props.Disabled, false)
 	local IsHovering = Scope:EnsureValue(Util.Fallback(Props.IsHovering, false))
