@@ -22,6 +22,10 @@ While it's recommended to use Fusion 0.3, OnyxUI offers [an old version](https:/
 
 ### Roblox model
 
+:::warning
+When using the `rbxm`, you must require the copy of Fusion bundled within it, rather than your own install. Or alternatively, switch to Wally to avoid this altogether.
+:::
+
 1. Download the `OnyxUI.rbxm` file [listed here](https://github.com/ImAvafe/OnyxUI/releases/latest)
 2. Insert `OnyxUI.rbxm` into Roblox Studio
 
