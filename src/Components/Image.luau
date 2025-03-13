@@ -38,6 +38,7 @@ export type Props = Base.Props & {
 		@field FallbackImage Fusion.UsedAs<string>?
 		@field ImageColor3 Fusion.UsedAs<Color3>?
 		@field ImageTransparency Fusion.UsedAs<number>?
+		@field ImageRectOffset Fusion.UsedAs<Vector2>?
 		@field ImageRectSize Fusion.UsedAs<Vector2>?
 		@field ResampleMode Fusion.UsedAs<Enum.ResamplerMode>?
 		@field ScaleType Fusion.UsedAs<Enum.ScaleType>?

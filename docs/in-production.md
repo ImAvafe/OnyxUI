@@ -10,7 +10,11 @@ import Rorooms from '/Rorooms.png';
 
 # Production Usage
 
-These projects use OnyxUI to power their user experience:
+These projects use OnyxUI to power their user experience.
+
+:::tip List your project
+If you're working on something, send me a message on Discord! `(@avafe)` I love seeing what people make. <3
+:::
 
 * ## [Avalog](https://github.com/imavafe/avalog)
   * * <img src={Avalog} width="600px"/>
@@ -22,7 +26,3 @@ These projects use OnyxUI to power their user experience:
   * * <img src={lonekaMenu} width="500px"/>
 * ## [Climb of Chaos](https://www.roblox.com/games/16882394262)
   * <img src={climbOfChaos} width="500px"/>
-
-:::tip List your project
-If you'd like your game or resource featured here, open an issue or pull request! If it's pretty, I want it listed!
-:::
