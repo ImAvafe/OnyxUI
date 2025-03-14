@@ -13,7 +13,6 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/imavafe/OnyxUI/actions"><img src="https://img.shields.io/github/actions/workflow/status/imavafe/OnyxUI/ci.yaml?branch=main" alt="Build Status"></img></a>
   <img title="MIT licensed" alt="License" src="https://img.shields.io/github/license/ImAvafe/OnyxUI"></img>
 </p>
 
@@ -25,11 +24,19 @@
 
 ---
 
-## [Installation 📦](https://avafe.me/OnyxUI/docs/intro#installation)
+## High quality components 🧩
+
+Make quality UI faster with dozens of fully-typed components.
+
+##  Comprehensive theming 🎨
+
+Give your UI the look and feel you desire with ease.
+
+## Styling, now *not* stupid 🖌️
+
+Messy markup sucks. Style any component, with less code, using OnyxUI's passthrough styling props.
 
 ## [Documentation 📄](https://avafe.me/OnyxUI/)
-
-## [Examples ✨](https://avafe.me/OnyxUI/docs/in-production)
 
 ##
 
